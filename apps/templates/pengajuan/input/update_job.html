@@ -1,0 +1,48 @@
+{% extends "layouts/base.html" %}
+{% block title %} DataJob{% endblock title %}
+{% block extrahead %}
+{% endblock extrahead %}
+{% load static %}
+{% block content %}
+<div id="jCrumbs" class="breadCrumb module">
+    <ul>
+        <li>
+            <a href="/"><i class="icon-home"></i></a>
+        </li>
+        <li>
+            <a href="{% url 'd-job' %}">Data Job</a>
+        </li>
+        <li>
+            Update Job
+        </li>
+    </ul>
+</div>
+<div class="row-fluid">
+    <div class="span6">
+        <form class="form-horizontal well" action="." method="post"> {% csrf_token %}
+            <fieldset>
+                <p class="f_legend">Update Status</p>
+                <div class="control-group">
+                    <label class="control-label">{{forms.tanggal.label}}</label>
+                    <div class="controls">
+                        {{forms.tanggal}}
+                        <span class="help-block">Data Tanggal Update</span>
+                    </div>
+                </div>
+                <div class="control-group">
+                    <label class="control-label">{{forms.status.label}}</label>
+                    <div class="controls">
+                        {{forms.status}}
+                        <span class="help-block">Status Update</span>
+                    </div>
+                </div>
+                <div class="control-group">
+                    <div class="controls">
+                        <button class="btn btn-gebo" type="submit">Update Status</button>
+                    </div>
+                </div>
+            </fieldset>
+        </form>
+    </div>
+
+{% endblock %}

@@ -1,0 +1,110 @@
+{% block header %}
+{% load static %}
+<header>
+  <div class="navbar navbar-fixed-top">
+    <div class="navbar-inner">
+      <div class="container-fluid">
+        <a class="brand" href ="/" ><img src="{% static 'paket/img/isp.png'%}"  alt="icon" class="img-brand"></a>
+        <ul class="nav user_menu pull-right profile">
+          <li class="hidden-phone hidden-tablet">
+            <div class="nb_boxes clearfix">
+            <!--<a data-toggle="modal" data-backdrop="static" href="#myMail" class="label ttip_b" title="New messages">25 <i class="splashy-mail_light"></i></a>-->
+            <!-- <a data-toggle="modal" data-backdrop="static" href="{#% url 'cart' % #}" class="label ttip_b" title="Data Pinjaman">{% if cart %} {{ cart|length }}{% endif %} <i class="fa fa-bell" style="font-size:16px;color:red"></i></a> -->
+            <a data-toggle="modal" data-backdrop="static" href="#Notifiction" class="label ttip_b" title="Notifiction"><i class="fa fa-bell" style="font-size:16px;color:red"></i></a>
+            </div>
+          </li>
+
+          <li class="dropdown dropdown-profile">
+            <a class="dropdown-toggle" href="#" data-toggle="dropdown" >
+              {% if user.is_authenticated %}
+                  <img src="{{ user.profile.avatar.url }}" alt="" class="user_avatar" />
+              {% else%}
+                  <img src="{% static 'img/logo_tr.jpg' %}" alt="" class="user_avatar" />
+              {% endif%}
+              Hi , {{user.username}} <b class="caret"></b>
+            </a>
+            
+            <ul class="dropdown-menu">
+              {% if user.is_authenticated %}
+              <li>
+                  <a  href="{#% url 'profile' %#}">Profile</a>
+              </li>
+              {% if user.is_superuser%}
+              <li>
+                  <a href="/admin">Console</a>
+              </li>
+              {% endif %}
+              <li class="divider"></li>
+              <li><a href="{% url 'logout'  %}">Logout </a></li>
+              {% else %}
+              <li><a  href="{% url 'login' %}">Login</a></li>
+            {% endif %}
+            </ul>
+          </li>
+        </ul>
+        <ul class="nav nav-shortcut" id="mobile-nav">
+          <li class="dropdown dropdown-short">
+            <a data-toggle="dropdown" class="dropdown-toggle" href="#">Menu <b class="caret"></b></a>
+            <ul class="dropdown-menu">
+              {% if user.is_authenticated %}
+                <li><a href="{% url 'add-kurs' %}" >Add Kurs</a></li>
+                <li><a href="{% url 'add-produk' %}" >Add Produk</a></li>
+                <li><a href="{% url 'add-negara' %}" >Add Negara</a></li>
+                <li><a href="{% url 'add-pengiriman' %}" >Add Vendor</a></li>
+              {% endif %}
+            </ul>
+          </li>            
+        </ul>
+      </div>
+    </div>
+  </div>
+  
+  <!-- modal -->
+  <div class="modal hide fade new-modal" id="Notifiction">
+    <div class="modal-header">
+      <button class="close" data-dismiss="modal">x</button>
+      <h3>Notification</h3>
+    </div>
+    <div class="modal-body">
+      <div class="alert alert-info">New Notification To IST</div>
+      <table class="table table-condensed table-striped" data-rowlink="a">
+        <thead>
+          <tr>
+            <th>Sender</th>
+            <th>Subject</th>
+            <th>Date</th>
+            <th>Size</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Declan Pamphlett</td>
+            <td><a href="javascript:void(0)">Lorem ipsum dolor sit amet</a></td>
+            <td>23/05/2012</td>
+            <td>25KB</td>
+          </tr>
+          <tr>
+            <td>Erin Church</td>
+            <td><a href="javascript:void(0)">Lorem ipsum dolor sit amet</a></td>
+            <td>24/05/2012</td>
+            <td>15KB</td>
+          </tr>
+          <tr>
+            <td>Koby Auld</td>
+            <td><a href="javascript:void(0)">Lorem ipsum dolor sit amet</a></td>
+            <td>25/05/2012</td>
+            <td>28KB</td>
+          </tr>
+          <tr>
+            <td>Anthony Pound</td>
+            <td><a href="javascript:void(0)">Lorem ipsum dolor sit amet</a></td>
+            <td>25/05/2012</td>
+            <td>33KB</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</header>    
+    
+{% endblock  %}

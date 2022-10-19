@@ -1,0 +1,19 @@
+<script src="/static/js/jquery.meio.mask.min.js?{% now 's' %}" type="text/javascript"></script>
+<script type="text/javascript">
+$(document).ready(function($) {
+    $("input.uang").setMask();
+    $('.tabular').submit(function(){
+        $('input.uang').each(function () { $(this).val(to_number($(this).val())); });
+        return true;
+    });     
+});
+</script>
+<script src="/static/js/jquery-1.4.2.min.js"></script>
+<script src="/static/js/jquery.maskedinput-1.2.2-co.min.js"></script>
+<script type="text/javascript">
+    jQuery(function($){    
+    $("#id_tgl_fs,#id_tgl_sl,#id_tgl_dl").mask("99-99-9999", {placeholder: 'DD-MM-YYYY'});
+});
+</script>
+
+

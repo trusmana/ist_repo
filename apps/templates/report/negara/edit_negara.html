@@ -1,0 +1,38 @@
+{% extends "layouts/base.html" %}
+{% load static %}
+
+{% block title %} Edit Negara{% endblock %}
+
+{% block content %}
+<div id="jCrumbs" class="breadCrumb module">
+    <ul>
+        <li>
+            <a href="/"><i class="icon-home"></i></a>
+        </li>
+        <li>
+            <a href="{% url 'd-negara' %}">Data Negara</a>
+        </li>
+        <li>
+            Edit Negara
+        </li>        
+    </ul>
+</div>
+<div class="row-fluid">
+    <div class="span12">
+		<form action="{% url 'd-negara' negara.id %}" method="post">{% csrf_token %}
+			<div class="formSep">
+                {% for field in form %}
+                <div class="col-md-6 mb-3">
+                    <div>{{ field.label_tag }}{{ field }}</div>
+                </div>
+                 {% endfor %}				
+			</div>
+
+            <div class="mt-3">
+                <button type="submit" class="btn btn-primary">Save</button>
+                <a class="btn btn-danger delete_item" data-href="{% url 'd-negara' negara.id 'single' %}">Delete</a>
+            </div>
+        </form>
+    </div>
+</div>
+{% endblock content %}

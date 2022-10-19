@@ -1,0 +1,42 @@
+{% extends "layouts/base.html" %}
+{% load static %}
+
+{% block title %} Edit Produk {% endblock %}
+
+{% block content %}
+<div id="jCrumbs" class="breadCrumb module">
+    <ul>
+        <li>
+            <a href="/"><i class="icon-home"></i></a>
+        </li>
+        <li>
+            <a href="{% url 'd-produk' %}">Data Produk</a>
+        </li>
+        <li>
+            Edit Produk
+        </li>        
+    </ul>
+</div>            
+<div class="row-fluid">
+    <div class="span12">
+        <h1 class="h4">Edit Produk</h1>
+        <p class="mb-0">You can change the form and update this Produk</p>
+        <form action="{% url 'd-produk' produk.id %}" method="post">
+            {% csrf_token %}
+            <div class="formSep">
+                {% for field in form %}
+                    <div class="col-md-6 mb-3">
+                        <div>{{ field.label_tag }}{{ field }}</div>
+                    </div>
+                {% endfor %}
+            </div>
+
+            <div class="mt-3">
+                <a class="btn btn-danger delete_item" data-href="{% url 'd-produk' produk.id 'single' %}">Delete</a>
+                <button type="submit" class="btn btn-primary">Save</button>
+            </div>
+        </form>
+    </div>
+</div>
+
+{% endblock content %}

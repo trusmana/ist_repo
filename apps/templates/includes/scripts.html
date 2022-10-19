@@ -1,0 +1,50 @@
+{% load static %}
+
+<!-- Core -->
+<script src="{% static 'app_assets/assets/vendor/popper.js/dist/umd/popper.min.js' %}"></script>
+<script src="{% static 'app_assets/assets/vendor/bootstrap/dist/js/bootstrap.min.js' %}"></script>
+
+<!-- Vendor JS -->
+<script src="{% static 'app_assets/assets/vendor/onscreen/dist/on-screen.umd.min.js' %}"></script>
+
+<!-- Slider -->
+<script src="{%static 'app_assets/assets/vendor/nouislider/distribute/nouislider.min.js'%}"></script>
+
+<!-- Jarallax -->
+<script src="{%static 'app_assets/assets/vendor/jarallax/dist/jarallax.min.js'%}"></script>
+
+<!-- Smooth scroll -->
+<script src="{%static 'app_assets/assets/vendor/smooth-scroll/dist/smooth-scroll.polyfills.min.js'%}"></script>
+
+<!-- Count up -->
+<script src="{%static 'app_assets/assets/vendor/countup.js/dist/countUp.umd.js'%}"></script>
+
+<!-- Notyf -->
+<script src="{%static 'app_assets/assets/vendor/notyf/notyf.min.js'%}"></script>
+
+<!-- Charts -->
+<script src="{%static 'app_assets/assets/vendor/chartist/dist/chartist.min.js'%}"></script>
+<script src="{%static 'app_assets/assets/vendor/chartist-plugin-tooltips/dist/chartist-plugin-tooltip.min.js'%}"></script>
+
+<!-- Datepicker -->
+<script src="{%static 'app_assets/assets/vendor/vanillajs-datepicker/dist/js/datepicker.min.js'%}"></script>
+
+<!-- Volt JS -->
+<script src="{%static 'app_assets/assets/js/volt.js' %}"></script>
+
+<!-- Custom app script -->
+<script src="{% static 'chosen/js/test/jquery-3.1.1.min.js' %}"></script>   
+<script src="{% static 'chosen/js/test/bootstrap.min.js' %}"></script>      
+<!-- Js Asli Dirubah -->
+<!--<script type="application/javascript" src="{% static 'app_assets/jquery/js/jquery-3.3.1.min.js' %}"></script>-->
+<script type="application/javascript" src="{% static 'app_assets/jquery/js/jquery-confirm.min.js' %}"></script>
+<script type="text/javascript" src="{% static 'app_assets/jquery/cookie/jquery.cookie.js' %}"></script>
+<script type="application/javascript" src="{% static 'app_assets/js/notify.js' %}"></script>
+<script type="application/javascript" src="{% static 'app_assets/js/app_js.js' %}"></script>
+<script>
+    {% if messages %}
+        {% for message in messages %}
+            notification['{{ message.tags }}']("<p>" + '{{ message|capfirst }}' + "</p>");
+        {% endfor %}
+    {% endif %}
+</script>

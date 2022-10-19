@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+    <title>IST |{% block title %} {% endblock %}</title>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<meta http-equiv="X-UA-Compatible" content="ie=edge">
+		{% include 'layouts/paket/head.html' %}
+		{% block extrahead %} {% endblock %}
+	</head>
+
+	<body class="ptrn_d">
+    	<div id="maincontainer" class="clearfix nav">
+			<header>
+				{% include 'layouts/paket/header.html' %}
+				
+			</header>
+			<div id="contentwrapper" class="content">
+				<div class="main_content">
+					{% block content %}
+					{% endblock %}
+				</div>
+			</div>
+			<a href ="javascript:void(0)" class="sidebar_switch on_switch ttip_r icon-sidebar" title="Sembunyikan Sidebar">Tampilkan Sidebar</a>
+  			<div class="sidebar">
+				{% include 'layouts/paket/sidebar.html' %}
+			</div>
+		</div>
+			{% include 'layouts/paket/javascript.html' %}
+			
+	</body>
+	
+</html>
