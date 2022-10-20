@@ -47,7 +47,7 @@ def datajob(request):
     object_list = Job.objects.filter(Q(transaksi__no_pekerjaan__icontains=query) | Q(vendor__nama_jasa_pengiriman__icontains=query)).order_by('id')
     page_num = request.GET.get('page', 1)
 
-    paginator = Paginator(object_list, 15) # 6 employees per page
+    paginator = Paginator(object_list, 3) # 6 employees per page
     try:
         page_obj = paginator.page(page_num)
     except PageNotAnInteger:
