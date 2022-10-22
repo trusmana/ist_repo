@@ -26,18 +26,19 @@
                 </div>
                 <div class="w-box-content cnt_a">
                     <div class="row-fluid">
-                        <label>{{forms.products.label}}</label> {{forms.products}}
+                        <label>{{forms.products.label}}</label> 
+                        {{forms.products}} {{forms.jenis_produk}}
                     </div>
                     <div class="row-fluid">
                         <label>{{forms.poin_satu.label}}</label> {{forms.poin_satu}}
                         {{forms.origin_vendor}}                        
                     </div>
                     <div class="row-fluid">
-                        <label>Through </label>
-                        {{forms.poin_dua}} {{forms.destinations_vendor}}                         
+                        <label> {{forms.poin_dua.label}}</label>
+                        {{forms.poin_dua}} {{forms.through_vendor}}                         
                     </div>
                     <div class="row-fluid">
-                        <label>Destination</label> {{forms.poin_tiga}} {{forms.locations_vendor}}                        
+                        <label>Destination</label> {{forms.poin_tiga}} {{forms.destinations_vendor}}                        
                     </div>
 
                     <div class="clearfix  text-right">
@@ -68,21 +69,22 @@
 <script >
 function cek_parameter()
     {
+        var jenis_produk = $('#id_jenis_produk').val();  
         var produk = $('#id_products').val();
         var poin_satu = $('#id_poin_satu').val();
         var origin_vendor = $('#id_origin_vendor').val();
         var poin_dua = $('#id_poin_dua').val();
-        var destinations_vendor = $('#id_destinations_vendor').val();        
+        var through_vendor = $('#id_through_vendor').val();        
         var poin_tiga = $('#id_poin_tiga').val();
-        var locations_vendor =$('#id_locations_vendor').val()
+        var destinations_vendor =$('#id_destinations_vendor').val()
         var dataString = 'produk='+produk+'&poin_satu='+poin_satu+'&poin_dua='+poin_dua+'&poin_tiga='+poin_tiga+
-            '&origin_vendor='+origin_vendor+'&destinations_vendor='+destinations_vendor+'&locations_vendor='+locations_vendor;
+            '&origin_vendor='+origin_vendor+'&through_vendor='+through_vendor+'&destinations_vendor='+destinations_vendor+'&jenis_produk='+jenis_produk ;
         $.ajax({
             url: "{% url 'show-param' %}",
             data: dataString,
             dataType: "JSON",
             error: function(data){
-                jAlert('Parameter Belum Tersedia!')
+                jAlert('Parameter Belum Tersedia!');
                 vendor_kosong();
             },
             success: function (data) {

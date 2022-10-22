@@ -148,22 +148,23 @@ def save_simulasi_form(request, h_ajax, template_name):
     return JsonResponse(data)
 
 def showparam(request):
+    jenis_produk = request.GET.get('jenis_produk',None)
     produk = request.GET.get('produk',None)
     tanggal = request.GET.get('tanggal',None)
     poin_satu = request.GET.get('poin_satu',None)
     poin_dua = request.GET.get('poin_dua',None)
     poin_tiga = request.GET.get('poin_tiga',None)
     origin_vendor = request.GET.get('origin_vendor',None)
-    through_vendor = request.GET.get('destinations_vendor',None)
-    destinations_vendor = request.GET.get('locations_vendor',None)    
+    through_vendor = request.GET.get('through_vendor',None)
+    destinations_vendor = request.GET.get('destinations_vendor',None)    
     
     param = ParameterData.objects.get(products=produk,products__point_satu=poin_satu,products__point_dua=poin_dua,
         products__point_tiga=poin_tiga,products__origin_vendor=origin_vendor,products__through_vendor=through_vendor,
-        products__destinations_vendor=destinations_vendor,products__status=1)
+        products__destinations_vendor=destinations_vendor,products__status=1,products__jenis_produk=jenis_produk)
     prd = param.products.kode_produk
     org_ven = param.products.origin_vendor
     org = param.products.point_satu
     h_ajax ={'tanggal':tanggal,'produk':prd,'param':param.id,'org':org,'org_ven':org_ven,'ds_ven':param.products.through_vendor,
-        'ds': param.products.point_dua,'lt_ven':param.products.destinations_vendor,'lt':param.products.point_tiga}
+        'ds': param.products.point_dua,'lt_ven':param.products.destinations_vendor,'lt':param.products.point_tiga,'js':param.products.jenis_produk}
     return save_simulasi_form(request, h_ajax,'pengajuan/addpengajuan.html')
     

@@ -5,6 +5,10 @@
     <tr>
         <td>Produk</td>
         <td>: {{h_ajax.produk}}</td>
+    </tr>
+    <tr>    
+        <td>Jenis Pengiriman</td>
+        <td>: {% if h_ajax.js == '1' %} Airfreight {% else%} Seafreight {% endif %}</td>
 	</td>
     <tr>
         <td>ID Param</td>

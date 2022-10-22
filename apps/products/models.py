@@ -180,8 +180,11 @@ class ParameterDataBl(models.Model):
         verbose_name= 'ParameterDataBl'
         verbose_name_plural =verbose_name
 
-    def __int__(self):
-        return self.id
+
+    def __str__(self):
+        return '%s' %(self.id)
+
+    
     
 
 ##########Parameter untuk Job

@@ -13,7 +13,7 @@
             <a href="{% url 'in-pengajuan' %}">Job</a>
         </li>
         <li>
-            Input Job
+            Input Job #{{param}} {{pse}}
         </li>
     </ul>
 </div>
@@ -258,6 +258,12 @@
                                 {{ sl.airfreight_two }}
 							</div>
                         </div>
+                        <div class="formSep control-group input-prepend">
+                            <label class="control-label">{{ sl.cartage_warehouse_charge_two.label }}  </label>
+                            <div class="controls"><span class="add-on">$</span>
+                                {{ sl.cartage_warehouse_charge_two }}
+							</div>
+                        </div>
 
                         <div class="formSep control-group input-prepend">
                             <label class="control-label">{{ sl.export_handling_sale.label }}  </label>
@@ -272,12 +278,7 @@
 							</div>
                         </div>
                         
-                        <div class="formSep control-group input-prepend">
-                            <label class="control-label">{{ sl.cartage_warehouse_charge_two.label }}  </label>
-                            <div class="controls"><span class="add-on">$</span>
-                                {{ sl.cartage_warehouse_charge_two }}
-							</div>
-                        </div>
+                        
                         <div class="formSep control-group input-prepend">
                             <label class="control-label">{{ sl.doc_clearance_sale.label }}  </label>
                             <div class="controls"><span class="add-on">$</span>

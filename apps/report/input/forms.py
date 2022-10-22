@@ -1,6 +1,7 @@
 from django import forms
 
-from apps.products.models import STATUS, STATUS_UPDATE, Commodity, JasaPengiriman, Negara, ParameterData, ParameterDataBl, Produk
+from apps.products.models import JENISPRODUK, STATUS, STATUS_UPDATE, Commodity, \
+    JasaPengiriman, Negara, ParameterData, ParameterDataBl, Produk
 
 class UpdateForm(forms.Form):
     tanggal= forms.DateField(label="Tanggal", widget=forms.DateInput(
@@ -11,19 +12,21 @@ class UpdateForm(forms.Form):
 class PengajuanForm(forms.Form):
     tanggal = forms.DateField(label="Tanggal", widget=forms.DateInput(
         attrs={'class': 'form-control ','readonly':True}))
+    jenis_produk = forms.ChoiceField(label='Jenis Pengiriman',widget = forms.Select(attrs={'class':'form-control chosen-select'}),
+        choices = JENISPRODUK)    
     products = forms.ModelChoiceField(queryset=Produk.objects.filter(status='1'),
         widget=forms.Select(attrs={'class':'form-control chosen-select'}))
     poin_satu = forms.ModelChoiceField(label="Origin",queryset=Negara.objects.filter(status='1'),
         widget=forms.Select(attrs={'class':'form-control chosen-select'}))
     origin_vendor = forms.ModelChoiceField(label="Vendor Origin",queryset=JasaPengiriman.objects.filter(status='1'),
         widget=forms.Select(attrs={'class':'form-control chosen-select'}))
-    poin_dua = forms.ModelChoiceField(label="Destinations",queryset=Negara.objects.filter(status='1'),
+    poin_dua = forms.ModelChoiceField(label="Through",queryset=Negara.objects.filter(status='1'),
         widget=forms.Select(attrs={'class':'form-control chosen-select'}))
-    destinations_vendor = forms.ModelChoiceField(label="Vendor Destination",queryset=JasaPengiriman.objects.filter(status='1'),
+    through_vendor = forms.ModelChoiceField(label="Vendor Through",queryset=JasaPengiriman.objects.filter(status='1'),
         widget=forms.Select(attrs={'class':'form-control chosen-select'}))
-    poin_tiga = forms.ModelChoiceField(label="Location",queryset=Negara.objects.filter(status='1'),
+    poin_tiga = forms.ModelChoiceField(label="Destinations",queryset=Negara.objects.filter(status='1'),
         widget=forms.Select(attrs={'class':'form-control chosen-select'}))
-    locations_vendor = forms.ModelChoiceField(label="Vendor Locations",queryset=JasaPengiriman.objects.filter(status='1'),
+    destinations_vendor = forms.ModelChoiceField(label="Vendor Destinations",queryset=JasaPengiriman.objects.filter(status='1'),
         widget=forms.Select(attrs={'class':'form-control chosen-select'}))
 
 
@@ -119,6 +122,9 @@ class DLForm(forms.Form):
 class SALEForm(forms.Form):
     tanggal = forms.DateField(label="Tanggal Invoice", widget=forms.DateInput(
         attrs={'class': 'form-control '}))
+
+    paramsale = forms.ModelChoiceField(queryset=ParameterDataBl.objects.filter(status_param='1'),
+        widget=forms.Select(attrs={'class':'form-control ','readonly':True}))
 
     re_export_shipment_one = forms.CharField(widget=forms.TextInput(attrs={'class':'input-small'}))
     re_export_shipment_one_pcs = forms.DecimalField(widget=forms.TextInput(attrs={'class':'input-small ttip_t',
