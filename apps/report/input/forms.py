@@ -120,9 +120,6 @@ class SALEForm(forms.Form):
     tanggal = forms.DateField(label="Tanggal Invoice", widget=forms.DateInput(
         attrs={'class': 'form-control '}))
 
-    paramsale = forms.ModelChoiceField(queryset=ParameterDataBl.objects.filter(status_param='1'),
-        widget=forms.Select(attrs={'class':'form-control ','readonly':True}))
-
     re_export_shipment_one = forms.CharField(widget=forms.TextInput(attrs={'class':'input-small'}))
     re_export_shipment_one_pcs = forms.DecimalField(widget=forms.TextInput(attrs={'class':'input-small ttip_t',
         'placeholder':'PCS'}))

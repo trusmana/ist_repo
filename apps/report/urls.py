@@ -9,9 +9,13 @@ from apps.report.input import views as inviews
 from apps.report.input import view_ajax as hinviews
 from apps.report.input import view_ajax_dua as hajaxtwo
 from apps.report.input import data_job as djob
+from apps.report.input.edit_inputan import views as v_edit
 
 urlpatterns = [
+    ######menu Edit Pekerjaan
+    path('e_jual/<int:id>',v_edit.edit_jual,name='e-jual'),
     ###################Data Job
+    path('d_job_done/',djob.datajob_done, name='d-job-done'),
     path('d_job/',djob.datajob, name='d-job'),
     ####Update Status Pekerjaan
     path('up_date/<int:pk>/',djob.update_job, name='up-job'),

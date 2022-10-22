@@ -4,11 +4,12 @@ from django.http import JsonResponse
 import datetime
 from django.template.loader import render_to_string
 from django.contrib import messages
+from django.conf import settings
 
 from apps.products.models import Job, ParameterData, ParameterDataBl, Sale, Transaksi
 from .forms import PengajuanForm,FSForm,SLForm,DLForm,SALEForm
 
-@login_required
+@login_required(login_url=settings.LOGIN_URL)
 def proses_input(request,param):
     user = request.user
     sekarang = datetime.date.today()
@@ -131,7 +132,7 @@ def proses_input(request,param):
     return render(request,'pengajuan/input/proses_input.html',{'param':param,'form':form,'pse':pse,
         'forms':forms,'formss':formss,'sl':slforms})
 
-@login_required
+@login_required(login_url=settings.LOGIN_URL)
 def input_pengajuan(request):
     sekarang = datetime.date.today()
     form = PengajuanForm(initial={'tanggal':sekarang})

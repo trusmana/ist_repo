@@ -42,8 +42,8 @@ MIDDLEWARE = [
 ]
 
 ROOT_URLCONF = 'app_tracking.urls'
-LOGIN_URL = '/core/login/'
-LOGOUT_URL = '/core/logout/'
+LOGIN_URL = '/login/'
+LOGOUT_URL = '/logout/'
 LOGIN_REDIRECT_URL = "home"  # Route defined in home/urls.py
 LOGOUT_REDIRECT_URL = "home"  # Route defined in home/urls.py
 TEMPLATE_DIR = os.path.join(CORE_DIR, "apps/templates")  # ROOT dir for templates
