@@ -10,8 +10,13 @@ from apps.report.input import view_ajax as hinviews
 from apps.report.input import view_ajax_dua as hajaxtwo
 from apps.report.input import data_job as djob
 from apps.report.input.edit_inputan import views as v_edit
+from apps.report.input import view_cetak as ctk_dok 
 
 urlpatterns = [
+    #####  Menu Cetak Invoice
+    path('ctk_job_buy/<int:id>',ctk_dok.invoice, name='ctk-job-buy'),##buy
+    path('ctk_job/<int:id>',ctk_dok.debit_note, name='ctk-job'),##Sale
+
     ######menu Edit Pekerjaan
     path('e_jual/<int:id>',v_edit.edit_jual,name='e-jual'),
     ###################Data Job

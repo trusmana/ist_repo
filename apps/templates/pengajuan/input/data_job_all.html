@@ -48,7 +48,9 @@
 <div class="row-fluid">
     <div class="span12">
         {% for data in  data.sale_set.all %}
-        <h3 class="heading"><a href="{% url 'e-jual' data.id %}">{{data.prod.vendor}}</a></h3>
+        <h3 class="heading"><a href="{% url 'e-jual' data.id %}">{{data.prod.vendor}}</a> | 
+            <a href="{% url 'ctk-job-buy' data.id %}">Invoice</a>
+        </h3>
         <table class="table table-bordered table-striped table_vam">
             <tr>
                 <td colspan='6'><div class="text-center act-info">{{data.trans.products}}</div></td>
