@@ -11,8 +11,12 @@ from apps.report.input import view_ajax_dua as hajaxtwo
 from apps.report.input import data_job as djob
 from apps.report.input.edit_inputan import views as v_edit
 from apps.report.input import view_cetak as ctk_dok 
+from apps.report.parameter.sale import views as s_views
 
 urlpatterns = [
+    ######data sale
+    re_path(r'^sale/(?:(?P<pk>\d+)/)?(?:(?P<action>\w+)/)?', s_views.list_sale.as_view(),name='d-sale'),
+
     #####  Menu Cetak Invoice
     path('ctk_job_buy/<int:id>',ctk_dok.invoice, name='ctk-job-buy'),##buy
     path('ctk_job/<int:id>',ctk_dok.debit_note, name='ctk-job'),##Sale
