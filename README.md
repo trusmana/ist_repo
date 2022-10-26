@@ -9,3 +9,12 @@ Indah Senergi Trading
 4. Cetak Invoice Pekerjaan , Cek
 5. Report Excel Untuk data pekerjaan dan penjualan
 
+26-0ktober 2020 :
+- - -
+1. Duty text  sama text handeling Charge di pisah di FS
+2. Upload invoce hanya di Timor leste, sigapur dan dps manual, di user IST
+3. Tambah 3 user dan password untuk pusat ist 2 dan user Timor Leste
+4. Parameter Inputan Bisa berubah sesuai Keingin user
+5. Menu Invoice di Pekerjaan Di Hapus
+6. Khusus Untuk Silid invoce bisa di tambah
+7. 

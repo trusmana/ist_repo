@@ -355,7 +355,7 @@ class Transaksi(models.Model):
         skr = datetime.date.today()
         thn = int(skr.strftime("%Y"))
         bl = int(skr.strftime("%m"))
-        return "%s%s" %(int(skr.strftime("%Y%m")),int(self.counter_nope()))
+        return "%s" %(int(self.counter_nope()))
 
 class Sale(models.Model):
     trans = models.ForeignKey(Transaksi,on_delete=models.CASCADE,null=True)
