@@ -17,4 +17,4 @@ Indah Senergi Trading
 4. Parameter Inputan Bisa berubah sesuai Keingin user
 5. Menu Invoice di Pekerjaan Di Hapus
 6. Khusus Untuk Silid invoce bisa di tambah
-7. 
+7. Report tagihan pencairan dan operasional ist
