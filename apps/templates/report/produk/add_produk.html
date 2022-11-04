@@ -5,7 +5,7 @@
 
 <!-- Specific Page CSS goes HERE  -->
 {% block stylesheets %}{% endblock stylesheets %}
-
+{% include 'alat/job.html' %}
 {% block content %}
 <div id="jCrumbs" class="breadCrumb module">
     <ul>
@@ -28,31 +28,12 @@
                 <div class="formSep">
                     <div class="col-md-6 mb-3">
                         <div>
-                            <label for="first_name">{{ form.id_prod.label}}</label>
-                            {{form.id_prod}}
-                        </div>
-                    </div>
-                    <div class="col-md-6 mb-3">
-                        <div>
-                            <label for="last_name">{{form.nama_produk.label}}</label>
-                            {{form.nama_produk}}
+                            <label for="first_name">{{ form.label}}</label>
+                            {{form}}
                         </div>
                     </div>
                 </div>
-                <div class="formSep">
-                    <div class="col-md-6 mb-3">
-                        <div class="form-group">
-                            <label for="email">Email</label>
-                            {{form.tgl_aktif}}
-                        </div>
-                    </div>
-                    <div class="col-md-6 mb-3">
-                        <div class="form-group">
-                            <label for="phone">Phone</label>
-                            {{form.status}}
-                        </div>
-                    </div>
-                </div>
+      
                 
                 <div class="formSep">
                     <button type="submit" class="btn btn-primary">Save All</button>

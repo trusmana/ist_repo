@@ -11,6 +11,7 @@ from django.urls import reverse
 from apps.utils import set_pagination
 from apps.products.models import Produk
 from apps.report.parameter.produk.forms import ProdukForm
+import datetime
 
 def is_ajax(request):
     return request.META.get('HTTP_X_REQUESTED_WITH') == 'XMLHttpRequest'
@@ -124,6 +125,7 @@ class list_product(View):
         if not is_urlencode:
             messages.warning(request, 'Error Occurred. Please try again.')
         return False, 'Error Occurred. Please try again.'
+
     
 #@login_required(login_url=settings.LOGIN_URL)
 #@user_passes_test(lambda u: u.groups.filter(name__in=('Administrator','Admin_IT')))
@@ -138,6 +140,6 @@ def addproduk(request):
             messages.add_message(request, messages.INFO,'Data Produk Berhasil Di Input', 'alert-success')
             return redirect('d-produk')
     else:
-        form = ProdukForm()
+        form = ProdukForm(initial={'tgl_aktif':datetime.date.today()})
     return render(request,'report/produk/add_produk.html',{'form':form})
 

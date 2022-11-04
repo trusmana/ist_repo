@@ -8,6 +8,7 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path("", include("apps.core.urls")), # Auth routes - login / register
     path("", include("apps.home.urls")),
+    path("", include("apps.keuangan.urls")),
     path("report/", include("apps.report.urls")),
     re_path(r'^transactions/(?:(?P<pk>\d+)/)?(?:(?P<action>\w+)/)?', vreport.list_matauang.as_view(),
             name='transactions'),

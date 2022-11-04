@@ -7,7 +7,7 @@ class ProdukForm(forms.ModelForm):
     id_prod = forms.CharField(label="ID Produk", widget=forms.TextInput(attrs={'class': 'form-control transaction'}))
     nama_produk = forms.CharField(label="Nama Produk", widget=forms.TextInput(attrs={'class': 'form-control transaction'}))
     tgl_aktif = forms.DateField(label="Tanggal Aktif", widget=forms.DateInput(
-        attrs={'class': 'form-control datepicker_input transaction', 'placeholder': 'yyyy-mm-dd'}))
+        attrs={'class': 'form-control datepicker_input transaction', 'placeholder': 'DD-mm-YYYY','readonly':True}))
     status = forms.ChoiceField(widget=forms.Select(attrs={'class':'form-control transaction'}), choices=STATUS)
     origin_vendor = forms.ModelChoiceField(queryset=JasaPengiriman.objects.all().order_by('id'),
         widget=forms.Select(attrs={'class':'form-control transaction'}))
