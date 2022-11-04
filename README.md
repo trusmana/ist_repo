@@ -20,3 +20,14 @@ Indah Senergi Trading
 7. Report tagihan pencairan dan operasional ist
 8. compresing data upload di dili
 9. Input leger di user keuangan, tambah user keuangan
+
+4 November 2020
+- - -
+Report dari rasky indah sinergi
+1. Di bagian Modules data sale untuk melihat satu pekerjaan yang telah di selesaikan dan ingin mengedit web tidak bisa di jalankan atau di buka (Kendala wifi tidak stabil)
+
+2. Untuk pembuatan produk ada satu pekerjaan melalui dhl yang di butuhkan hanya origin vendor dan destination vendor, through vendor harus diisi jadi tidak dapat melanjutkan pekerjaan.
+
+3. Di bagian List vendor saya membuat nama vendor yang sama kemudian mau menghapus tetapi tidak bisa.
+
+4. Saya membuat Vendor baru Wartsila indonesia tetapi tidak muncul waktu pembuatan job dan di list vendor tidak ada.
