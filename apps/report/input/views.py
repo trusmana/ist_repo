@@ -132,11 +132,6 @@ def proses_input(request,param):
     return render(request,'pengajuan/input/proses_input.html',{'param':param,'form':form,'pse':pse,
         'forms':forms,'formss':formss,'sl':slforms})
 
-@login_required(login_url=settings.LOGIN_URL)
-def input_pengajuan(request):
-    sekarang = datetime.date.today()
-    form = PengajuanForm(initial={'tanggal':sekarang})
-    return render(request, 'pengajuan/pengajuan.html',{'forms':form})
 
 def is_ajax(request):
     return request.META.get('HTTP_X_REQUESTED_WITH') == 'XMLHttpRequest'

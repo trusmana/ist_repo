@@ -10,18 +10,18 @@ class ProdukForm(forms.ModelForm):
         attrs={'class': 'form-control datepicker_input transaction', 'placeholder': 'DD-mm-YYYY','readonly':True}))
     status = forms.ChoiceField(widget=forms.Select(attrs={'class':'form-control transaction'}), choices=STATUS)
     origin_vendor = forms.ModelChoiceField(queryset=JasaPengiriman.objects.all().order_by('id'),
-        widget=forms.Select(attrs={'class':'form-control transaction'}))
+        widget=forms.Select(attrs={'class':'form-control transaction'}),required=False)
     point_satu = forms.ModelChoiceField(queryset=Negara.objects.all().order_by('id'),
-        widget=forms.Select(attrs={'class':'form-control transaction'}))
+        widget=forms.Select(attrs={'class':'form-control transaction'}),required=False)
     kurs_origin = forms.ModelChoiceField(queryset=Kurs.objects.all().order_by('id'),
-        widget=forms.Select(attrs={'class':'form-control transaction'}))
+        widget=forms.Select(attrs={'class':'form-control transaction'}),required=False)
 
     through_vendor = forms.ModelChoiceField(queryset=JasaPengiriman.objects.all().order_by('id'),
-        widget=forms.Select(attrs={'class':'form-control transaction'}))
+        widget=forms.Select(attrs={'class':'form-control transaction'}),required=False)
     kurs_through = forms.ModelChoiceField(queryset=Kurs.objects.all().order_by('id'),
-        widget=forms.Select(attrs={'class':'form-control transaction'}))
+        widget=forms.Select(attrs={'class':'form-control transaction'}),required=False)
     point_dua = forms.ModelChoiceField(queryset=Negara.objects.all().order_by('id'),
-        widget=forms.Select(attrs={'class':'form-control transaction'}))
+        widget=forms.Select(attrs={'class':'form-control transaction'}),required=False)
 
     destinations_vendor = forms.ModelChoiceField(queryset=JasaPengiriman.objects.all().order_by('id'),
         widget=forms.Select(attrs={'class':'form-control transaction'}))
@@ -32,5 +32,5 @@ class ProdukForm(forms.ModelForm):
 
     class Meta:
         model = Produk
-        fields =['id','id_prod','nama_produk','tgl_aktif','status','origin_vendor','point_satu',
+        fields =['jumlah_vendor','id_prod','nama_produk','tgl_aktif','status','origin_vendor','point_satu',
             'kurs_origin','through_vendor','point_dua','kurs_through','destinations_vendor','kurs_destinations','point_tiga']

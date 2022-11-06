@@ -31,4 +31,4 @@ Indah Senergi Trading
 3. Di bagian List vendor saya membuat nama vendor yang sama kemudian mau menghapus tetapi tidak bisa.
   - Nomor 3 selesai tinggal di uji 4 nov 2020
 4. Saya membuat Vendor baru Wartsila indonesia tetapi tidak muncul waktu pembuatan job dan di list vendor tidak ada.
-  - Nomor 3 selesai tinggal di uji 4 nov 2020 
+  - Nomor 4 selesai tinggal di uji 4 nov 2020 

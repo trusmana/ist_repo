@@ -10,6 +10,8 @@ STATUS =[('0','NonAktif'),('1','Aktif')]
 
 STATUS_UPDATE =[('',''),('1','Done')]
 
+JUMLAH_VENDOR=[('1','SATU'),('2','DUA'),('3','TIGA')]
+
 JENISPRODUK =[('1','Airfreight'),('2','Seafreight')]
 
 class Commodity(models.Model):
@@ -90,15 +92,22 @@ class JasaPengiriman(models.Model):
 class Produk(models.Model):
     id_prod = models.IntegerField(null=True)
     nama_produk = models.CharField(max_length=100,null=True)
+    jumlah_vendor = models.CharField(choices = JUMLAH_VENDOR,max_length=20,null= True)
     jenis_produk = models.CharField(choices = JENISPRODUK,max_length=20,null= True,blank= True)
     ####origin
-    point_satu = models.ForeignKey(Negara,on_delete=models.CASCADE,null=True, related_name='point_satu' )
-    origin_vendor = models.ForeignKey(JasaPengiriman,on_delete=models.CASCADE,null=True,related_name='origin_v1')
-    kurs_origin = models.ForeignKey(Kurs,on_delete=models.CASCADE,null=True,related_name='origin_kurs')
+    point_satu = models.ForeignKey(Negara,on_delete=models.CASCADE,null=True, related_name='point_satu',
+        blank=True)
+    origin_vendor = models.ForeignKey(JasaPengiriman,on_delete=models.CASCADE,null=True,related_name='origin_v1',
+        blank=True)
+    kurs_origin = models.ForeignKey(Kurs,on_delete=models.CASCADE,null=True,related_name='origin_kurs',
+        blank=True)
     ####Through
-    point_dua = models.ForeignKey(Negara,on_delete=models.CASCADE,null=True,related_name='point_dua' )
-    through_vendor = models.ForeignKey(JasaPengiriman,on_delete=models.CASCADE,null=True,related_name='Through_v2')
-    kurs_through = models.ForeignKey(Kurs,on_delete=models.CASCADE,null=True,related_name='origin_trough')
+    point_dua = models.ForeignKey(Negara,on_delete=models.CASCADE,null=True,related_name='point_dua',
+        blank=True)
+    through_vendor = models.ForeignKey(JasaPengiriman,on_delete=models.CASCADE,null=True,related_name='Through_v2',
+        blank=True)
+    kurs_through = models.ForeignKey(Kurs,on_delete=models.CASCADE,null=True,related_name='origin_trough',
+        blank=True)
     ####Destinations
     point_tiga  = models.ForeignKey(Negara,on_delete=models.CASCADE,null=True,blank=True,related_name='point_tiga' )
     destinations_vendor = models.ForeignKey(JasaPengiriman,on_delete=models.CASCADE,null=True,related_name='destinatioin_v3')
@@ -115,7 +124,12 @@ class Produk(models.Model):
         verbose_name_plural =verbose_name
     
     def kode_produk(self):
-        return '%s %s %s Via %s' %(self.nama_produk, self.point_satu,self.point_dua,self.point_tiga)
+        if self.jumlah_vendor == '1':
+            return '%s %s' %(self.nama_produk,self.point_tiga)           
+        elif self.jumlah_vendor == '2':
+            return '%s %s %s' %(self.nama_produk, self.point_satu,self.point_tiga)
+        else:
+            return '%s %s %s Via %s' %(self.nama_produk, self.point_satu,self.point_tiga,self.point_dua)
 
     def __str__(self):
         return '%s-%s-%s' %(self.id,self.id_prod, self.kode_produk())

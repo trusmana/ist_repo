@@ -1,7 +1,60 @@
 from django import forms
 
-from apps.products.models import JENISPRODUK, STATUS, STATUS_UPDATE, Commodity, \
-    JasaPengiriman, Negara, ParameterData, ParameterDataBl, Produk
+from apps.products.models import JENISPRODUK,STATUS_UPDATE, Commodity, \
+    JasaPengiriman, Negara, ParameterData, ParameterDataBl, Produk,JUMLAH_VENDOR
+
+class JvendorForm(forms.Form):
+    jvendor = forms.ChoiceField(choices=JUMLAH_VENDOR)
+    
+    
+class PengajuanForm(forms.Form):
+    tanggal = forms.DateField(label="Tanggal", widget=forms.DateInput(
+        attrs={'class': 'form-control ','readonly':True}))
+    jenis_produk = forms.ChoiceField(label='Jenis Pengiriman',widget = forms.Select(attrs={'class':'form-control chosen-select'}),
+        choices = JENISPRODUK)    
+    products = forms.ModelChoiceField(queryset=Produk.objects.filter(status='1',jumlah_vendor =1),
+        widget=forms.Select(attrs={'class':'form-control chosen-select'}))
+    poin_satu = forms.ModelChoiceField(label="Origin",queryset=Negara.objects.filter(status='1'),
+        widget=forms.Select(attrs={'class':'form-control chosen-select'}))
+    origin_vendor = forms.ModelChoiceField(label="Vendor Origin",queryset=JasaPengiriman.objects.filter(status='1'),
+        widget=forms.Select(attrs={'class':'form-control chosen-select'}))
+    poin_dua = forms.ModelChoiceField(label="Through",queryset=Negara.objects.filter(status='1'),
+        widget=forms.Select(attrs={'class':'form-control chosen-select'}))
+    through_vendor = forms.ModelChoiceField(label="Vendor Through",queryset=JasaPengiriman.objects.filter(status='1'),
+        widget=forms.Select(attrs={'class':'form-control chosen-select'}))
+    poin_tiga = forms.ModelChoiceField(label="Destinations",queryset=Negara.objects.filter(status='1'),
+        widget=forms.Select(attrs={'class':'form-control chosen-select'}))
+    destinations_vendor = forms.ModelChoiceField(label="Vendor Destinations",queryset=JasaPengiriman.objects.filter(status='1'),
+        widget=forms.Select(attrs={'class':'form-control chosen-select'}))
+
+class PengajuanSatuForm(forms.Form):
+    tanggal = forms.DateField(label="Tanggal", widget=forms.DateInput(
+        attrs={'class': 'form-control ','readonly':True}))
+    jenis_produk = forms.ChoiceField(label='Jenis Pengiriman',widget = forms.Select(attrs={'class':'form-control chosen-select'}),
+        choices = JENISPRODUK)    
+    products = forms.ModelChoiceField(queryset=Produk.objects.filter(status=1,jumlah_vendor =1),
+        widget=forms.Select(attrs={'class':'form-control chosen-select'}))
+    poin_tiga = forms.ModelChoiceField(label="Destinations",queryset=Negara.objects.filter(status='1'),
+        widget=forms.Select(attrs={'class':'form-control chosen-select'}))
+    destinations_vendor = forms.ModelChoiceField(label="Vendor Destinations",queryset=JasaPengiriman.objects.filter(status='1'),
+        widget=forms.Select(attrs={'class':'form-control chosen-select'}))
+
+class PengajuanDuaForm(forms.Form):
+    tanggal = forms.DateField(label="Tanggal", widget=forms.DateInput(
+        attrs={'class': 'form-control ','readonly':True}))
+    jenis_produk = forms.ChoiceField(label='Jenis Pengiriman',widget = forms.Select(attrs={'class':'form-control chosen-select'}),
+        choices = JENISPRODUK)    
+    products = forms.ModelChoiceField(queryset=Produk.objects.filter(status='1',jumlah_vendor =2),
+        widget=forms.Select(attrs={'class':'form-control chosen-select'}))
+    poin_satu = forms.ModelChoiceField(label="Origin",queryset=Negara.objects.filter(status='1'),
+        widget=forms.Select(attrs={'class':'form-control chosen-select'}))
+    origin_vendor = forms.ModelChoiceField(label="Vendor Origin",queryset=JasaPengiriman.objects.filter(status='1'),
+        widget=forms.Select(attrs={'class':'form-control chosen-select'}))
+    poin_tiga = forms.ModelChoiceField(label="Destinations",queryset=Negara.objects.filter(status='1'),
+        widget=forms.Select(attrs={'class':'form-control chosen-select'}))
+    destinations_vendor = forms.ModelChoiceField(label="Vendor Destinations",queryset=JasaPengiriman.objects.filter(status='1'),
+        widget=forms.Select(attrs={'class':'form-control chosen-select'}))
+
 
 class UpdateForm(forms.Form):
     tanggal= forms.DateField(label="Tanggal", widget=forms.DateInput(

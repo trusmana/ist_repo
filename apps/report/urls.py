@@ -12,6 +12,7 @@ from apps.report.input import data_job as djob
 from apps.report.input.edit_inputan import views as v_edit
 from apps.report.input import view_cetak as ctk_dok 
 from apps.report.parameter.sale import views as s_views
+from apps.report.input import view_filter as fviews
 
 urlpatterns = [
     ######data sale
@@ -56,9 +57,15 @@ urlpatterns = [
     path('list_param/<int:id>/',prviews.detailparam, name='dtl-param'),
 
     ###################Input Pengajuan
-    path('in_pengajuan/',inviews.input_pengajuan, name='in-pengajuan'),
+    #### Filter Data Pengajuan Berdasarkan Vendor
+    path('f_pengajuan/',fviews.filter_pengajuan, name='f-pengajuan'),
+    path('in_pengajuan/',fviews.input_pengajuan, name='in-pengajuan'),
+    path('in_pengajuan_satu/<int:jv>/',fviews.input_pengajuan_satu, name='in-pengajuan-satu'),
+    path('in_pengajuan_dua/',fviews.input_pengajuan_dua, name='in-pengajuan-dua'),
+    #### Filter Data Pengajuan 
     path('show_pa/',inviews.showparam,name='show-param'),
     path('proses_input/<int:param>/',inviews.proses_input,name='proses-input'),
+    ###################Akhir Input Pengajuan
 
     ######Fungsi Ajax Hitungan Pembelian
     path('h_airfreight/',hinviews.airfreight, name='h-airfreight'),
