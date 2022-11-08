@@ -8,6 +8,7 @@ from django.contrib.auth.decorators import login_required,user_passes_test
 from django.http import JsonResponse,HttpResponse,QueryDict
 from django.template.loader import render_to_string
 from django.urls import reverse
+from django.conf import settings
 
 from apps.utils import set_pagination
 from apps.products.models import ParameterData
@@ -125,9 +126,8 @@ class list_param(View):
             messages.warning(request, 'Error Occurred. Please try again.')
         return False, 'Error Occurred. Please try again.'
     
-#@login_required(login_url=settings.LOGIN_URL)
-#@user_passes_test(lambda u: u.groups.filter(name__in=('Administrator','Admin_IT')))
-
+@login_required(login_url=settings.LOGIN_URL)
+@user_passes_test(lambda u: u.groups.filter(name__in=('Administrator','Admin_IT','OPERASIONAL')))
 def addparam(request):
     user = request.user
     if request.method == 'POST':

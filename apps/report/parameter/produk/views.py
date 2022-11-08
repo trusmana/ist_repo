@@ -7,6 +7,7 @@ from django.contrib.auth.decorators import login_required,user_passes_test
 from django.http import JsonResponse,HttpResponse,QueryDict
 from django.template.loader import render_to_string
 from django.urls import reverse
+from django.conf import settings
 
 from apps.utils import set_pagination
 from apps.products.models import Produk
@@ -127,8 +128,8 @@ class list_product(View):
         return False, 'Error Occurred. Please try again.'
 
     
-#@login_required(login_url=settings.LOGIN_URL)
-#@user_passes_test(lambda u: u.groups.filter(name__in=('Administrator','Admin_IT')))
+@login_required(login_url=settings.LOGIN_URL)
+@user_passes_test(lambda u: u.groups.filter(name__in=('Administrator','Admin_IT','OPERASIONAL')))
 def addproduk(request):
     user = request.user
     if request.method == 'POST':
@@ -137,7 +138,7 @@ def addproduk(request):
             prod = form.save(commit=False)
             prod.cu = user
             prod.save()
-            messages.add_message(request, messages.INFO,'Data Produk Berhasil Di Input', 'alert-success')
+            messages.warning(request,'Data Produk Berhasil Di Input', 'alert-success')
             return redirect('d-produk')
     else:
         form = ProdukForm(initial={'tgl_aktif':datetime.date.today()})

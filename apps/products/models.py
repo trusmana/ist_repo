@@ -63,6 +63,7 @@ class Negara(models.Model):
     nama_negara = models.CharField(max_length=100,null=True)
     singkatan = models.CharField(max_length=100,null=True)
     status = models.CharField(max_length=20,choices=STATUS,null=True,blank=True,default=0)
+    cu = models.ForeignKey(user, related_name='cu_ng', editable=False, null=True, blank=True,on_delete=models.CASCADE)
     cdate = models.DateTimeField(auto_now_add=True)
     mdate = models.DateTimeField(auto_now=True)
 

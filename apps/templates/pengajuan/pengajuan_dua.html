@@ -1,5 +1,5 @@
 {% extends "layouts/base.html" %}
-{% block title %} Input{% endblock title %}
+{% block title %} Pengajuan Dua{% endblock title %}
 {% block extrahead %}
 {% endblock extrahead %}
 {% load static %}
@@ -77,10 +77,10 @@ function cek_parameter()
         var through_vendor = $('#id_through_vendor').val();        
         var poin_tiga = $('#id_poin_tiga').val();
         var destinations_vendor =$('#id_destinations_vendor').val()
-        var dataString = 'produk='+produk+'&poin_satu='+poin_satu+'&poin_dua='+poin_dua+'&poin_tiga='+poin_tiga+
-            '&origin_vendor='+origin_vendor+'&through_vendor='+through_vendor+'&destinations_vendor='+destinations_vendor+'&jenis_produk='+jenis_produk ;
+        var dataString = 'produk='+produk+'&poin_satu='+poin_satu+'&poin_tiga='+poin_tiga+
+            '&origin_vendor='+origin_vendor+'&destinations_vendor='+destinations_vendor+'&jenis_produk='+jenis_produk ;
         $.ajax({
-            url: "{% url 'show-param' %}",
+            url: "{% url 'show-param-dua' %}",
             data: dataString,
             dataType: "JSON",
             error: function(data){

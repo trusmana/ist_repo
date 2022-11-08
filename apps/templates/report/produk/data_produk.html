@@ -34,9 +34,10 @@
                     <th>#</th>
                     <th>Kode Produk</th>
                     <th>Nama Produk</th>
-                    <th>Vendor Origin</th>
-                    <th>Negara Origin</th>
-                    <th>Kurs Origin</th>
+                    <th>Jumlah Vendor</th>
+                    <th>Origin</th>
+                    <th>Through</th>
+                    <th>Destination</th>
                     <th>Status</th>
                     <th>Action</th>
                 </tr>
@@ -50,9 +51,10 @@
                             <td><span class="font-weight-bold">{{ transaction.id }}</span></td>
                             <td><span class="font-weight-normal">{{ transaction.id_prod }}</span></td>
                             <td><span class="font-weight-normal">{{ transaction.kode_produk }}</span></td>
-                            <td><span class="font-weight-normal">{{ transaction.origin_vendor }}</span></td>
-                            <td><span class="font-weight-normal">{{ transaction.point_satu }}</span></td>
-                            <td><span class="font-weight-normal">{{ transaction.kurs_origin }}</span></td>
+                            <td><span class="font-weight-normal">{{ transaction.jumlah_vendor }}</span></td>
+                            <td><span class="font-weight-normal">{{ transaction.point_satu|default_if_none:'-' }}</span></td>
+                            <td><span class="font-weight-normal">{{ transaction.point_dua|default_if_none:'-' }}</span></td>
+                            <td><span class="font-weight-normal">{{ transaction.point_tiga }}</span></td>
                             <td>
                                 <span class="font-weight-bold {{ transaction.status.class }}">{{ transaction.get_status_display }}</span>
                             </td>

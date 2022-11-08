@@ -10,18 +10,18 @@ from apps.products.models import Job, ParameterData, ParameterDataBl, Sale, Tran
 from .forms import PengajuanForm,FSForm,SLForm,DLForm,SALEForm
 
 @login_required(login_url=settings.LOGIN_URL)
-def proses_input(request,param):
+def proses_input_dua(request,param):
     user = request.user
     sekarang = datetime.date.today()
     param = ParameterData.objects.get(id = param)
     pse = ParameterDataBl.objects.get(products = param.products) 
       
     if request.method == "POST":
-        form = FSForm(request.POST)
-        forms = SLForm(request.POST)
-        formss = DLForm(request.POST)
+        form = FSForm(request.POST)###satu
+        #forms = SLForm(request.POST)###dua
+        formss = DLForm(request.POST)###Tiga
         slforms = SALEForm(request.POST)
-        if form.is_valid() and forms.is_valid() and formss.is_valid() and slforms.is_valid():
+        if form.is_valid() and formss.is_valid() and slforms.is_valid():
             ##FSForm
             tgl_fs = form.cleaned_data['tgl_fs']
             no_invoice_fs = form.cleaned_data['no_invoice_fs']
@@ -36,21 +36,7 @@ def proses_input(request,param):
             price_insurance_security_surcharge = form.cleaned_data['price_insurance_security_surcharge']
             price_fuel_surcharge = form.cleaned_data['price_fuel_surcharge']
             price_import_handling_charges = form.cleaned_data['price_import_handling_charges']
-            price_gst_zero_rated = form.cleaned_data['price_gst_zero_rated']
-
-            
-            ###SLFORM
-            tgl_sl = forms.cleaned_data['tgl_sl']
-            no_invoice_sl = forms.cleaned_data['no_invoice_sl']
-            #qt_sl = forms.cleaned_data['qt_sl']
-            price_storage_at_cost = forms.cleaned_data['price_storage_at_cost']
-            price_pjkp2u_sin_dps_at_cost = forms.cleaned_data['price_pjkp2u_sin_dps_at_cost']
-            price_storage_mcl_e_0389249_at_cost = forms.cleaned_data['price_storage_mcl_e_0389249_at_cost']
-            price_pjkp2u_dps_dil_at_cost = forms.cleaned_data['price_pjkp2u_dps_dil_at_cost']
-            price_airfreight_charges = forms.cleaned_data['price_airfreight_charges']
-            price_overweight_charges_surcharge = forms.cleaned_data['price_overweight_charges_surcharge']
-            price_awb_fee = forms.cleaned_data['price_awb_fee']
-            price_handling_charges_sl = forms.cleaned_data['price_handling_charges_sl']
+            price_gst_zero_rated = form.cleaned_data['price_gst_zero_rated']           
 
             #DLFORM
             tgl_dl = formss.cleaned_data['tgl_dl']
@@ -100,13 +86,7 @@ def proses_input(request,param):
                 insurance_security_surcharge = price_insurance_security_surcharge,fuel_surcharge = price_fuel_surcharge,
                 import_handling_charges = price_import_handling_charges,gst_zero_rated = price_gst_zero_rated,)
             job.save()
-            job1 = Job(transaksi = tran,tanggal_invoice = tgl_sl,no_invoice = no_invoice_sl,nilai_kurs = tran.products.kurs_through,
-                vendor = tran.products.through_vendor,
-                storage_at_cost = price_storage_at_cost,pjkp2u_sin_dps_at_cost = price_pjkp2u_sin_dps_at_cost,
-                storage_mcl_e_0389249_at_cost = price_storage_mcl_e_0389249_at_cost,pjkp2u_dps_dil_at_cost = price_pjkp2u_dps_dil_at_cost,
-                airfreight = price_airfreight_charges,overweight_charges_surcharge = price_overweight_charges_surcharge,
-                awb_fee = price_awb_fee,handling_charges = price_handling_charges_sl)
-            job1.save()
+            
             job2 = Job(transaksi =tran,tanggal_invoice = tgl_dl,no_invoice = no_invoice_dl,nilai_kurs = tran.products.kurs_destinations,
                 vendor = tran.products.destinations_vendor,
                 ground_handling = price_ground_handling_dl,forklift_for_heavy_cargo = price_forklift_for_heavy_cargo,
@@ -125,42 +105,42 @@ def proses_input(request,param):
             return redirect('d-job')            
     else:
         form = FSForm(initial={'tgl_fs':datetime.date.today(),'products':param.products.id,'param':param.id})
-        forms = SLForm(initial={'tgl_sl':datetime.date.today()})
+        #forms = SLForm(initial={'tgl_sl':datetime.date.today()})
         formss = DLForm(initial={'tgl_dl':datetime.date.today()})
         slforms = SALEForm(initial={'tanggal':datetime.date.today(),'paramsale':pse.id})
     
-    return render(request,'pengajuan/input/proses_input.html',{'param':param,'form':form,'pse':pse,
-        'forms':forms,'formss':formss,'sl':slforms})
+    return render(request,'pengajuan/input/proses_input_dua.html',{'param':param,'form':form,'pse':pse,
+        'formss':formss,'sl':slforms})
 
 
 def is_ajax(request):
     return request.META.get('HTTP_X_REQUESTED_WITH') == 'XMLHttpRequest'
 
-def save_simulasi_form(request, h_ajax, template_name):
+def save_simulasi_form_dua(request, h_ajax, template_name):
     data = dict()
     context = {'h_ajax': h_ajax}
     data['django_form'] = render_to_string(template_name, context, request=request)
     return JsonResponse(data)
 
-def showparam(request):
+def showparamdua(request):
     jenis_produk = request.GET.get('jenis_produk',None)
     produk = request.GET.get('produk',None)
     tanggal = request.GET.get('tanggal',None)
     poin_satu = request.GET.get('poin_satu',None)
-    poin_dua = request.GET.get('poin_dua',None)
+    
     poin_tiga = request.GET.get('poin_tiga',None)
     origin_vendor = request.GET.get('origin_vendor',None)
-    through_vendor = request.GET.get('through_vendor',None)
+    
     destinations_vendor = request.GET.get('destinations_vendor',None)    
     
-    param = ParameterData.objects.get(products=produk,products__point_satu=poin_satu,products__point_dua=poin_dua,
-        products__point_tiga=poin_tiga,products__origin_vendor=origin_vendor,products__through_vendor=through_vendor,
-        products__destinations_vendor=destinations_vendor,products__status=1,products__jenis_produk=jenis_produk)
+    param = ParameterData.objects.get(products=produk,products__point_satu=poin_satu,products__point_tiga=poin_tiga,
+        products__origin_vendor=origin_vendor,products__destinations_vendor=destinations_vendor,
+        products__status=1,products__jenis_produk=jenis_produk)
+    
     prd = param.products.kode_produk
     org_ven = param.products.origin_vendor
     org = param.products.point_satu
-    h_ajax ={'tanggal':tanggal,'produk':prd,'param':param.id,'org':org,'org_ven':org_ven,'ds_ven':param.products.through_vendor,
-        'ds': param.products.point_dua,'lt_ven':param.products.destinations_vendor,'lt':param.products.point_tiga,
-        'js':param.products.jenis_produk,'jmlv':param.products.jumlah_vendor}
-    return save_simulasi_form(request, h_ajax,'pengajuan/addpengajuan.html')
+    h_ajax ={'tanggal':tanggal,'produk':prd,'param':param.id,'org':org,'org_ven':org_ven,'jmlv':param.products.jumlah_vendor,
+        'lt_ven':param.products.destinations_vendor,'lt':param.products.point_tiga,'js':param.products.jenis_produk}
+    return save_simulasi_form_dua(request, h_ajax,'pengajuan/addpengajuan_dua.html')
     

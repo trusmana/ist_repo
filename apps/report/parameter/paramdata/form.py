@@ -9,7 +9,7 @@ class ParamForm(forms.Form):
     status = forms.ChoiceField(widget=forms.Select(attrs={'class':'form-control transaction'}), choices=STATUS)
 
 
-class ParamAllForm(forms.ModelForm):
+class ParamAllForm(forms.Form):
     products = forms.ModelChoiceField(queryset=Produk.objects.filter(status='1'),
         widget=forms.Select(attrs={'class':'form-control transaction'}))
 
@@ -25,14 +25,48 @@ class ParamAllForm(forms.ModelForm):
         'alt':'integer'}),required =False)
     price_airfreight = forms.IntegerField(widget=forms.TextInput(attrs={'class':'form-control transaction',
         'alt':'integer'}),required =False)
+    
+    max_handling_charges = forms.IntegerField(widget=forms.TextInput(attrs={'class':'form-control transaction',
+        'alt':'integer'}),required =False)
+    min_handling_charges = forms.IntegerField(widget=forms.TextInput(attrs={'class':'form-control transaction',
+        'alt':'integer'}),required =False)
+    price_handling_charges = forms.IntegerField(widget=forms.TextInput(attrs={'class':'form-control transaction',
+        'alt':'integer'}),required =False)
+    
+    ##### Biaya Asuransi
+    max_insurance_security_surcharge = forms.IntegerField(widget=forms.TextInput(attrs={'class':'form-control transaction',
+        'alt':'integer'}),required =False)
+    min_insurance_security_surcharge = forms.IntegerField(widget=forms.TextInput(attrs={'class':'form-control transaction',
+        'alt':'integer'}),required =False)
+    price_insurance_security_surcharge = forms.IntegerField(widget=forms.TextInput(attrs={'class':'form-control transaction',
+        'alt':'integer'}),required =False)
+    ##biaya tambahan bahan bakar
+    max_fuel_surcharge = forms.IntegerField(widget=forms.TextInput(attrs={'class':'form-control transaction',
+        'alt':'integer'}),required =False)
+    min_fuel_surcharge = forms.IntegerField(widget=forms.TextInput(attrs={'class':'form-control transaction',
+        'alt':'integer'}),required =False)
+    price_fuel_surcharge = forms.IntegerField(widget=forms.TextInput(attrs={'class':'form-control transaction',
+        'alt':'integer'}),required =False)
+
+    ###Biaya Penanganan Impor
+    max_import_handling_charges = forms.IntegerField(widget=forms.TextInput(attrs={'class':'form-control transaction',
+        'alt':'integer'}),required =False)
+    max_import_handling_charges = forms.IntegerField(widget=forms.TextInput(attrs={'class':'form-control transaction',
+        'alt':'integer'}),required =False)
+    price_import_handling_charges = forms.IntegerField(widget=forms.TextInput(attrs={'class':'form-control transaction',
+        'alt':'integer'}),required =False)
+
+    max_gst_zero_rated = forms.IntegerField(widget=forms.TextInput(attrs={'class':'form-control transaction',
+        'alt':'integer'}),required =False)
+    min_gst_zero_rated = forms.IntegerField(widget=forms.TextInput(attrs={'class':'form-control transaction',
+        'alt':'integer'}),required =False)
+    price_gst_zero_rated = forms.IntegerField(widget=forms.TextInput(attrs={'class':'form-control transaction',
+        'alt':'integer'}),required =False)
 
     '''
     
     ########## Khusus Untuk Freight Solutions
     ####Pengiriman Udara
-    max_airfreight = forms.FloatField(null=True,blank=True)
-    min_airfreight = forms.FloatField(null=True,blank=True)
-    price_airfreight = forms.DecimalField(max_digits=12, decimal_places=2,null=True,blank=True,default=0)
     
     ###### Biaya pengurusan / oprasional
     max_handling_charges = forms.FloatField(null=True,blank=True)
@@ -171,9 +205,10 @@ class ParamAllForm(forms.ModelForm):
     min_tax_handling_charge = forms.FloatField(null=True,blank=True)
     max_tax_handling_charge = forms.FloatField(null=True,blank=True)
     price_tax_handling_charge = forms.DecimalField(max_digits=12, decimal_places=2,null=True,blank=True,default=0)
-    '''
+    
 
     class Meta:
         model = ParameterData
         fields = ['id','products','nilai_kurs','status_param','tgl_aktif_param','max_airfreight',
             'min_airfreight','price_airfreight']
+    '''    

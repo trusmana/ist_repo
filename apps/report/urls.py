@@ -5,7 +5,9 @@ from apps.report.parameter.produk import views as pviews
 from apps.report.parameter.pengiriman import views as jviews
 from apps.report.parameter.paramdata import views_param as prviews
 from apps.report.parameter.negara import views as nviews
-from apps.report.input import views as inviews
+from apps.report.input import views as inviews ####untuk yg 3 vendor
+from apps.report.input import views_dua as inviewsdua ####untuk yg 2 vendor
+from apps.report.input import views_satu as inviewssatu ####untuk yg 2 vendor
 from apps.report.input import view_ajax as hinviews
 from apps.report.input import view_ajax_dua as hajaxtwo
 from apps.report.input import data_job as djob
@@ -53,8 +55,9 @@ urlpatterns = [
 
     ####Parameter Data
     re_path(r'^param_data/(?:(?P<pk>\d+)/)?(?:(?P<action>\w+)/)?', prviews.list_param.as_view(),name='d-param'),
-    #####Detail Data Param
     path('list_param/<int:id>/',prviews.detailparam, name='dtl-param'),
+    path('add_paramdata/',prviews.addparam, name='add-paramdata'),
+    ####Parameter Data
 
     ###################Input Pengajuan
     #### Filter Data Pengajuan Berdasarkan Vendor
@@ -63,8 +66,13 @@ urlpatterns = [
     path('in_pengajuan_satu/<int:jv>/',fviews.input_pengajuan_satu, name='in-pengajuan-satu'),
     path('in_pengajuan_dua/',fviews.input_pengajuan_dua, name='in-pengajuan-dua'),
     #### Filter Data Pengajuan 
-    path('show_pa/',inviews.showparam,name='show-param'),
-    path('proses_input/<int:param>/',inviews.proses_input,name='proses-input'),
+    path('show_pa/',inviews.showparam,name='show-param'),###tiga vendor
+    path('proses_input/<int:param>/',inviews.proses_input,name='proses-input'),###proses  input 3 vendor
+    path('show_pa_dua/',inviewsdua.showparamdua,name='show-param-dua'),###dua vendor
+    path('proses_input_dua/<int:param>/',inviewsdua.proses_input_dua,name='proses-input-dua'),
+    path('show_pa_satu/',inviewssatu.showparamsatu,name='show-param-satu'),###satu vendor
+    path('proses_input_satu/<int:param>/',inviewssatu.proses_input_satu,name='proses-input-satu'),
+    
     ###################Akhir Input Pengajuan
 
     ######Fungsi Ajax Hitungan Pembelian

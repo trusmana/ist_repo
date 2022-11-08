@@ -1,7 +1,8 @@
 from dataclasses import field
 from django import forms
 
-from apps.products.models import Kurs, Negara, Produk,STATUS,JasaPengiriman
+from apps.products.models import Kurs, Negara, Produk,STATUS,JasaPengiriman,JENISPRODUK
+
 
 class ProdukForm(forms.ModelForm):
     id_prod = forms.CharField(label="ID Produk", widget=forms.TextInput(attrs={'class': 'form-control transaction'}))
@@ -9,6 +10,7 @@ class ProdukForm(forms.ModelForm):
     tgl_aktif = forms.DateField(label="Tanggal Aktif", widget=forms.DateInput(
         attrs={'class': 'form-control datepicker_input transaction', 'placeholder': 'DD-mm-YYYY','readonly':True}))
     status = forms.ChoiceField(widget=forms.Select(attrs={'class':'form-control transaction'}), choices=STATUS)
+    jenis_produk = forms.ChoiceField(widget=forms.Select(attrs={'class':'form-control transaction'}), choices=JENISPRODUK)
     origin_vendor = forms.ModelChoiceField(queryset=JasaPengiriman.objects.all().order_by('id'),
         widget=forms.Select(attrs={'class':'form-control transaction'}),required=False)
     point_satu = forms.ModelChoiceField(queryset=Negara.objects.all().order_by('id'),

@@ -10,7 +10,7 @@ from apps.products.models import Job, ParameterData, ParameterDataBl, Sale, Tran
 from .forms import PengajuanForm,FSForm,SLForm,DLForm,SALEForm
 
 @login_required(login_url=settings.LOGIN_URL)
-def proses_input(request,param):
+def proses_input_satu(request,param):
     user = request.user
     sekarang = datetime.date.today()
     param = ParameterData.objects.get(id = param)
@@ -129,38 +129,31 @@ def proses_input(request,param):
         formss = DLForm(initial={'tgl_dl':datetime.date.today()})
         slforms = SALEForm(initial={'tanggal':datetime.date.today(),'paramsale':pse.id})
     
-    return render(request,'pengajuan/input/proses_input.html',{'param':param,'form':form,'pse':pse,
+    return render(request,'pengajuan/input/proses_input_satu.html',{'param':param,'form':form,'pse':pse,
         'forms':forms,'formss':formss,'sl':slforms})
 
 
 def is_ajax(request):
     return request.META.get('HTTP_X_REQUESTED_WITH') == 'XMLHttpRequest'
 
-def save_simulasi_form(request, h_ajax, template_name):
+def save_simulasi_form_satu(request, h_ajax, template_name):
     data = dict()
     context = {'h_ajax': h_ajax}
     data['django_form'] = render_to_string(template_name, context, request=request)
     return JsonResponse(data)
 
-def showparam(request):
+def showparamsatu(request):
     jenis_produk = request.GET.get('jenis_produk',None)
     produk = request.GET.get('produk',None)
     tanggal = request.GET.get('tanggal',None)
-    poin_satu = request.GET.get('poin_satu',None)
-    poin_dua = request.GET.get('poin_dua',None)
     poin_tiga = request.GET.get('poin_tiga',None)
-    origin_vendor = request.GET.get('origin_vendor',None)
-    through_vendor = request.GET.get('through_vendor',None)
     destinations_vendor = request.GET.get('destinations_vendor',None)    
     
-    param = ParameterData.objects.get(products=produk,products__point_satu=poin_satu,products__point_dua=poin_dua,
-        products__point_tiga=poin_tiga,products__origin_vendor=origin_vendor,products__through_vendor=through_vendor,
+    param = ParameterData.objects.get(products=produk,products__point_tiga=poin_tiga,
         products__destinations_vendor=destinations_vendor,products__status=1,products__jenis_produk=jenis_produk)
-    prd = param.products.kode_produk
-    org_ven = param.products.origin_vendor
-    org = param.products.point_satu
-    h_ajax ={'tanggal':tanggal,'produk':prd,'param':param.id,'org':org,'org_ven':org_ven,'ds_ven':param.products.through_vendor,
+    prd = param.products.kode_produk    
+    h_ajax ={'tanggal':tanggal,'produk':prd,'param':param.id,'ds_ven':param.products.through_vendor,
         'ds': param.products.point_dua,'lt_ven':param.products.destinations_vendor,'lt':param.products.point_tiga,
-        'js':param.products.jenis_produk,'jmlv':param.products.jumlah_vendor}
-    return save_simulasi_form(request, h_ajax,'pengajuan/addpengajuan.html')
+        'js':param.products.jenis_produk,'jmlv':param.products.jumlah_vendor }
+    return save_simulasi_form_satu(request, h_ajax,'pengajuan/addpengajuan_satu.html')
     

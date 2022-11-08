@@ -11,9 +11,30 @@
         <td>: {% if h_ajax.js == '1' %} Airfreight {% else%} Seafreight {% endif %}</td>
 	</td>
     <tr>
-        <td>ID Param</td>
-        <td>: {{h_ajax.param}}</td>
+        <td>ID Param / Jumlah Vendor</td>
+        <td>: {{h_ajax.param}} || {{h_ajax.jmlv}}</td>
 	</td>
+    {% if h_ajax.jmlv == '1' %}    
+    <tr>
+        <td>Destination</td>
+        <td>: {{h_ajax.lt}}</td>
+        <td>Destination Vendor</td>
+        <td>: {{h_ajax.lt_ven}}</td>        
+	</td>
+    {% elif h_ajax.jmlv == '2' %}    
+    <tr>
+        <td>Origin</td>
+        <td>: {{h_ajax.org}}</td>
+        <td>Origin Vendor</td>
+        <td>: {{h_ajax.org_ven}}</td>        
+	</td>
+    <tr>
+        <td>Destination</td>
+        <td>: {{h_ajax.lt}}</td>
+        <td>Destination Vendor</td>
+        <td>: {{h_ajax.lt_ven}}</td>        
+	</td>
+    {% elif h_ajax.jmlv == '3' %}    
     <tr>
         <td>Origin</td>
         <td>: {{h_ajax.org}}</td>
@@ -31,8 +52,8 @@
         <td>: {{h_ajax.lt}}</td>
         <td>Destination Vendor</td>
         <td>: {{h_ajax.lt_ven}}</td>        
-	</td>
-
+	</td>    
+    {% endif %}
     </tr>
 </table>
 

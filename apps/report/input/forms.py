@@ -12,7 +12,7 @@ class PengajuanForm(forms.Form):
         attrs={'class': 'form-control ','readonly':True}))
     jenis_produk = forms.ChoiceField(label='Jenis Pengiriman',widget = forms.Select(attrs={'class':'form-control chosen-select'}),
         choices = JENISPRODUK)    
-    products = forms.ModelChoiceField(queryset=Produk.objects.filter(status='1',jumlah_vendor =1),
+    products = forms.ModelChoiceField(queryset=Produk.objects.filter(status='1',jumlah_vendor = 3),
         widget=forms.Select(attrs={'class':'form-control chosen-select'}))
     poin_satu = forms.ModelChoiceField(label="Origin",queryset=Negara.objects.filter(status='1'),
         widget=forms.Select(attrs={'class':'form-control chosen-select'}))
@@ -61,26 +61,6 @@ class UpdateForm(forms.Form):
         attrs={'class': 'span10 ','readonly':True}))
     status = forms.ChoiceField(choices=STATUS_UPDATE)
 
-
-class PengajuanForm(forms.Form):
-    tanggal = forms.DateField(label="Tanggal", widget=forms.DateInput(
-        attrs={'class': 'form-control ','readonly':True}))
-    jenis_produk = forms.ChoiceField(label='Jenis Pengiriman',widget = forms.Select(attrs={'class':'form-control chosen-select'}),
-        choices = JENISPRODUK)    
-    products = forms.ModelChoiceField(queryset=Produk.objects.filter(status='1'),
-        widget=forms.Select(attrs={'class':'form-control chosen-select'}))
-    poin_satu = forms.ModelChoiceField(label="Origin",queryset=Negara.objects.filter(status='1'),
-        widget=forms.Select(attrs={'class':'form-control chosen-select'}))
-    origin_vendor = forms.ModelChoiceField(label="Vendor Origin",queryset=JasaPengiriman.objects.filter(status='1'),
-        widget=forms.Select(attrs={'class':'form-control chosen-select'}))
-    poin_dua = forms.ModelChoiceField(label="Through",queryset=Negara.objects.filter(status='1'),
-        widget=forms.Select(attrs={'class':'form-control chosen-select'}))
-    through_vendor = forms.ModelChoiceField(label="Vendor Through",queryset=JasaPengiriman.objects.filter(status='1'),
-        widget=forms.Select(attrs={'class':'form-control chosen-select'}))
-    poin_tiga = forms.ModelChoiceField(label="Destinations",queryset=Negara.objects.filter(status='1'),
-        widget=forms.Select(attrs={'class':'form-control chosen-select'}))
-    destinations_vendor = forms.ModelChoiceField(label="Vendor Destinations",queryset=JasaPengiriman.objects.filter(status='1'),
-        widget=forms.Select(attrs={'class':'form-control chosen-select'}))
 
 
 ##########Akhir Khusus Untuk Freight Solutions
