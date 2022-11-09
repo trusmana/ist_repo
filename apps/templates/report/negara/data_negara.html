@@ -19,7 +19,8 @@
             <input autocomplete="off" name="search" class="search_query input-medium" size="16" type="text" placeholder="Search..." /><button type="submit" class="btn"><i class="icon-search"></i></button>
         </form>
     </div>
-</div>        
+</div>
+            
 <div class="row-fluid">
     <div class="span12">
         <h3 class="heading">Daftar Negara <a href="{% url 'add-negara' %}" class="btn btn-info"> Add</a></h3>
@@ -28,6 +29,7 @@
             <tr>
                 <th>#</th>
                 <th>Negara</th>
+                <th>Nama Kota</th>
                 <th>Singkatan</th>
                 <th>Status</th>
                 <th>Action</th>
@@ -39,8 +41,9 @@
                 {% for transaction in negara %}
                     <tr class="item-row" data-edit="{% url 'd-negara' transaction.id 'edit' %}"
                         data-detail="{% url 'd-negara' transaction.id %}">
-                        <td><span class="font-weight-bold">{{ transaction.id }}</span></td>
+                        <td><span class="font-weight-bold">{{ forloop.counter }}</span></td>
                         <td><span class="font-weight-normal">{{ transaction.nama_negara }}</span></td>
+                        <td><span class="font-weight-normal">{{ transaction.nama_kota }}</span></td>
                         <td><span class="font-weight-normal">{{ transaction.singkatan }}</span></td>
                         <td>
                             <span class="font-weight-bold {{ transaction.status.class }}">{{ transaction.get_status_display }}</span>
@@ -71,7 +74,7 @@
             {% endif %}
             </tbody>
         </table>
-        {{ transactions.pagination }}
+        {{ negara.pagination }}
         </div>
     </div>
 </div>

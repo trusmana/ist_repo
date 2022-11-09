@@ -1,7 +1,8 @@
 from django.urls import path, re_path
 from apps.report  import views as vreport
 from apps.report  import view_kurs as vkurs
-from apps.report.parameter.produk import views as pviews
+from apps.report.parameter.produk import views as pviews #### Data produk 3 vendor
+from apps.report.parameter.produk import views_dua as pviews2 #### Data produk 2 vendor
 from apps.report.parameter.pengiriman import views as jviews
 from apps.report.parameter.paramdata import views_param as prviews
 from apps.report.parameter.negara import views as nviews
@@ -41,8 +42,12 @@ urlpatterns = [
 
     ####show produk
     re_path(r'^produk/(?:(?P<pk>\d+)/)?(?:(?P<action>\w+)/)?', pviews.list_product.as_view(),name='d-produk'),
+    re_path(r'^produkdua/(?:(?P<pk>\d+)/)?(?:(?P<action>\w+)/)?', pviews2.list_product_dua.as_view(),name='d-produk-dua'),
     ###Add Produk
     path('add_produk/',pviews.addproduk,name='add-produk'),
+    path('add_produk_dua/',pviews2.addproduk_dua,name='add-produk-dua'),
+    
+    
     ####show Jasa Pengiriman
     re_path(r'^pengiriman/(?:(?P<pk>\d+)/)?(?:(?P<action>\w+)/)?', jviews.list_pengiriman.as_view(),name='d-pengiriman'),
     ####Add Jasa Pengiriman

@@ -13,13 +13,13 @@
             <a href="/"><i class="icon-home"></i></a>
         </li>
         <li>
-            <a href="{% url 'd-produk' %}"> Data Produk</a>
+            <a href="{% url 'd-produk-dua' %}"> Data Produk</a>
         </li>
     </ul>
 </div>
 <div class="row-fluid">
     <div class="span4">
-        <form action="{% url 'd-produk' %}" class="input-append" method="get" >
+        <form action="{% url 'd-produk-dua' %}" class="input-append" method="get" >
             <input autocomplete="off" name="search" class="search_query input-medium" size="16" type="text" placeholder="Search..." /><button type="submit" class="btn"><i class="icon-search"></i></button>
         </form>
     </div>      
@@ -27,11 +27,11 @@
             
 <div class="row-fluid">
     <div class="span12">
-        <h3 class="heading">Data Produk <a href="{% url 'add-produk' %}" class="btn btn-info"> Add</a></h3>
+        <h3 class="heading">Data Produk Dua Vendor <a href="{% url 'add-produk-dua' %}" class="btn btn-info"> Add</a></h3>
         <div class="tabbable tabbable-bordered">
             <ul class="nav nav-tabs">
-                <li class="active"><a href="{% url 'd-produk' %}" >Tiga Vendor</a></li>
-                <li><a href="{% url 'd-produk-dua' %}" >Dua Vendor</a></li>                
+                <li><a href="{% url 'd-produk' %}" >Tiga Vendor</a></li>
+                <li class="active"><a href="{% url 'd-produk-dua' %}" >Dua Vendor</a></li>
             </ul>
             <div class="tab-content">
                 <div class="tab-pane active" id="tab_br1">
@@ -75,11 +75,11 @@
                                             </button>
                                             <ul class="dropdown-menu">
                                                 <li>
-                                                    <a href="{% url 'd-produk' transaction.id 'edit' %}">
+                                                    <a href="{% url 'd-produk-dua' transaction.id 'edit' %}">
                                                     <span class="fas fa-edit mr-2"></span> Edit</a>
                                                 </li>
                                                 <li>
-                                                    <a href="{% url 'd-produk' transaction.id %}" class="text-danger delete_item">
+                                                    <a href="{% url 'd-produk-dua' transaction.id %}" class="text-danger delete_item">
                                                     <span class="fas fa-trash-alt mr-2"></span> Remove {{transaction.id}}</a>
                                                 </li>
                                             </ul>

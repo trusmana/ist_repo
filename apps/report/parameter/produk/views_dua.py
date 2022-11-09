@@ -11,14 +11,14 @@ from django.conf import settings
 
 from apps.utils import set_pagination
 from apps.products.models import Produk
-from apps.report.parameter.produk.forms import ProdukForm
+from apps.report.parameter.produk.forms import ProdukDuaForm
 import datetime
 
 def is_ajax(request):
     return request.META.get('HTTP_X_REQUESTED_WITH') == 'XMLHttpRequest'
 
 
-class list_product(View):
+class list_product_dua(View):
     context = {'segment': 'produk'}
 
     def get(self, request, pk=None, action=None):
@@ -43,7 +43,7 @@ class list_product(View):
     
     def post(self, request, pk=None, action=None):
         self.update_instance(request, pk)
-        return redirect('d-produk')
+        return redirect('d-produk-dua')
 
     def put(self, request, pk, action=None):
         is_done, message = self.update_instance(request, pk, True)
@@ -57,7 +57,7 @@ class list_product(View):
         redirect_url = None
         if action == 'single':
             messages.success(request, 'Data Berhasil Di Hapus')
-            redirect_url = reverse('d-produk')
+            redirect_url = reverse('d-produk-dua')
 
         response = {'valid': 'success', 'message': 'Data Berhasil Di Hapus', 'redirect_url': redirect_url}
         return JsonResponse(response)
@@ -77,29 +77,29 @@ class list_product(View):
                     else:
                         filter_params |= Q(nama_produk__icontains=key.strip())
 
-        produk = Produk.objects.filter(filter_params) if filter_params else Produk.objects.filter(jumlah_vendor=3).order_by('-id')
+        produk = Produk.objects.filter(filter_params) if filter_params else Produk.objects.filter(jumlah_vendor=2).order_by('-id')
 
         self.context['produk'], self.context['info'] = set_pagination(request, produk)
         if not self.context['produk']:
             return False, self.context['info']
 
-        return self.context, 'report/produk/data_produk.html'
+        return self.context, 'report/produk/data_produk_dua.html'
 
     def edit(self, request, pk):
         produk = self.get_object(pk)
 
         self.context['produk'] = produk
-        self.context['form'] = ProdukForm(instance=produk)
+        self.context['form'] = ProdukDuaForm(instance=produk)
 
-        return self.context, 'report/produk/edit_produk.html'
+        return self.context, 'report/produk/edit_produk_dua.html'
 
     """ Get Ajax pages """
 
     def edit_row(self, pk):
         produk = self.get_object(pk)
-        form = ProdukForm(instance=produk)
+        form = ProdukDuaForm(instance=produk)
         context = {'instance': produk, 'form': form}
-        return render_to_string('report/produk/edit_produk_row.html', context)
+        return render_to_string('report/produk/edit_produk_row_dua.html', context)
 
     """ Common methods """
         
@@ -109,13 +109,13 @@ class list_product(View):
     
     def get_row_item(self, pk):
         transaction = self.get_object(pk)
-        edit_row = render_to_string('report/produk/edit_produk_row.html', {'instance': transaction})
+        edit_row = render_to_string('report/produk/edit_produk_row_dua.html', {'instance': transaction})
         return edit_row
 
     def update_instance(self, request, pk, is_urlencode=False):
         transaction = self.get_object(pk)
         form_data = QueryDict(request.body) if is_urlencode else request.POST
-        form = ProdukForm(form_data, instance=transaction)        
+        form = ProdukDuaForm(form_data, instance=transaction)        
         if form.is_valid():
             form.save()
             if not is_urlencode:
@@ -130,18 +130,18 @@ class list_product(View):
     
 @login_required(login_url=settings.LOGIN_URL)
 @user_passes_test(lambda u: u.groups.filter(name__in=('Administrator','Admin_IT','OPERASIONAL')))
-def addproduk(request):
+def addproduk_dua(request):
     user = request.user
     if request.method == 'POST':
-        form = ProdukForm(request.POST)
+        form = ProdukDuaForm(request.POST)
         if form.is_valid():
             prod = form.save(commit=False)
             prod.cu = user
             prod.id_prod = prod.counter_produk()
             prod.save()
             messages.warning(request,'Data Produk Berhasil Di Input', 'alert-success')
-            return redirect('d-produk')
+            return redirect('d-produk-dua')
     else:
-        form = ProdukForm(initial={'tgl_aktif':datetime.date.today(),'nama_produk':"SHIPMENT"})
-    return render(request,'report/produk/add_produk.html',{'form':form})
+        form = ProdukDuaForm(initial={'tgl_aktif':datetime.date.today(),'nama_produk':"SHIPMENT"})
+    return render(request,'report/produk/add_produk_dua.html',{'form':form})
 

@@ -61,6 +61,7 @@ class Kurs(models.Model):
 
 class Negara(models.Model):
     nama_negara = models.CharField(max_length=100,null=True)
+    nama_kota = models.CharField(max_length=100,null=True)
     singkatan = models.CharField(max_length=100,null=True)
     status = models.CharField(max_length=20,choices=STATUS,null=True,blank=True,default=0)
     cu = models.ForeignKey(user, related_name='cu_ng', editable=False, null=True, blank=True,on_delete=models.CASCADE)
@@ -71,7 +72,8 @@ class Negara(models.Model):
         db_table ='negara'
 
     def __str__(self):
-        return self.singkatan
+        return '%s ' %(self.singkatan)
+    
     
 
 #####Vendor
@@ -123,6 +125,20 @@ class Produk(models.Model):
         db_table = 'produk'
         verbose_name= 'Produk'
         verbose_name_plural =verbose_name
+        
+    def counter_produk(self):
+        tot = 0
+        try:
+            skr = datetime.date.today()
+            count = Produk.objects.filter(tgl_aktif__year=skr.year).count()
+            cekkr = Produk.objects.filter(tgl_aktif__year=skr.year).latest('id_prod')
+            if count >= 1:
+                tot = cekkr.id_prod + 1
+            else:
+                tot = 1
+        except ObjectDoesNotExist:
+            tot = 1
+        return tot
     
     def kode_produk(self):
         if self.jumlah_vendor == '1':
