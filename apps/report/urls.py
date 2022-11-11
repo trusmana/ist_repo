@@ -4,7 +4,10 @@ from apps.report  import view_kurs as vkurs
 from apps.report.parameter.produk import views as pviews #### Data produk 3 vendor
 from apps.report.parameter.produk import views_dua as pviews2 #### Data produk 2 vendor
 from apps.report.parameter.pengiriman import views as jviews
-from apps.report.parameter.paramdata import views_param as prviews
+from apps.report.parameter.paramdata import views_param as prviews ### Parameter
+from apps.report.parameter.paramdata import param_cari as prviewscr ### Paramaeter
+from apps.report.parameter.paramdata import param_tiga as param3 ### Paramaeter 3 vendor 
+from apps.report.parameter.paramdata import param_dua as param2 ### Paramaeter 2 vendor 
 from apps.report.parameter.negara import views as nviews
 from apps.report.input import views as inviews ####untuk yg 3 vendor
 from apps.report.input import views_dua as inviewsdua ####untuk yg 2 vendor
@@ -60,8 +63,13 @@ urlpatterns = [
 
     ####Parameter Data
     re_path(r'^param_data/(?:(?P<pk>\d+)/)?(?:(?P<action>\w+)/)?', prviews.list_param.as_view(),name='d-param'),
+    re_path(r'^param_data2/(?:(?P<pk>\d+)/)?(?:(?P<action>\w+)/)?', prviews.list_param_dua.as_view(),name='d-param2'),
+    
     path('list_param/<int:id>/',prviews.detailparam, name='dtl-param'),
-    path('add_paramdata/',prviews.addparam, name='add-paramdata'),
+    path('add_dta/',prviewscr.addparamdta, name='add-paramdta'),
+    
+    path('add_paramdata/<int:pr>/<int:origin>/<int:through>/<int:destn>/',param3.addparam, name='add-paramdata'),
+    path('add_paramdatadua/<int:pr>/<int:origin>/<int:destn>/',param2.addparamdua, name='add-paramdatadua'),
     ####Parameter Data
 
     ###################Input Pengajuan

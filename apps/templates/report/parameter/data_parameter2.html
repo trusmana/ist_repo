@@ -1,7 +1,7 @@
 {% extends "layouts/base.html" %}
 {% load static %}
 
-{% block title %} Sale{% endblock %}
+{% block title %} Parameter{% endblock %}
 
 <!-- Specific Page CSS goes HERE  -->
 {% block stylesheets %}{% endblock stylesheets %}
@@ -13,33 +13,33 @@
             <a href="/"><i class="icon-home"></i></a>
         </li>
         <li>
-            <a href="{% url 'd-sale' %}"> Data Sale</a>
+            <a href="{% url 'd-param' %}"> Data Parameter</a>
         </li>
     </ul>
 </div>
 <div class="row-fluid">
     <div class="span4">
-        <form action="{% url 'd-kurs' %}" class="input-append" method="get" >
+        <form action="{% url 'd-param' %}" class="input-append" method="get" >
             <input autocomplete="off" name="search" class="search_query input-medium" size="16" type="text" placeholder="Search..." /><button type="submit" class="btn"><i class="icon-search"></i></button>
         </form>
     </div>      
 </div>
 <div class="row-fluid">
     <div class="span12">
-        <h3 class="heading">Data Parameter Sale <a href="{% url 'add-kurs' %}" class="btn btn-info"> Add</a></h3>    
+        <h3 class="heading">Data Parameter Job <a href="{% url 'add-paramdta' %}" class="btn btn-info"> Add</a></h3>    
         <div class="tabbable tabbable-bordered">
             <ul class="nav nav-tabs">
-                <li><a href="{% url 'd-produk' %}" >Tiga Vendor</a></li>
-                <li class="active"><a href="{% url 'd-produk-dua' %}" >Dua Vendor</a></li>
+                <li><a href="{% url 'd-param' %}" >Tiga Vendor</a></li>
+                <li class="active" ><a href="{% url 'd-param2' %}" >Dua Vendor</a></li>
             </ul>
             <div class="tab-content">
                 <div class="tab-pane active" id="tab_br1">
                     <table class="table table-hover">
                         <thead>
                         <tr>
-                            <th>Nomor</th>
-                            <th>Matauang</th>
-                            <th>Nilai Kurs</th>
+                            <th>#</th>
+                            <th>Kode Produk</th>
+                            <th>Vendor</th>
                             <th>Tanggal Aktif</th>
                             <th>Status</th>
                             <th>Action</th>
@@ -47,16 +47,15 @@
                         </thead>
                         <tbody>
                         <!-- Item -->
-                        {% if sale is not True %}
-                            {% for transaction in sale %}
-                                <tr class="item-row" data-edit="{% url 'd-kurs' transaction.id 'edit' %}"
-                                    data-detail="{% url 'd-kurs' transaction.id %}">
-                                    <td><span class="font-weight-bold">{{ transaction.trans.no_pekerjaan }}</span></td>
-                                    <td><span class="font-weight-normal">{{ transaction.mtu.nama_mata_uang }}</span></td>
-                                    <td><span class="font-weight-normal">{{ transaction.nilai_kurs }}</span></td>
-                                    <td><span class="font-weight-normal">{{ transaction.tanggal_aktif|date:'d-m-Y' }}</span></td>
+                        {% if param is not True %}
+                            {% for transaction in param %}
+                                <tr>
+                                    <td><span class="font-weight-bold">{{ transaction.id }}</span></td>
+                                    <td><span class="font-weight-normal">{{ transaction.products.id_prod }}</span></td>
+                                    <td><span class="font-weight-normal">{{ transaction.products.origin_vendor }}</span></td>
+                                    <td><span class="font-weight-normal">{{ transaction.tgl_aktif_param|date:'d-m-Y' }}</span></td>
                                     <td>
-                                        <span class="font-weight-bold {{ transaction.status.class }}">{{ transaction.get_status_kurs_display }}</span>
+                                        <span class="font-weight-bold {{ transaction.status.class }}">{{ transaction.get_status_param_display }}</span>
                                     </td>
                                     <td>
                                         <div class="btn-group">
@@ -69,12 +68,19 @@
                                             </button>
                                             <li class="dropdown-menu">
                                                 <ul>
-                                                    <a href="{% url 'd-kurs' transaction.id 'edit' %}">
-                                                    <span class="fas fa-edit mr-2"></span> Edit</a>
+                                                    <a href="{% url 'dtl-param' transaction.id  %}">
+                                                    <span class="fas fa-list-alt mr-2"></span> Detail</a>
+                                                </ul>
+                                                <ul><a class="dropdown-item edit_item"
+                                                   href="{#% url 'd-param' transaction.id 'edit' %#}">
+                                                    <span class="fas fa-edit mr-2"></span> Edit
+                                                </a>
                                                 </ul>
                                                 <ul>
-                                                    <a data-href="{% url 'd-kurs' transaction.id %}">
-                                                    <span class="fas fa-trash-alt mr-2"></span> Remove</a>
+                                                <a class="dropdown-item text-danger delete_item"
+                                                   data-href="{% url 'd-param' transaction.id %}">
+                                                    <span class="fas fa-trash-alt mr-2"></span> Remove
+                                                </a>
                                                 </ul>
                                             </li>
                                         </div>
@@ -85,9 +91,7 @@
                         </tbody>
                     </table>
         
-                    {{ sale.pagination }}
-        
-
+                    {{ param.pagination }}
 
                 </div>
             </div>

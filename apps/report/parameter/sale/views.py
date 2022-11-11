@@ -7,13 +7,11 @@ from django.contrib.auth.decorators import login_required,user_passes_test
 from django.http import JsonResponse,HttpResponse,QueryDict
 from django.template.loader import render_to_string
 from django.urls import reverse
+from django.conf import settings
 from apps.report.parameter.sale.forms import SaleForm
-
 
 from apps.utils import set_pagination
 from apps.products.models import Produk, Sale
-from apps.report.input.forms import SALEForm
-
 
 def is_ajax(request):
     return request.META.get('HTTP_X_REQUESTED_WITH') == 'XMLHttpRequest'
@@ -128,9 +126,9 @@ class list_sale(View):
             messages.warning(request, 'Error Occurred. Please try again.')
         return False, 'Error Occurred. Please try again.'
     
-#@login_required(login_url=settings.LOGIN_URL)
-#@user_passes_test(lambda u: u.groups.filter(name__in=('Administrator','Admin_IT')))
-def addproduk(request):
+@login_required(login_url=settings.LOGIN_URL)
+@user_passes_test(lambda u: u.groups.filter(name__in=('Administrator','Admin_IT','OPERASIONAL')))
+def addsale(request):
     user = request.user
     if request.method == 'POST':
         form = SaleForm(request.POST)
@@ -138,8 +136,8 @@ def addproduk(request):
             prod = form.save(commit=False)
             prod.cu = user
             prod.save()
-            messages.add_message(request, messages.INFO,'Data Produk Berhasil Di Input', 'alert-success')
-            return redirect('d-produk')
+            messages.add_message(request, messages.INFO,'Data Param Berhasil Di Input', 'alert-success')
+            return redirect('d-sale')
     else:
         form = SaleForm()
     return render(request,'report/sale/add_sale.html',{'form':form})
