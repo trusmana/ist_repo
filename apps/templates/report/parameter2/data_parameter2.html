@@ -1,7 +1,7 @@
 {% extends "layouts/base.html" %}
 {% load static %}
 
-{% block title %} Sale{% endblock %}
+{% block title %} Parameter2{% endblock %}
 
 <!-- Specific Page CSS goes HERE  -->
 {% block stylesheets %}{% endblock stylesheets %}
@@ -13,23 +13,23 @@
             <a href="/"><i class="icon-home"></i></a>
         </li>
         <li>
-            <a href="{% url 'd-sale' %}"> Data Sale</a>
+            <a href="{% url 'd-paramjl' %}">Daftar Parameter Jual</a>
         </li>
     </ul>
 </div>
 <div class="row-fluid">
     <div class="span4">
-        <form action="{% url 'd-kurs' %}" class="input-append" method="get" >
+        <form action="{% url 'd-paramjl' %}" class="input-append" method="get" >
             <input autocomplete="off" name="search" class="search_query input-medium" size="16" type="text" placeholder="Search..." /><button type="submit" class="btn"><i class="icon-search"></i></button>
         </form>
     </div>      
 </div>
 <div class="row-fluid">
     <div class="span12">
-        <h3 class="heading">Data Parameter Sale <a href="{% url 'add-sale' %}" class="btn btn-info"> Add</a></h3>    
+        <h3 class="heading">Data Parameter Jual <a href="{% url 'add-param2' %}" class="btn btn-info"> Add</a></h3>    
         <div class="tabbable tabbable-bordered">
             <ul class="nav nav-tabs">
-                <li class="active"><a href="{% url 'd-sale' %}" >Tiga Vendor</a></li>
+                <li class="active"><a href="{% url 'd-paramjl' %}" >Data Parameter</a></li>
                 
             </ul>
             <div class="tab-content">
@@ -37,26 +37,28 @@
                     <table class="table table-hover">
                         <thead>
                         <tr>
-                            <th>Nomor</th>
-                            <th>Matauang</th>
-                            <th>Nilai Kurs</th>
+                            <th>#</th>
+                            <th>Produk</th>
                             <th>Tanggal Aktif</th>
+                            <th>Status</th>
+                            
                             <th>Status</th>
                             <th>Action</th>
                         </tr>
                         </thead>
                         <tbody>
                         <!-- Item -->
-                        {% if sale is not True %}
-                            {% for transaction in sale %}
-                                <tr class="item-row" data-edit="{% url 'd-kurs' transaction.id 'edit' %}"
-                                    data-detail="{% url 'd-kurs' transaction.id %}">
-                                    <td><span class="font-weight-bold">{{ transaction.trans.no_pekerjaan }}</span></td>
-                                    <td><span class="font-weight-normal">{{ transaction.mtu.nama_mata_uang }}</span></td>
-                                    <td><span class="font-weight-normal">{{ transaction.nilai_kurs }}</span></td>
-                                    <td><span class="font-weight-normal">{{ transaction.tanggal_aktif|date:'d-m-Y' }}</span></td>
+                        {% if param2 is not True %}
+                            {% for transaction in param2 %}
+                                <tr class="item-row" data-edit="{% url 'd-paramjl' transaction.id 'edit' %}"
+                                    data-detail="{% url 'd-paramjl' transaction.id %}">
+                                    <td><span class="font-weight-bold">{{ forloop.counter }}</span></td>
+                                    <td><span class="font-weight-bold">{{ transaction.products }}</span></td>
+                                    <td><span class="font-weight-normal">{{ transaction.tgl_aktif_param }}</span></td>
+                                    <td><span class="font-weight-normal">{{ transaction.status_param }}</span></td>
+                                    
                                     <td>
-                                        <span class="font-weight-bold {{ transaction.status.class }}">{{ transaction.get_status_kurs_display }}</span>
+                                        <span class="font-weight-bold {{ transaction.status.class }}">{{ transaction.vendor }}</span>
                                     </td>
                                     <td>
                                         <div class="btn-group">
@@ -69,11 +71,11 @@
                                             </button>
                                             <li class="dropdown-menu">
                                                 <ul>
-                                                    <a href="{% url 'd-kurs' transaction.id 'edit' %}">
+                                                    <a href="{% url 'd-paramjl' transaction.id 'edit' %}">
                                                     <span class="fas fa-edit mr-2"></span> Edit</a>
                                                 </ul>
                                                 <ul>
-                                                    <a data-href="{% url 'd-kurs' transaction.id %}">
+                                                    <a data-href="{% url 'd-paramjl' transaction.id %}" class="text-danger delete_item">
                                                     <span class="fas fa-trash-alt mr-2"></span> Remove</a>
                                                 </ul>
                                             </li>
@@ -85,7 +87,7 @@
                         </tbody>
                     </table>
         
-                    {{ sale.pagination }}
+                    {{ param2.pagination }}
         
 
 

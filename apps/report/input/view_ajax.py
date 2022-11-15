@@ -19,10 +19,8 @@ def airfreight(request):
         pa = ParameterData.objects.get(id= int(id_param))
         if int(airfreight)>int(1) and int(airfreight)<=int(pa.min_airfreight) :
             nilai = Decimal(airfreight) * Decimal(pa.price_min_airfreight)
-        elif int(airfreight)>int(pa.min_airfreight) and int(airfreight)<=int(pa.max_airfreight) :
-            nilai = Decimal(airfreight) * Decimal(pa.price_max_airfreight)
         else:
-            nilai = Decimal(airfreight) * Decimal(pa.price_high_airfreight)
+            nilai = Decimal(airfreight) * Decimal(pa.price_max_airfreight)
         data = {'result':'1','param':id_param,'price':nilai}            
         return HttpResponse(JsonResponse(data))
     else:

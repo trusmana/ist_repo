@@ -68,7 +68,7 @@ class FSForm(forms.Form):
     tgl_fs = forms.DateField(label="Tanggal Invoice", widget=forms.DateInput(
         attrs={'class': 'form-control '}))
 
-    no_invoice_fs = forms.IntegerField(label='No Invoice',widget=forms.TextInput(attrs={'class':'input-small',
+    no_invoice_fs = forms.CharField(label='No Invoice',widget=forms.TextInput(attrs={'class':'input-small',
         'alt':'integer','placeholder':'No Invoice'}))
     qt_fs = forms.IntegerField(label='Quantity',widget=forms.TextInput(attrs={'class':'input-small',
         'alt':'integer','placeholder':'QTY'}))
@@ -103,7 +103,7 @@ class SLForm(forms.Form):
     tgl_sl = forms.DateField(label="Tanggal Invoice", widget=forms.DateInput(
         attrs={'class': 'form-control '}))
 
-    no_invoice_sl = forms.IntegerField(label='No Invoice',widget=forms.TextInput(attrs={'class':'input-small',
+    no_invoice_sl = forms.CharField(label='No Invoice',widget=forms.TextInput(attrs={'class':'input-small',
         'alt':'integer','placeholder':'No Invoice'}))   
 
     weight_sl = forms.IntegerField(label='Weight',widget=forms.TextInput(attrs={'alt': 'integer',
@@ -111,23 +111,23 @@ class SLForm(forms.Form):
         cek_storage_mcl_e_0389249_at_cost();cek_pjkp2u_dps_dil_at_cost();cek_airfreight_charges();\
         cek_currency_overweight_charges_surcharg();cek_currency_awb_fee();cek_currency_handling_charges()'}))
 
-    price_storage_at_cost = forms.DecimalField(label = 'Storage At Cost',widget=forms.TextInput(attrs={'class':'input-small uang ttip_t',
+    price_storage_at_cost = forms.IntegerField(label = 'Storage At Cost',widget=forms.TextInput(attrs={'class':'input-small uang ttip_t',
         'alt':'integer'}))
-    price_pjkp2u_sin_dps_at_cost = forms.DecimalField(label= 'Handling IN',widget=forms.TextInput(attrs={'class':'input-small uang ttip_t',
+    price_pjkp2u_sin_dps_at_cost = forms.IntegerField(label= 'Handling IN',widget=forms.TextInput(attrs={'class':'input-small uang ttip_t',
         'alt':'integer'}))
-    price_storage_mcl_e_0389249_at_cost = forms.DecimalField(widget=forms.TextInput(attrs={'class':'input-small uang ttip_t',
+    price_storage_mcl_e_0389249_at_cost = forms.IntegerField(widget=forms.TextInput(attrs={'class':'input-small uang ttip_t',
         'alt':'integer'}))
-    price_pjkp2u_dps_dil_at_cost = forms.DecimalField(label='Handling Out',widget=forms.TextInput(attrs={'class':'input-small uang ttip_t',
+    price_pjkp2u_dps_dil_at_cost = forms.IntegerField(label='Handling Out',widget=forms.TextInput(attrs={'class':'input-small uang ttip_t',
         'alt':'integer'}))
     ######### Biaya Storege
-    price_airfreight_charges = forms.DecimalField(widget=forms.TextInput(attrs={'class':'input-small uang ttip_t',
+    price_airfreight_charges = forms.IntegerField(widget=forms.TextInput(attrs={'class':'input-small uang ttip_t',
         'alt':'integer'}))
     ###didiyeu
-    price_overweight_charges_surcharge = forms.DecimalField(widget=forms.TextInput(attrs={'class':'input-small uang ttip_t',
+    price_overweight_charges_surcharge = forms.IntegerField(widget=forms.TextInput(attrs={'class':'input-small uang ttip_t',
         'alt':'integer'}))
-    price_awb_fee = forms.DecimalField(widget=forms.TextInput(attrs={'class':'input-small uang ttip_t',
+    price_awb_fee = forms.IntegerField(widget=forms.TextInput(attrs={'class':'input-small uang ttip_t',
         'alt':'integer'}))
-    price_handling_charges_sl = forms.DecimalField(widget=forms.TextInput(attrs={'class':'input-small uang ttip_t',
+    price_handling_charges_sl = forms.IntegerField(widget=forms.TextInput(attrs={'class':'input-small uang ttip_t',
         'alt':'integer'}))
 
 class DLForm(forms.Form):
@@ -135,7 +135,7 @@ class DLForm(forms.Form):
     tgl_dl = forms.DateField(label="Tanggal Invoice", widget=forms.DateInput(
         attrs={'class': 'form-control '}))
 
-    no_invoice_dl = forms.IntegerField(label='No Invoice',widget=forms.TextInput(attrs={'class':'input-small',
+    no_invoice_dl = forms.CharField(label='No Invoice',widget=forms.TextInput(attrs={'class':'input-small',
         'alt':'integer','placeholder':'No Invoice'}))
     
     weight_dl = forms.IntegerField(label='Weight',widget=forms.TextInput(attrs={'alt': 'integer',

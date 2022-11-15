@@ -21,7 +21,7 @@ Indah Senergi Trading
 8. compresing data upload di dili
 9. Input leger di user keuangan, tambah user keuangan
 
-4 November 2020
+4 November 2022
 - - -
 - Report dari rasky indah sinergi
 1. Di bagian Modules data sale untuk melihat satu pekerjaan yang telah di selesaikan dan ingin mengedit web tidak bisa di jalankan atau di buka (Kendala wifi tidak stabil)
@@ -32,3 +32,13 @@ Indah Senergi Trading
   - Nomor 3 selesai tinggal di uji 4 nov 2020
 4. Saya membuat Vendor baru Wartsila indonesia tetapi tidak muncul waktu pembuatan job dan di list vendor tidak ada.
   - Nomor 4 selesai tinggal di uji 4 nov 2020 
+
+ 14 Novemver 2022
+---
+- Inputan di job carakter invoice bisa numerik dan simbol, bukan Integer tapi farchard
+- Tabulah kurs, belum di akifkan 
+- inputan berat di dili decimal bukan integer
+- Re export di Indah sinergi , harus decimal
+
+
+

@@ -154,7 +154,7 @@ class Produk(models.Model):
 ######Khusus Parameter Jual
 class ParameterDataBl(models.Model):
     products = models.ForeignKey(Produk,on_delete=models.CASCADE)
-    nilai_kurs = models.ForeignKey(Kurs,on_delete=models.CASCADE)
+    
     vendor = models.ForeignKey(JasaPengiriman,on_delete=models.CASCADE,null=True,blank=True)    
     status_param = models.CharField(max_length=20,choices=STATUS,null=True,blank=True,default=0)
     tgl_aktif_param = models.DateField(blank=True, null=True)
@@ -464,7 +464,8 @@ class Sale(models.Model):
 
 class Job(models.Model):
     tanggal_invoice = models.DateField()
-    no_invoice = models.IntegerField(blank=True,null=True)
+    #no_invoice = models.IntegerField(blank=True,null=True)
+    no_invoice = models.CharField(null=True,blank=True,max_length=50)
     transaksi = models.ForeignKey(Transaksi,on_delete=models.CASCADE)
     status_job = models.CharField(choices=STATUS_UPDATE,null=True,blank=True,max_length=50)
     tanggal_status = models.DateField(null=True,blank=True) 

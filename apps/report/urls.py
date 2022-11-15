@@ -17,12 +17,20 @@ from apps.report.input import view_ajax_dua as hajaxtwo
 from apps.report.input import data_job as djob
 from apps.report.input.edit_inputan import views as v_edit
 from apps.report.input import view_cetak as ctk_dok 
-from apps.report.parameter.sale import views as s_views
+
 from apps.report.input import view_filter as fviews
+from apps.report.parameter.paramdata2 import views as v_pr2 #### Paarameter Jual
+from apps.report.parameter.sale import views as s_views #### Parameter Beli
 
 urlpatterns = [
-    ######data sale
+    ######Daftar Parameter dua
+    re_path(r'^paramjl/(?:(?P<pk>\d+)/)?(?:(?P<action>\w+)/)?', v_pr2.list_param2.as_view(),name='d-paramjl'),
+    path('add_param2/',v_pr2.addparamdatabl, name='add-param2'),##Add param dua
+    
+    
+    ######Daftar sale
     re_path(r'^sale/(?:(?P<pk>\d+)/)?(?:(?P<action>\w+)/)?', s_views.list_sale.as_view(),name='d-sale'),
+    path('add_sale/',s_views.addsale, name='add-sale'),##Add Sale
 
     #####  Menu Cetak Invoice
     path('ctk_job_buy/<int:id>',ctk_dok.invoice, name='ctk-job-buy'),##buy
