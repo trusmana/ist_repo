@@ -79,7 +79,7 @@ class FSForm(forms.Form):
     param = forms.ModelChoiceField(queryset=ParameterData.objects.filter(status_param='1'),
         widget=forms.Select(attrs={'class':'form-control ','readonly':True}))    
 
-    weight_fs = forms.IntegerField(label='Weight',widget=forms.TextInput(attrs={'alt': 'integer',
+    weight_fs = forms.DecimalField(label='Weight',widget=forms.TextInput(attrs={
         'class':'uang input-small','onkeyup':'cek_nilai();cek_nilai_handling();cek_insurance_security()\
         ;cek_fuel_surcharge();cek_import_handling_charges();cek_gst_zero_rated()'}))
     
@@ -110,7 +110,7 @@ class SLForm(forms.Form):
     no_invoice_sl_3 = forms.CharField(label='No Invoice',widget=forms.TextInput(attrs={'class':'input-small',
         'alt':'integer','placeholder':'No Invoice Tiga'}))   
 
-    weight_sl = forms.IntegerField(label='Weight',widget=forms.TextInput(attrs={'alt': 'integer',
+    weight_sl = forms.DecimalField(label='Weight',widget=forms.TextInput(attrs={
         'class':'uang input-small','onkeyup':'cek_price_storage_at_cost();cek_pjkp2u_sin_dps_at_cost();\
         cek_storage_mcl_e_0389249_at_cost();cek_pjkp2u_dps_dil_at_cost();cek_airfreight_charges();\
         cek_currency_overweight_charges_surcharg();cek_currency_awb_fee();cek_currency_handling_charges()'}))
@@ -142,7 +142,7 @@ class DLForm(forms.Form):
     no_invoice_dl = forms.CharField(label='No Invoice',widget=forms.TextInput(attrs={'class':'input-small',
         'alt':'integer','placeholder':'No Invoice'}))
     
-    weight_dl = forms.IntegerField(label='Weight',widget=forms.TextInput(attrs={'alt': 'integer',
+    weight_dl = forms.DecimalField(label='Weight',widget=forms.TextInput(attrs={
         'class':'input-small','onkeyup':'cek_currency_ground_handling();cek_currency_forklift_for_heavy_cargo();\
         cek_currency_custom_clearance();cek_currency_delivey_to_hera();cek_currency_akses_bandara_inspeksi();\
         cek_currency_handling_fee();cek_currency_admin_fee();cek_currency_fee_collection()'}))    

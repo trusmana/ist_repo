@@ -42,7 +42,38 @@ Indah Senergi Trading
 
 15 November 2022
 ---
-1. Tambah form di invoice Solidlogistic jadi 3 form
+1. Tambah form di invoice Solidlogistic jadi 3 form @done 12112022
+
+16 November 2022
+---
+1. Inputan duty tax
+  Posisi inputanan Disable atau ena
+  - Value shipment 
+  - duty tax
+  - handling fee tax
+
+2. Gastiasih
+  - Pcs ,weight, Paking, rate =untuk parameter
+  - Darat = muncul Ammount  (Pcs ,weight, Paking)
+  - Udara = muncul Ammount (Pcs ,weight, Paking)
+  - Laut = muncul Ammount (Pcs ,weight, Paking)
+
+3. Lintas Negara
+  - Transit charge
+  - transportations charge
+
+4. AntarLapan
+  - CBm, 20ft ,BLfee, Biaya PEB
+
+5. Wastila indonesia, cuman atribut vendor saja 
+
+6. DHL 
+ - Standard charge , total
+ - fuel_surcharge_dhl , total
+ - emergency_situation
+
+Buat report untuk data vendor khusus dhl
+  - tambahkan ceklis untuk mengelompokan no pekerjaan, sesuai invoce dhl,Report terlampir
 
 
 
