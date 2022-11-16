@@ -35,10 +35,15 @@ Indah Senergi Trading
 
  14 Novemver 2022
 ---
-- Inputan di job carakter invoice bisa numerik dan simbol, bukan Integer tapi farchard
-- Tabulah kurs, belum di akifkan 
-- inputan berat di dili decimal bukan integer
-- Re export di Indah sinergi , harus decimal
+- Inputan di job carakter invoice bisa numerik dan simbol, bukan Integer tapi farchard @Done 15112022
+- Tabulah kurs, belum di akifkan @Done 15112022
+- inputan berat di dili decimal bukan integer @Done 15112022
+- Re export di Indah sinergi , harus decimal @Done 15112022
+
+15 November 2022
+---
+1. Tambah form di invoice Solidlogistic jadi 3 form
+
 
 
 

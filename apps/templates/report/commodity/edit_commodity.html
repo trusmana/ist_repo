@@ -1,7 +1,7 @@
 {% extends "layouts/base.html" %}
 {% load static %}
 
-{% block title %} Edit Transaction {% endblock %}
+{% block title %} Edit commodity {% endblock %}
 
 {% block content %}
 <div id="jCrumbs" class="breadCrumb module">
@@ -10,17 +10,17 @@
             <a href="/"><i class="icon-home"></i></a>
         </li>
         <li>
-            <a href="{% url 'd-sale' %}">Sale</a>
+            <a href="{% url 'd-commodity' %}">Commodity</a>
         </li>
         <li>
-            Edit Sale
+            Edit Commodity
         </li>        
     </ul>
 </div>
 <div class="row-fluid">
     <div class="span12">
-        <h2 class="h5 mb-4">sale</h2>
-        <form action="{% url 'd-sale' sale.id %}" method="post">
+        <h2 class="h5 mb-4">Commodity</h2>
+        <form action="{% url 'd-commodity' transaction.id %}" method="post">
             {% csrf_token %}
             <div class="formSep">
                 {% for field in form %}
@@ -31,7 +31,7 @@
 			</div>
 
             <div class="mt-3">
-                <a class="btn btn-danger" href="{% url 'd-sale' %}">Cancel</a>
+                <a class="btn btn-danger delete_item" data-href="{% url 'd-kurs' transaction.id 'single' %}">Delete</a>
                 <button type="submit" class="btn btn-primary">Save</button>
             </div>
         </form>

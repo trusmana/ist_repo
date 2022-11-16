@@ -26,7 +26,7 @@ def debit_note(request,id):
 #####cetak Sale IST
 def invoice(request,id):
     ist = Sale.objects.get(id=id)
-    html_string = render_to_string('report/cetak/invoice.html', {'ist': ist})
+    html_string = render_to_string('report/cetak/invoice.html', {'data': ist})
     html = HTML(string=html_string)
     html.write_pdf(target='/tmp/mypdf.pdf')
 

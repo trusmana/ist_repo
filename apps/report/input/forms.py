@@ -104,7 +104,11 @@ class SLForm(forms.Form):
         attrs={'class': 'form-control '}))
 
     no_invoice_sl = forms.CharField(label='No Invoice',widget=forms.TextInput(attrs={'class':'input-small',
-        'alt':'integer','placeholder':'No Invoice'}))   
+        'alt':'integer','placeholder':'No Invoice Satu'}))
+    no_invoice_sl_2 = forms.CharField(label='No Invoice',widget=forms.TextInput(attrs={'class':'input-small',
+        'alt':'integer','placeholder':'No Invoice Dua'}))
+    no_invoice_sl_3 = forms.CharField(label='No Invoice',widget=forms.TextInput(attrs={'class':'input-small',
+        'alt':'integer','placeholder':'No Invoice Tiga'}))   
 
     weight_sl = forms.IntegerField(label='Weight',widget=forms.TextInput(attrs={'alt': 'integer',
         'class':'uang input-small','onkeyup':'cek_price_storage_at_cost();cek_pjkp2u_sin_dps_at_cost();\

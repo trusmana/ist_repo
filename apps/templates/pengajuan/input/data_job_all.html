@@ -48,12 +48,12 @@
 <div class="row-fluid">
     <div class="span12">
         {% for data in  data.sale_set.all %}
-        <h3 class="heading"><a href="{% url 'e-jual' data.id %}">{{data.prod.vendor}}</a> | 
+        <h3 class="heading"><a href="{% url 'e-jual' data.id %}">{{data.prod.vendor}} #{{data.id}}</a> | 
             <a href="{% url 'ctk-job-buy' data.id %}">Invoice</a>
         </h3>
         <table class="table table-bordered table-striped table_vam">
             <tr>
-                <td colspan='6'><div class="text-center act-info">{{data.trans.products}}</div></td>
+                <td colspan='6'><div class="text-center act-info">{{data.trans.products}} </div></td>
             </tr>    
             <tr>
                 <td rowspan='2'><div class="text-center"><b>{{data.prod.vendor}}</b></div></td>
@@ -83,14 +83,14 @@
                 <td>Airfreight Import Handling</td>
                 <td colspan='2'>1.00 AWB</td><td></td>
                 <td></td>
-                <td><div class="text-right">{{data.airfreight_one|intcomma}}</div></td>
+                <td><div class="text-right">{{data.prod.vendor.nilai_kurs.simbol}} {{data.airfreight_one|intcomma}}</div></td>
             </tr>
             <tr>
                 <td>Cartage and Warehouse Charge</td>
                 <td colspan='2'>{{data.trans.re_export_shipment_one_qty}}</td>
-                <td><div class="text-right">{{data.prod.nilai_kurs}} {{data.prod.price_cartage_and_warehouse_charge}}</div></td>
+                <td><div class="text-right">{{data.prod.vendor.nilai_kurs.simbol}} {{data.prod.price_cartage_and_warehouse_charge}}</div></td>
                 <td></td>                
-                <td><div class="text-right">{{data.cartage_warehouse_charge_one|intcomma }}</div></td>
+                <td><div class="text-right">{{data.prod.vendor.nilai_kurs.simbol}} {{data.cartage_warehouse_charge_one|intcomma }}</div></td>
             </tr>
             <tr>
                 <td> <b> {{data.trans.re_export_shipment_two }} ({{data.trans.re_export_shipment_two_pcs}} / {{data.trans.re_export_shipment_two_qty}} ) </b></td>
@@ -102,27 +102,27 @@
                 <td>Airfreight Import Handling</td>
                 <td colspan='2'>1.00 AWB</td><td></td>
                 <td></td>
-                <td><div class="text-right">{{data.airfreight_two|intcomma}}</div></td>
+                <td><div class="text-right">{{data.prod.vendor.nilai_kurs.simbol}} {{data.airfreight_two|intcomma}}</div></td>
             </tr>
             <tr>
                 <td>Cartage and Warehouse Charge</td>
                 <td colspan='2'>{{data.trans.re_export_shipment_two_qty}}</td>
-                <td><div class="text-right">{{data.prod.nilai_kurs}} {{data.prod.price_cartage_and_warehouse_charge}}</div></td>
+                <td><div class="text-right">{{data.prod.vendor.nilai_kurs.simbol}} {{data.prod.price_cartage_and_warehouse_charge}}</div></td>
                 <td></td>                
-                <td><div class="text-right">{{data.cartage_warehouse_charge_two|intcomma }}</div></td>
+                <td><div class="text-right">{{data.prod.vendor.nilai_kurs.simbol}} {{data.cartage_warehouse_charge_two|intcomma }}</div></td>
             </tr>
             <tr>
                 <td>Export Handling</td>
                 <td colspan='2'>1.00 AWB</td><td></td>
                 <td></td>
-                <td><div class="text-right">{{data.export_handling|intcomma}}</div></td>
+                <td><div class="text-right">{{data.prod.vendor.nilai_kurs.simbol}} {{data.export_handling|intcomma}}</div></td>
             </tr>
             <tr>
                 <td>{{data.trans.products.get_jenis_produk_display}} {{data.trans.products.point_satu}} - {{data.trans.products.point_dua}} - {{data.trans.products.point_tiga}}</td>
                 <td colspan='2'>{{data.trans.weight}}</td>
                 <td>{{data.nilai_kurs.mtu.kode_matauang}}</td>
                 <td></td>                
-                <td><div class="text-right">{{data.freight|intcomma}}</div></td>
+                <td><div class="text-right">{{data.prod.vendor.nilai_kurs.simbol}} {{data.freight|intcomma}}</div></td>
             </tr>
             <tr>
                 <td><b>Local Handling Charge</b></td>
@@ -133,49 +133,49 @@
             <tr>
                 <td>Doc and Clearance</td>
                 <td colspan='2'>1.00 AWB</td>
-                <td><div class="text-right">{{data.prod.nilai_kurs}} {{data.prod.price_doc_and_clearance}}</div></td>
+                <td><div class="text-right">{{data.prod.vendor.nilai_kurs.simbol}} {{data.prod.price_doc_and_clearance}}</div></td>
                 <td></td>                
-                <td><div class="text-right">{{data.doc_clearance|intcomma}}</div></td>
+                <td><div class="text-right">{{data.prod.vendor.nilai_kurs.simbol}} {{data.doc_clearance|intcomma}}</div></td>
             </tr>
             <tr>
                 <td>Ground Handling</td>
                 <td colspan='2'>{{data.trans.weight}}</td>
-                <td><div class="text-right">{{data.prod.nilai_kurs}} {{data.prod.price_ground_handling}}</div></td>
+                <td><div class="text-right">{{data.prod.vendor.nilai_kurs.simbol}} {{data.prod.price_ground_handling}}</div></td>
                 <td></td>                
-                <td><div class="text-right">{{data.ground_handling|intcomma}}</div></td>
+                <td><div class="text-right">{{data.prod.vendor.nilai_kurs.simbol}} {{data.ground_handling|intcomma}}</div></td>
             </tr>
             <tr>
                 <td>Warehouse Charge </td>
                 <td colspan='2'>{{data.trans.weight}}</td>
-                <td><div class="text-right">{{data.prod.nilai_kurs}} {{data.prod.price_warehouse_charge}}</div></td>
+                <td><div class="text-right">{{data.prod.vendor.nilai_kurs.simbol}} {{data.prod.price_warehouse_charge}}</div></td>
                 <td></td>                
-                <td><div class="text-right">{{data.warehouse_charge|intcomma}}</div></td>
+                <td><div class="text-right">{{data.prod.vendor.nilai_kurs.simbol}} {{data.warehouse_charge|intcomma}}</div></td>
             </tr>
             <tr>
                 <td>Handling Charge</td>
                 <td colspan='2'>{{data.trans.weight}}</td>
-                <td><div class="text-right">{{data.prod.nilai_kurs}} {{data.prod.price_handling_charge }}</div></td>
+                <td><div class="text-right">{{data.prod.vendor.nilai_kurs.simbol}} {{data.prod.price_handling_charge }}</div></td>
                 <td></td>                
-                <td><div class="text-right">{{data.handling_charge|intcomma}}</div></td>
+                <td><div class="text-right">{{data.prod.vendor.nilai_kurs.simbol}} {{data.handling_charge|intcomma}}</div></td>
             </tr>
             <tr>
                 <td>Delivery</td>
                 <td colspan='2'>{{data.trans.weight}}</td>
-                <td><div class="text-right">{{data.prod.nilai_kurs}} {{data.prod.price_delivery }}</div></td>
+                <td><div class="text-right">{{data.prod.vendor.nilai_kurs.simbol}} {{data.prod.price_delivery }}</div></td>
                 <td></td>                
-                <td><div class="text-right">{{data.delivery|intcomma}}</div></td>
+                <td><div class="text-right">{{data.prod.vendor.nilai_kurs.simbol}} {{data.delivery|intcomma}}</div></td>
             </tr>
             <tr>
                 <td>Duty Tax</td>
                 <td colspan='2'>{{data.trans.weight}}</td><td></td>
                 <td></td>
-                <td><div class="text-right">{{data.duty_tax |intcomma}}</div></td>
+                <td><div class="text-right">{{data.prod.vendor.nilai_kurs.simbol}} {{data.duty_tax |intcomma}}</div></td>
             </tr>
             <tr>
                 <td>Tax Handling Charge</td>
                 <td colspan='2'></td><td></td>
                 <td></td>
-                <td><div class="text-right">{{data.tax_handling_charge|intcomma}}</div></td>
+                <td><div class="text-right">{{data.prod.vendor.nilai_kurs.simbol}} {{data.tax_handling_charge|intcomma}}</div></td>
             </tr>
             <tr>
                 <td></td>
@@ -355,7 +355,7 @@
             {% for data in  data.job_set.all %}
             {% if data.vendor.id == 3 %}
             <div class="span6">
-                <h3 class="heading">{{data.vendor}}</h3>
+                <h3 class="heading">{{data.vendor}} </h3>
                 <table class="table table-bordered table-striped table_vam">
                     <tr>
                         <td colspan='6'><div class="text-center act-info">{{data.transaksi.products}}</div></td>
@@ -427,7 +427,7 @@
                     </tr>
                     <tr>
                         <td><div class="text-center">{{data.tanggal_invoice|date:'d-M-Y'}}</div></td>
-                        <td><div class="text-center">{{data.no_invoice}}</div></td>
+                        <td><div class="text-center">{{data.no_invoice_sl_2}}</div></td>
                         <td><div class="text-center">{{data.transaksi.no_pekerjaan}}</div></td>
                     </tr>
                     <tr>
@@ -492,7 +492,7 @@
                     </tr>
                     <tr>
                         <td><div class="text-center">{{data.tanggal_invoice|date:'d-M-Y'}}</div></td>
-                        <td><div class="text-center">{{data.no_invoice}}</div></td>
+                        <td><div class="text-center">{{data.no_invoice_sl_3}}</div></td>
                         <td><div class="text-center">{{data.transaksi.no_pekerjaan}}</div></td>
                     </tr>
                     <tr>

@@ -42,6 +42,8 @@ def proses_input(request,param):
             ###SLFORM
             tgl_sl = forms.cleaned_data['tgl_sl']
             no_invoice_sl = forms.cleaned_data['no_invoice_sl']
+            no_invoice_sl_2 = forms.cleaned_data['no_invoice_sl_2']
+            no_invoice_sl_3 = forms.cleaned_data['no_invoice_sl_3']
             #qt_sl = forms.cleaned_data['qt_sl']
             price_storage_at_cost = forms.cleaned_data['price_storage_at_cost']
             price_pjkp2u_sin_dps_at_cost = forms.cleaned_data['price_pjkp2u_sin_dps_at_cost']
@@ -101,7 +103,7 @@ def proses_input(request,param):
                 import_handling_charges = price_import_handling_charges,gst_zero_rated = price_gst_zero_rated,)
             job.save()
             job1 = Job(transaksi = tran,tanggal_invoice = tgl_sl,no_invoice = no_invoice_sl,nilai_kurs = tran.products.kurs_through,
-                vendor = tran.products.through_vendor,
+                vendor = tran.products.through_vendor,no_invoice_sl_2 = no_invoice_sl_2,no_invoice_sl_3 = no_invoice_sl_3,
                 storage_at_cost = price_storage_at_cost,pjkp2u_sin_dps_at_cost = price_pjkp2u_sin_dps_at_cost,
                 storage_mcl_e_0389249_at_cost = price_storage_mcl_e_0389249_at_cost,pjkp2u_dps_dil_at_cost = price_pjkp2u_dps_dil_at_cost,
                 airfreight = price_airfreight_charges,overweight_charges_surcharge = price_overweight_charges_surcharge,

@@ -48,6 +48,7 @@ class Kurs(models.Model):
     status_kurs = models.CharField(max_length=10,choices=STATUS,default=0)
     nilai_kurs = models.FloatField(null=True,blank=True)
     tanggal_aktif = models.DateField(null=True,blank=True)
+    simbol = models.CharField(max_length=10,null=True,blank=True)
     cu = models.ForeignKey(user, related_name='cu_kurs', editable=False, null=True, blank=True,on_delete=models.CASCADE)
     mu = models.ForeignKey(user, related_name='mu_kurs', editable=False, null=True, blank=True,on_delete=models.CASCADE)
     cdate = models.DateTimeField(auto_now_add=True)
@@ -82,6 +83,7 @@ class JasaPengiriman(models.Model):
     alamat = models.CharField(max_length=100,null=True)
     telepon = models.CharField(max_length=20,null=True)
     status = models.CharField(max_length=20,choices=STATUS,null=True,blank=True,default=0)
+    nilai_kurs = models.ForeignKey(Kurs, on_delete=models.CASCADE,null=True,blank=True)
     cu = models.ForeignKey(user, related_name='cu_js', editable=False, null=True, blank=True,on_delete=models.CASCADE)
 
     class Meta:
@@ -407,7 +409,11 @@ class Transaksi(models.Model):
     def __str__(self):
         return '%s' %(self.no_pekerjaan)
 
-   
+    def nb_of_parcels(self):
+        return self.re_export_shipment_one_pcs + self.re_export_shipment_two_pcs
+
+    def gross_weight(self):
+        return self.re_export_shipment_one_qty + self.re_export_shipment_two_qty
         
 
     def counter_nope(self):
@@ -466,6 +472,8 @@ class Job(models.Model):
     tanggal_invoice = models.DateField()
     #no_invoice = models.IntegerField(blank=True,null=True)
     no_invoice = models.CharField(null=True,blank=True,max_length=50)
+    no_invoice_sl_2 = models.CharField(null=True,blank=True,max_length=50)
+    no_invoice_sl_3 = models.CharField(null=True,blank=True,max_length=50)
     transaksi = models.ForeignKey(Transaksi,on_delete=models.CASCADE)
     status_job = models.CharField(choices=STATUS_UPDATE,null=True,blank=True,max_length=50)
     tanggal_status = models.DateField(null=True,blank=True) 

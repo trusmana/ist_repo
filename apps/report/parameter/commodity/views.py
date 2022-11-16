@@ -3,22 +3,21 @@ from django.db.models import Q
 from django.views import View
 from django.template import loader
 from django.contrib import messages
-from django.contrib.auth.decorators import login_required,user_passes_test
+from django.contrib.auth.decorators import login_required
 from django.http import JsonResponse,HttpResponse,QueryDict
 from django.template.loader import render_to_string
 from django.urls import reverse
 from django.conf import settings
-from apps.report.parameter.sale.forms import SaleForm
-
 from apps.utils import set_pagination
-from apps.products.models import Produk, Sale
+from apps.products.models import Commodity
+from apps.report.parameter.commodity.forms import CommodityForm
 
 def is_ajax(request):
     return request.META.get('HTTP_X_REQUESTED_WITH') == 'XMLHttpRequest'
 
 
-class list_sale(View):
-    context = {'segment': 'sale'}
+class list_commodity(View):
+    context = {'segment': 'commodity'}
 
     def get(self, request, pk=None, action=None):
         if is_ajax(request=request):
@@ -42,7 +41,7 @@ class list_sale(View):
     
     def post(self, request, pk=None, action=None):
         self.update_instance(request, pk)
-        return redirect('d-sale')
+        return redirect('d-commodity')
 
     def put(self, request, pk, action=None):
         is_done, message = self.update_instance(request, pk, True)
@@ -50,15 +49,15 @@ class list_sale(View):
         return JsonResponse({'valid': 'success' if is_done else 'warning', 'message': message, 'edit_row': edit_row})
 
     def delete(self, request, pk, action=None):
-        transaction = self.get_object(pk)
-        transaction.delete()
+        negara = self.get_object(pk)
+        negara.delete()
 
         redirect_url = None
         if action == 'single':
-            messages.success(request, 'Data Sale Di Hapus')
-            redirect_url = reverse('d-sale')
+            messages.success(request, 'Data Berhasil Di Hapus')
+            redirect_url = reverse('d-commodity')
 
-        response = {'valid': 'success', 'message': 'Data Sale Di Hapus', 'redirect_url': redirect_url}
+        response = {'valid': 'success', 'message': 'Data Berhasil Di Hapus', 'redirect_url': redirect_url}
         return JsonResponse(response)
 
     """ Get pages """
@@ -72,73 +71,72 @@ class list_sale(View):
             for key in search.split():
                 if key.strip():
                     if not filter_params:
-                        filter_params = Q(trans__icontains=key.strip())
+                        filter_params = Q(nama__icontains=key.strip())
                     else:
-                        filter_params |= Q(trans__icontains=key.strip())
+                        filter_params |= Q(nama__icontains=key.strip())
 
-        sale = Sale.objects.filter(filter_params) if filter_params else Sale.objects.all().order_by('-id')
+        commodity = Commodity.objects.filter(filter_params) if filter_params else Commodity.objects.filter(status=1).order_by('-id')
 
-        self.context['sale'], self.context['info'] = set_pagination(request, sale)
-        if not self.context['sale']:
+        self.context['commodity'], self.context['info'] = set_pagination(request, commodity)
+        if not self.context['commodity']:
             return False, self.context['info']
 
-        return self.context, 'report/sale/data_sale.html'
+        return self.context, 'report/commodity/data_commodity.html'
 
     def edit(self, request, pk):
-        sale = self.get_object(pk)
+        commodity = self.get_object(pk)
 
-        self.context['sale'] = sale
-        self.context['form'] = SaleForm(instance=sale)
+        self.context['commodity'] = commodity
+        self.context['form'] = CommodityForm(instance=commodity)
 
-        return self.context, 'report/sale/edit_sale.html'
+        return self.context, 'report/commodity/edit_commodity.html'
 
     """ Get Ajax pages """
 
     def edit_row(self, pk):
-        sale = self.get_object(pk)
-        form = SaleForm(instance=sale)
-        context = {'instance': sale, 'form': form}
-        return render_to_string('report/sale/edit_sale_row.html', context)
+        commodity = self.get_object(pk)
+        form = CommodityForm(instance=commodity)
+        context = {'instance': commodity, 'form': form}
+        return render_to_string('report/commodity/edit_commodity_row.html', context)
 
     """ Common methods """
         
     def get_object(self, pk):
-        transaction = get_object_or_404(Sale, id=pk)
-        return transaction
+        commodity = get_object_or_404(Commodity, id=pk)
+        return commodity
     
     def get_row_item(self, pk):
-        transaction = self.get_object(pk)
-        edit_row = render_to_string('report/sale/edit_sale_row.html', {'instance': transaction})
+        commodity = self.get_object(pk)
+        edit_row = render_to_string('report/commodity/edit_commodity_row.html', {'instance': commodity})
         return edit_row
 
     def update_instance(self, request, pk, is_urlencode=False):
         transaction = self.get_object(pk)
         form_data = QueryDict(request.body) if is_urlencode else request.POST
-        form = SaleForm(form_data, instance=transaction)        
+        form = CommodityForm(form_data, instance=transaction)        
         if form.is_valid():
             form.save()
             if not is_urlencode:
-                messages.success(request, 'Sale Berhasil DiSimpan')
+                messages.success(request, 'Commodity Berhasil DiSimpan')
 
-            return True, 'Sale Berhasil DiSimpan'
+            return True, 'Commodity Berhasil DiSimpan'
 
         if not is_urlencode:
             messages.warning(request, 'Error Occurred. Please try again.')
         return False, 'Error Occurred. Please try again.'
     
 @login_required(login_url=settings.LOGIN_URL)
-@user_passes_test(lambda u: u.groups.filter(name__in=('Administrator','Admin_IT','OPERASIONAL')))
-def addsale(request):
+#@user_passes_test(lambda u: u.groups.filter(name__in=('Administrator','Admin_IT')))
+def addcommodity(request):
     user = request.user
     if request.method == 'POST':
-        form = SaleForm(request.POST)
+        form = CommodityForm(request.POST)
         if form.is_valid():
             prod = form.save(commit=False)
             prod.cu = user
             prod.save()
-            messages.add_message(request, messages.INFO,'Data Param Berhasil Di Input', 'alert-success')
-            return redirect('d-sale')
+            messages.success(request, 'Data Commodity Berhasil Di Input')
+            return redirect('d-commodity')
     else:
-        form = SaleForm()
-    return render(request,'report/sale/add_sale.html',{'form':form})
-
+        form = CommodityForm(initial={'status':1})
+    return render(request,'report/commodity/add_commodity.html',{'form':form})

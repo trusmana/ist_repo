@@ -22,7 +22,13 @@ from apps.report.input import view_filter as fviews
 from apps.report.parameter.paramdata2 import views as v_pr2 #### Paarameter Jual
 from apps.report.parameter.sale import views as s_views #### Parameter Beli
 
+from apps.report.parameter.commodity import views as comm_v ####Commodity
+
 urlpatterns = [
+    ######Daftar Commodity
+    re_path(r'^commodity/(?:(?P<pk>\d+)/)?(?:(?P<action>\w+)/)?', comm_v.list_commodity.as_view(),name='d-commodity'),
+    path('add_commodity/',comm_v.addcommodity, name='add-commodity'),##Add Commodiy
+
     ######Daftar Parameter dua
     re_path(r'^paramjl/(?:(?P<pk>\d+)/)?(?:(?P<action>\w+)/)?', v_pr2.list_param2.as_view(),name='d-paramjl'),
     path('add_param2/',v_pr2.addparamdatabl, name='add-param2'),##Add param dua
