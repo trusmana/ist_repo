@@ -26,11 +26,6 @@ def proses_input(request,param):
     
     return redirect('in-pengajuan')    
 
-@login_required(login_url=settings.LOGIN_URL)
-def input_pengajuan(request):
-    sekarang = datetime.date.today()
-    form = PengajuanForm(initial={'tanggal':sekarang})
-    return render(request, 'pengajuan/pengajuan.html',{'forms':form})
 
 def is_ajax(request):
     return request.META.get('HTTP_X_REQUESTED_WITH') == 'XMLHttpRequest'
@@ -59,7 +54,6 @@ def showparam(request):
     org_ven = param.products.origin_vendor
     org = param.products.point_satu
     h_ajax ={'tanggal':tanggal,'produk':prd,'param':param.id,'org':org,'org_ven':org_ven,'ds_ven':param.products.through_vendor,
-        'ds': param.products.point_dua,'lt_ven':param.products.destinations_vendor,'lt':param.products.point_tiga,
-        'js':param.products.jenis_produk,'jmlv':param.products.jumlah_vendor,}
+        'ds': param.products.point_dua,'lt_ven':param.products.destinations_vendor,'lt':param.products.point_tiga,'js':param.products.jenis_produk}
     return save_simulasi_form(request, h_ajax,'pengajuan/addpengajuan.html')
     

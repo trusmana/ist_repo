@@ -15,7 +15,6 @@ from apps.report.parameter.pengiriman.forms import PengirimanForm
 def is_ajax(request):
     return request.META.get('HTTP_X_REQUESTED_WITH') == 'XMLHttpRequest'
 
-
 class list_pengiriman(View):
     context = {'segment': 'pengiriman'}
 

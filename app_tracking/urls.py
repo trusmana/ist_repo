@@ -11,6 +11,7 @@ urlpatterns = [
     path("", include("apps.home.urls")),
     path("", include("apps.keuangan.urls")),
     path("", include("apps.paramvendor.urls")),
+    path("", include("apps.keuangan.urls")),
     path("report/", include("apps.report.urls")),
     re_path(r'^static/(?P<path>.*)$', serve, {'document_root' : settings.STATIC_ROOT}),
     re_path(r'^transactions/(?:(?P<pk>\d+)/)?(?:(?P<action>\w+)/)?', vreport.list_matauang.as_view(),

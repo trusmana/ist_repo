@@ -27,7 +27,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'import_export','django_browser_reload',
     'django.contrib.staticfiles','apps.core','apps.products',
-    'apps.report','apps.keuangan','apps.home','apps.paramvendor',    
+    'apps.report',    
 ]
 
 MIDDLEWARE = [
@@ -114,8 +114,6 @@ USE_TZ = False
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/4.0/howto/static-files/
 AUTH_USER_MODEL = 'core.AccountsUser'
-
-STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 STATIC_URL = '/static/'
 STATICFILES_DIRS = (
     os.path.join(CORE_DIR, 'apps/static'),
