@@ -27,7 +27,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'import_export','django_browser_reload',
     'django.contrib.staticfiles','apps.core','apps.products',
-    'apps.report',    
+    'apps.report','apps.paramvendor',    
 ]
 
 MIDDLEWARE = [
