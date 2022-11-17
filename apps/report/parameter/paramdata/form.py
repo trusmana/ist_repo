@@ -1,5 +1,5 @@
 from django import forms
-from apps.products.models import Kurs,Produk,STATUS,ParameterData
+from apps.products.models import Produk,STATUS
 
 class CariForm(forms.Form):
     products = forms.ModelChoiceField(queryset=Produk.objects.filter(status='1'),

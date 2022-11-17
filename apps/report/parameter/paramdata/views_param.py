@@ -11,7 +11,7 @@ from django.urls import reverse
 
 from apps.utils import set_pagination
 from apps.products.models import ParameterData
-from apps.report.parameter.paramdata.form import ParamAllForm, ParamForm
+from apps.report.parameter.paramdata.form import ParamForm
 
 def is_ajax(request):
     return request.META.get('HTTP_X_REQUESTED_WITH') == 'XMLHttpRequest'
