@@ -4,6 +4,7 @@ from django import forms
 from apps.products.models import Kurs, Negara, Produk,STATUS,JasaPengiriman,Sale
 
 class SaleForm(forms.ModelForm):
+    '''
     id_prod = forms.CharField(label="ID Produk", widget=forms.TextInput(attrs={'class': 'form-control transaction'}))
     nama_produk = forms.CharField(label="Nama Produk", widget=forms.TextInput(attrs={'class': 'form-control transaction'}))
     tgl_aktif = forms.DateField(label="Tanggal Aktif", widget=forms.DateInput(
@@ -29,9 +30,9 @@ class SaleForm(forms.ModelForm):
         widget=forms.Select(attrs={'class':'form-control transaction'}))
     point_tiga = forms.ModelChoiceField(queryset=Negara.objects.all().order_by('id'),
         widget=forms.Select(attrs={'class':'form-control transaction'}))
-
+    '''
     class Meta:
         model = Sale
         #fields =['id','id_prod','nama_produk','tgl_aktif','status','origin_vendor','point_satu',
             #'kurs_origin','through_vendor','point_dua','kurs_through','destinations_vendor','kurs_destinations','point_tiga']
-        fields = ['id']
+        fields = '__all__'

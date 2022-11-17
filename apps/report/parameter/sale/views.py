@@ -7,13 +7,11 @@ from django.contrib.auth.decorators import login_required,user_passes_test
 from django.http import JsonResponse,HttpResponse,QueryDict
 from django.template.loader import render_to_string
 from django.urls import reverse
+from django.conf import settings
 from apps.report.parameter.sale.forms import SaleForm
-
 
 from apps.utils import set_pagination
 from apps.products.models import Produk, Sale
-from apps.report.input.forms import SALEForm
-
 
 def is_ajax(request):
     return request.META.get('HTTP_X_REQUESTED_WITH') == 'XMLHttpRequest'
@@ -44,7 +42,7 @@ class list_sale(View):
     
     def post(self, request, pk=None, action=None):
         self.update_instance(request, pk)
-        return redirect('d-produk')
+        return redirect('d-sale')
 
     def put(self, request, pk, action=None):
         is_done, message = self.update_instance(request, pk, True)
@@ -57,10 +55,10 @@ class list_sale(View):
 
         redirect_url = None
         if action == 'single':
-            messages.success(request, 'Data Berhasil Di Hapus')
-            redirect_url = reverse('d-produk')
+            messages.success(request, 'Data Sale Di Hapus')
+            redirect_url = reverse('d-sale')
 
-        response = {'valid': 'success', 'message': 'Data Berhasil Di Hapus', 'redirect_url': redirect_url}
+        response = {'valid': 'success', 'message': 'Data Sale Di Hapus', 'redirect_url': redirect_url}
         return JsonResponse(response)
 
     """ Get pages """
@@ -74,9 +72,9 @@ class list_sale(View):
             for key in search.split():
                 if key.strip():
                     if not filter_params:
-                        filter_params = Q(nama_produk__icontains=key.strip())
+                        filter_params = Q(trans__icontains=key.strip())
                     else:
-                        filter_params |= Q(nama_produk__icontains=key.strip())
+                        filter_params |= Q(trans__icontains=key.strip())
 
         sale = Sale.objects.filter(filter_params) if filter_params else Sale.objects.all().order_by('-id')
 
@@ -120,17 +118,17 @@ class list_sale(View):
         if form.is_valid():
             form.save()
             if not is_urlencode:
-                messages.success(request, 'Penjualan Berhasil DiSimpan')
+                messages.success(request, 'Sale Berhasil DiSimpan')
 
-            return True, 'Penjualan Berhasil DiSimpan'
+            return True, 'Sale Berhasil DiSimpan'
 
         if not is_urlencode:
             messages.warning(request, 'Error Occurred. Please try again.')
         return False, 'Error Occurred. Please try again.'
     
-#@login_required(login_url=settings.LOGIN_URL)
-#@user_passes_test(lambda u: u.groups.filter(name__in=('Administrator','Admin_IT')))
-def addproduk(request):
+@login_required(login_url=settings.LOGIN_URL)
+@user_passes_test(lambda u: u.groups.filter(name__in=('Administrator','Admin_IT','OPERASIONAL')))
+def addsale(request):
     user = request.user
     if request.method == 'POST':
         form = SaleForm(request.POST)
@@ -138,8 +136,8 @@ def addproduk(request):
             prod = form.save(commit=False)
             prod.cu = user
             prod.save()
-            messages.add_message(request, messages.INFO,'Data Produk Berhasil Di Input', 'alert-success')
-            return redirect('d-produk')
+            messages.add_message(request, messages.INFO,'Data Param Berhasil Di Input', 'alert-success')
+            return redirect('d-sale')
     else:
         form = SaleForm()
     return render(request,'report/sale/add_sale.html',{'form':form})

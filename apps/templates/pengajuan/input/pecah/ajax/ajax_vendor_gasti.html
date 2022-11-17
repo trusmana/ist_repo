@@ -1,0 +1,27 @@
+<script>
+    ///Gasti Asih ///
+    function cek_amount_gst()
+    {        
+        var prm = $('#id_param').val();
+        var pcs = $('#id_qt_fs').val();
+        var weight = $('#id_weight_fs').val();
+        var jenis = $('#id_jenis').val();
+        var paking = parseFloat(to_number($('#id_paking').val()));
+        var dataString ='prm='+prm+'&pcs='+pcs+'&weight='+weight+'&jenis='+jenis+'&paking='+paking;
+        $.ajax({
+            url: "{% url 'h-gasti-origin' %}",
+            data: dataString,
+            dataType: "JSON",
+            success: function(data){
+                if(data.result=='1'){
+                    $('#id_amount').val(format_number(String(Math.round(data.price))));
+                    
+                }else{
+                    $('#id_amount').val('0');                   
+                    
+                }
+            }
+        });    
+    }
+
+</script>

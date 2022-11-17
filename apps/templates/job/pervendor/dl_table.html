@@ -1,0 +1,81 @@
+{% load humanize %}
+<div class="span12">
+    <h3 class="heading">{{data.vendor}}</h3>
+    <table class="table table-bordered table-striped table_vam">
+        <tr>
+            <td colspan='6'><div class="text-center act-info">{{data.transaksi.products}}</div></td>
+        </tr>    
+        <tr>
+            <td rowspan='2'><div class="text-center">{{data.vendor}}</div></td>
+            <td rowspan='2' colspan='2'></td>
+            <td><div class="text-center">Tanggal Invoice</div></td>
+            <td><div class="text-center">Nomor Invoice</div></td>
+            <td><div class="text-center">Job Number</div></td>
+        </tr>
+        <tr>
+            <td><div class="text-center">{{data.tanggal_invoice|date:'d-M-Y'}}</div></td>
+            <td><div class="text-center">{{data.no_invoice}}</div></td>
+            <td><div class="text-center">{{data.transaksi.no_pekerjaan}}</div></td>
+        </tr>
+        <tr>
+            <td>Detail</td>
+            <td colspan="2"><div class="text-center">Currency </div></td>
+            <td></td>
+            <td colspan="2"><div class="text-center"> Amount</div></td>
+        </tr>
+        <tr>
+            <td>Ground Handling</td>
+            <td colspan='2'>{{data.nilai_kurs.mtu.nama_mata_uang}}</td><td></td>
+            <td>{{data.nilai_kurs.mtu.kode_matauang}}</td>
+            <td><div class="text-right">{{data.ground_handling|intcomma}}</div></td>
+        </tr>
+        <tr>
+            <td>Forklift For Heavy Cargo</td>
+            <td colspan='2'>{{data.nilai_kurs.mtu.nama_mata_uang}}</td><td></td>
+            <td>{{data.nilai_kurs.mtu.kode_matauang}}</td>
+            <td><div class="text-right">{{data.forklift_for_heavy_cargo|intcomma}}</div></td>
+        </tr>
+        <tr>
+            <td>Custom Clearance</td>
+            <td colspan='2'>{{data.nilai_kurs.mtu.nama_mata_uang}}</td><td></td>
+            <td>{{data.nilai_kurs.mtu.kode_matauang}}</td>
+            <td><div class="text-right">{{data.custom_clearance|intcomma}}</div></td>
+        </tr>
+        <tr>
+            <td>Delivey To Hera</td>
+            <td colspan='2'>{{data.nilai_kurs.mtu.nama_mata_uang}}</td><td></td>
+            <td>{{data.nilai_kurs.mtu.kode_matauang}}</td>
+            <td><div class="text-right">{{data.delivey_to_hera|intcomma}}</div></td>
+        </tr>
+        <tr>
+            <td>Akses Bandara + Inspeksi</td>
+            <td colspan='2'>{{data.nilai_kurs.mtu.nama_mata_uang}}</td><td></td>
+            <td>{{data.nilai_kurs.mtu.kode_matauang}}</td>
+            <td><div class="text-right">{{data.akses_bandara_inspeksi|intcomma}}</div></td>
+        </tr>
+        <tr>
+            <td>Handling Fee</td>
+            <td colspan='2'>{{data.nilai_kurs.mtu.nama_mata_uang}}</td><td></td>
+            <td>{{data.nilai_kurs.mtu.kode_matauang}}</td>
+            <td><div class="text-right">{{data.handling_fee|intcomma}}</div></td>
+        </tr>
+        <tr>
+            <td>Admin Fee / invoice fee</td>
+            <td colspan='2'>{{data.nilai_kurs.mtu.nama_mata_uang}}</td><td></td>
+            <td>{{data.nilai_kurs.mtu.kode_matauang}}</td>
+            <td><div class="text-right">{{data.admin_fee|intcomma}}</div></td>
+        </tr>
+        <tr>
+            <td>Fee Collection</td>
+            <td colspan='2'>{{data.nilai_kurs.mtu.nama_mata_uang}}</td><td></td>
+            <td>{{data.nilai_kurs.mtu.kode_matauang}}</td>
+            <td><div class="text-right">{{data.fee_collection|intcomma}}</div></td>
+        </tr>
+        <tr>
+            <td></td>
+            <td colspan='2'></td><td></td>
+            <td><b>Total {{data.nilai_kurs.mtu.kode_matauang}}</b></td>
+            <td><div class="text-right act-danger">{{data.total_job|intcomma}}</div></td>
+        </tr>
+    </table>      
+</div>

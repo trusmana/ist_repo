@@ -10,7 +10,11 @@ STATUS =[('0','NonAktif'),('1','Aktif')]
 
 STATUS_UPDATE =[('',''),('1','Done')]
 
-JENISPRODUK =[('1','Airfreight'),('2','Seafreight')]
+JUMLAH_VENDOR=[('1','SATU'),('2','DUA'),('3','TIGA')]
+
+JENISPRODUK =[('1','Airfreight'),('2','Seafreight'),('3','Landfreught')]
+
+
 
 class Commodity(models.Model):
     nama = models.CharField(max_length=100)
@@ -45,6 +49,7 @@ class Kurs(models.Model):
     mtu = models.ForeignKey(MataUang,on_delete=models.CASCADE,related_name='mtu_fk')
     status_kurs = models.CharField(max_length=10,choices=STATUS,default=0)
     nilai_kurs = models.FloatField(null=True,blank=True)
+    simbol = models.CharField(max_length=10,null=True,blank=True)
     tanggal_aktif = models.DateField(null=True,blank=True)
     cu = models.ForeignKey(user, related_name='cu_kurs', editable=False, null=True, blank=True,on_delete=models.CASCADE)
     mu = models.ForeignKey(user, related_name='mu_kurs', editable=False, null=True, blank=True,on_delete=models.CASCADE)
@@ -59,8 +64,10 @@ class Kurs(models.Model):
 
 class Negara(models.Model):
     nama_negara = models.CharField(max_length=100,null=True)
+    nama_kota = models.CharField(max_length=100,null=True)
     singkatan = models.CharField(max_length=100,null=True)
     status = models.CharField(max_length=20,choices=STATUS,null=True,blank=True,default=0)
+    cu = models.ForeignKey(user, related_name='cu_ng', editable=False, null=True, blank=True,on_delete=models.CASCADE)
     cdate = models.DateTimeField(auto_now_add=True)
     mdate = models.DateTimeField(auto_now=True)
 
@@ -68,7 +75,7 @@ class Negara(models.Model):
         db_table ='negara'
 
     def __str__(self):
-        return self.singkatan
+        return '%s' %(self.singkatan)
     
 
 #####Vendor
@@ -77,6 +84,7 @@ class JasaPengiriman(models.Model):
     alamat = models.CharField(max_length=100,null=True)
     telepon = models.CharField(max_length=20,null=True)
     status = models.CharField(max_length=20,choices=STATUS,null=True,blank=True,default=0)
+    nilai_kurs = models.ForeignKey(Kurs, on_delete=models.CASCADE,null=True,blank=True)
     cu = models.ForeignKey(user, related_name='cu_js', editable=False, null=True, blank=True,on_delete=models.CASCADE)
 
     class Meta:
@@ -90,20 +98,26 @@ class JasaPengiriman(models.Model):
 class Produk(models.Model):
     id_prod = models.IntegerField(null=True)
     nama_produk = models.CharField(max_length=100,null=True)
+    jumlah_vendor = models.CharField(choices = JUMLAH_VENDOR,max_length=20,null= True)
     jenis_produk = models.CharField(choices = JENISPRODUK,max_length=20,null= True,blank= True)
     ####origin
-    point_satu = models.ForeignKey(Negara,on_delete=models.CASCADE,null=True, related_name='point_satu' )
-    origin_vendor = models.ForeignKey(JasaPengiriman,on_delete=models.CASCADE,null=True,related_name='origin_v1')
-    kurs_origin = models.ForeignKey(Kurs,on_delete=models.CASCADE,null=True,related_name='origin_kurs')
+    point_satu = models.ForeignKey(Negara,on_delete=models.CASCADE,null=True, related_name='point_satu',
+        blank=True)
+    origin_vendor = models.ForeignKey(JasaPengiriman,on_delete=models.CASCADE,null=True,related_name='origin_v1',
+        blank=True)
+    kurs_origin = models.ForeignKey(Kurs,on_delete=models.CASCADE,null=True,related_name='origin_kurs',
+        blank=True)
     ####Through
-    point_dua = models.ForeignKey(Negara,on_delete=models.CASCADE,null=True,related_name='point_dua' )
-    through_vendor = models.ForeignKey(JasaPengiriman,on_delete=models.CASCADE,null=True,related_name='Through_v2')
-    kurs_through = models.ForeignKey(Kurs,on_delete=models.CASCADE,null=True,related_name='origin_trough')
+    point_dua = models.ForeignKey(Negara,on_delete=models.CASCADE,null=True,related_name='point_dua',
+        blank=True)
+    through_vendor = models.ForeignKey(JasaPengiriman,on_delete=models.CASCADE,null=True,related_name='Through_v2',
+        blank=True)
+    kurs_through = models.ForeignKey(Kurs,on_delete=models.CASCADE,null=True,related_name='origin_trough',
+        blank=True)
     ####Destinations
     point_tiga  = models.ForeignKey(Negara,on_delete=models.CASCADE,null=True,blank=True,related_name='point_tiga' )
     destinations_vendor = models.ForeignKey(JasaPengiriman,on_delete=models.CASCADE,null=True,related_name='destinatioin_v3')
     kurs_destinations = models.ForeignKey(Kurs,on_delete=models.CASCADE,null=True,related_name='origin_destinastions')
-
 
     tgl_aktif = models.DateField(blank=True, null=True)
     status = models.CharField(max_length=20,choices=STATUS,null=True,blank=True,default=0)
@@ -113,9 +127,28 @@ class Produk(models.Model):
         db_table = 'produk'
         verbose_name= 'Produk'
         verbose_name_plural =verbose_name
+        
+    def counter_produk(self):
+        tot = 0
+        try:
+            skr = datetime.date.today()
+            count = Produk.objects.filter(tgl_aktif__year=skr.year).count()
+            cekkr = Produk.objects.filter(tgl_aktif__year=skr.year).latest('id_prod')
+            if count >= 1:
+                tot = cekkr.id_prod + 1
+            else:
+                tot = 1
+        except ObjectDoesNotExist:
+            tot = 1
+        return tot
     
     def kode_produk(self):
-        return '%s %s %s Via %s' %(self.nama_produk, self.point_satu,self.point_dua,self.point_tiga)
+        if self.jumlah_vendor == '1':
+            return '%s %s' %(self.nama_produk,self.point_tiga)           
+        elif self.jumlah_vendor == '2':
+            return '%s %s %s' %(self.nama_produk, self.point_satu,self.point_tiga)
+        else:
+            return '%s %s %s Via %s' %(self.nama_produk, self.point_satu,self.point_tiga,self.point_dua)
 
     def __str__(self):
         return '%s-%s-%s' %(self.id,self.id_prod, self.kode_produk())
@@ -190,17 +223,16 @@ class ParameterDataBl(models.Model):
 ##########Parameter untuk Job
 class ParameterData(models.Model):
     products = models.ForeignKey(Produk,on_delete=models.CASCADE)
-    nilai_kurs = models.ForeignKey(Kurs,on_delete=models.CASCADE)    
+    nilai_kurs = models.ForeignKey(Kurs,on_delete=models.CASCADE,null=True,blank=True)    
     status_param = models.CharField(max_length=20,choices=STATUS,null=True,blank=True,default=0)
     tgl_aktif_param = models.DateField(blank=True, null=True)
+    j_vendor = models.CharField(choices = JUMLAH_VENDOR,max_length=20,null= True,blank=True)
     ########## Khusus Untuk Freight Solutions
     ####Pengiriman Udara
-    max_airfreight = models.FloatField(null=True,blank=True,help_text="Freigh Solution")
-    min_airfreight = models.FloatField(null=True,blank=True,help_text="Freigh Solution")
     
+    min_airfreight = models.FloatField(null=True,blank=True,help_text="Freigh Solution")
     price_min_airfreight = models.DecimalField(max_digits=12, decimal_places=2,null=True,blank=True,help_text="Freigh Solution")
     price_max_airfreight = models.DecimalField(max_digits=12, decimal_places=2,null=True,blank=True,help_text="Freigh Solution")
-    price_high_airfreight = models.DecimalField(max_digits=12, decimal_places=2,null=True,blank=True,help_text="Freigh Solution")
     
     ###### Biaya pengurusan / oprasional
     min_handling_charges = models.FloatField(null=True,blank=True,help_text="Freigh Solution",)
@@ -298,9 +330,53 @@ class ParameterData(models.Model):
     fee_collection = models.DecimalField(max_digits=12, decimal_places=2,null=True,blank=True,help_text="LOGISTIK DILI")
     fee_high_collection = models.DecimalField(max_digits=12, decimal_places=2,null=True,blank=True,help_text="LOGISTIK DILI")
     ############ Akhir khusus logistik dili
-
+    
+    ###########Gasti asih Caraka
+    min_pcs = models.FloatField(null=True,blank=True,help_text="Gasti asih caraka")
+    price_pcs= models.DecimalField(max_digits=12, decimal_places=2,null=True,blank=True,help_text="Gasti Asih caraka")
+    price_high_pcs= models.DecimalField(max_digits=12, decimal_places=2,null=True,blank=True,help_text="Gasti Asih caraka")
+    
+    min_weight = models.FloatField(null=True,blank=True,help_text="Gasti asih caraka")
+    price_weight = models.DecimalField(max_digits=12, decimal_places=2,null=True,blank=True,help_text="Gasti Asih caraka")
+    price_high_weight = models.DecimalField(max_digits=12, decimal_places=2,null=True,blank=True,help_text="Gasti Asih caraka")                                       
+    
+    min_paking = models.FloatField(null=True,blank=True,help_text="Gasti asih caraka")
+    price_paking = models.DecimalField(max_digits=12, decimal_places=2,null=True,blank=True,help_text="Gasti Asih caraka")
+    price_high_paking = models.DecimalField(max_digits=12, decimal_places=2,null=True,blank=True,help_text="Gasti Asih caraka")
+    
+    ########Warstila nedherlan
+    min_custom_learance_fee_handling= models.FloatField(null=True,blank=True,help_text="Wastila Belanda")
+    price_custom_learance_fee_handling= models.DecimalField(max_digits=12, decimal_places=2,null=True,blank=True,help_text="Wastila Belanda")
+    price_high_custom_learance_fee_handling= models.DecimalField(max_digits=12, decimal_places=2,null=True,blank=True,help_text="Wastila Belanda")
+    
+    min_heavy_weight_surcharge= models.FloatField(null=True,blank=True,help_text="Wastila Belanda")
+    price_heavy_weight_surcharge= models.DecimalField(max_digits=12, decimal_places=2,null=True,blank=True,help_text="Wastila Belanda")
+    price_high_heavy_weight_surcharge= models.DecimalField(max_digits=12, decimal_places=2,null=True,blank=True,help_text="Wastila Belanda")
+    
+    min_agent_fee= models.FloatField(null=True,blank=True,help_text="Wastila Belanda")
+    price_agent_fee= models.DecimalField(max_digits=12, decimal_places=2,null=True,blank=True,help_text="Wastila Belanda")
+    price_high_agent_fee= models.DecimalField(max_digits=12, decimal_places=2,null=True,blank=True,help_text="Wastila Belanda")
+    
+    min_delivery= models.FloatField(null=True,blank=True,help_text="Wastila Belanda")
+    price_delivery= models.DecimalField(max_digits=12, decimal_places=2,null=True,blank=True,help_text="Wastila Belanda")
+    price_high_delivery= models.DecimalField(max_digits=12, decimal_places=2,null=True,blank=True,help_text="Wastila Belanda")
+        
+    ########DHL
+    min_express_wordwide_nondoc= models.FloatField(null=True,blank=True,help_text="DHl")
+    price_express_wordwide_nondoc= models.DecimalField(max_digits=12, decimal_places=2,null=True,blank=True,help_text="DHl")
+    price_high_express_wordwide_nondoc= models.DecimalField(max_digits=12, decimal_places=2,null=True,blank=True,help_text="DHl")
+    
+    min_fuel_surcharge_dhl= models.FloatField(null=True,blank=True,help_text="DHl")
+    price_fuel_surcharge_dhl= models.DecimalField(max_digits=12, decimal_places=2,null=True,blank=True,help_text="DHl")
+    price_high_fuel_surcharge_dhl= models.DecimalField(max_digits=12, decimal_places=2,null=True,blank=True,help_text="DHl")
+    
+    min_emergency_situation= models.FloatField(null=True,blank=True,help_text="DHl")
+    price_emergency_situation= models.DecimalField(max_digits=12, decimal_places=2,null=True,blank=True,help_text="DHl")
+    price_high_emergency_situation= models.DecimalField(max_digits=12, decimal_places=2,null=True,blank=True,help_text="DHl")
+    
     cu = models.ForeignKey(user, related_name='cu_paramdata', editable=False, null=True, blank=True,on_delete=models.CASCADE)
     cdate = models.DateTimeField(auto_now_add=True)
+
 
     class Meta:
         db_table = 'parameterdata'
@@ -314,7 +390,8 @@ class Transaksi(models.Model):
     tanggal = models.DateTimeField(auto_now_add=True)
     no_pekerjaan = models.IntegerField(blank=True,null=True)
     qty = models.IntegerField(blank=True,null=True)
-    weight = models.FloatField(null=True,blank=True)
+    #weight = models.FloatField(null=True,blank=True)
+    weight = models.DecimalField(max_digits=12,decimal_places=2,null=True,blank=True )
     products = models.ForeignKey(Produk,on_delete=models.CASCADE,null=True,blank=True)
     commodity =models.ForeignKey(Commodity,blank=True,null=True,on_delete= models.CASCADE)
     re_export_shipment_one = models.CharField(max_length=30,null=True,blank=True)
@@ -334,7 +411,11 @@ class Transaksi(models.Model):
     def __str__(self):
         return '%s' %(self.no_pekerjaan)
 
-   
+    def nb_of_parcels(self):
+        return self.re_export_shipment_one_pcs + self.re_export_shipment_two_pcs
+
+    def gross_weight(self):
+        return self.re_export_shipment_one_qty + self.re_export_shipment_two_qty
         
 
     def counter_nope(self):
@@ -391,7 +472,10 @@ class Sale(models.Model):
 
 class Job(models.Model):
     tanggal_invoice = models.DateField()
-    no_invoice = models.IntegerField(blank=True,null=True)
+    #no_invoice = models.IntegerField(blank=True,null=True)
+    no_invoice = models.CharField(null=True,blank=True,max_length=50)
+    no_invoice_sl_2 = models.CharField(null=True,blank=True,max_length=50)
+    no_invoice_sl_3 = models.CharField(null=True,blank=True,max_length=50)
     transaksi = models.ForeignKey(Transaksi,on_delete=models.CASCADE)
     status_job = models.CharField(choices=STATUS_UPDATE,null=True,blank=True,max_length=50)
     tanggal_status = models.DateField(null=True,blank=True) 
@@ -402,46 +486,72 @@ class Job(models.Model):
     ####Pengiriman Udara
     
     ###### Biaya pengurusan / oprasional dan Udara Untuk Freight Solution dan Shlid
-    airfreight = models.DecimalField(max_digits=12, decimal_places=2,null=True,blank=True,default=0)
-    handling_charges = models.DecimalField(max_digits=12, decimal_places=2,null=True,blank=True,default=0)
+    airfreight = models.DecimalField(max_digits=12, decimal_places=2,null=True,blank=True,default=0,help_text="Freight")
+    handling_charges = models.DecimalField(max_digits=12, decimal_places=2,null=True,blank=True,default=0,help_text="Freight")
     ##### Biaya Asuransi
-    insurance_security_surcharge = models.DecimalField(max_digits=12, decimal_places=2,null=True,blank=True,default=0)
+    insurance_security_surcharge = models.DecimalField(max_digits=12, decimal_places=2,null=True,blank=True,default=0,help_text="Freight")
     ##biaya tambahan bahan bakar
-    fuel_surcharge = models.DecimalField(max_digits=12, decimal_places=2,null=True,blank=True,default=0)
+    fuel_surcharge = models.DecimalField(max_digits=12, decimal_places=2,null=True,blank=True,default=0,help_text="Freight")
     ###Biaya Penanganan Impor
-    import_handling_charges = models.DecimalField(max_digits=12, decimal_places=2,null=True,blank=True,default=0)
-    gst_zero_rated = models.DecimalField(max_digits=12, decimal_places=2,null=True,blank=True,default=0)
-
-    
-
+    import_handling_charges = models.DecimalField(max_digits=12, decimal_places=2,null=True,blank=True,default=0,help_text="Freight")
+    gst_zero_rated = models.DecimalField(max_digits=12, decimal_places=2,null=True,blank=True,default=0,help_text="Freight")
     ##########Akhir Khusus Untuk Freight Solutions
-
-   
+  
     ##########Khusus Untuk Sholid Logistik
     ####### Biaya Storage
-    storage_at_cost = models.DecimalField(max_digits=12, decimal_places=2,null=True,blank=True,default=0)
-    pjkp2u_sin_dps_at_cost = models.DecimalField(max_digits=12, decimal_places=2,null=True,blank=True,default=0)
-    storage_mcl_e_0389249_at_cost = models.DecimalField(max_digits=12, decimal_places=2,null=True,blank=True,default=0)
-    pjkp2u_dps_dil_at_cost = models.DecimalField(max_digits=12, decimal_places=2,null=True,blank=True,default=0)
+    storage_at_cost = models.DecimalField(max_digits=12, decimal_places=2,null=True,blank=True,default=0,help_text="Solid")
+    pjkp2u_sin_dps_at_cost = models.DecimalField(max_digits=12, decimal_places=2,null=True,blank=True,default=0,help_text="Solid")
+    storage_mcl_e_0389249_at_cost = models.DecimalField(max_digits=12, decimal_places=2,null=True,blank=True,default=0,help_text="Solid")
+    pjkp2u_dps_dil_at_cost = models.DecimalField(max_digits=12, decimal_places=2,null=True,blank=True,default=0,help_text="Solid")
     ######### Biaya Storege
-    overweight_charges_surcharge = models.DecimalField(max_digits=12, decimal_places=2,null=True,blank=True,default=0)
-    awb_fee = models.DecimalField(max_digits=12, decimal_places=2,null=True,blank=True,default=0)    
+    overweight_charges_surcharge = models.DecimalField(max_digits=12, decimal_places=2,null=True,blank=True,default=0,help_text="Solid")
+    awb_fee = models.DecimalField(max_digits=12, decimal_places=2,null=True,blank=True,default=0,help_text="Solid")    
     ########## Akhir Khusus Untuk Sholid Logistik
-    ##########Khusus Untuk Sholid Logistik
+    
         
     ############ khusus logistik dili
-    ground_handling = models.DecimalField(max_digits=12, decimal_places=2,null=True,blank=True,default=0)
-    forklift_for_heavy_cargo = models.DecimalField(max_digits=12, decimal_places=2,null=True,blank=True,default=0)
-    custom_clearance = models.DecimalField(max_digits=12, decimal_places=2,null=True,blank=True,default=0)
-    delivey_to_hera = models.DecimalField(max_digits=12, decimal_places=2,null=True,blank=True,default=0)
-    akses_bandara_inspeksi = models.DecimalField(max_digits=12, decimal_places=2,null=True,blank=True,default=0)
-    handling_fee = models.DecimalField(max_digits=12, decimal_places=2,null=True,blank=True,default=0)
-    admin_fee = models.DecimalField(max_digits=12, decimal_places=2,null=True,blank=True,default=0) 
-    fee_collection = models.DecimalField(max_digits=12, decimal_places=2,null=True,blank=True,default=0)
+    ground_handling = models.DecimalField(max_digits=12, decimal_places=2,null=True,blank=True,default=0,help_text="Dili")
+    forklift_for_heavy_cargo = models.DecimalField(max_digits=12, decimal_places=2,null=True,blank=True,default=0,help_text="Dili")
+    custom_clearance = models.DecimalField(max_digits=12, decimal_places=2,null=True,blank=True,default=0,help_text="Dili")
+    delivey_to_hera = models.DecimalField(max_digits=12, decimal_places=2,null=True,blank=True,default=0,help_text="Dili")
+    akses_bandara_inspeksi = models.DecimalField(max_digits=12, decimal_places=2,null=True,blank=True,default=0,help_text="Dili")
+    handling_fee = models.DecimalField(max_digits=12, decimal_places=2,null=True,blank=True,default=0,help_text="Dili")
+    admin_fee = models.DecimalField(max_digits=12, decimal_places=2,null=True,blank=True,default=0,help_text="Dili") 
+    fee_collection = models.DecimalField(max_digits=12, decimal_places=2,null=True,blank=True,default=0,help_text="Dili")
     ############ Akhir khusus logistik dili
+    
+    ###########Gasti asih Caraka
+    jenis = models.CharField(choices = JENISPRODUK,max_length=20,null= True,blank= True)
+    amount = models.DecimalField(max_digits=12, decimal_places=2,null=True,blank=True,default=0,help_text="Gasti asih caraka")
+    pcs = models.DecimalField(max_digits=12, decimal_places=2,null=True,blank=True,default=0,help_text="Gasti asih caraka")
+    weight = models.DecimalField(max_digits=12, decimal_places=2,null=True,blank=True,default=0,help_text="Gasti asih caraka")
+    paking = models.DecimalField(max_digits=12, decimal_places=2,null=True,blank=True,default=0,help_text="Gasti asih caraka")
+    
+    ###########LintasNegara
+    transit_charge = models.DecimalField(max_digits=12, decimal_places=2,null=True,blank=True,default=0,help_text="Lintas Negara")
+    transportations_charge = models.DecimalField(max_digits=12, decimal_places=2,null=True,blank=True,default=0,help_text="Lintas Negara")
+
+    ###########AntarLapan
+    cbm = models.DecimalField(max_digits=12, decimal_places=2,null=True,blank=True,default=0,help_text="ANTAR LAPAN")
+    twentyft = models.DecimalField(max_digits=12, decimal_places=2,null=True,blank=True,default=0,help_text="ANTAR LAPAN")
+    blfee = models.DecimalField(max_digits=12, decimal_places=2,null=True,blank=True,default=0,help_text="ANTAR LAPAN")
+    biaya_peb = models.DecimalField(max_digits=12, decimal_places=2,null=True,blank=True,default=0,help_text="ANTAR LAPAN")
+
+    ########Warstila nedherlan
+    custom_learance_fee_handling = models.DecimalField(max_digits=12, decimal_places=2,null=True,blank=True,default=0,help_text="Wastila belanda")
+    heavy_weight_surcharge =  models.DecimalField(max_digits=12, decimal_places=2,null=True,blank=True,default=0,help_text="Wastila belanda")
+    agent_fee = models.DecimalField(max_digits=12, decimal_places=2,null=True,blank=True,default=0,help_text="Wastila belanda")
+    delivery = models.DecimalField(max_digits=12, decimal_places=2,null=True,blank=True,default=0,help_text="Wastila belanda")
+    
+    ########DHL
+    express_wordwide_nondoc =models.DecimalField(max_digits=12, decimal_places=2,null=True,blank=True,default=0,help_text="DHL")
+    fuel_surcharge_dhl =models.DecimalField(max_digits=12, decimal_places=2,null=True,blank=True,default=0,help_text="DHL")
+    emergency_situation  =models.DecimalField(max_digits=12, decimal_places=2,null=True,blank=True,default=0,help_text="DHL")
+    
     cu = models.ForeignKey(user, related_name='cu_job', editable=False, null=True, blank=True,on_delete=models.CASCADE)
     cu_update = models.ForeignKey(user, related_name='cu_jobup', null=True, blank=True,on_delete=models.CASCADE)
     cdate = models.DateTimeField(auto_now_add=True)
+
 
     class Meta:
         db_table = 'job'
@@ -472,5 +582,11 @@ class Job(models.Model):
 
     def total_sl_tree(self):
         return self.handling_charges + self.handeling_sl_kali_vat() 
+
+    def total_lintas_negara(self):
+        return self.transit_charge + self.transportations_charge    
+
+    def total_antarlapan(self):
+        return self.cbm + self.twentyft + self.blfee + self.biaya_peb 
 
     ####Untuk Vendor Solid Logistik

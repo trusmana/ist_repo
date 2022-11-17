@@ -1,0 +1,113 @@
+{% extends 'layouts/base_jurnal.html' %}
+{% block title %}Jurnal{% endblock %}
+{% block extrahead %}
+{% include "alat/jurnal_gl.html" %}
+{% endblock %}
+{% block content %}
+<style type="text/css">
+    div.item_jurnal { width: 48%; border-bottom: solid 2px #999; border-top: solid 2px #999;}
+    div#debet { float: left;}
+    div#kredit { float: right; }
+    </style>
+{% load humanize %}
+<div id="jCrumbs" class="breadCrumb module">
+    <ul>
+        <li>
+            <a href=""><i class="icon-home"></i></a>
+        </li>
+        <li>
+            GL GL Transaksi
+        </li>
+    </ul>
+</div>
+<h3 class="heading">GL GL Transaksi</h3>
+    <form action="." method="POST" class="form-inline" id="form_jurnal">{% csrf_token %}
+     <p id="selisih_jurnal" title="Selisih Debet Kredit" style="float: right; font-size:1.7em;font-weight: bold;">0</p>
+            {{ form.as_p }}
+            <hr>
+            <table id="id_orders_table" border="0" cellpadding="0" cellspacing="5">
+                <thead>
+                    <tr>
+                        <th>Kode COA</th><th></th>
+                        <th scope="col">Keterangan</th>
+                        <th scope="col">Debet</th>
+                        <th scope="col">Kredit</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for form in formset.forms %}
+                    <tr id="{{ form.prefix }}-row">
+                        <td>
+                            {% for fld in form.hidden_fields %}{{ fld }}{% endfor %}
+                            {% if form.instance.pk %}{{ form.DELETE }}{% endif %}
+                            {{ form.koderekening }}
+                        </td>
+                        <td>{{ form.id_cabang }}</td>
+                        <td>{{ form.deskripsi }}</td>
+                        <td>{{ form.debet }}</td>
+                        <td>{{ form.kredit }}</td>
+                        
+                    </tr>
+                    {% endfor %}
+                </tbody>
+                <tfoot>
+                    <td>{{ formset.management_form }}
+                    <br>
+                    <input type="submit" id="id_simpan" value="&radic; Tambah" class="simpan btn btn-primary"/>
+                    </td>
+                    <td></td><td></td>
+                    <td align="right"><b><span id="total_debet">0</span></b></td>
+                    <td align="right"><b><span id="total_kredit">0</span></b></td></tr>
+                </tfoot>
+            </table>
+        </form>
+
+
+<h3 align="center">Data Transaksi</h3>
+<form method="POST" action="/jurnal-post-gl/">{% csrf_token %}
+<table class="table table-bordered">
+<thead>
+    <tr>
+      <th><input id="select_all" type="checkbox" align="center"></th>
+      
+      <th>Kode Account</th>
+      <th>No Bukti</th>
+      <th>Keterangan</th>          
+      <th>Debet(Rp)</th>
+      <th>Kredit(Rp)</th>
+      <th>Menu</th>
+    </tr>
+</thead>
+    
+    <tbody>
+    {% regroup show by jurnal as grouped %}
+    {% for group in grouped %}
+    {% for p in group.list %}
+        <tr style="background-color: {% ifchanged group.list %}{% cycle "#CCFFFF" "white" as rowcolors %}{% else %}
+            {{ rowcolors }}{% endifchanged %}">
+            {% ifchanged %}<td rowspan="{{ group.list|length }}"><input type="checkbox"  value="{{ p.jurnal.id }}" class="checkbox_delete" name='id_pilih' /></td>
+            {% endifchanged %}
+            <td>{{p.id_coa}}</td>
+            <td>{{p.no_trans}}</td>            
+            <td>{% if forloop.counter %}<i>{{p.deskripsi}}</i>{% endif %}</td>
+            <td align="right">{{ p.debet|intcomma }}</td>
+            <td align="right">{{ p.kredit|intcomma }}</td>
+            {% ifchanged %} <td rowspan="{{ group.list|length }}" align="center"><a href="/{{p.jurnal.id}}/hapus_gl/" class="btn btn-danger">Batal</a></td>{% endifchanged %}
+        </tr>
+    {% endfor %}
+    {% endfor %}
+    </tbody>
+  <tfoot>
+  <tr>
+        <td colspan="7" align="right"><input type="submit" value="&radic; Simpan" class="btn btn-primary" /></td>
+  </tr>
+  </tfoot>
+</table>
+</form>
+
+
+
+{% endblock %}
+
+
+

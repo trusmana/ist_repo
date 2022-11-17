@@ -7,6 +7,7 @@ from django.contrib.auth.decorators import login_required,user_passes_test
 from django.http import JsonResponse,HttpResponse,QueryDict
 from django.template.loader import render_to_string
 from django.urls import reverse
+import datetime
 
 from apps.utils import set_pagination
 from apps.products.models import Produk
@@ -75,7 +76,7 @@ class list_product(View):
                     else:
                         filter_params |= Q(nama_produk__icontains=key.strip())
 
-        produk = Produk.objects.filter(filter_params) if filter_params else Produk.objects.all().order_by('-id')
+        produk = Produk.objects.filter(filter_params) if filter_params else Produk.objects.filter(jumlah_vendor=3).order_by('-id')
 
         self.context['produk'], self.context['info'] = set_pagination(request, produk)
         if not self.context['produk']:
@@ -134,10 +135,11 @@ def addproduk(request):
         if form.is_valid():
             prod = form.save(commit=False)
             prod.cu = user
+            prod.id_prod = prod.counter_produk()
             prod.save()
-            messages.add_message(request, messages.INFO,'Data Produk Berhasil Di Input', 'alert-success')
+            messages.success(request,'Data Produk Berhasil Di Input')
             return redirect('d-produk')
     else:
-        form = ProdukForm()
+        form = ProdukForm(initial={'tgl_aktif':datetime.date.today(),'nama_produk':"SHIPMENT"})
     return render(request,'report/produk/add_produk.html',{'form':form})
 

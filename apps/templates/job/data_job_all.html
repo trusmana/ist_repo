@@ -1,0 +1,267 @@
+{% extends "layouts/base.html" %}
+{% block title %} DataJobAll{% endblock title %}
+{% block extrahead %}
+{% endblock extrahead %}
+{% load humanize %}
+{% load static %}
+{% block content %}
+<div id="jCrumbs" class="breadCrumb module">
+    <ul>
+        <li>
+            <a href="/"><i class="icon-home"></i></a>
+        </li>
+        <li>
+            <a href="{% url 'd-job' %}">Data Job</a>
+        </li>
+        <li>
+            Detail Job
+        </li>
+    </ul>
+</div>
+<div class="row-fluid">
+    <div class="span12">
+        <h3 class="heading">Detail Job</h3>
+		<table class="table table-bordered table-striped table_vam" id="dt_gal">
+			<thead>
+				<tr>
+					<th>#</th>
+					<th>Tanggal</th>
+					<th>Nomor</th>
+					<th>Qty</th>
+					<th>Produk </th>
+					<th>Commodity</th>
+				</tr>
+			</thead>
+			<tbody>
+                <tr>
+                    <td>{{data.id}}</td>
+                    <td>{{data.tanggal}}</td>
+                    <td>{{data.no_pekerjaan}}</td>
+                    <td>{{data.qty}}</td>
+                    <td>{{data.products}}</td>
+                    <td>{{data.commodity.nama}}</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+<div class="row-fluid">
+    <div class="span12">
+        {% for data in  data.sale_set.all %}
+        <h3 class="heading"><a href="{% url 'e-jual' data.id %}">{{data.prod.vendor}}</a> | 
+            <a href="{% url 'ctk-job-buy' data.id %}">Invoice</a>
+        </h3>
+        <table class="table table-bordered table-striped table_vam">
+            <tr>
+                <td colspan='6'><div class="text-center act-info">{{data.trans.products}}</div></td>
+            </tr>    
+            <tr>
+                <td rowspan='2'><div class="text-center"><b>{{data.prod.vendor}}</b></div></td>
+                <td rowspan='2' colspan='2'></td>
+                <td><div class="text-center">Tanggal Invoice</div></td>
+                <td><div class="text-center">Nomor Invoice</div></td>
+                <td><div class="text-center">Job Number</div></td>
+            </tr>
+            <tr>
+                <td><div class="text-center">{{data.tanggal_invoice|date:'d-M-Y'}}</div></td>
+                <td><div class="text-center">{{data.no_invoice}}</div></td>
+                <td><div class="text-center">{{data.transaksi.no_pekerjaan}}</div></td>
+            </tr>
+            <tr>
+                <td><div class="text-center"> Detail Charges</div></td>
+                <td colspan="2"><div class="text-center">Currency </div></td>
+                <td><div class="text-center">Price </div> </td>
+                <td colspan="2"><div class="text-center"> Amount</div></td>
+            </tr>
+            <tr>
+                <td> <b> {{data.trans.re_export_shipment_one }} ({{data.trans.re_export_shipment_one_pcs}} / {{data.trans.re_export_shipment_one_qty}} ) </b></td>
+                <td colspan='2'>{{data.trans.re_export_shipment_one_qty}}</td><td></td>
+                <td></td>
+                <td></td>
+            </tr>
+            <tr>
+                <td>Airfreight Import Handling</td>
+                <td colspan='2'>1.00 AWB</td><td></td>
+                <td></td>
+                <td><div class="text-right">{{data.airfreight_one|intcomma}}</div></td>
+            </tr>
+            <tr>
+                <td>Cartage and Warehouse Charge</td>
+                <td colspan='2'>{{data.trans.re_export_shipment_one_qty}}</td>
+                <td><div class="text-right">{{data.prod.nilai_kurs}} {{data.prod.price_cartage_and_warehouse_charge}}</div></td>
+                <td></td>                
+                <td><div class="text-right">{{data.cartage_warehouse_charge_one|intcomma }}</div></td>
+            </tr>
+            <tr>
+                <td> <b> {{data.trans.re_export_shipment_two }} ({{data.trans.re_export_shipment_two_pcs}} / {{data.trans.re_export_shipment_two_qty}} ) </b></td>
+                <td colspan='2'>{{data.trans.re_export_shipment_two_qty}}</td><td></td>
+                <td></td>
+                <td></td>
+            </tr>
+            <tr>
+                <td>Airfreight Import Handling</td>
+                <td colspan='2'>1.00 AWB</td><td></td>
+                <td></td>
+                <td><div class="text-right">{{data.airfreight_two|intcomma}}</div></td>
+            </tr>
+            <tr>
+                <td>Cartage and Warehouse Charge</td>
+                <td colspan='2'>{{data.trans.re_export_shipment_two_qty}}</td>
+                <td><div class="text-right">{{data.prod.nilai_kurs}} {{data.prod.price_cartage_and_warehouse_charge}}</div></td>
+                <td></td>                
+                <td><div class="text-right">{{data.cartage_warehouse_charge_two|intcomma }}</div></td>
+            </tr>
+            <tr>
+                <td>Export Handling</td>
+                <td colspan='2'>1.00 AWB</td><td></td>
+                <td></td>
+                <td><div class="text-right">{{data.export_handling|intcomma}}</div></td>
+            </tr>
+            <tr>
+                <td>{{data.trans.products.get_jenis_produk_display}} {{data.trans.products.point_satu}} - {{data.trans.products.point_dua}} - {{data.trans.products.point_tiga}}</td>
+                <td colspan='2'>{{data.trans.weight}}</td>
+                <td>{{data.nilai_kurs.mtu.kode_matauang}}</td>
+                <td></td>                
+                <td><div class="text-right">{{data.freight|intcomma}}</div></td>
+            </tr>
+            <tr>
+                <td><b>Local Handling Charge</b></td>
+                <td colspan='2'></td><td></td>
+                <td></td>
+                <td><div class="text-right"></div></td>
+            </tr>
+            <tr>
+                <td>Doc and Clearance</td>
+                <td colspan='2'>1.00 AWB</td>
+                <td><div class="text-right">{{data.prod.nilai_kurs}} {{data.prod.price_doc_and_clearance}}</div></td>
+                <td></td>                
+                <td><div class="text-right">{{data.doc_clearance|intcomma}}</div></td>
+            </tr>
+            <tr>
+                <td>Ground Handling</td>
+                <td colspan='2'>{{data.trans.weight}}</td>
+                <td><div class="text-right">{{data.prod.nilai_kurs}} {{data.prod.price_ground_handling}}</div></td>
+                <td></td>                
+                <td><div class="text-right">{{data.ground_handling|intcomma}}</div></td>
+            </tr>
+            <tr>
+                <td>Warehouse Charge </td>
+                <td colspan='2'>{{data.trans.weight}}</td>
+                <td><div class="text-right">{{data.prod.nilai_kurs}} {{data.prod.price_warehouse_charge}}</div></td>
+                <td></td>                
+                <td><div class="text-right">{{data.warehouse_charge|intcomma}}</div></td>
+            </tr>
+            <tr>
+                <td>Handling Charge</td>
+                <td colspan='2'>{{data.trans.weight}}</td>
+                <td><div class="text-right">{{data.prod.nilai_kurs}} {{data.prod.price_handling_charge }}</div></td>
+                <td></td>                
+                <td><div class="text-right">{{data.handling_charge|intcomma}}</div></td>
+            </tr>
+            <tr>
+                <td>Delivery</td>
+                <td colspan='2'>{{data.trans.weight}}</td>
+                <td><div class="text-right">{{data.prod.nilai_kurs}} {{data.prod.price_delivery }}</div></td>
+                <td></td>                
+                <td><div class="text-right">{{data.delivery|intcomma}}</div></td>
+            </tr>
+            <tr>
+                <td>Duty Tax</td>
+                <td colspan='2'>{{data.trans.weight}}</td><td></td>
+                <td></td>
+                <td><div class="text-right">{{data.duty_tax |intcomma}}</div></td>
+            </tr>
+            <tr>
+                <td>Tax Handling Charge</td>
+                <td colspan='2'></td><td></td>
+                <td></td>
+                <td><div class="text-right">{{data.tax_handling_charge|intcomma}}</div></td>
+            </tr>
+            <tr>
+                <td></td>
+                <td colspan='2'></td><td></td>
+                <td><b>Total {{data.nilai_kurs.mtu.kode_matauang}}</b></td>
+                <td><div class="text-right act-danger">{{data.total_sale|intcomma}}</div></td>
+            </tr>
+        </table>
+        {% endfor %}
+    </div>
+</div>
+
+<div class="row-fluid">
+    <div class="span12">
+        <div class="row-fluid">
+            {% for data in  data.job_set.all %}
+            {% if data.vendor.id == 1 %}
+                {% include "job/pervendor/fred_table.html" %}
+            {% endif  %}
+            {% endfor %}
+        </div>
+    </div>
+</div>
+<div class="row-fluid">
+    <div class="span12">
+        <div class="row-fluid">
+            {% for data in  data.job_set.all %}
+            {% if data.vendor.id == 5 %}
+                {% include "job/pervendor/dl_table.html" %}          
+            {% endif %}
+
+            {% endfor %}
+        </div>
+    </div>
+</div>
+
+<div class="row-fluid">
+    <div class="span12">
+        <div class="row-fluid">
+            {% for data in  data.job_set.all %}
+            {% if data.vendor.id == 3 %}
+                {% include "job/pervendor/solid_table.html" %}          
+            {% endif %}
+
+            {% endfor %}
+        </div>
+    </div>
+</div>
+<div class="row-fluid">
+    <div class="span12">
+        <div class="row-fluid">
+            {% for data in  data.job_set.all %}
+            
+            {% if data.vendor.id == 10 %}
+                {% include "job/pervendor/gastiasih_table.html" %}
+            {% endif  %}
+            
+            {% endfor %}
+        </div>
+    </div>
+</div>
+<div class="row-fluid">
+    <div class="span12">
+        <div class="row-fluid">
+            {% for data in  data.job_set.all %}
+            
+            {% if data.vendor.id == 18 %}
+                {% include "job/pervendor/lintasnegara_table.html" %}
+            {% endif  %}
+            
+            {% endfor %}
+        </div>
+    </div>
+</div>
+<div class="row-fluid">
+    <div class="span12">
+        <div class="row-fluid">
+            {% for data in  data.job_set.all %}
+            
+            {% if data.vendor.id == 19 %}
+                {% include "job/pervendor/antarlapan_table.html" %}
+            {% endif  %}
+            
+            {% endfor %}
+        </div>
+    </div>
+</div>
+
+{% endblock %}

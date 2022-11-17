@@ -7,7 +7,7 @@
 {% block content %}
 <div class="row-fluid">
   <div class="span12">
-      <h3 class="heading">Aktifitas Dari Dua Bulan Terakhir </a>
+      <h3 class="heading">Aktifitas Dari Awal Tahun </a>
       </div>
     </div>      
 <div class="row-fluid">
@@ -16,43 +16,29 @@
       <li>
         <div class="p_bar_up p_canvas">2,4,9,7,12,8,16</div>
         <div class="ov_text">
-          <strong>{{buku}} / {{bk_to}} </strong>
-          On Proses
+          <strong>{{tr}} Pekerjaan </strong>
+          Total Data Pekerjaan
         </div>
       </li>
       <li>
         <div class="p_bar_down p_canvas">20,15,18,14,10,13,9,7</div>
         <div class="ov_text">
-          <strong>{{anggota}} Orang</strong>
-          Daftar Anggota
+          <strong>{{on_proses}} Pekerjaan</strong>
+          Total Data Onproses
         </div>
       </li>
       <li>
         <div class="p_line_up p_canvas">3,5,9,7,12,8,16</div>
         <div class="ov_text">
-          <strong>{{pinjam}} Buku</strong>
-          Daftar Pinjaman Buku
+          <strong>{{j_done}} Pekerjaan</strong>
+          Total Pekerjaan Selesai
         </div>
       </li>
       <li>
         <div class="p_line_down p_canvas">20,16,14,18,15,14,14,13,12,10,10,8</div>
         <div class="ov_text">
-          <strong>{{scripsi}} Orang</strong>
-          Daftar Penyerahan Skripsi
-        </div>
-      </li>
-      <li>
-        <div class="p_bar_down p_canvas">20,15,5,17,10,18,9,7</div>
-        <div class="ov_text">
-          <strong>50 Orang</strong>
-          Daftar Kunjungan
-        </div>
-      </li>
-      <li>
-        <div class="p_bar_up p_canvas">2,4,6,8,12,8,14</div>
-        <div class="ov_text">
-          <strong>Rp {{denda}} </strong>
-          Pendapatan Denda 
+          <strong>{{invoice}} Invoce</strong>
+          Total Invoce 
         </div>
       </li>
     </ul>
@@ -61,16 +47,12 @@
 <div class="row-fluid">
   <div class="span12">
     <ul class="dshb_icoNav clearfix">
-      
-      <li><a href="javascript:void(0)" style="background-image: url(/static/paket/img/gCons/multi-agents.png)"><span class="label label-info">+{{anggota}}</span> Anggota</a></li>
-      <li><a href="javascript:void(0)" style="background-image: url(/static/paket/img/gCons/world.png)">Map</a></li>
-      <li><a href="javascript:void(0)" style="background-image: url(/static/paket/img/gCons/configuration.png)">Settings</a></li>
-      <li><a href="javascript:void(0)" style="background-image: url(/static/paket/img/gCons/lab.png)">Lab</a>
-      <li><a href="javascript:void(0)" style="background-image: url(/static/paket/img/gCons/van.png)"><span class="label label-success">$2851</span> Delivery</a></li>
-      <li><a href="javascript:void(0)" style="background-image: url(/static/paket/img/gCons/pie-chart.png)">Charts</a></li>
-      <li><a href="javascript:void(0)" style="background-image: url(/static/paket/img/gCons/edit.png)">Add New Article</a></li>
-      <li><a href="javascript:void(0)" style="background-image: url(/static/paket/img/gCons/add-item.png)"> Add New Page</a></li>
-      <li><a href="javascript:void(0)" style="background-image: url(/static/paket/img/gCons/chat-.png)"><span class="label label-important">26</span> Comments</a></li>
+      <li><a href="{% url 'd-negara' %}" style="background-image: url(/static/paket/img/gCons/world.png)"><span class="label label-info">+{{ng}}</span>Negara</a></li>
+      <li><a href="{% url 'transactions' %}" style="background-image: url(/static/paket/img/gCons/lab.png)"><span class="label label-important">+{{mt}}</span>Mata Uang</a>
+      <li><a href="{% url 'd-kurs' %}" style="background-image: url(/static/paket/img/gCons/configuration.png)"><span class="label label-info">+{{kurs}}</span>Kurs</a></li>
+      <li><a href="{% url 'd-pengiriman' %}" style="background-image: url(/static/paket/img/gCons/van.png)"><span class="label label-success">{{vd}}</span> Vendor</a></li>
+      <li><a href="{% url 'd-produk' %}" style="background-image: url(/static/paket/img/gCons/multi-agents.png)"><span class="label label-info">+{{pr}}</span> Produk</a></li>
+      <li><a href="{% url 'd-param' %}" style="background-image: url(/static/paket/img/gCons/chat-.png)"><span class="label label-important">{{pr}}</span> Parameter Job</a></li>
     </ul>
   </div>
 </div>

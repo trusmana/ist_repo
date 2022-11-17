@@ -1,21 +1,19 @@
 from django import forms
 
-from apps.products.models import JENISPRODUK, STATUS, STATUS_UPDATE, Commodity, \
-    JasaPengiriman, Negara, ParameterData, ParameterDataBl, Produk
+from apps.products.models import JENISPRODUK, STATUS_UPDATE, Commodity, \
+    JasaPengiriman, Negara, ParameterData, ParameterDataBl, Produk,JUMLAH_VENDOR
 
-class UpdateForm(forms.Form):
-    tanggal= forms.DateField(label="Tanggal", widget=forms.DateInput(
-        attrs={'class': 'span10 ','readonly':True}))
-    status = forms.ChoiceField(choices=STATUS_UPDATE)
-
-
+class JvendorForm(forms.Form):
+    jvendor = forms.ChoiceField(choices=JUMLAH_VENDOR)
+    
+    
 class PengajuanForm(forms.Form):
     tanggal = forms.DateField(label="Tanggal", widget=forms.DateInput(
         attrs={'class': 'form-control ','readonly':True}))
     jenis_produk = forms.ChoiceField(label='Jenis Pengiriman',widget = forms.Select(attrs={'class':'form-control chosen-select'}),
         choices = JENISPRODUK)    
-    products = forms.ModelChoiceField(queryset=Produk.objects.filter(status='1'),
-        widget=forms.Select(attrs={'class':'form-control chosen-select'}))
+    products = forms.ModelChoiceField(queryset=Produk.objects.filter(status='1',jumlah_vendor = 3),
+        widget=forms.Select(attrs={'class':'form-control span5 chosen-select'}))
     poin_satu = forms.ModelChoiceField(label="Origin",queryset=Negara.objects.filter(status='1'),
         widget=forms.Select(attrs={'class':'form-control chosen-select'}))
     origin_vendor = forms.ModelChoiceField(label="Vendor Origin",queryset=JasaPengiriman.objects.filter(status='1'),
@@ -29,14 +27,48 @@ class PengajuanForm(forms.Form):
     destinations_vendor = forms.ModelChoiceField(label="Vendor Destinations",queryset=JasaPengiriman.objects.filter(status='1'),
         widget=forms.Select(attrs={'class':'form-control chosen-select'}))
 
+class PengajuanSatuForm(forms.Form):
+    tanggal = forms.DateField(label="Tanggal", widget=forms.DateInput(
+        attrs={'class': 'form-control ','readonly':True}))
+    jenis_produk = forms.ChoiceField(label='Jenis Pengiriman',widget = forms.Select(attrs={'class':'form-control chosen-select'}),
+        choices = JENISPRODUK)    
+    products = forms.ModelChoiceField(queryset=Produk.objects.filter(status=1,jumlah_vendor =1),
+        widget=forms.Select(attrs={'class':'form-control span5 chosen-select'}))
+    poin_tiga = forms.ModelChoiceField(label="Destinations",queryset=Negara.objects.filter(status='1'),
+        widget=forms.Select(attrs={'class':'form-control chosen-select'}))
+    destinations_vendor = forms.ModelChoiceField(label="Vendor Destinations",queryset=JasaPengiriman.objects.filter(status='1'),
+        widget=forms.Select(attrs={'class':'form-control chosen-select'}))
+
+class PengajuanDuaForm(forms.Form):
+    tanggal = forms.DateField(label="Tanggal", widget=forms.DateInput(
+        attrs={'class': 'form-control ','readonly':True}))
+    jenis_produk = forms.ChoiceField(label='Jenis Pengiriman',widget = forms.Select(attrs={'class':'form-control chosen-select'}),
+        choices = JENISPRODUK)    
+    products = forms.ModelChoiceField(queryset=Produk.objects.filter(status='1',jumlah_vendor =2),
+        widget=forms.Select(attrs={'class':'form-control span5 chosen-select'}))
+    poin_satu = forms.ModelChoiceField(label="Origin",queryset=Negara.objects.filter(status='1'),
+        widget=forms.Select(attrs={'class':'form-control chosen-select'}))
+    origin_vendor = forms.ModelChoiceField(label="Vendor Origin",queryset=JasaPengiriman.objects.filter(status='1'),
+        widget=forms.Select(attrs={'class':'form-control chosen-select'}))
+    poin_tiga = forms.ModelChoiceField(label="Destinations",queryset=Negara.objects.filter(status='1'),
+        widget=forms.Select(attrs={'class':'form-control chosen-select'}))
+    destinations_vendor = forms.ModelChoiceField(label="Vendor Destinations",queryset=JasaPengiriman.objects.filter(status='1'),
+        widget=forms.Select(attrs={'class':'form-control chosen-select'}))
+
+
+class UpdateForm(forms.Form):
+    tanggal= forms.DateField(label="Tanggal", widget=forms.DateInput(
+        attrs={'class': 'span10 ','readonly':True}))
+    status = forms.ChoiceField(choices=STATUS_UPDATE)
+
 
 ##########Akhir Khusus Untuk Freight Solutions
 class FSForm(forms.Form):
     tgl_fs = forms.DateField(label="Tanggal Invoice", widget=forms.DateInput(
         attrs={'class': 'form-control '}))
 
-    no_invoice_fs = forms.IntegerField(label='No Invoice',widget=forms.TextInput(attrs={'class':'input-small',
-        'alt':'integer','placeholder':'No Invoice'}))
+    no_invoice_fs = forms.CharField(label='No Invoice',widget=forms.TextInput(attrs={'class':'input-small',
+        'placeholder':'No Invoice'}))
     qt_fs = forms.IntegerField(label='Quantity',widget=forms.TextInput(attrs={'class':'input-small',
         'alt':'integer','placeholder':'QTY'}))
     products = forms.ModelChoiceField(queryset=Produk.objects.filter(status='1'),
@@ -46,7 +78,7 @@ class FSForm(forms.Form):
     param = forms.ModelChoiceField(queryset=ParameterData.objects.filter(status_param='1'),
         widget=forms.Select(attrs={'class':'form-control ','readonly':True}))    
 
-    weight_fs = forms.IntegerField(label='Weight',widget=forms.TextInput(attrs={'alt': 'integer',
+    weight_fs = forms.DecimalField(label='Weight',widget=forms.TextInput(attrs={
         'class':'uang input-small','onkeyup':'cek_nilai();cek_nilai_handling();cek_insurance_security()\
         ;cek_fuel_surcharge();cek_import_handling_charges();cek_gst_zero_rated()'}))
     
@@ -70,31 +102,36 @@ class SLForm(forms.Form):
     tgl_sl = forms.DateField(label="Tanggal Invoice", widget=forms.DateInput(
         attrs={'class': 'form-control '}))
 
-    no_invoice_sl = forms.IntegerField(label='No Invoice',widget=forms.TextInput(attrs={'class':'input-small',
-        'alt':'integer','placeholder':'No Invoice'}))   
+    no_invoice_sl = forms.CharField(label='No Invoice',widget=forms.TextInput(attrs={'class':'input-small',
+        'placeholder':'No Invoice'}))
+    no_invoice_sl_2 = forms.CharField(label='No Invoice',widget=forms.TextInput(attrs={'class':'input-small',
+        'alt':'integer','placeholder':'No Invoice Dua'}))
+    no_invoice_sl_3 = forms.CharField(label='No Invoice',widget=forms.TextInput(attrs={'class':'input-small',
+        'alt':'integer','placeholder':'No Invoice Tiga'}))   
 
-    weight_sl = forms.IntegerField(label='Weight',widget=forms.TextInput(attrs={'alt': 'integer',
+
+    weight_sl = forms.DecimalField(label='Weight',widget=forms.TextInput(attrs={
         'class':'uang input-small','onkeyup':'cek_price_storage_at_cost();cek_pjkp2u_sin_dps_at_cost();\
         cek_storage_mcl_e_0389249_at_cost();cek_pjkp2u_dps_dil_at_cost();cek_airfreight_charges();\
         cek_currency_overweight_charges_surcharg();cek_currency_awb_fee();cek_currency_handling_charges()'}))
 
-    price_storage_at_cost = forms.DecimalField(label = 'Storage At Cost',widget=forms.TextInput(attrs={'class':'input-small uang ttip_t',
+    price_storage_at_cost = forms.IntegerField(label = 'Storage At Cost',widget=forms.TextInput(attrs={'class':'input-small uang ttip_t',
         'alt':'integer'}))
-    price_pjkp2u_sin_dps_at_cost = forms.DecimalField(label= 'Handling IN',widget=forms.TextInput(attrs={'class':'input-small uang ttip_t',
+    price_pjkp2u_sin_dps_at_cost = forms.IntegerField(label= 'Handling IN',widget=forms.TextInput(attrs={'class':'input-small uang ttip_t',
         'alt':'integer'}))
-    price_storage_mcl_e_0389249_at_cost = forms.DecimalField(widget=forms.TextInput(attrs={'class':'input-small uang ttip_t',
+    price_storage_mcl_e_0389249_at_cost = forms.IntegerField(widget=forms.TextInput(attrs={'class':'input-small uang ttip_t',
         'alt':'integer'}))
-    price_pjkp2u_dps_dil_at_cost = forms.DecimalField(label='Handling Out',widget=forms.TextInput(attrs={'class':'input-small uang ttip_t',
+    price_pjkp2u_dps_dil_at_cost = forms.IntegerField(label='Handling Out',widget=forms.TextInput(attrs={'class':'input-small uang ttip_t',
         'alt':'integer'}))
     ######### Biaya Storege
-    price_airfreight_charges = forms.DecimalField(widget=forms.TextInput(attrs={'class':'input-small uang ttip_t',
+    price_airfreight_charges = forms.IntegerField(widget=forms.TextInput(attrs={'class':'input-small uang ttip_t',
         'alt':'integer'}))
     ###didiyeu
-    price_overweight_charges_surcharge = forms.DecimalField(widget=forms.TextInput(attrs={'class':'input-small uang ttip_t',
+    price_overweight_charges_surcharge = forms.IntegerField(widget=forms.TextInput(attrs={'class':'input-small uang ttip_t',
         'alt':'integer'}))
-    price_awb_fee = forms.DecimalField(widget=forms.TextInput(attrs={'class':'input-small uang ttip_t',
+    price_awb_fee = forms.IntegerField(widget=forms.TextInput(attrs={'class':'input-small uang ttip_t',
         'alt':'integer'}))
-    price_handling_charges_sl = forms.DecimalField(widget=forms.TextInput(attrs={'class':'input-small uang ttip_t',
+    price_handling_charges_sl = forms.IntegerField(widget=forms.TextInput(attrs={'class':'input-small uang ttip_t',
         'alt':'integer'}))
 
 class DLForm(forms.Form):
@@ -102,10 +139,10 @@ class DLForm(forms.Form):
     tgl_dl = forms.DateField(label="Tanggal Invoice", widget=forms.DateInput(
         attrs={'class': 'form-control '}))
 
-    no_invoice_dl = forms.IntegerField(label='No Invoice',widget=forms.TextInput(attrs={'class':'input-small',
-        'alt':'integer','placeholder':'No Invoice'}))
+    no_invoice_dl = forms.CharField(label='No Invoice',widget=forms.TextInput(attrs={'class':'input-small',
+        'placeholder':'No Invoice'}))
     
-    weight_dl = forms.IntegerField(label='Weight',widget=forms.TextInput(attrs={'alt': 'integer',
+    weight_dl = forms.DecimalField(label='Weight',widget=forms.TextInput(attrs={
         'class':'input-small','onkeyup':'cek_currency_ground_handling();cek_currency_forklift_for_heavy_cargo();\
         cek_currency_custom_clearance();cek_currency_delivey_to_hera();cek_currency_akses_bandara_inspeksi();\
         cek_currency_handling_fee();cek_currency_admin_fee();cek_currency_fee_collection()'}))    
@@ -163,3 +200,64 @@ class SALEForm(forms.Form):
     delivery_sale = forms.DecimalField(widget=forms.NumberInput(attrs={'class':'input-small ttip_t'}))
     duty_tax_sale = forms.DecimalField(widget=forms.NumberInput(attrs={'class':'input-small ttip_t'})) 
     tax_handling_charge_sale = forms.DecimalField(widget=forms.NumberInput(attrs={'class':'input-small ttip_t'}))
+
+class TransaksiForm(forms.Form):
+    products = forms.ModelChoiceField(queryset=Produk.objects.filter(status='1'),
+        widget=forms.Select(attrs={'class':'form-control ','readonly':True}))
+    commodity = forms.ModelChoiceField(queryset=Commodity.objects.filter(status='1'),
+        widget=forms.Select(attrs={'class':'form-control '}))
+    param = forms.ModelChoiceField(queryset=ParameterData.objects.filter(status_param='1'),
+        widget=forms.Select(attrs={'class':'form-control ','readonly':True}))    
+    qt_fs = forms.IntegerField(label='Quantity',widget=forms.NumberInput(attrs={'class':'input-small',
+        'alt':'integer','placeholder':'QTY'}))
+    weight_fs = forms.DecimalField(label='Weight',widget=forms.NumberInput(attrs={
+        'class':'uang input-small','onkeyup':'cek_amount_gst()'}))
+
+
+class GastiAsihForm(forms.Form):
+    tgl_ga = forms.DateField(label="Tanggal Invoice", widget=forms.DateInput(
+        attrs={'class': 'form-control '}))
+
+    no_invoice_ga = forms.CharField(label='No Invoice',widget=forms.TextInput(attrs={'class':'input-small',
+        'placeholder':'No Invoice'}))
+    #pcs = forms.DecimalField(widget=forms.NumberInput(attrs={'class':'input-small ttip_t'}))
+    #weight = forms.DecimalField(widget=forms.NumberInput(attrs={'class':'input-small ttip_t'}))
+    paking = forms.IntegerField(label='Paking',widget=forms.TextInput(attrs={'class':'input-small uang ttip_t',
+        'alt':'integer','onkeyup':'cek_amount_gst()'}))
+    jenis = forms.ChoiceField(label='Jenis Pengiriman',widget = forms.Select(attrs={'class':'form-control chosen-select','onchange':'cek_amount_gst()'}),
+        choices = JENISPRODUK)  
+    amount = forms.IntegerField(label='Amount',widget=forms.TextInput(attrs={'class':'input-small uang ttip_t',
+        'alt':'integer'}))
+    
+class LintasNegaraForm(forms.Form):
+    tgl_ln = forms.DateField(label="Tanggal Invoice", widget=forms.DateInput(
+        attrs={'class': 'form-control '}))
+    no_invoice_ln = forms.CharField(label='No Invoice',widget=forms.TextInput(attrs={'class':'input-small',
+        'placeholder':'No Invoice'}))
+    transit_charge = forms.IntegerField(widget=forms.TextInput(attrs={'class':'input-small uang ttip_t',
+        'alt':'integer'}))
+    transportations_charge = forms.IntegerField(widget=forms.TextInput(attrs={'class':'input-small uang ttip_t',
+        'alt':'integer'}))
+
+class AntarLapanForm(forms.Form):
+    tgl_al = forms.DateField(label="Tanggal Invoice", widget=forms.DateInput(
+        attrs={'class': 'form-control '}))
+    no_invoice_al = forms.CharField(label='No Invoice',widget=forms.TextInput(attrs={'class':'input-small',
+        'placeholder':'No Invoice'}))
+    cbm = forms.IntegerField(widget=forms.TextInput(attrs={'class':'input-small uang ttip_t',
+        'alt':'integer'}))
+    twentyft = forms.IntegerField(widget=forms.TextInput(attrs={'class':'input-small uang ttip_t',
+        'alt':'integer'}))###20ft
+    blfee = forms.IntegerField(widget=forms.TextInput(attrs={'class':'input-small uang ttip_t',
+        'alt':'integer'}))
+    biaya_peb = forms.IntegerField(widget=forms.TextInput(attrs={'class':'input-small uang ttip_t',
+        'alt':'integer'}))
+
+class DHLForm(forms.Form):
+    tgl_dhl = forms.DateField(label="Tanggal Invoice", widget=forms.DateInput(
+        attrs={'class': 'form-control '}))
+    no_invoice_dhl = forms.CharField(label='No Invoice',widget=forms.TextInput(attrs={'class':'input-small',
+        'placeholder':'No Invoice'}))
+    standard_charge = forms.DecimalField(widget=forms.NumberInput(attrs={'class':'input-small ttip_t'}))
+    fuel_surcharge_dhl = forms.DecimalField(widget=forms.NumberInput(attrs={'class':'input-small ttip_t'}))
+    emergency_situation = forms.DecimalField(widget=forms.NumberInput(attrs={'class':'input-small ttip_t'}))

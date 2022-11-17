@@ -7,7 +7,7 @@ from django.contrib.auth.decorators import login_required,user_passes_test
 from django.http import JsonResponse,HttpResponse,QueryDict
 from django.template.loader import render_to_string
 from django.urls import reverse
-
+from django.conf import settings
 from apps.utils import set_pagination
 from apps.products.models import Negara
 from apps.report.parameter.negara.forms import NegaraForm
@@ -125,7 +125,7 @@ class list_negara(View):
             messages.warning(request, 'Error Occurred. Please try again.')
         return False, 'Error Occurred. Please try again.'
     
-#@login_required(login_url=settings.LOGIN_URL)
+@login_required(login_url=settings.LOGIN_URL)
 #@user_passes_test(lambda u: u.groups.filter(name__in=('Administrator','Admin_IT')))
 def addnegara(request):
     user = request.user
@@ -138,5 +138,5 @@ def addnegara(request):
             messages.success(request, 'Data Negara Berhasil Di Input')
             return redirect('d-negara')
     else:
-        form = NegaraForm()
+        form = NegaraForm(initial={'status':1})
     return render(request,'report/negara/add_negara.html',{'form':form})

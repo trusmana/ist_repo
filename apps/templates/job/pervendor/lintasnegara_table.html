@@ -1,0 +1,47 @@
+{% load humanize %}
+<div class="span12">
+    <h3 class="heading">{{data.vendor}}</h3>
+    <table class="table table-bordered table-striped table_vam">
+        <tr>
+            <td colspan='6'><div class="text-center act-info">{{data.transaksi.products}}</div></td>
+        </tr>    
+        <tr>
+            <td rowspan='2'><div class="text-center">{{data.vendor}}</div></td>
+            <td rowspan='2' colspan='2'></td>
+            <td><div class="text-center">Tanggal Invoice</div></td>
+            <td><div class="text-center">Nomor Invoice</div></td>
+            <td><div class="text-center">Job Number</div></td>
+        </tr>
+        <tr>
+            <td><div class="text-center">{{data.tanggal_invoice|date:'d-M-Y'}}</div></td>
+            <td><div class="text-center">{{data.no_invoice}}</div></td>
+            <td><div class="text-center">{{data.transaksi.no_pekerjaan}}</div></td>
+        </tr>
+        <tr>
+            <td>Detail</td>
+            <td colspan="2"><div class="text-center">Currency </div></td>
+            <td></td>
+            <td colspan="2"><div class="text-center"> Amount</div></td>
+        </tr>
+        
+        <tr>
+            <td>Transit Charge</td>
+            <td colspan='2'>{{data.nilai_kurs.mtu.nama_mata_uang}}</td><td></td>
+            <td>{{data.nilai_kurs.mtu.kode_matauang}}</td>
+            <td><div class="text-right">{{data.transit_charge|intcomma}}</div></td>
+        </tr>
+        <tr>
+            <td>Transportations Charge</td>
+            <td colspan='2'>{{data.nilai_kurs.mtu.nama_mata_uang}}</td><td></td>
+            <td>{{data.nilai_kurs.mtu.kode_matauang}}</td>
+            <td><div class="text-right">{{data.transportations_charge|intcomma}}</div></td>
+        </tr>
+               
+        <tr>
+            <td></td>
+            <td colspan='2'></td><td></td>
+            <td><b>Total {{data.nilai_kurs.mtu.kode_matauang}}</b></td>
+            <td><div class="text-right act-danger">{{data.total_lintas_negara|intcomma}}</div></td>
+        </tr>
+    </table>      
+</div>

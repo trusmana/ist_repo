@@ -1,0 +1,137 @@
+<script>
+    function sale_cartege()
+    {        
+        var prm = $('#id_paramsale').val();
+        var kali = $('#id_re_export_shipment_one_qty').val();
+        var dataString ='prm='+prm+'&kali='+kali;
+        $.ajax({
+            url: "{% url 'h-salecartage' %}",
+            data: dataString,
+            dataType: "JSON",
+            success: function(data){
+                if(data.result=='1'){
+                    $('#id_cartage_warehouse_charge_one').val(parseFloat(data.price).toFixed(2));                                                    
+                }else{
+                    $('#id_cartage_warehouse_charge_one').val('0');
+                }
+            }
+        });
+    
+    }
+    function sale_cartege_two()
+    {        
+        var prm = $('#id_paramsale').val();
+        var kali = $('#id_re_export_shipment_two_qty').val();
+        var dataString ='prm='+prm+'&kali='+kali;
+        $.ajax({
+            url: "{% url 'h-salecartagetwo' %}",
+            data: dataString,
+            dataType: "JSON",
+            success: function(data){
+                if(data.result=='1'){
+                    $('#id_cartage_warehouse_charge_two').val(parseFloat(data.price).toFixed(2));                                                    
+                }else{
+                    $('#id_cartage_warehouse_charge_two').val('0');
+                }
+            }
+        });
+    
+    }
+    
+    function h_ground_handling_sale()
+    {        
+        var prm = $('#id_paramsale').val();
+        var kali = $('#id_weight_fs').val();
+        var dataString ='prm='+prm+'&kali='+kali;
+        $.ajax({
+            url: "{% url 'h-groundhandlingsale' %}",
+            data: dataString,
+            dataType: "JSON",
+            success: function(data){
+                if(data.result=='1'){
+                    $('#id_ground_handling_sale').val(parseFloat(data.price).toFixed(2));                                                    
+                }else{
+                    $('#id_ground_handling_sale').val('0');
+                }
+            }
+        });
+    
+    }
+    function h_warehouse_charge_sale()
+    {        
+        var prm = $('#id_paramsale').val();
+        var kali = $('#id_weight_fs').val();
+        var dataString ='prm='+prm+'&kali='+kali;
+        $.ajax({
+            url: "{% url 'h-warehousechargesale' %}",
+            data: dataString,
+            dataType: "JSON",
+            success: function(data){
+                if(data.result=='1'){
+                    $('#id_warehouse_charge_sale').val(parseFloat(data.price).toFixed(2));                                                    
+                }else{
+                    $('#id_warehouse_charge_sale').val('0');
+                }
+            }
+        });
+    
+    }
+    function h_handling_charge_sale()
+    {        
+        var prm = $('#id_paramsale').val();
+        var kali = $('#id_weight_fs').val();
+        var dataString ='prm='+prm+'&kali='+kali;
+        $.ajax({
+            url: "{% url 'h-handlingchargesale' %}",
+            data: dataString,
+            dataType: "JSON",
+            success: function(data){
+                if(data.result=='1'){
+                    $('#id_handling_charge_sale').val(parseFloat(data.price).toFixed(2));                                                    
+                }else{
+                    $('#id_handling_charge_sale').val('0');
+                }
+            }
+        });
+    
+    }
+    function h_delivery_sale()
+    {        
+        var prm = $('#id_paramsale').val();
+        var kali = $('#id_weight_fs').val();
+        var dataString ='prm='+prm+'&kali='+kali;
+        $.ajax({
+            url: "{% url 'h-deliverysale' %}",
+            data: dataString,
+            dataType: "JSON",
+            success: function(data){
+                if(data.result=='1'){
+                    $('#id_delivery_sale').val(parseFloat(data.price).toFixed(2));                                                    
+                }else{
+                    $('#id_delivery_sale').val('0');
+                }
+            }
+        });
+    
+    }
+    function h_freight_sale()
+    {        
+        var prm = $('#id_paramsale').val();
+        var kali = $('#id_weight_fs').val();
+        var dataString ='prm='+prm+'&kali='+kali;
+        $.ajax({
+            url: "{% url 'h-freightsale' %}",
+            data: dataString,
+            dataType: "JSON",
+            success: function(data){
+                if(data.result=='1'){
+                    $('#id_freight_sale').val(parseFloat(data.price).toFixed(2));                                                    
+                }else{
+                    $('#id_freight_sale').val('0');
+                }
+            }
+        });
+    
+    }
+
+</script> 

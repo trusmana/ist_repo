@@ -1,0 +1,127 @@
+<script>
+    function cek_nilai()
+    {        
+        var prm = $('#id_param').val();
+        var airfreight = $('#id_weight_fs').val();
+        var dataString ='prm='+prm+'&airfreight='+airfreight;
+        $.ajax({
+            url: "{% url 'h-airfreight' %}",
+            data: dataString,
+            dataType: "JSON",
+            success: function(data){
+                if(data.result=='1'){
+                    $('#id_price_airfreight').val(parseFloat(data.price).toFixed(2));                                                    
+                }else{
+                    $('#id_price_airfreight').val('0');
+                }
+            }
+        });
+    
+    }
+    function cek_nilai_handling()
+    {        
+        var prm = $('#id_param').val();
+        var handling = $('#id_weight_fs').val();
+        var dataString ='prm='+prm+'&handling='+handling;
+        $.ajax({
+            url: "{% url 'h-handlingcharges' %}",
+            data: dataString,
+            dataType: "JSON",
+            success: function(data){
+                if(data.result=='1'){
+                    $('#id_price_handling_charges').val(parseFloat(data.price).toFixed(2));
+                    
+                }else{
+                    $('#id_price_handling_charges').val('0');                   
+                    
+                }
+            }
+        });
+    
+    }
+    function cek_insurance_security()
+    {        
+        var prm = $('#id_param').val();
+        var asuransi = $('#id_weight_fs').val();
+        var dataString ='prm='+prm+'&asuransi='+asuransi;
+        $.ajax({
+            url: "{% url 'h-insurancesecurity' %}",
+            data: dataString,
+            dataType: "JSON",
+            success: function(data){
+                if(data.result=='1'){
+                    $('#id_price_insurance_security_surcharge').val(parseFloat(data.price).toFixed(2));	
+                    
+                }else{
+                    $('#id_price_insurance_security_surcharge').val('0');                   
+                    
+                }
+            }
+        });
+    
+    }
+    
+    function cek_fuel_surcharge()
+    {        
+        var prm = $('#id_param').val();
+        var bahanbakar = $('#id_weight_fs ').val();
+        var dataString ='prm='+prm+'&bahanbakar='+bahanbakar;
+        $.ajax({
+            url: "{% url 'h-fuelsurcharge' %}",
+            data: dataString,
+            dataType: "JSON",
+            success: function(data){
+                if(data.result=='1'){
+                    $('#id_price_fuel_surcharge').val(parseFloat(data.price).toFixed(2));	
+                    
+                }else{
+                    $('#id_price_fuel_surcharge').val('0');                   
+                    
+                }
+            }
+        });
+    
+    }
+    function cek_import_handling_charges()
+    {        
+        var prm = $('#id_param').val();
+        var penanganan = $('#id_weight_fs').val();
+        var dataString ='prm='+prm+'&penanganan='+penanganan;
+        $.ajax({
+            url: "{% url 'h-importhandlingcharges' %}",
+            data: dataString,
+            dataType: "JSON",
+            success: function(data){
+                if(data.result=='1'){
+                    $('#id_price_import_handling_charges').val(parseFloat(data.price).toFixed(2));	
+                    
+                }else{
+                    $('#id_price_import_handling_charges').val('0');                   
+                    
+                }
+            }
+        });
+    
+    }
+    function cek_gst_zero_rated()
+    {        
+        var prm = $('#id_param').val();
+        var zero = $('#id_weight_fs').val();
+        var dataString ='prm='+prm+'&zero='+zero;
+        $.ajax({
+            url: "{% url 'h-gstzerorated' %}",
+            data: dataString,
+            dataType: "JSON",
+            success: function(data){
+                if(data.result=='1'){
+                    $('#id_price_gst_zero_rated').val(parseFloat(data.price).toFixed(2));	
+                    
+                }else{
+                    $('#id_price_gst_zero_rated').val('0');                   
+                    
+                }
+            }
+        });
+    
+    }
+    </script>

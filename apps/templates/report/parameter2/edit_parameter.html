@@ -1,0 +1,41 @@
+{% extends "layouts/base.html" %}
+{% load static %}
+
+{% block title %} Edit Parameter {% endblock %}
+
+{% block content %}
+<div id="jCrumbs" class="breadCrumb module">
+    <ul>
+        <li>
+            <a href="/"><i class="icon-home"></i></a>
+        </li>
+        <li>
+            <a href="{% url 'd-param' %}">Data Parameter</a>
+        </li>
+        <li>
+            Edit Parameter
+        </li>        
+    </ul>
+</div>            
+<div class="row-fluid">
+    <div class="span12">
+        <h1 class="h4">Edit Parameter</h1>
+        <p class="mb-0">You can change the form and update this Parameter</p>
+        <form action="{% url 'd-paramjl' param2.id %}" method="post">
+            {% csrf_token %}
+            <div class="formSep">
+                {% for field in form %}
+                    <div class="col-md-6 mb-3">
+                        <div>{{ field.label_tag }}{{ field }}</div>
+                    </div>
+                {% endfor %}
+            </div>
+
+            <div class="mt-3">
+                <a class="btn btn-danger delete_item" data-href="{% url 'd-param' param.id 'single' %}">Delete</a>
+                <button type="submit" class="btn btn-primary">Save</button>
+            </div>
+        </form>
+    </div>
+</div>
+{% endblock content %}

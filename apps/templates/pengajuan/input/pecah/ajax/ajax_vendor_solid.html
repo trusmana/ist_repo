@@ -1,0 +1,168 @@
+<script>
+    /////Sholid Logistik
+    function cek_price_storage_at_cost()
+    {        
+        var prm = $('#id_param').val();
+        var tmp = $('#id_weight_sl').val();
+        var dataString ='prm='+prm+'&tmp='+tmp;
+        $.ajax({
+            url: "{% url 'h-pricestorageatcost' %}",
+            data: dataString,
+            dataType: "JSON",
+            success: function(data){
+                if(data.result=='1'){
+                    $('#id_price_storage_at_cost').val(format_number(String(Math.round(data.price))));	
+                    
+                }else{
+                    $('#id_price_storage_at_cost').val('0');                   
+                    
+                }
+            }
+        });
+    
+    }
+    function cek_pjkp2u_sin_dps_at_cost()
+    {        
+        var prm = $('#id_param').val();
+        var tmp = $('#id_weight_sl').val();
+        var dataString ='prm='+prm+'&tmp='+tmp;
+        $.ajax({
+            url: "{% url 'h-pricestorageatcost' %}",
+            data: dataString,
+            dataType: "JSON",
+            success: function(data){
+                if(data.result=='1'){
+                    $('#id_price_pjkp2u_sin_dps_at_cost').val(format_number(String(Math.round(data.price))));	
+                    
+                }else{
+                    $('#id_price_pjkp2u_sin_dps_at_cost').val('0');                   
+                    
+                }
+            }
+        });
+    
+    }     
+    function cek_storage_mcl_e_0389249_at_cost()
+    {        
+        var prm = $('#id_param').val();
+        var tmp = $('#id_weight_sl').val();
+        var dataString ='prm='+prm+'&tmp='+tmp;
+        $.ajax({
+            url: "{% url 'h-storagemcle0389249atcost' %}",
+            data: dataString,
+            dataType: "JSON",
+            success: function(data){
+                if(data.result=='1'){
+                    $('#id_price_storage_mcl_e_0389249_at_cost').val(format_number(String(Math.round(data.price))));	
+                    
+                }else{
+                    $('#id_price_storage_mcl_e_0389249_at_cost').val('0');                   
+                    
+                }
+            }
+        });    
+    }
+    function cek_pjkp2u_dps_dil_at_cost()
+    {        
+        var prm = $('#id_param').val();
+        var tmp = $('#id_weight_sl').val();
+        var dataString ='prm='+prm+'&tmp='+tmp;
+        $.ajax({
+            url: "{% url 'h-pjkp2udpsdilatcost' %}",
+            data: dataString,
+            dataType: "JSON",
+            success: function(data){
+                if(data.result=='1'){
+                    $('#id_price_pjkp2u_dps_dil_at_cost').val(format_number(String(Math.round(data.price))));	
+                    
+                }else{
+                    $('#id_price_pjkp2u_dps_dil_at_cost').val('0');                   
+                    
+                }
+            }
+        });    
+    }
+    function cek_airfreight_charges()
+    {        
+        var prm = $('#id_param').val();
+        var tmp = $('#id_weight_sl').val();
+        var dataString ='prm='+prm+'&tmp='+tmp;
+        $.ajax({
+            url: "{% url 'h-currencyairfreightcharges' %}",
+            data: dataString,
+            dataType: "JSON",
+            success: function(data){
+                if(data.result=='1'){
+                    $('#id_price_airfreight_charges').val(format_number(String(Math.round(data.price))));	
+                    
+                }else{
+                    $('#id_price_airfreight_charges').val('0');                   
+                    
+                }
+            }
+        });    
+    }
+    function cek_currency_overweight_charges_surcharg()
+    {        
+        var prm = $('#id_param').val();
+        var tmp = $('#id_weight_sl').val();
+        var dataString ='prm='+prm+'&tmp='+tmp;
+        $.ajax({
+            url: "{% url 'h-currencyoverweightchargessurcharg'%}",
+            data: dataString,
+            dataType: "JSON",
+            success: function(data){
+                if(data.result=='1'){
+                    $('#id_price_overweight_charges_surcharge').val(format_number(String(Math.round(data.price))));	
+                    
+                }else{
+                    $('#id_price_overweight_charges_surcharge').val('0');                   
+                    
+                }
+            }
+        });    
+    }
+    
+    function cek_currency_awb_fee()
+    {        
+        var prm = $('#id_param').val();
+        var tmp = $('#id_weight_sl').val();
+        var dataString ='prm='+prm+'&tmp='+tmp;
+        $.ajax({
+            url: "{% url 'h-currencyawbfee'%}",
+            data: dataString,
+            dataType: "JSON",
+            success: function(data){
+                if(data.result=='1'){
+                    $('#id_price_awb_fee').val(format_number(String(Math.round(data.price))));	
+                    
+                }else{
+                    $('#id_price_awb_fee').val('0');                   
+                    
+                }
+            }
+        });    
+    }
+    function cek_currency_handling_charges()
+    {        
+        var prm = $('#id_param').val();
+        var tmp = $('#id_weight_sl').val();
+        var dataString ='prm='+prm+'&tmp='+tmp;
+        $.ajax({
+            url: "{% url 'h-currencyhandlingcharges'%}",
+            data: dataString,
+            dataType: "JSON",
+            success: function(data){
+                if(data.result=='1'){
+                    $('#id_price_handling_charges_sl').val(format_number(String(Math.round(data.price))));	
+                    
+                }else{
+                    $('#id_price_handling_charges_sl').val('0');                   
+                    
+                }
+            }
+        });    
+    }
+    /////End Sholid Logistik
+
+</script>

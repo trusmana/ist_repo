@@ -6,7 +6,7 @@ import datetime
 from django.conf import settings
 from django.template.loader import render_to_string
 from django.contrib import messages
-from traitlets import Instance
+#from traitlets import Instance
 
 from apps.products.models import Sale
 from apps.report.input.edit_inputan.form import JualForm

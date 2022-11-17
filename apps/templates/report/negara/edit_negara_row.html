@@ -12,6 +12,7 @@
 {% else %}
     <td><span class="font-weight-bold">{{ instance.id }}</span></td>
     <td><span class="font-weight-normal">{{ instance.nama_negara}}</span></td>
+    <td><span class="font-weight-normal">{{ instance.nama_kota}}</span></td>
     <td><span class="font-weight-normal">{{ instance.singkatan }}</span></td>    
     <td>
         <span class="font-weight-bold {{ instance.status.class }}">{{ instance.get_status_display }}</span>

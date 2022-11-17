@@ -5,6 +5,8 @@ from django.conf import settings
 from django.utils.translation import gettext as _
 from PIL import Image
 
+from apps.home.models import Cabang
+
 class AccountsUser(AbstractUser):
     email = models.EmailField(_('email address'),unique = True)
 
@@ -20,7 +22,8 @@ class Profile(models.Model):
 
     is_banned = models.BooleanField(default=False)
     jumlah_banned = models.IntegerField(blank=True, null=True, default=0)
-    #lev_verif = models.ForeignKey('paramkredit.Group_Verif', on_delete=models.CASCADE,null=True, blank=True)
+    cabang = models.ForeignKey(Cabang, null=True, blank=True,related_name='val_cab',on_delete=models.CASCADE)
+    
     def __str__(self):
         return self.user.username
 

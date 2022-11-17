@@ -1,0 +1,175 @@
+
+/* header */
+
+body 
+.nav 
+header 
+.navbar 
+.navbar-inner
+.container-fluid {
+    background-color: #F5F5F5;
+    padding-top: 8px;
+}
+
+body 
+.nav 
+header 
+.navbar 
+.navbar-inner
+.container-fluid 
+.brand 
+.img-brand{
+    height: 50px;
+    width: 80%;
+    padding-bottom: 13px;
+}
+
+body 
+.nav 
+header 
+.navbar 
+.navbar-inner
+.container-fluid 
+.profile{
+    padding-top: 10px;
+}
+
+body 
+.nav 
+header 
+.navbar 
+.navbar-inner
+.container-fluid  
+.profile 
+.dropdown-profile 
+.dropdown-toggle{
+    font-family: 'Nunito', sans-serif;
+    font-size: 15px;
+    font-weight: 700;
+    color: #000E5A;
+}
+
+
+body 
+.nav 
+header 
+.navbar 
+.navbar-inner
+.container-fluid 
+.nav-shortcut 
+.dropdown-short
+.dropdown-toggle{
+    padding-top: 20px;
+    font-family: 'Nunito', sans-serif;
+    font-size: 15px;
+    font-weight: 700;
+    color: #000E5A;
+}
+
+
+/* akhir header */
+
+
+/* sidebar */
+body .icon-sidebar{
+    margin-top: 30px;
+}
+
+body .sidebar{
+    margin-top: 50px;
+    font-family: 'Nunito', sans-serif;
+    font-size: 14px;
+    font-weight: 700;
+}
+
+
+body 
+.sidebar 
+.antiscroll
+/* akhir sidebar */
+
+
+/* content */
+body 
+.content 
+.main_content{
+    margin-top: 30px;
+}
+
+body 
+.content 
+.main_content 
+.row-fluid
+.heading{
+    margin-top:30px;
+    font-family: 'Nunito', sans-serif;
+    font-size: 18px;
+    font-weight: 700;
+    color: #000E5A;
+}
+
+body 
+.content 
+.main_content 
+.row-fluid
+.tac 
+.ov_boxes
+li{
+    font-family: 'Nunito', sans-serif;
+   border: none;
+   box-shadow: rgba(0, 0, 0, 0.35) 8px 8px 10px;
+}
+
+body 
+.content 
+.main_content 
+.row-fluid
+.tac 
+.ov_boxes
+li
+.p_canvas
+.icon{
+      font-size: 33px;
+      color: #0077B6;
+      
+}
+
+
+body 
+.content 
+.main_content 
+.row-fluid
+.short 
+.clearfix
+li{
+      
+      color: #0077B6;
+}
+
+body 
+.content 
+.main_content
+.module{
+    margin-top: 30px;
+}
+/* akhir content */
+
+
+/* modal notification */
+body .new-modal{
+   border:none;
+   margin-top: 20px;
+   border-radius: 0px;
+   background-color: rgb(228, 228, 228);
+}
+
+body .new-modal .modal-header{
+ background-color: #0077B6;
+ color: white;
+}
+
+body .new-modal .modal-header .close{
+    color: white;
+    opacity: 80%;
+   }
+/* modal notification */

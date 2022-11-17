@@ -1,0 +1,176 @@
+{% extends "layouts/base.html" %}
+{% block section %}{% endblock %}
+{% block extrahead %}
+{% include "alat/gl_cabang.html" %}
+{% endblock %}
+{% block content %}
+{% load humanize %}
+
+<div id="jCrumbs" class="breadCrumb module">
+    <ul>
+        <li>
+            <a href="/"><i class="icon-home"></i></a>
+        </li>
+        <li>
+            Biaya Cabang
+        </li>
+    </ul>
+</div>
+<div class="row-fluid">
+    <div class="span12">
+        <h3 class="heading">Menu Input Biaya </h3>
+        <p>Note : Menu Input Biaya bisa di Isi Kapanpun, sebelum  tutup Transaksi</p>
+<form class ="tabular" method='POST' action="." enctype="multipart/form-data" >{% csrf_token %}
+<table class='table table-bordered table-striped'>
+    <tr>
+        <td>TANGGAL:</td>
+        <td colspan ="3">{{form.tanggal}}</td>
+
+    </tr>
+    
+	<tr>
+	    <td colspan="4"><h3><i>BEBAN BIAYA</i></h3><hr>
+        </td>
+	</tr>
+
+	<tr>
+		<td>PARKIR :</td>
+		<td> {{form.jenis_transaksi_palkir}}</td>
+		<td>{{form.palkir}}</td><td >{{form.ket_palkir}}</td>
+	</tr>
+
+	<tr>
+		<td>BBM :</td>
+		<td> {{form.jenis_transaksi_bbm}}</td>
+		<td>{{form.bbm}}</td><td>{{form.ket_bbm}}</td>
+	</tr>
+	<tr>
+		<td>FOTO COPY :</td>
+		<td> {{form.jenis_transaksi_foto_copy}}</td>
+		<td>{{form.foto_copy}}</td><td>{{form.ket_foto_copy}}</td>
+	</tr>
+	
+	<tr>
+		<td>LINGKUNGAN:</td>
+		<td> {{form.jenis_transaksi_pemb_lingkungan}}</td>
+		<td>{{form.pemb_lingkungan}}</td><td>{{form.ket_pemb_lingkungan}}</td>
+	</tr>
+	
+	<tr>
+		<td>SUMBANGAN:</td>
+		<td> {{form.jenis_transaksi_sumbangan}}</td>
+		<td>{{form.sumbangan}}</td><td>{{form.ket_sumbangan}}</td>
+	</tr>
+	
+	<tr>
+		<td>PERLENGKAPAN:</td>
+		<td> {{form.jenis_transaksi_perlengkapan}}</td>
+		<td>{{form.perlengkapan}}</td><td>{{form.ket_perlengkapan}}</td>
+	</tr>
+	
+	<tr>
+		<td>KONSUMSI:</td>
+		<td> {{form.jenis_transaksi_konsumsi}}</td>
+		<td>{{form.konsumsi}}</td><td>{{form.ket_konsumsi}}</td>
+	</tr>
+
+	<tr>
+        <td>LISTRIK :</td>
+		<td> {{form.jenis_transaksi_listrik}}</td>
+        <td>{{form.listrik}}</td><td>{{form.ket_listrik}}</td>
+    </tr>
+
+	<tr>
+		<td>PDAM :</td>
+		<td> {{form.jenis_transaksi_pdam}}</td>
+        <td>{{form.pdam}}</td><td>{{form.ket_pdam}}</td>
+	</tr>
+
+	<tr>
+		<td>TELPON :</td>
+		<td> {{form.jenis_transaksi_telepon}}</td>
+        <td> {{form.telpon}}</td><td>{{form.ket_telpon}}</td>
+    </tr>
+
+	<tr>
+		<td>ENTERTAINT :</td>
+		<td> {{form.jenis_transaksi_entertaint}}</td>
+        <td> {{form.entertaint}}</td><td>{{form.ket_entertaint}}</td>
+    </tr>
+
+	<tr>
+		<td>BIAYA LAIN-LAIN :</td>
+		<td> {{form.jenis_transaksi_pengiriman}}</td>
+		<td>{{form.pengiriman}}</td><td >{{form.ket_pengiriman}}</td>
+	</tr>
+
+	<tr>
+		<td>BIAYA ANTAR BANK :</td>
+		<td> {{form.jenis_transaksi_biaya_bank}}</td>
+		<td>{{form.biaya_bank}}</td><td >{{form.ket_biaya_bank}}</td>
+	</tr>
+        
+	<!--{{form.as_table}}-->
+
+<tr><td></td><td></td><td></td><td><input type="submit"  class="btn btn-primary" value="&radic; Simpan" class="simpan"></td></tr>
+</table>
+</form>
+
+<h3 align="center">Posting Biaya</h3>
+<form method="POST" action="/postting_gl/">{% csrf_token %}
+<input type="hidden" name="id" value="{{object.id}}" />
+<table class="table table-bordered" >
+    <thead>
+        <tr>
+          <th><input id="select_all" type="checkbox" align="center"></th>
+          <th>Tanggal</th>
+          <th>Kode Account</th>
+          <th>Keterangan</th>
+          <th>Debet(Rp)</th>
+          <th>Kredit(Rp)</th>
+          <th>Menu</th>
+        </tr>
+    </thead>
+    
+   <tbody>
+    {% regroup bea by jurnal as grouped %}
+    {% for group in grouped %}
+    {% for p in group.list %}
+        <tr style="background-color: {% ifchanged group.list %}{% cycle "#CCFFFF" "white" as rowcolors %}{% else %}
+            {{ rowcolors }}{% endifchanged %}">
+            {% ifchanged %}<td rowspan="{{ group.list|length }}"><input type="checkbox"  value="{{ p.jurnal.id }}" class="checkbox_delete" name='id_pilih' /></td>
+            {% endifchanged %}
+            {% ifchanged %}<td rowspan="{{ group.list|length }}">{{ p.tgl_trans|date:"d-M-Y" }}</td>{% endifchanged %}
+            <td>{{p}}.{{p.id_coa}}</td>       
+            <td>{% if forloop.counter %}<i>{{p.deskripsi}}-{{p.jurnal.nobukti}}</i>{% endif %}</td>
+            <td align="right">{{ p.debet|intcomma }}</td>
+            <td align="right">{{ p.kredit|intcomma }}</td>
+            {% ifchanged %} <td rowspan="{{ group.list|length }}" align="center">
+            <a href="{% url 'del-jurnal' p.jurnal.id %}" class="cari btn btn-danger">
+            &radic; Batal</a></td>{% endifchanged %}
+        </tr>
+    {% endfor %}
+    {% endfor %}
+    </tbody>
+ <tr>
+    <th align="center" colspan="4"><b>Jumlah</b></th>
+    <th align="right"><b>{{total_debet|intcomma}}</b></th>
+    <th align="right"><b>{{total_kredit|intcomma}}</b></th>
+    <th align="right"></th>
+  </tr>
+
+</table>
+
+
+<p align="right"><input type="submit" value="&radic; Simpan" class="next btn btn-primary" /></p>
+</form>
+</div>
+</div>
+{% endblock %} 
+
+
+
+
+
+
+

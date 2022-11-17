@@ -27,7 +27,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'import_export','django_browser_reload',
     'django.contrib.staticfiles','apps.core','apps.products',
-    'apps.report',    
+    'apps.report','apps.keuangan','apps.home','apps.paramvendor',    
 ]
 
 MIDDLEWARE = [
@@ -114,12 +114,14 @@ USE_TZ = False
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/4.0/howto/static-files/
 AUTH_USER_MODEL = 'core.AccountsUser'
+
+STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 STATIC_URL = '/static/'
 STATICFILES_DIRS = (
     os.path.join(CORE_DIR, 'apps/static'),
 )
 SESSION_EXPIRE_AT_BROWSER_CLOSE = True
-SESSION_COOKIE_AGE = 60 * 60 # 30 menit
+SESSION_COOKIE_AGE = 240 * 60 # 30 menit
 SESSION_SAVE_EVERY_REQUEST = True
 
 

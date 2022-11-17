@@ -26,70 +26,81 @@
 </div>
 <div class="row-fluid">
     <div class="span12">
-        <h3 class="heading">Data Parameter <a href="{#% url 'add-produk' %#}" class="btn btn-info"> Add</a></h3>
-        <div class="card card-body border-light shadow-sm table-wrapper table-responsive pt-0">
-            <table class="table table-hover">
-                <thead>
-                <tr>
-                    <th>#</th>
-                    <th>Kode Produk</th>
-                    <th>Vendor</th>
-                    <th>Tanggal Aktif</th>
-                    <th>Status</th>
-                    <th>Action</th>
-                </tr>
-                </thead>
-                <tbody>
-                <!-- Item -->
-                {% if param is not True %}
-                    {% for transaction in param %}
+        <h3 class="heading">Data Parameter Job <a href="{% url 'add-paramdta' %}" class="btn btn-info"> Add</a></h3>    
+        <div class="tabbable tabbable-bordered">
+            <ul class="nav nav-tabs">
+                <li class="active"><a href="{% url 'd-param' %}" >Tiga Vendor.</a></li>
+                <li><a href="{% url 'd-param2' %}" >Dua Vendor</a></li>
+            </ul>
+            <div class="tab-content">
+                <div class="tab-pane active" id="tab_br1">
+                    <table class="table table-hover">
+                        <thead>
                         <tr>
-                            <td><span class="font-weight-bold">{{ transaction.id }}</span></td>
-                            <td><span class="font-weight-normal">{{ transaction.products.id_prod }}</span></td>
-                            <td><span class="font-weight-normal">{{ transaction.products.origin_vendor }}</span></td>
-                            <td><span class="font-weight-normal">{{ transaction.tgl_aktif_param|date:'d-m-Y' }}</span></td>
-                            <td>
-                                <span class="font-weight-bold {{ transaction.status.class }}">{{ transaction.get_status_param_display }}</span>
-                            </td>
-                            <td>
-                                <div class="btn-group">
-                                    <button class="btn btn-link text-dark dropdown-toggle dropdown-toggle-split m-0 p-0"
-                                            data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                        <span class="icon icon-sm">
-                                            <span class="fas fa-ellipsis-h icon-dark"></span>
-                                        </span>
-                                        <span class="sr-only">Toggle Dropdown</span>
-                                    </button>
-                                    <li class="dropdown-menu">
-                                        <ul>
-                                            <a href="{% url 'dtl-param' transaction.id  %}">
-                                            <span class="fas fa-list-alt mr-2"></span> Detail</a>
-                                        </ul>
-                                        <ul><a class="dropdown-item edit_item"
-                                           href="{% url 'd-param' transaction.id 'edit' %}">
-                                            <span class="fas fa-edit mr-2"></span> Edit
-                                        </a>
-                                        </ul>
-                                        <ul>
-                                        <a class="dropdown-item text-danger delete_item"
-                                           data-href="{% url 'd-param' transaction.id %}">
-                                            <span class="fas fa-trash-alt mr-2"></span> Remove
-                                        </a>
-                                        </ul>
-                                    </li>
-                                </div>
-                            </td>
+                            <th>#</th>
+                            <th>Kode Produk</th>
+                            <th>Vendor</th>
+                            <th>Tanggal Aktif</th>
+                            <th>Status</th>
+                            <th>Action</th>
                         </tr>
-                    {% endfor %}
-                {% endif %}
-                </tbody>
-            </table>
+                        </thead>
+                        <tbody>
+                        <!-- Item -->
+                        
+                        {% if param is not True %}
+                            {% for transaction in param %}
+                                <tr>
+                                    <td><span class="font-weight-bold">{{ transaction.id }}</span></td>
+                                    <td><span class="font-weight-normal">{{ transaction.products.id_prod }}</span></td>
+                                    <td><span class="font-weight-normal">{{ transaction.products.origin_vendor }}</span></td>
+                                    <td><span class="font-weight-normal">{{ transaction.tgl_aktif_param|date:'d-m-Y' }}</span></td>
+                                    <td>
+                                        <span class="font-weight-bold {{ transaction.status.class }}">{{ transaction.get_status_param_display }}</span>
+                                    </td>
+                                    <td>
+                                        <div class="btn-group">
+                                            <button class="btn btn-link text-dark dropdown-toggle dropdown-toggle-split m-0 p-0"
+                                                    data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                                <span class="icon icon-sm">
+                                                    <span class="fas fa-ellipsis-h icon-dark"></span>
+                                                </span>
+                                                <span class="sr-only">Toggle Dropdown</span>
+                                            </button>
+                                            <li class="dropdown-menu">
+                                                <ul>
+                                                    <a href="{% url 'dtl-param' transaction.id  %}">
+                                                    <span class="fas fa-list-alt mr-2"></span> Detail</a>
+                                                </ul>
+                                                <ul><a class="dropdown-item edit_item"
+                                                   href="{#% url 'd-param' transaction.id 'edit' %#}">
+                                                    <span class="fas fa-edit mr-2"></span> Edit
+                                                </a>
+                                                </ul>
+                                                <ul>
+                                                <a class="dropdown-item text-danger delete_item"
+                                                   data-href="{% url 'd-param' transaction.id %}">
+                                                    <span class="fas fa-trash-alt mr-2"></span> Remove
+                                                </a>
+                                                </ul>
+                                            </li>
+                                        </div>
+                                    </td>
+                                </tr>
+                            {% endfor %}
+                        {% endif %}
+                        </tbody>
+                    </table>
+        
+                    {{ param.pagination }}
 
-            {{ transactions.pagination }}
-
+                </div>
+            </div>
         </div>
     </div>
 </div>
+
+
 
 {% endblock content %}
 

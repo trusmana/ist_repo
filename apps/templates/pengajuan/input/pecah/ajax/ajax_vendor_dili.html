@@ -1,0 +1,172 @@
+<script>
+    ////Logistik Dili
+    function cek_currency_ground_handling()
+    {        
+        var prm = $('#id_param').val();
+        var tmp = $('#id_weight_dl').val();
+        var dataString ='prm='+prm+'&tmp='+tmp;
+        $.ajax({
+            url: "{% url 'h-currencygroundhandling'%}",
+            data: dataString,
+            dataType: "JSON",
+            success: function(data){
+                if(data.result=='1'){
+                    $('#id_price_ground_handling_dl').val(parseFloat(data.price).toFixed(2));	
+                    
+                }else{
+                    $('#id_price_ground_handling_dl').val('0');                   
+                    
+                }
+            }
+        });    
+    }
+    function cek_currency_forklift_for_heavy_cargo()
+    {        
+        var prm = $('#id_param').val();
+        var tmp = $('#id_weight_dl').val();
+        var dataString ='prm='+prm+'&tmp='+tmp;
+        $.ajax({
+            url: "{% url 'h-currencyforkliftforheavycargo'%}",
+            data: dataString,
+            dataType: "JSON",
+            success: function(data){
+                if(data.result=='1'){
+                    $('#id_price_forklift_for_heavy_cargo').val(parseFloat(data.price).toFixed(2));
+                    
+                }else{
+                    $('#id_price_forklift_for_heavy_cargo').val('0');                   
+                    
+                }
+            }
+        });    
+    }
+
+    function cek_currency_custom_clearance()
+    {        
+        var prm = $('#id_param').val();
+        var tmp = $('#id_weight_dl').val();
+        var dataString ='prm='+prm+'&tmp='+tmp;
+        $.ajax({
+            url: "{% url 'h-currencycustomclearance'%}",
+            data: dataString,
+            dataType: "JSON",
+            success: function(data){
+                if(data.result=='1'){
+                    $('#id_price_custom_clearance').val(parseFloat(data.price).toFixed(2));	
+                    
+                }else{
+                    $('#id_price_custom_clearance').val('0');                   
+                    
+                }
+            }
+        });    
+    }
+    
+    function cek_currency_delivey_to_hera()
+    {        
+        var prm = $('#id_param').val();
+        var tmp = $('#id_weight_dl').val();
+        var dataString ='prm='+prm+'&tmp='+tmp;
+        $.ajax({
+            url: "{% url 'h-currencydeliveytohera'%}",
+            data: dataString,
+            dataType: "JSON",
+            success: function(data){
+                if(data.result=='1'){
+                    $('#id_price_delivey_to_hera').val(parseFloat(data.price).toFixed(2));	
+                    
+                }else{
+                    $('#id_price_delivey_to_hera').val('0');                   
+                    
+                }
+            }
+        });    
+    }
+
+    function cek_currency_akses_bandara_inspeksi()
+    {        
+        var prm = $('#id_param').val();
+        var tmp = $('#id_weight_dl').val();
+        var dataString ='prm='+prm+'&tmp='+tmp;
+        $.ajax({
+            url: "{% url 'h-currencyaksesbandarainspeksi'%}",
+            data: dataString,
+            dataType: "JSON",
+            success: function(data){
+                if(data.result=='1'){
+                    $('#id_price_akses_bandara_inspeksi').val(parseFloat(data.price).toFixed(2));	
+                    
+                }else{
+                    $('#id_price_akses_bandara_inspeksi').val('0');                   
+                    
+                }
+            }
+        });    
+    }
+
+    function cek_currency_handling_fee()
+    {        
+        var prm = $('#id_param').val();
+        var tmp = $('#id_weight_dl').val();
+        var dataString ='prm='+prm+'&tmp='+tmp;
+        $.ajax({
+            url: "{% url 'h-currencyhandlingfee'%}",
+            data: dataString,
+            dataType: "JSON",
+            success: function(data){
+                if(data.result=='1'){
+                    $('#id_price_handling_fee').val(parseFloat(data.price).toFixed(2));	
+                    
+                }else{
+                    $('#id_price_handling_fee').val('0');                   
+                    
+                }
+            }
+        });    
+    }
+
+    function cek_currency_admin_fee()
+    {        
+        var prm = $('#id_param').val();
+        var tmp = $('#id_weight_dl').val();
+        var dataString ='prm='+prm+'&tmp='+tmp;
+        $.ajax({
+            url: "{% url 'h-currencyadminfee'%}",
+            data: dataString,
+            dataType: "JSON",
+            success: function(data){
+                if(data.result=='1'){
+                    $('#id_admin_fee').val(parseFloat(data.price).toFixed(2));	
+                    
+                }else{
+                    $('#id_admin_fee').val('0');                   
+                    
+                }
+            }
+        });    
+    }
+
+    function cek_currency_fee_collection()
+    {        
+        var prm = $('#id_param').val();
+        var tmp = $('#id_weight_dl').val();
+        var dataString ='prm='+prm+'&tmp='+tmp;
+        $.ajax({
+            url: "{% url 'h-currencyfeecollection' %}",
+            data: dataString,
+            dataType: "JSON",
+            success: function(data){
+                if(data.result=='1'){
+                    $('#id_fee_collection').val(parseFloat(data.price).toFixed(2));	
+                    
+                }else{
+                    $('#id_fee_collection').val('0');                   
+                    
+                }
+            }
+        });    
+    }
+
+    ////End Logistik Dili
+
+</script>
