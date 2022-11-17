@@ -18,3 +18,5 @@ Indah Senergi Trading
 5. Menu Invoice di Pekerjaan Di Hapus
 6. Khusus Untuk Silid invoce bisa di tambah
 7. Report tagihan pencairan dan operasional ist
+8. compresing data upload di dili
+9. Input leger di user keuangan, tambah user keuangan
