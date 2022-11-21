@@ -108,29 +108,37 @@ Buat report untuk data vendor khusus dhl
   - Value shipment 
   - duty tax
   - handling fee tax
+  
 
 2. Gastiasih
   - Pcs ,weight, Paking, rate =untuk parameter
   - Darat = muncul Ammount  (Pcs ,weight, Paking)
   - Udara = muncul Ammount (Pcs ,weight, Paking)
   - Laut = muncul Ammount (Pcs ,weight, Paking)
+  - @Done Silahkan Di coba tedi_black 18112022
 
 3. Lintas Negara
   - Transit charge
   - transportations charge
+  - @Done Silahkan Di coba tedi_black 18112022
 
 4. AntarLapan
   - CBm, 20ft ,BLfee, Biaya PEB
+  - @Done Silahkan Di coba tedi_black 18112022
 
 5. Wastila indonesia, cuman atribut vendor saja 
+  - @Done Silahkan Di coba tedi_black 18112022
+
 
 6. DHL 
  - Standard charge , total
  - fuel_surcharge_dhl , total
  - emergency_situation
+ - @Done Silahkan Di coba tedi_black 18112022
 
 Buat report untuk data vendor khusus dhl
   - tambahkan ceklis untuk mengelompokan no pekerjaan, sesuai invoce dhl,Report terlampir
+  - @Done Silahkan Di coba tedi_black 18112022
 
 
 
