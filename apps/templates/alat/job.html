@@ -17,5 +17,58 @@ $(document).ready(function($) {
     $("#id_tgl_fs,#id_tgl_sl,#id_tgl_dl,#id_tgl_aktif,#id_tgl_ga,#id_tgl_ln,#id_tanggal").mask("99-99-9999", {placeholder: 'DD-MM-YYYY'});
 });
 </script>
+<script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+<script>
+$(document).ready(function(){
+    $("select").change(function(){
+        $(this).find("option:selected").each(function(){
+            var optionValue = $(this).attr("value");
+            if(optionValue){
+                $(".box").not("." + optionValue).hide();
+                $("." + optionValue).show();
+            } else{
+                $(".box").show();
+            }
+        });
+    }).change();
+});
+</script>
+
+
+<script type="text/javascript">
+    window.onload = function() {
+        document.getElementById('ifYes').style.display = 'none';
+    }
+function Check() {
+    if (document.getElementById('yesCheck').checked) {
+        document.getElementById('ifYes').style.display = 'block';
+    } 
+    else {
+        document.getElementById('ifYes').style.display = 'none';
+
+   }
+}
+function nonCheck() {
+    if (document.getElementById('nonCheck').checked) {
+        document.getElementById('ifYes').style.display = 'none';
+    } 
+    else {
+        document.getElementById('ifYes').style.display = 'block';
+
+   }
+}
+
+</script>
+<script>
+    $(document).ready(function(){
+         $(".tombol1").click(function(){
+         $(".duty-tampil").show();
+         $("#div1").fadeIn("slow");
+         });
+         $(".tombol2").click(function(){
+         $(".duty-tampil").hide();
+         });
+    });
+    </script>
 
 

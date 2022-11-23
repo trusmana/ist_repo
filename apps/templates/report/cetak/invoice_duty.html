@@ -1,0 +1,420 @@
+{% load static %}
+<html>
+    <head>
+    <style>
+    ul.a {list-style-type:circle;}
+    ul.b {list-style-type:square;}
+    ol.c {list-style-type: upper-roman;}
+    ol.d {list-style-type:lower-alpha;}
+    ol.e {list-style-type:decimal;}
+    hr {page-break-after: always;
+        border: 0;
+    }
+    body page{
+      /*margin-top: 0.3cm;
+      margin-bottom: 1.7cm;
+      margin-left:0.5cm;
+      margin-right:0.5cm;*/
+      text-align: justify;
+      font-size:12px;
+    }
+    p { font-size:11px}
+    
+    page[size="A4"] {  
+      /* margin-top: 0.3cm;
+      margin-bottom: 1.7cm; */
+      width: 21cm;
+      height: 29.7cm;
+      /* margin-left:0.5cm;
+      margin-right:0.5cm; */
+    }
+    page {
+      background: white;
+      display: block;
+      box-shadow: 0 0 0.5cm rgba(0,0,0,0.5);
+      margin-top: 0.1cm;
+      margin-left:0.1cm;
+      margin-right:0.5cm;
+      margin-bottom: 1.7cm;
+      text-align: justify;
+    }
+    
+    
+    /* table th{
+    width: 200px;
+    text-align: center;
+    }
+    td.text{
+    text-align: justify;
+    padding: 5px;
+    }
+    table table, table table td{
+    border: 1px solid #000;
+    } */
+    
+    table, th, td {
+      border: 1px solid black;
+      border-collapse: collapse;
+    }
+
+    .box_icon{
+      width:50%;
+      height:50px;
+      border: solid;
+      top:-45px;
+      position:absolute;
+      border:none;
+      overflow-wrap: break-word;
+      }
+
+
+      .box-last{
+        width:50%;
+        height:100px;
+        margin-top:20px;
+        margin-left:-30px;
+        padding-left:5px;
+        border: none;
+        overflow-wrap: break-word;
+      }
+
+      .box-sign{
+        width:50%;
+        height:100px;
+        margin-top:-100px;
+        margin-left:500px;
+        position:absolute;
+        padding-left:5px;
+        border: none;
+        overflow-wrap: break-word;
+      }
+
+      .box2{
+        width:41.5%;
+        height:120px;
+        padding-top:10px;
+        padding-left:5px;
+        position:absolute;
+        top:-40px;
+        left:410px;
+        border: none;
+      }
+      
+      .box3{
+      width:95.2%;
+      height:100px;
+      border: solid;
+      margin-top:5px;
+      margin-left:-70px;
+      margin-right:10px;
+      padding-top:10px;
+      padding-left:5px;
+      border: 1px solid rgb(0, 0, 0);
+      }
+
+    /* .box4{
+    width:104%;
+    height:150px;
+    border: solid;
+    position:absolute;
+    top:4040px;
+    border: 1px solid rgb(0, 0, 0);
+    } */
+    .tab2 {
+        display: inline-block;
+        margin-left: 100px;
+    }
+    
+    
+    
+    </style>
+    
+    </head>
+     
+    <page size="A4">
+      <body>
+
+        <div class="box_icon" >
+          <img src="http://103.10.171.33:8000/static/paket/img/isp.png"  alt="icon" class="img-brand" style="height:100%; width:50%;">
+          <table style="text-align:left; font-size:12px; top:240px; border:none; width:100%;">
+            <thead >
+              <tr style="border:none;">
+                <td span="1" colspan="3" style="width: 25%; border:none;"><b>Indah Sinergi Trading Unipessoal. Lda,</b></td>
+              </tr>
+
+              <tr style="border:none;">
+                <td span="1" colspan="3" style="width: 25%; border:none;">Rua de Ramelau, Comoro, Dom Alexio</td>
+              </tr>
+
+              <tr style="border:none;">
+                <td span="1" colspan="3" style="width: 25%; border:none;">Dili, Timor-Leste</td>
+              </tr>
+
+              <tr style="border:none;">
+                <td span="1" style="width: 25%; border:none;">Phone</td>
+                <td span="1" style="width: 1%; border:none;">: </td>
+                <td span="1" style="width: 30%; border:none;">+670-73487777, 73707522</td>
+              </tr>
+
+              <tr style="border:none;">
+                <td span="1" style="width: 25%; border:none;">Email</td>
+                <td span="1" style="width: 1%; border:none;">: </td>
+                <td span="1" style="width: 30%; border:none;">abdul.mutolib@indahsinergi.com</td>
+              </tr>
+            </thead>
+          </table>
+        </div>
+        
+        <div class="box2" >
+          <table style="text-align:left; font-size:12px; font-weight:700; top:240px; border:none; width:100%;">
+            <thead >
+              <tr style="border:none;">
+                <td span="1" style="width: 25%; border:none;">INVOICE NO</td>
+                <td span="1" style="width: 1%; border:none;">: </td>
+                <td span="1" style="width: 30%; border:none;">{{ist.trans.no_pekerjaan}}</td>
+              </tr>
+
+              <tr style="border:none;">
+                <td span="1" style="width: 25%; border:none;">INVOICE DATE</td>
+                <td span="1" style="width: 1%; border:none;">: </td>
+                <td span="1" style="width: 30%; border:none;">{{ist.cdate|date:"d-m-Y"}}</td>
+              </tr>
+
+              <tr style="border:none;">
+                <td span="1" style="width: 25%; border:none;">TERMS</td>
+                <td span="1" style="width: 1%; border:none;">: </td>
+                <td span="1" style="width: 30%; border:none;">W600-60DAYS NET</td>
+              </tr>
+
+              <tr style="border:none;">
+                <td span="1" style="width: 25%; border:none;">PO#</td>
+                <td span="1" style="width: 1%; border:none;">: </td>
+                <td span="1" style="width: 30%; border:none;">-</td>
+              </tr>
+
+              <tr style="border:none;">
+                <td span="1" style="width: 25%; border:none;">DDP</td>
+                <td span="1" style="width: 1%; border:none;">: </td>
+                <td span="1" style="width: 30%; border:none;">BETANO</td>
+              </tr>
+
+              <tr style="border:none;">
+                <td span="1" style="width: 25%; border:none;">PIC</td>
+                <td span="1" style="width: 1%; border:none;">: </td>
+                <td span="1" style="width: 30%; border:none;">ELEAZAR</td>
+              </tr>
+            </thead>
+          </table>
+        </div> 
+
+        <table height="200px"  style="text-align:left; margin-top:120px; font-size:11px; border-top:none; width:86%; margin-left:-30px;">
+          <thead>
+              <tr>
+                <th style="width: 30%; text-align: center;">Shipper</th>
+                <th style="width: 30%; text-align: Center;">Consignee</th>
+                <th style="width: 30%; text-align: Center;">Descriptions of Goods</th>
+              </tr>
+          </thead>
+          <tbody>
+            <tr >
+              <td style="text-align:center; padding:15px 0px;">WARTSILA GLOBAL LOGISTICS SERVICES, KAMPEN - NETHERLAND</td>
+              <td style="text-align:center; padding:15px 0px;">WARTSILA INDONESIA, R.P. DILI, TIMOR LESTE</td>
+              <td style="text-align:center; padding:15px 0px;">{{ist.trans.commodity}}</td>
+            </tr>
+          </tbody>
+        </table>
+
+        <table height="200px"  style="text-align:left; font-size:11px; border-top:none; width:86%; margin-left:-30px;">
+          <thead >
+              <tr>
+                <th style="width: 22%; text-align: center;">Invoice Ref#</th>
+                <th style="width: 40%; text-align: Center;">Customer Reference</th>
+                <th style="width: 50%; text-align: Center;">AWB ORIGIN</th>
+              </tr>
+          </thead>
+          <tbody>
+            <tr >
+              <td style="text-align:center; padding:5px 0px;">8702054<br>8700531<br>8700352</td>
+              <td style="text-align:center; padding:5px 0px;">PR62139852<br>PO4505237662</td>
+              <td style="text-align:center; padding:5px 0px;">AMS220855015 (2PCS/206.5KG)<br>AMS220840959 (1PCS/36KG)</td>
+            </tr>
+          </tbody>
+        </table>
+
+        <table height="200px"  style="text-align:left; font-size:11px; border-top:none; width:86%; margin-left:-30px;">
+          <thead>
+              <tr>
+                <th style="width: 30%; text-align: center;">AWB</th>
+                <th style="width: 30%; text-align: Center;">ETD</th>
+                <th style="width: 30%; text-align: Center;">ETA</th>
+              </tr>
+          </thead>
+          <tbody>
+            <tr >
+              <td style="text-align:center; padding:2px 0px;">97504010930</td>
+              <td style="text-align:center; padding:2px 0px;">19/4/2022</td>
+              <td style="text-align:center; padding:2px 0px;">22/4/2022</td>
+            </tr>
+          </tbody>
+        </table>
+
+        <table height="200px"  style="text-align:left; font-size:11px; border-top:none; width:86%; margin-left:-30px;">
+          <thead>
+              <tr>
+                <th style="width: 15%; text-align: center;">Nb of Parcels</th>
+                <th style="width: 15%; text-align: Center;">Gross Weight</th>
+                <th style="width: 20%; text-align: Center;">Chargeable W.</th>
+                <th style="width: 10%; text-align: Center;">POL</th>
+                <th style="width: 13%; text-align: Center;">POD</th>
+                <th style="width: 17%; text-align: Center;">Vessel/Flight</th>
+              </tr>
+          </thead>
+          <tbody>
+            <tr >
+              <td style="text-align:center; padding:2px 0px;">{{data.trans.nb_of_parcels}}</td>
+              <td style="text-align:center; padding:2px 0px;">{{data.trans.gross_weight}}</td>
+              <td style="text-align:center; padding:2px 0px;">{{data.trans.gross_weight}}</td>
+              <td style="text-align:center; padding:2px 0px;">{{data.trans.products.point_satu}}</td>
+              <td style="text-align:center; padding:2px 0px;">{{data.trans.products.point_tiga}}</td>
+              <td style="text-align:center; padding:2px 0px;">{{data.trans.products.get_jenis_produk_display}}</td>
+
+            </tr>
+          </tbody>
+        </table>
+
+        <table height="200px"  style="text-align:left; font-size:11px; border-top:none; width:86%; margin-left:-30px;">
+          <thead>
+              <tr>
+                <th style="width: 45%; text-align: center;">DETAIL OF CHARGE</th>
+                <th style="width: 15%; text-align: Center;">QUANTITY</th>
+                <th style="width: 13%; text-align: Center;">PRICE</th>
+                <th style="width: 17%; text-align: Center;">AMOUNT</th>
+              </tr>
+          </thead>
+          <tbody>
+            <tr >
+              <td style="text-align:left; padding:2px 0px; border-bottom:none;"><b>SINGAPORE PORT</b></td>
+              <td style="text-align:center; padding:2px 0px; border-bottom:none;">&nbsp;</td>
+              <td style="text-align:center; padding:2px 0px; border-bottom:none;">&nbsp;</td>
+              <td style="text-align:center; padding:2px 0px; border-bottom:none;">&nbsp;</td>
+            </tr>
+
+            <tr >
+              <td style="text-align:left; padding:2px 0px; border-bottom:none; border-top:none;"><b>- AMS220855015 (2PCS/206.5KG)</b></td>
+              <td style="text-align:center; padding:2px 0px; border-bottom:none; border-top:none;"><b>206.50 &nbsp;&nbsp;KG</b></td>
+              <td style="text-align:center; padding:2px 0px; border-bottom:none; border-top:none;">&nbsp;</td>
+              <td style="text-align:center; padding:2px 0px; border-bottom:none; border-top:none;">&nbsp;</td>
+            </tr>
+
+            <tr >
+              <td style="text-align:left; padding:2px 8px; border-bottom:none; border-top:none;">Airfreight Import Handling</td>
+              <td style="text-align:center; padding:2px 0px; border-bottom:none; border-top:none;">1.00 &nbsp;&nbsp;AWB</td>
+              <td style="text-align:center; padding:2px 0px; border-bottom:none; border-top:none;">&nbsp;</td>
+              <td style="text-align:center; padding:2px 0px; border-bottom:none; border-top:none;">$ &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; $257.40</td>
+            </tr>
+
+            <tr >
+              <td style="text-align:left; padding:2px 8px; border-bottom:none; border-top:none;">Cartage and warehouse charge</td>
+              <td style="text-align:center; padding:2px 0px; border-bottom:none; border-top:none;">206.50 &nbsp;&nbsp;KG</td>
+              <td style="text-align:center; padding:2px 0px; border-bottom:none; border-top:none;">$ &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; 3.25</td>
+              <td style="text-align:center; padding:2px 0px; border-bottom:none; border-top:none;">$ &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; $257.40</td>
+            </tr>
+
+            <tr >
+              <td style="text-align:left; padding:2px 0px; border-bottom:none; border-top:none;"><b>- AAMS220840959 (1PCS/36KG)</b></td>
+              <td style="text-align:center; padding:2px 0px; border-bottom:none; border-top:none;"><b>36.00 &nbsp;&nbsp;KG</b></td>
+              <td style="text-align:center; padding:2px 0px; border-bottom:none; border-top:none;">&nbsp;</td>
+              <td style="text-align:center; padding:2px 0px; border-bottom:none; border-top:none;">&nbsp;</td>
+            </tr>
+
+            <tr >
+              <td style="text-align:left; padding:2px 8px; border-bottom:none; border-top:none;">Airfreight Import Handling</td>
+              <td style="text-align:center; padding:2px 0px; border-bottom:none; border-top:none;">1.00 &nbsp;&nbsp;AWB</td>
+              <td style="text-align:center; padding:2px 0px; border-bottom:none; border-top:none;">&nbsp;</td>
+              <td style="text-align:center; padding:2px 0px; border-bottom:none; border-top:none;">$ &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; $257.40</td>
+            </tr>
+
+            <tr >
+              <td style="text-align:left; padding:2px 8px; border-bottom:none; border-top:none;">Cartage and warehouse charge</td>
+              <td style="text-align:center; padding:2px 0px; border-bottom:none; border-top:none;">36.00 &nbsp;&nbsp;KG</td>
+              <td style="text-align:center; padding:2px 0px; border-bottom:none; border-top:none;">$ &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; 3.25</td>
+              <td style="text-align:center; padding:2px 0px; border-bottom:none; border-top:none;">$ &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; $117.00</td>
+            </tr>
+
+
+          </tbody>
+        </table>
+
+        <table height="200px"  style="text-align:left; font-size:11px; border-top:none; width:86%; margin-left:-30px;">
+          <thead>
+              <tr>
+                <th style="width: 45%; text-align: center;">&nbsp;</th>
+                <th style="width: 28%; text-align: Center;">GRAND TOTAL</th>
+                <th style="width: 17%; text-align: Center;">$ 12,755.30</th>
+              </tr>
+          </thead>
+        </table>
+
+        <table height="200px"  style="text-align:left; font-size:10px; border:none; width:86%; margin-left:-30px;">
+          <tbody>
+            <tr style="border:none;">
+              <td style="text-align:left; padding:2px 0px; border:none;">Remarks : All payment are to be made by cross cheque</td>
+            </tr>
+            <tr style="border:none;">
+              <td style="text-align:left; padding:2px 0px; border:none;">or T/T to <b>INDAH SINERGI TRADING UNIPESSOAL LDA</b></td>
+            </tr>
+          </tbody>
+        </table>
+
+        <div class="box-last">
+          <table style="text-align:left; font-size:10px; border:none; width:100%;">
+            <thead >
+              <tr style="border:none;">
+                <td span="1" colspan="3" style="width: 25%; border:none;"><b>Bank Details :</b></td>
+              </tr>
+
+              <tr style="border:none;">
+                <td span="1" colspan="3" style="width: 25%; border:none;"><b>MANDIRI BANK (USD)</b></td>
+              </tr>
+
+              <tr style="border:none;">
+                <td span="1" colspan="3" style="width: 25%; border:none;"><b>DILI BRANCH<b></td>
+              </tr>
+
+              <tr style="border:none; font-size:11px;">
+                <td span="1" style="width: 8%; border:none;"><b>No. AC :</b></td>
+                <td span="1" style="width: 1%; border:none;">&nbsp;</td>
+                <td span="1" style="width: 30%; border:none;">6<b>01.00.0085428.4</b></td>
+              </tr>
+            </thead>
+          </table>
+        </div>
+
+        <div class="box-sign">
+          <table style="text-align:left; font-size:10px; border:none; width:100%;">
+            <thead >
+              <tr style="border:none;">
+                <td span="1" colspan="3" style="width: 25%; border:none; font-size:9px;"><b>Regards,</b></td>
+              </tr>
+
+              <tr style="border:none;">
+                <td span="1" colspan="3" style="width: 25%; border:none; font-size:9px;">
+                  <img src="http://127.0.0.1:8000/static/paket/img/isp.png"  alt="icon" class="img-brand" style="height:20%; width:40%;">
+                </td>
+              </tr>
+
+              <tr style="border:none;">
+                <td span="1" colspan="3" style="width: 25%; border:none;"><u>ABDUL MUTOLIB</u></td>
+              </tr>
+
+              <tr style="border:none;">
+                <td span="1" colspan="3" style="width: 25%; border:none; font-size:9px;">Sales Manager</td>
+              </tr>
+            </thead>
+          </table>
+        </div>
+    
+    </page>
+    </body>
+    </html> 
+    

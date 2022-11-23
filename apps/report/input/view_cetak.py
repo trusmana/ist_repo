@@ -36,3 +36,18 @@ def invoice(request,id):
         response['Content-Disposition'] = 'attachment; filename="INVOICE.pdf"'
         return response
     
+
+@login_required(login_url=settings.LOGIN_URL)
+#####cetak Sale IST
+def invoice_duty(request,id):
+    ist = Sale.objects.get(id=id)
+    html_string = render_to_string('report/cetak/invoice_duty.html', {'data': ist})
+    html = HTML(string=html_string)
+    html.write_pdf(target='/tmp/mypdf.pdf')
+
+    fs = FileSystemStorage('/tmp')
+    with fs.open('mypdf.pdf') as pdf:
+        response = HttpResponse(pdf, content_type='application/pdf')
+        response['Content-Disposition'] = 'attachment; filename="INVOICE.pdf"'
+        return response
+    

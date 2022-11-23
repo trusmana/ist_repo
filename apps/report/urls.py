@@ -1,28 +1,41 @@
 from django.urls import path, re_path
 from apps.report  import views as vreport
 from apps.report  import view_kurs as vkurs
-from apps.report.parameter.produk import views as pviews
+from apps.report.parameter.produk import views as pviews #### Data produk 3 vendor
+from apps.report.parameter.produk import views_dua as pviews2 #### Data produk 2 vendor
 from apps.report.parameter.pengiriman import views as jviews
 from apps.report.parameter.paramdata import views_param as prviews ### Parameter
 from apps.report.parameter.paramdata import param_cari as prviewscr ### Paramaeter
 from apps.report.parameter.paramdata import param_tiga as param3 ### Paramaeter 3 vendor 
-from apps.report.parameter.paramdata import param_dua as param2 ### Paramaeter 2 vendor  ### Parameter
-from apps.report.parameter.paramdata import param_cari as prviewscr ### Paramaeter
-from apps.report.parameter.paramdata import param_tiga as param3 ### Paramaeter 3 vendor 
 from apps.report.parameter.paramdata import param_dua as param2 ### Paramaeter 2 vendor 
 from apps.report.parameter.negara import views as nviews
-from apps.report.input import views as inviews
+from apps.report.input import views as inviews ####untuk yg 1 vendor
+from apps.report.input import views_dua as inviewsdua ####untuk yg 2 vendor
+from apps.report.input import views_satu as inviewssatu ####untuk yg 2 vendor
 from apps.report.input import view_ajax as hinviews
 from apps.report.input import view_ajax_dua as hajaxtwo
 from apps.report.job import data_job as djob
 from apps.report.input.edit_inputan import views as v_edit
 from apps.report.input import view_cetak as ctk_dok 
-from apps.report.parameter.sale import views as s_views
+
+from apps.report.input import view_filter as fviews
+from apps.report.input.pecah import view_satu as fviews_satu ####simpan pekerjaan
+from apps.report.parameter.paramdata2 import views as v_pr2 #### Paarameter Jual
+from apps.report.parameter.sale import views as s_views #### Parameter Beli
+from apps.report.parameter.commodity import views as comm_v ####Commodity
+
 
 urlpatterns = [
+    ######Daftar Commodity
+    re_path(r'^commodity/(?:(?P<pk>\d+)/)?(?:(?P<action>\w+)/)?', comm_v.list_commodity.as_view(),name='d-commodity'),
+    path('add_commodity/',comm_v.addcommodity, name='add-commodity'),##Add Commodiy
+
+    ######Daftar Parameter dua
+    re_path(r'^paramjl/(?:(?P<pk>\d+)/)?(?:(?P<action>\w+)/)?', v_pr2.list_param2.as_view(),name='d-paramjl'),
+    path('add_param2/',v_pr2.addparamdatabl, name='add-param2'),##Add param dua
+
     ######data sale
     re_path(r'^sale/(?:(?P<pk>\d+)/)?(?:(?P<action>\w+)/)?', s_views.list_sale.as_view(),name='d-sale'),
-    path('add_sale/',s_views.addsale, name='add-sale'),##Add Sale
 
     #####  Menu Cetak Invoice
     path('ctk_job_buy/<int:id>',ctk_dok.invoice, name='ctk-job-buy'),##buy
@@ -45,8 +58,13 @@ urlpatterns = [
 
     ####show produk
     re_path(r'^produk/(?:(?P<pk>\d+)/)?(?:(?P<action>\w+)/)?', pviews.list_product.as_view(),name='d-produk'),
+    re_path(r'^produkdua/(?:(?P<pk>\d+)/)?(?:(?P<action>\w+)/)?', pviews2.list_product_dua.as_view(),name='d-produk-dua'),
     ###Add Produk
     path('add_produk/',pviews.addproduk,name='add-produk'),
+    path('add_produk_dua/',pviews2.addproduk_dua,name='add-produk-dua'),
+    
+    
+    
     ####show Jasa Pengiriman
     re_path(r'^pengiriman/(?:(?P<pk>\d+)/)?(?:(?P<action>\w+)/)?', jviews.list_pengiriman.as_view(),name='d-pengiriman'),
     ####Add Jasa Pengiriman
@@ -59,13 +77,36 @@ urlpatterns = [
 
     ####Parameter Data
     re_path(r'^param_data/(?:(?P<pk>\d+)/)?(?:(?P<action>\w+)/)?', prviews.list_param.as_view(),name='d-param'),
-    #####Detail Data Param
+    re_path(r'^param_data2/(?:(?P<pk>\d+)/)?(?:(?P<action>\w+)/)?', prviews.list_param_dua.as_view(),name='d-param2'),
+    
     path('list_param/<int:id>/',prviews.detailparam, name='dtl-param'),
+    path('add_dta/',prviewscr.addparamdta, name='add-paramdta'),
+    
+    path('add_paramdata/<int:pr>/<int:origin>/<int:through>/<int:destn>/',param3.addparam, name='add-paramdata'),
+    path('add_paramdatadua/<int:pr>/<int:origin>/<int:destn>/',param2.addparamdua, name='add-paramdatadua'),
+    ####Parameter Data
 
-    ###################Input Pengajuan
-    path('in_pengajuan/',inviews.input_pengajuan, name='in-pengajuan'),
-    path('show_pa/',inviews.showparam,name='show-param'),
-    path('proses_input/<int:param>/',inviews.proses_input,name='proses-input'),
+    ###################Input Pengajuan Pekerjaan 
+    #### Filter Data Pengajuan Berdasarkan Vendor
+    path('f_pengajuan/',fviews.filter_pengajuan, name='f-pengajuan'),
+    path('in_pengajuan/',fviews.input_pengajuan, name='in-pengajuan'),
+    path('in_pengajuan_satu/<int:jv>/',fviews.input_pengajuan_satu, name='in-pengajuan-satu'),
+    path('in_pengajuan_dua/',fviews.input_pengajuan_dua, name='in-pengajuan-dua'),
+    #### Filter Data Pengajuan 
+    ### Tiga Vendor
+    path('show_pa/',inviews.showparam,name='show-param'),###tiga vendor
+    path('proses_input/<int:param>/',inviews.proses_input,name='proses-input'),###proses  input 3 vendor
+    ## Dua Vendor
+    path('show_pa_dua/',inviewsdua.showparamdua,name='show-param-dua'),###dua vendor
+    path('proses_input_dua/<int:param>/',inviewsdua.proses_input_dua,name='proses-input-dua'),
+    ## Satu Vendor
+    path('show_pa_satu/',inviewssatu.showparamsatu,name='show-param-satu'),###satu vendor
+    path('proses_input_satu/<int:param>/',inviewssatu.proses_input_satu,name='proses-input-satu'),
+    ### Proses Simpan Pekerjaan Berdasarkan Vendor
+    path('save_input_satu/<int:param>/',fviews_satu.proses_input_satu,name='save-satu'),###SIng DPS DL Fs/SL/DILI
+    path('save_input_dua/<int:param>/',fviews_satu.proses_input_dua,name='save-dua'),###ID SUB DILI GA/LA/DILI
+    path('save_input_tiga/<int:param>/',fviews_satu.proses_input_tiga,name='save-tiga'),###ID ABU DILI ID GA/AL/DILI    
+    ###################Akhir Input Pengajuan
 
     ######Fungsi Ajax Hitungan Pembelian
     path('h_airfreight/',hinviews.airfreight, name='h-airfreight'),

@@ -82,14 +82,22 @@
         </div>
     </div>
     <div class="formSep control-group input-prepend">
+        <label class="control-label">{{ sl.status_duty.label }}  </label>
+        <div class="controls">
+            {{ sl.status_duty }}                                
+        </div>
+    </div>
+    
+    <div class="formSep control-group input-prepend 2 box" style="display:none">
         <label class="control-label">{{ sl.duty_tax_sale.label }}  </label>
         <div class="controls"><span class="add-on">$</span>
             {{ sl.duty_tax_sale }}                                
         </div>
     </div>
-    <div class="formSep control-group input-prepend">
+    <div class="formSep control-group input-prepend 2 box" style="display:none">
         <label class="control-label">{{ sl.tax_handling_charge_sale.label }}  </label>
         <div class="controls"><span class="add-on">$</span>
             {{ sl.tax_handling_charge_sale }}                                
         </div>
     </div>
+

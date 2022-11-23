@@ -5,6 +5,7 @@ class CariForm(forms.Form):
     products = forms.ModelChoiceField(queryset=Produk.objects.filter(status='1'),
         widget=forms.Select(attrs={'class':'form-control span8 transaction chosen-select'}))
     
+    
 
 class ParamForm(forms.Form):
     nama_jasa_pengiriman = forms.CharField(label="Jasa Pengiriman", widget=forms.TextInput(attrs={'class': 'form-control transaction'}))

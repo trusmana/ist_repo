@@ -6,9 +6,13 @@ from django.core.exceptions import ObjectDoesNotExist
 import datetime
 from apps.core.models import AccountsUser as user
 
+STATUS_DUTY =[('','--Piih--'),("1",'Tidak'),("2",'Ada')]
+
 STATUS =[('0','NonAktif'),('1','Aktif')]
 
 STATUS_UPDATE =[('',''),('1','Done')]
+
+JUMLAH_VENDOR=[('1','SATU'),('2','DUA'),('3','TIGA')]
 
 JENISPRODUK =[('1','Airfreight'),('2','Seafreight')]
 
@@ -93,6 +97,7 @@ class JasaPengiriman(models.Model):
 class Produk(models.Model):
     id_prod = models.IntegerField(null=True)
     nama_produk = models.CharField(max_length=100,null=True)
+    jumlah_vendor = models.CharField(choices = JUMLAH_VENDOR,max_length=20,null= True,blank=True)
     jenis_produk = models.CharField(choices = JENISPRODUK,max_length=20,null= True,blank= True)
     ####origin
     point_satu = models.ForeignKey(Negara,on_delete=models.CASCADE,null=True, related_name='point_satu' )
@@ -192,9 +197,10 @@ class ParameterDataBl(models.Model):
 ##########Parameter untuk Job
 class ParameterData(models.Model):
     products = models.ForeignKey(Produk,on_delete=models.CASCADE)
-    nilai_kurs = models.ForeignKey(Kurs,on_delete=models.CASCADE)    
+    nilai_kurs = models.ForeignKey(Kurs,on_delete=models.CASCADE,null=True,blank=True)    
     status_param = models.CharField(max_length=20,choices=STATUS,null=True,blank=True,default=0)
     tgl_aktif_param = models.DateField(blank=True, null=True)
+    j_vendor = models.CharField(choices = JUMLAH_VENDOR,max_length=20,null= True,blank=True)
     ########## Khusus Untuk Freight Solutions
     ####Pengiriman Udara
     max_airfreight = models.FloatField(null=True,blank=True,help_text="Freigh Solution")
@@ -373,6 +379,7 @@ class Sale(models.Model):
     ground_handling = models.DecimalField(max_digits=12, decimal_places=2,null=True,blank=True,default=0)
     warehouse_charge = models.DecimalField(max_digits=12, decimal_places=2,null=True,blank=True,default=0)
     handling_charge = models.DecimalField(max_digits=12, decimal_places=2,null=True,blank=True,default=0)
+    status_duty = models.CharField(choices=STATUS_DUTY,max_length=10,null=True,blank=True)
     delivery = models.DecimalField(max_digits=12, decimal_places=2,null=True,blank=True,default=0)
     duty_tax = models.DecimalField(max_digits=12, decimal_places=2,null=True,blank=True,default=0) 
     tax_handling_charge = models.DecimalField(max_digits=12, decimal_places=2,null=True,blank=True,default=0)
@@ -394,7 +401,9 @@ class Sale(models.Model):
 
 class Job(models.Model):
     tanggal_invoice = models.DateField()
-    no_invoice = models.IntegerField(blank=True,null=True)
+    no_invoice = models.CharField(null=True,blank=True,max_length=50)
+    no_invoice_sl_2 = models.CharField(null=True,blank=True,max_length=50)
+    no_invoice_sl_3 = models.CharField(null=True,blank=True,max_length=50)
     transaksi = models.ForeignKey(Transaksi,on_delete=models.CASCADE)
     status_job = models.CharField(choices=STATUS_UPDATE,null=True,blank=True,max_length=50)
     tanggal_status = models.DateField(null=True,blank=True) 

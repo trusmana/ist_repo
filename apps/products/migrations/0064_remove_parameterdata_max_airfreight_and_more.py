@@ -10,12 +10,5 @@ class Migration(migrations.Migration):
     ]
 
     operations = [
-        migrations.RemoveField(
-            model_name='parameterdata',
-            name='max_airfreight',
-        ),
-        migrations.RemoveField(
-            model_name='parameterdata',
-            name='price_high_airfreight',
-        ),
+        
     ]

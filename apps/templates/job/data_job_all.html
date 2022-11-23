@@ -184,6 +184,46 @@
                 <td><div class="text-right act-danger">{{data.total_sale|intcomma}}</div></td>
             </tr>
         </table>
+        {% if data.status_duty  %}
+        <h3 class="heading"><a href="{% url 'e-jual' data.id %}">{{data.prod.vendor}}</a> | 
+            <a href="{% url 'ctk-job-buy' data.id %}">Invoice DutyTax</a>
+        </h3>
+        <table class="table table-bordered table-striped table_vam">
+            <tr>
+                <td colspan='6'><div class="text-center act-info">{{data.trans.products}}</div></td>
+            </tr>    
+            <tr>
+                <td rowspan='2'><div class="text-center"><b>{{data.prod.vendor}}</b></div></td>
+                <td rowspan='2' colspan='2'></td>
+                <td><div class="text-center">Tanggal Invoice</div></td>
+                <td><div class="text-center">Nomor Invoice</div></td>
+                <td><div class="text-center">Job Number</div></td>
+            </tr>
+            <tr>
+                <td><div class="text-center">{{data.tanggal_invoice|date:'d-M-Y'}}</div></td>
+                <td><div class="text-center">{{data.no_invoice}}</div></td>
+                <td><div class="text-center">{{data.transaksi.no_pekerjaan}}</div></td>
+            </tr>
+            <tr>
+                <td><div class="text-center"> Detail Charges</div></td>
+                <td colspan="2"><div class="text-center">Currency </div></td>
+                <td><div class="text-center">Price </div> </td>
+                <td colspan="2"><div class="text-center"> Amount</div></td>
+            </tr>
+            <tr>
+                <td>Duty Tax</td>
+                <td colspan='2'>{{data.trans.weight}}</td><td></td>
+                <td></td>
+                <td><div class="text-right">{{data.duty_tax |intcomma}}</div></td>
+            </tr>
+            <tr>
+                <td>Tax Handling Charge</td>
+                <td colspan='2'></td><td></td>
+                <td></td>
+                <td><div class="text-right">{{data.tax_handling_charge|intcomma}}</div></td>
+            </tr>
+        </table>
+        {% endif %}
         {% endfor %}
     </div>
 </div>
