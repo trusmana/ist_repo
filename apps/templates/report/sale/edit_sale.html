@@ -19,8 +19,8 @@
 </div>
 <div class="row-fluid">
     <div class="span12">
-        <h2 class="h5 mb-4">sale</h2>
-        <form action="{% url 'd-sale' sale.id %}" method="post">
+        <h2 class="h5 mb-4">Sale</h2>
+        <form action="{% url 'edt-sale' sale.id %}" method="post">
             {% csrf_token %}
             <div class="formSep">
                 {% for field in form %}

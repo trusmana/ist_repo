@@ -1,10 +1,10 @@
 from decimal import Decimal
-from pyexpat import model
-from random import choices
 from django.db import models
 from django.core.exceptions import ObjectDoesNotExist
 import datetime
 from apps.core.models import AccountsUser as user
+
+REPORT_DATA =[('','-- Select --'),("1",'View'),("2",'Xls')]
 
 STATUS_DUTY =[('','--Piih--'),("1",'Tidak'),("2",'Ada')]
 
@@ -29,7 +29,7 @@ class Commodity(models.Model):
         return self.nama
 
 class MataUang(models.Model):
-    status =models.CharField(max_length=10,choices=STATUS,null=True,default=0)
+    status =models.CharField(max_length=10,choices=STATUS,null=True,default=0)  # type: ignore
     kode_matauang = models.CharField(max_length=5,null=True)
     nama_mata_uang = models.CharField(max_length=30,null=True,blank=True)
     negara = models.CharField(max_length=30,null=True,blank=True)
@@ -47,7 +47,7 @@ class MataUang(models.Model):
 
 class Kurs(models.Model):
     mtu = models.ForeignKey(MataUang,on_delete=models.CASCADE,related_name='mtu_fk')
-    status_kurs = models.CharField(max_length=10,choices=STATUS,default=0)
+    status_kurs = models.CharField(max_length=10,choices=STATUS,default=0)  # type: ignore
     nilai_kurs = models.FloatField(null=True,blank=True)
     simbol = models.CharField(max_length=10,null=True,blank=True)
     tanggal_aktif = models.DateField(null=True,blank=True)
@@ -66,7 +66,7 @@ class Kurs(models.Model):
 class Negara(models.Model):
     nama_negara = models.CharField(max_length=100,null=True)
     singkatan = models.CharField(max_length=100,null=True)
-    status = models.CharField(max_length=20,choices=STATUS,null=True,blank=True,default=0)
+    status = models.CharField(max_length=20,choices=STATUS,null=True,blank=True,default=0)  # type: ignore
     cdate = models.DateTimeField(auto_now_add=True)
     mdate = models.DateTimeField(auto_now=True)
 
@@ -83,7 +83,7 @@ class JasaPengiriman(models.Model):
     nama_jasa_pengiriman = models.CharField(max_length=100,null=True)
     alamat = models.CharField(max_length=100,null=True)
     telepon = models.CharField(max_length=20,null=True)
-    status = models.CharField(max_length=20,choices=STATUS,null=True,blank=True,default=0)
+    status = models.CharField(max_length=20,choices=STATUS,null=True,blank=True,default=0)  # type: ignore
     cu = models.ForeignKey(user, related_name='cu_js', editable=False, null=True, blank=True,on_delete=models.CASCADE)
 
     class Meta:
@@ -113,7 +113,7 @@ class Produk(models.Model):
     kurs_destinations = models.ForeignKey(Kurs,on_delete=models.CASCADE,null=True,related_name='origin_destinastions')
 
     tgl_aktif = models.DateField(blank=True, null=True)
-    status = models.CharField(max_length=20,choices=STATUS,null=True,blank=True,default=0)
+    status = models.CharField(max_length=20,choices=STATUS,null=True,blank=True,default=0)  # type: ignore
     cu = models.ForeignKey(user, related_name='cu_produk', editable=False, null=True, blank=True,on_delete=models.CASCADE)
 
     class Meta:
@@ -132,16 +132,16 @@ class ParameterDataBl(models.Model):
     products = models.ForeignKey(Produk,on_delete=models.CASCADE)
     
     vendor = models.ForeignKey(JasaPengiriman,on_delete=models.CASCADE,null=True,blank=True)    
-    status_param = models.CharField(max_length=20,choices=STATUS,null=True,blank=True,default=0)
+    status_param = models.CharField(max_length=20,choices=STATUS,null=True,blank=True,default=0)  # type: ignore
     tgl_aktif_param = models.DateField(blank=True, null=True)
     ########## logistik Indah Sinergi Trading
     min_airfreight_import_handling = models.FloatField(null=True,blank=True)
     max_airfreight_import_handling = models.FloatField(null=True,blank=True)
-    price_airfreight_import_handling = models.DecimalField(max_digits=12, decimal_places=2,null=True,blank=True,default=0)
+    price_airfreight_import_handling = models.DecimalField(max_digits=12, decimal_places=2,null=True,blank=True,default=0)  # type: ignore
 
     min_cartage_and_warehouse_charge = models.FloatField(null=True,blank=True)
     max_cartage_and_warehouse_charge = models.FloatField(null=True,blank=True)
-    price_cartage_and_warehouse_charge = models.DecimalField(max_digits=12, decimal_places=2,null=True,blank=True,default=0)
+    price_cartage_and_warehouse_charge = models.DecimalField(max_digits=12, decimal_places=2,null=True,blank=True,default=0)  # type: ignore
 
     min_export_handling = models.FloatField(null=True,blank=True)
     max_export_handling = models.FloatField(null=True,blank=True)
@@ -368,6 +368,8 @@ class Transaksi(models.Model):
 
 class Sale(models.Model):
     trans = models.ForeignKey(Transaksi,on_delete=models.CASCADE,null=True)
+    status_sale = models.CharField(choices=STATUS_UPDATE,null=True,blank=True,max_length=50)
+    tgl_done = models.DateField(null=True,blank=True)
     prod = models.ForeignKey(ParameterDataBl,on_delete=models.CASCADE,null=True,blank=True)
     cartage_warehouse_charge_one =models.DecimalField(max_digits=12, decimal_places=2,null=True,blank=True,default=0)
     cartage_warehouse_charge_two =models.DecimalField(max_digits=12, decimal_places=2,null=True,blank=True,default=0)

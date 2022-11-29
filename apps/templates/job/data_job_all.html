@@ -165,18 +165,7 @@
                 <td></td>                
                 <td><div class="text-right">{{data.delivery|intcomma}}</div></td>
             </tr>
-            <tr>
-                <td>Duty Tax</td>
-                <td colspan='2'>{{data.trans.weight}}</td><td></td>
-                <td></td>
-                <td><div class="text-right">{{data.duty_tax |intcomma}}</div></td>
-            </tr>
-            <tr>
-                <td>Tax Handling Charge</td>
-                <td colspan='2'></td><td></td>
-                <td></td>
-                <td><div class="text-right">{{data.tax_handling_charge|intcomma}}</div></td>
-            </tr>
+            
             <tr>
                 <td></td>
                 <td colspan='2'></td><td></td>
@@ -186,7 +175,7 @@
         </table>
         {% if data.status_duty  %}
         <h3 class="heading"><a href="{% url 'e-jual' data.id %}">{{data.prod.vendor}}</a> | 
-            <a href="{% url 'ctk-job-buy' data.id %}">Invoice DutyTax</a>
+            <a href="{% url 'ctk-job-buy_duty' data.id %}">Invoice DutyTax</a>
         </h3>
         <table class="table table-bordered table-striped table_vam">
             <tr>

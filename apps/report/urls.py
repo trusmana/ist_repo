@@ -15,17 +15,25 @@ from apps.report.input import views_satu as inviewssatu ####untuk yg 2 vendor
 from apps.report.input import view_ajax as hinviews
 from apps.report.input import view_ajax_dua as hajaxtwo
 from apps.report.job import data_job as djob
+from apps.report.job import views as rpjob ####report Job XLS
 from apps.report.input.edit_inputan import views as v_edit
 from apps.report.input import view_cetak as ctk_dok 
 
 from apps.report.input import view_filter as fviews
 from apps.report.input.pecah import view_satu as fviews_satu ####simpan pekerjaan
 from apps.report.parameter.paramdata2 import views as v_pr2 #### Paarameter Jual
-from apps.report.parameter.sale import views as s_views #### Parameter Beli
+from apps.report.parameter.sale import views as s_views #### Data sale
+from apps.report.parameter.sale import views_report as rpt_views #### Report sale
 from apps.report.parameter.commodity import views as comm_v ####Commodity
 
 
 urlpatterns = [
+    ###### Report Sale
+    path('rp-sales',rpt_views.report_sale,name='rpt-sale'),
+    path('rp-sales-done',rpt_views.report_sale_done,name='rpt-sale-done'),
+    ###### Report Job
+    path('rp-job',rpjob.report_job,name='rpt-job'),
+    path('rp-job-done',rpjob.report_job_done,name='rpt-job-done'),
     ######Daftar Commodity
     re_path(r'^commodity/(?:(?P<pk>\d+)/)?(?:(?P<action>\w+)/)?', comm_v.list_commodity.as_view(),name='d-commodity'),
     path('add_commodity/',comm_v.addcommodity, name='add-commodity'),##Add Commodiy
@@ -35,9 +43,14 @@ urlpatterns = [
     path('add_param2/',v_pr2.addparamdatabl, name='add-param2'),##Add param dua
 
     ######data sale
-    re_path(r'^sale/(?:(?P<pk>\d+)/)?(?:(?P<action>\w+)/)?', s_views.list_sale.as_view(),name='d-sale'),
+    #re_path(r'^sale/(?:(?P<pk>\d+)/)?(?:(?P<action>\w+)/)?', s_views.list_sale.as_view(),name='d-sale'),
+    path('sale/', s_views.datasale,name='d-sale'),
+    path('sale-done/', s_views.datasaledone,name='d-sale-done'),
+    path('up_sale/<int:pk>/',s_views.update_sale, name='up-sale'),
+    path('edit-sale/<int:id>/',s_views.editsale, name='edt-sale'),
 
     #####  Menu Cetak Invoice
+    path('ctk_job_buy_duty/<int:id>',ctk_dok.invoice_duty, name='ctk-job-buy_duty'),##Duty
     path('ctk_job_buy/<int:id>',ctk_dok.invoice, name='ctk-job-buy'),##buy
     path('ctk_job/<int:id>',ctk_dok.debit_note, name='ctk-job'),##Sale
 

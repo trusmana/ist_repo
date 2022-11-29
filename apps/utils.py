@@ -38,5 +38,5 @@ def set_pagination(request, items, item_numer=10):
         page_range += [i for i in range(pages_number - 7, pages_number + 1)]
 
     context = dict(items=items, page_range=page_range, last=pages_number, url_params=urlencode(url_params))
-    items.pagination = render_to_string('layouts/pagination.html', context)
+    items.pagination = render_to_string('layouts/pagination.html', context)  # type: ignore
     return items, {'current_page': page, 'items': item_len, 'items_on_page': item_numer}

@@ -48,6 +48,6 @@ def invoice_duty(request,id):
     fs = FileSystemStorage('/tmp')
     with fs.open('mypdf.pdf') as pdf:
         response = HttpResponse(pdf, content_type='application/pdf')
-        response['Content-Disposition'] = 'attachment; filename="INVOICE.pdf"'
+        response['Content-Disposition'] = 'attachment; filename="Duty.pdf"'
         return response
     
