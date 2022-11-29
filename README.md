@@ -108,7 +108,6 @@ Buat report untuk data vendor khusus dhl
   - Value shipment 
   - duty tax
   - handling fee tax
-  - @Done Silahkan Di coba tedi_black 24112022
 
 2. Gastiasih
   - Pcs ,weight, Paking, rate =untuk parameter
@@ -123,10 +122,11 @@ Buat report untuk data vendor khusus dhl
   - @Done Silahkan Di coba tedi_black 18112022
 
 4. AntarLapan
-  - CBm, 20ft ,BLfee, Biaya PEB 
-  - @Done Silahkan Di coba tedi_black 18112022
+  - CBm, 20ft ,BLfee, Biaya PEB
 
 5. Wastila indonesia, cuman atribut vendor saja 
+  - @Done Silahkan Di coba tedi_black 18112022
+
 
 6. DHL 
  - Standard charge , total
