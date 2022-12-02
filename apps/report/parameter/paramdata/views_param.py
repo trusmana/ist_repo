@@ -27,7 +27,7 @@ class list_param(View):
                 return JsonResponse({'edit_row': edit_row})
 
         if pk and action == 'edit':
-            context, template = self.edit(request, pk)
+            context, template = self.edit(request, pk)  # type: ignore  
         else:
             context, template = self.list(request)
 
@@ -35,7 +35,7 @@ class list_param(View):
             html_template = loader.get_template('page-500.html')
             return HttpResponse(html_template.render(self.context, request))
 
-        return render(request, template, context)
+        return render(request, template, context)  # type: ignore 
     
     def post(self, request, pk=None, action=None):
         self.update_instance(request, pk)
@@ -74,7 +74,7 @@ class list_param(View):
                         filter_params |= Q(products__nama_produk__icontains=key.strip())
 
         param = ParameterData.objects.filter(filter_params) if filter_params else ParameterData.objects.filter(j_vendor='3').order_by('-id')
-        self.context['param'], self.context['info'] = set_pagination(request, param)
+        self.context['param'], self.context['info'] = set_pagination(request, param)  # type: ignore 
         if not self.context['param']:
             return False, self.context['info']
 
@@ -92,7 +92,7 @@ class list_param(View):
 
     def edit_row(self, pk):
         produk = self.get_object(pk)
-        form = ParamForm(instance=produk)
+        form = ParamForm(instance=produk)  # type: ignore 
         context = {'instance': produk, 'form': form}
         return render_to_string('report/parameter/edit_parameter_row.html', context)
 
@@ -110,9 +110,9 @@ class list_param(View):
     def update_instance(self, request, pk, is_urlencode=False):
         transaction = self.get_object(pk)
         form_data = QueryDict(request.body) if is_urlencode else request.POST
-        form = ParamForm(form_data, instance=transaction)        
+        form = ParamForm(form_data, instance=transaction)          # type: ignore 
         if form.is_valid():
-            form.save()
+            form.save()  # type: ignore
             if not is_urlencode:
                 messages.success(request, 'Parameter Data Berhasil DiSimpan')
 
@@ -149,7 +149,7 @@ class list_param_dua(View):
             html_template = loader.get_template('page-500.html')
             return HttpResponse(html_template.render(self.context, request))
 
-        return render(request, template, context)
+        return render(request, template, context)  # type: ignore
     
     def post(self, request, pk=None, action=None):
         self.update_instance(request, pk)
@@ -188,7 +188,7 @@ class list_param_dua(View):
                         filter_params |= Q(products__nama_produk__icontains=key.strip())
 
         param = ParameterData.objects.filter(filter_params) if filter_params else ParameterData.objects.filter(j_vendor=2).order_by('-id')
-        self.context['param'], self.context['info'] = set_pagination(request, param)
+        self.context['param'], self.context['info'] = set_pagination(request, param)  # type: ignore 
         if not self.context['param']:
             return False, self.context['info']
 
@@ -197,8 +197,8 @@ class list_param_dua(View):
     def edit(self, request, pk):
         param = self.get_object(pk)
 
-        self.context['param'] = param
-        self.context['form'] = FSForm(instance=param)
+        self.context['param'] = param  # type: ignore
+        self.context['form'] = FSForm(instance=param)  # type: ignore  
 
         return self.context, 'report/parameter/edit_parameter.html'
 
@@ -206,7 +206,7 @@ class list_param_dua(View):
 
     def edit_row(self, pk):
         produk = self.get_object(pk)
-        form = ParamForm(instance=produk)
+        form = ParamForm(instance=produk)  # type: ignore
         context = {'instance': produk, 'form': form}
         return render_to_string('report/parameter/edit_parameter_row.html', context)
 
@@ -224,9 +224,9 @@ class list_param_dua(View):
     def update_instance(self, request, pk, is_urlencode=False):
         transaction = self.get_object(pk)
         form_data = QueryDict(request.body) if is_urlencode else request.POST
-        form = ParamForm(form_data, instance=transaction)        
+        form = ParamForm(form_data, instance=transaction)          # type: ignore  
         if form.is_valid():
-            form.save()
+            form.save()  # type: ignore 
             if not is_urlencode:
                 messages.success(request, 'Parameter Data Berhasil DiSimpan')
 

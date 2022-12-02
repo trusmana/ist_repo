@@ -146,3 +146,7 @@ Buat report untuk data vendor khusus dhl
   - @Done Silahkan Di coba tedi_black 29112022
 
 
+01/11/2022
+---
+1. Penambahan menu di vendor dili, akusi dan betano
+  - @done selesai silahkan di coba tedi_black 02112022

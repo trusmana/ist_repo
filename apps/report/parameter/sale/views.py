@@ -4,6 +4,7 @@ from django.contrib import messages
 from django.contrib.auth.decorators import login_required,user_passes_test
 from django.conf import settings
 import datetime
+from django import forms
 
 from apps.report.parameter.sale.forms import SaleForm
 from apps.products.models import Sale
@@ -82,5 +83,9 @@ def editsale(request,id):
             return redirect('d-sale')
     else:
         form = SaleForm(instance=data)
+        form.fields['status_sale'].widget = forms.HiddenInput()
+        form.fields['status_sale'].label=''
+        form.fields['tgl_done'].widget = forms.HiddenInput()
+        form.fields['tgl_done'].label=''
     return render(request,'report/sale/edit_sale.html',{'form':form,'sale':data})
 

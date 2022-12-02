@@ -6,6 +6,7 @@ from apps.report.parameter.produk import views_dua as pviews2 #### Data produk 2
 from apps.report.parameter.pengiriman import views as jviews
 from apps.report.parameter.paramdata import views_param as prviews ### Parameter
 from apps.report.parameter.paramdata import param_cari as prviewscr ### Paramaeter
+from apps.report.parameter.paramdata import edit_param as eparam ### EditParameter
 from apps.report.parameter.paramdata import param_tiga as param3 ### Paramaeter 3 vendor 
 from apps.report.parameter.paramdata import param_dua as param2 ### Paramaeter 2 vendor 
 from apps.report.parameter.negara import views as nviews
@@ -89,6 +90,9 @@ urlpatterns = [
     path('add_negara/',nviews.addnegara,name='add-negara'),
 
     ####Parameter Data
+    path('edit_dl/<int:id>/',eparam.dledit, name='e-dl'),
+    path('edit_sl/<int:id>/',eparam.sledit, name='e-sl'),
+    path('edit_fs/<int:id>/',eparam.fsedit, name='e-fs'),
     re_path(r'^param_data/(?:(?P<pk>\d+)/)?(?:(?P<action>\w+)/)?', prviews.list_param.as_view(),name='d-param'),
     re_path(r'^param_data2/(?:(?P<pk>\d+)/)?(?:(?P<action>\w+)/)?', prviews.list_param_dua.as_view(),name='d-param2'),
     

@@ -73,10 +73,14 @@
             dataType: "JSON",
             success: function(data){
                 if(data.result=='1'){
-                    $('#id_price_delivey_to_hera').val(parseFloat(data.price).toFixed(2));	
+                    $('#id_price_delivey_to_hera').val('0');
+                    $('#id_price_delivey_to_betano').val('0');
+                    $('#id_price_delivey_to_okusi').val('0');	
                     
                 }else{
-                    $('#id_price_delivey_to_hera').val('0');                   
+                    $('#id_price_delivey_to_hera').val('0');
+                    $('#id_price_delivey_to_betano').val('0');
+                    $('#id_price_delivey_to_okusi').val('0');                   
                     
                 }
             }

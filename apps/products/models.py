@@ -4,6 +4,8 @@ from django.core.exceptions import ObjectDoesNotExist
 import datetime
 from apps.core.models import AccountsUser as user
 
+DELIVERY_TIMOR_LESTE =[('','--SELECT--'),('3','Hera'),('4','Okusi'),('5','Betano')]
+
 REPORT_DATA =[('','-- Select --'),("1",'View'),("2",'Xls')]
 
 STATUS_DUTY =[('','--Piih--'),("1",'Tidak'),("2",'Ada')]
@@ -125,7 +127,7 @@ class Produk(models.Model):
         return '%s %s %s Via %s' %(self.nama_produk, self.point_satu,self.point_dua,self.point_tiga)
 
     def __str__(self):
-        return '%s-%s-%s' %(self.id,self.id_prod, self.kode_produk())
+        return '%s-%s-%s' %(self.id,self.id_prod, self.kode_produk())  # type: ignore
 
 ######Khusus Parameter Jual
 class ParameterDataBl(models.Model):
@@ -145,39 +147,39 @@ class ParameterDataBl(models.Model):
 
     min_export_handling = models.FloatField(null=True,blank=True)
     max_export_handling = models.FloatField(null=True,blank=True)
-    price_export_handling = models.DecimalField(max_digits=12, decimal_places=2,null=True,blank=True,default=0)
+    price_export_handling = models.DecimalField(max_digits=12, decimal_places=2,null=True,blank=True,default=0)  # type: ignore
     
     min_airfreight_sin_dps_dil = models.FloatField(null=True,blank=True)
     max_airfreight_sin_dps_dil = models.FloatField(null=True,blank=True)
-    airfreight_sin_dps_dil = models.DecimalField(max_digits=12, decimal_places=2,null=True,blank=True,default=0)
+    airfreight_sin_dps_dil = models.DecimalField(max_digits=12, decimal_places=2,null=True,blank=True,default=0)  # type: ignore
 
     min_doc_and_clearance = models.FloatField(null=True,blank=True)
     max_doc_and_clearance = models.FloatField(null=True,blank=True)
-    price_doc_and_clearance = models.DecimalField(max_digits=12, decimal_places=2,null=True,blank=True,default=0)
+    price_doc_and_clearance = models.DecimalField(max_digits=12, decimal_places=2,null=True,blank=True,default=0) # type: ignore
     
     min_ground_handling = models.FloatField(null=True,blank=True)
     max_ground_handling = models.FloatField(null=True,blank=True)
-    price_ground_handling = models.DecimalField(max_digits=12, decimal_places=2,null=True,blank=True,default=0)
+    price_ground_handling = models.DecimalField(max_digits=12, decimal_places=2,null=True,blank=True,default=0) # type: ignore
 
     min_warehouse_charge = models.FloatField(null=True,blank=True)
     max_warehouse_charge = models.FloatField(null=True,blank=True)
-    price_warehouse_charge = models.DecimalField(max_digits=12, decimal_places=2,null=True,blank=True,default=0)
+    price_warehouse_charge = models.DecimalField(max_digits=12, decimal_places=2,null=True,blank=True,default=0) # type: ignore
 
     min_handling_charge = models.FloatField(null=True,blank=True)
     max_handling_charge = models.FloatField(null=True,blank=True)
-    price_handling_charge = models.DecimalField(max_digits=12, decimal_places=2,null=True,blank=True,default=0)
+    price_handling_charge = models.DecimalField(max_digits=12, decimal_places=2,null=True,blank=True,default=0) # type: ignore
 
     min_delivery = models.FloatField(null=True,blank=True)
     max_delivery = models.FloatField(null=True,blank=True)
-    price_delivery = models.DecimalField(max_digits=12, decimal_places=2,null=True,blank=True,default=0)
+    price_delivery = models.DecimalField(max_digits=12, decimal_places=2,null=True,blank=True,default=0) # type: ignore
 
     min_duty_tax = models.FloatField(null=True,blank=True)
     max_duty_tax = models.FloatField(null=True,blank=True)
-    price_duty_tax = models.DecimalField(max_digits=12, decimal_places=2,null=True,blank=True,default=0)
+    price_duty_tax = models.DecimalField(max_digits=12, decimal_places=2,null=True,blank=True,default=0) # type: ignore
 
     min_tax_handling_charge = models.FloatField(null=True,blank=True)
     max_tax_handling_charge = models.FloatField(null=True,blank=True)
-    price_tax_handling_charge = models.DecimalField(max_digits=12, decimal_places=2,null=True,blank=True,default=0)
+    price_tax_handling_charge = models.DecimalField(max_digits=12, decimal_places=2,null=True,blank=True,default=0) # type: ignore
     ########## logistik Indah Sinergi Trading
     cu = models.ForeignKey(user, related_name='cu_parambl', editable=False, null=True, blank=True,on_delete=models.CASCADE)
     cdate = models.DateTimeField(auto_now_add=True)
@@ -189,7 +191,7 @@ class ParameterDataBl(models.Model):
 
 
     def __str__(self):
-        return '%s' %(self.id)
+        return '%s' %(self.id) # type: ignore
 
     
     
@@ -198,7 +200,7 @@ class ParameterDataBl(models.Model):
 class ParameterData(models.Model):
     products = models.ForeignKey(Produk,on_delete=models.CASCADE)
     nilai_kurs = models.ForeignKey(Kurs,on_delete=models.CASCADE,null=True,blank=True)    
-    status_param = models.CharField(max_length=20,choices=STATUS,null=True,blank=True,default=0)
+    status_param = models.CharField(max_length=20,choices=STATUS,null=True,blank=True,default=0) # type: ignore
     tgl_aktif_param = models.DateField(blank=True, null=True)
     j_vendor = models.CharField(choices = JUMLAH_VENDOR,max_length=20,null= True,blank=True)
     ########## Khusus Untuk Freight Solutions
@@ -306,7 +308,49 @@ class ParameterData(models.Model):
     fee_collection = models.DecimalField(max_digits=12, decimal_places=2,null=True,blank=True,help_text="LOGISTIK DILI")
     fee_high_collection = models.DecimalField(max_digits=12, decimal_places=2,null=True,blank=True,help_text="LOGISTIK DILI")
     ############ Akhir khusus logistik dili
-
+    ###########Gasti asih Caraka
+    min_pcs = models.FloatField(null=True,blank=True,help_text="Gasti asih caraka")
+    price_pcs= models.DecimalField(max_digits=12, decimal_places=2,null=True,blank=True,help_text="Gasti Asih caraka")
+    price_high_pcs= models.DecimalField(max_digits=12, decimal_places=2,null=True,blank=True,help_text="Gasti Asih caraka")
+    
+    min_weight = models.FloatField(null=True,blank=True,help_text="Gasti asih caraka")
+    price_weight = models.DecimalField(max_digits=12, decimal_places=2,null=True,blank=True,help_text="Gasti Asih caraka")
+    price_high_weight = models.DecimalField(max_digits=12, decimal_places=2,null=True,blank=True,help_text="Gasti Asih caraka")                                       
+    
+    min_paking = models.FloatField(null=True,blank=True,help_text="Gasti asih caraka")
+    price_paking = models.DecimalField(max_digits=12, decimal_places=2,null=True,blank=True,help_text="Gasti Asih caraka")
+    price_high_paking = models.DecimalField(max_digits=12, decimal_places=2,null=True,blank=True,help_text="Gasti Asih caraka")
+    
+    ########Warstila nedherlan
+    min_custom_learance_fee_handling= models.FloatField(null=True,blank=True,help_text="Wastila Belanda")
+    price_custom_learance_fee_handling= models.DecimalField(max_digits=12, decimal_places=2,null=True,blank=True,help_text="Wastila Belanda")
+    price_high_custom_learance_fee_handling= models.DecimalField(max_digits=12, decimal_places=2,null=True,blank=True,help_text="Wastila Belanda")
+    
+    min_heavy_weight_surcharge= models.FloatField(null=True,blank=True,help_text="Wastila Belanda")
+    price_heavy_weight_surcharge= models.DecimalField(max_digits=12, decimal_places=2,null=True,blank=True,help_text="Wastila Belanda")
+    price_high_heavy_weight_surcharge= models.DecimalField(max_digits=12, decimal_places=2,null=True,blank=True,help_text="Wastila Belanda")
+    
+    min_agent_fee= models.FloatField(null=True,blank=True,help_text="Wastila Belanda")
+    price_agent_fee= models.DecimalField(max_digits=12, decimal_places=2,null=True,blank=True,help_text="Wastila Belanda")
+    price_high_agent_fee= models.DecimalField(max_digits=12, decimal_places=2,null=True,blank=True,help_text="Wastila Belanda")
+    
+    min_delivery= models.FloatField(null=True,blank=True,help_text="Wastila Belanda")
+    price_delivery= models.DecimalField(max_digits=12, decimal_places=2,null=True,blank=True,help_text="Wastila Belanda")
+    price_high_delivery= models.DecimalField(max_digits=12, decimal_places=2,null=True,blank=True,help_text="Wastila Belanda")
+        
+    ########DHL
+    min_express_wordwide_nondoc= models.FloatField(null=True,blank=True,help_text="DHl")
+    price_express_wordwide_nondoc= models.DecimalField(max_digits=12, decimal_places=2,null=True,blank=True,help_text="DHl")
+    price_high_express_wordwide_nondoc= models.DecimalField(max_digits=12, decimal_places=2,null=True,blank=True,help_text="DHl")
+    
+    min_fuel_surcharge_dhl= models.FloatField(null=True,blank=True,help_text="DHl")
+    price_fuel_surcharge_dhl= models.DecimalField(max_digits=12, decimal_places=2,null=True,blank=True,help_text="DHl")
+    price_high_fuel_surcharge_dhl= models.DecimalField(max_digits=12, decimal_places=2,null=True,blank=True,help_text="DHl")
+    
+    min_emergency_situation= models.FloatField(null=True,blank=True,help_text="DHl")
+    price_emergency_situation= models.DecimalField(max_digits=12, decimal_places=2,null=True,blank=True,help_text="DHl")
+    price_high_emergency_situation= models.DecimalField(max_digits=12, decimal_places=2,null=True,blank=True,help_text="DHl")
+    
     cu = models.ForeignKey(user, related_name='cu_paramdata', editable=False, null=True, blank=True,on_delete=models.CASCADE)
     cdate = models.DateTimeField(auto_now_add=True)
 
@@ -316,7 +360,7 @@ class ParameterData(models.Model):
         verbose_name = 'ParameterData'
 
     def __str__(self):
-        return '%s' %(self.id)
+        return '%s' %(self.id) # type: ignore
 
 
 class Transaksi(models.Model):
@@ -327,12 +371,12 @@ class Transaksi(models.Model):
     products = models.ForeignKey(Produk,on_delete=models.CASCADE,null=True,blank=True)
     commodity =models.ForeignKey(Commodity,blank=True,null=True,on_delete= models.CASCADE)
     re_export_shipment_one = models.CharField(max_length=30,null=True,blank=True)
-    re_export_shipment_one_pcs = models.DecimalField(max_digits=12, decimal_places=2,null=True,blank=True,default=0)
-    re_export_shipment_one_qty = models.DecimalField(max_digits=12, decimal_places=2,null=True,blank=True,default=0)
+    re_export_shipment_one_pcs = models.DecimalField(max_digits=12, decimal_places=2,null=True,blank=True,default=0) # type: ignore
+    re_export_shipment_one_qty = models.DecimalField(max_digits=12, decimal_places=2,null=True,blank=True,default=0) # type: ignore
     
     re_export_shipment_two = models.CharField(max_length=30,null=True,blank=True)
-    re_export_shipment_two_pcs = models.DecimalField(max_digits=12, decimal_places=2,null=True,blank=True,default=0)
-    re_export_shipment_two_qty = models.DecimalField(max_digits=12, decimal_places=2,null=True,blank=True,default=0)
+    re_export_shipment_two_pcs = models.DecimalField(max_digits=12, decimal_places=2,null=True,blank=True,default=0) # type: ignore
+    re_export_shipment_two_qty = models.DecimalField(max_digits=12, decimal_places=2,null=True,blank=True,default=0) # type: ignore
     cu = models.ForeignKey(user, related_name='cu_transaksi', editable=False, null=True, blank=True,on_delete=models.CASCADE)
     cdate = models.DateTimeField(auto_now_add=True)
 
@@ -353,7 +397,7 @@ class Transaksi(models.Model):
             count = Transaksi.objects.filter(cdate__year=skr.year).count()
             cekkr = Transaksi.objects.filter(cdate__year=skr.year).latest('no_pekerjaan')
             if count >= 1:
-                tot = cekkr.no_pekerjaan + 1
+                tot = cekkr.no_pekerjaan + 1 # type: ignore
             else:
                 tot = 1
         except ObjectDoesNotExist:
@@ -371,20 +415,20 @@ class Sale(models.Model):
     status_sale = models.CharField(choices=STATUS_UPDATE,null=True,blank=True,max_length=50)
     tgl_done = models.DateField(null=True,blank=True)
     prod = models.ForeignKey(ParameterDataBl,on_delete=models.CASCADE,null=True,blank=True)
-    cartage_warehouse_charge_one =models.DecimalField(max_digits=12, decimal_places=2,null=True,blank=True,default=0)
-    cartage_warehouse_charge_two =models.DecimalField(max_digits=12, decimal_places=2,null=True,blank=True,default=0)
-    airfreight_one = models.DecimalField(max_digits=12, decimal_places=2,null=True,blank=True,default=0)
-    airfreight_two = models.DecimalField(max_digits=12, decimal_places=2,null=True,blank=True,default=0)
-    export_handling = models.DecimalField(max_digits=12, decimal_places=2,null=True,blank=True,default=0)
-    freight = models.DecimalField(max_digits=12, decimal_places=2,null=True,blank=True,default=0)
-    doc_clearance = models.DecimalField(max_digits=12, decimal_places=2,null=True,blank=True,default=0)
-    ground_handling = models.DecimalField(max_digits=12, decimal_places=2,null=True,blank=True,default=0)
-    warehouse_charge = models.DecimalField(max_digits=12, decimal_places=2,null=True,blank=True,default=0)
-    handling_charge = models.DecimalField(max_digits=12, decimal_places=2,null=True,blank=True,default=0)
+    cartage_warehouse_charge_one =models.DecimalField(max_digits=12, decimal_places=2,null=True,blank=True,default=0) # type: ignore
+    cartage_warehouse_charge_two =models.DecimalField(max_digits=12, decimal_places=2,null=True,blank=True,default=0) # type: ignore
+    airfreight_one = models.DecimalField(max_digits=12, decimal_places=2,null=True,blank=True,default=0) # type: ignore
+    airfreight_two = models.DecimalField(max_digits=12, decimal_places=2,null=True,blank=True,default=0) # type: ignore
+    export_handling = models.DecimalField(max_digits=12, decimal_places=2,null=True,blank=True,default=0) # type: ignore
+    freight = models.DecimalField(max_digits=12, decimal_places=2,null=True,blank=True,default=0) # type: ignore
+    doc_clearance = models.DecimalField(max_digits=12, decimal_places=2,null=True,blank=True,default=0) # type: ignore
+    ground_handling = models.DecimalField(max_digits=12, decimal_places=2,null=True,blank=True,default=0) # type: ignore
+    warehouse_charge = models.DecimalField(max_digits=12, decimal_places=2,null=True,blank=True,default=0) # type: ignore
+    handling_charge = models.DecimalField(max_digits=12, decimal_places=2,null=True,blank=True,default=0) # type: ignore
     status_duty = models.CharField(choices=STATUS_DUTY,max_length=10,null=True,blank=True)
-    delivery = models.DecimalField(max_digits=12, decimal_places=2,null=True,blank=True,default=0)
-    duty_tax = models.DecimalField(max_digits=12, decimal_places=2,null=True,blank=True,default=0) 
-    tax_handling_charge = models.DecimalField(max_digits=12, decimal_places=2,null=True,blank=True,default=0)
+    delivery = models.DecimalField(max_digits=12, decimal_places=2,null=True,blank=True,default=0) # type: ignore
+    duty_tax = models.DecimalField(max_digits=12, decimal_places=2,null=True,blank=True,default=0) # type: ignore 
+    tax_handling_charge = models.DecimalField(max_digits=12, decimal_places=2,null=True,blank=True,default=0) # type: ignore 
     cu = models.ForeignKey(user, related_name='cu_sale', editable=False, null=True, blank=True,on_delete=models.CASCADE)
     cdate = models.DateTimeField(auto_now_add=True)
 
@@ -392,7 +436,7 @@ class Sale(models.Model):
         db_table='sale'
 
     def __str__(self):
-        return '%s' %(self.id)
+        return '%s' %(self.id) # type: ignore
 
     def total_sale(self):
         return self.cartage_warehouse_charge_one + self.cartage_warehouse_charge_two + \
@@ -416,15 +460,15 @@ class Job(models.Model):
     ####Pengiriman Udara
     
     ###### Biaya pengurusan / oprasional dan Udara Untuk Freight Solution dan Shlid
-    airfreight = models.DecimalField(max_digits=12, decimal_places=2,null=True,blank=True,default=0)
-    handling_charges = models.DecimalField(max_digits=12, decimal_places=2,null=True,blank=True,default=0)
-    ##### Biaya Asuransi
-    insurance_security_surcharge = models.DecimalField(max_digits=12, decimal_places=2,null=True,blank=True,default=0)
+    airfreight = models.DecimalField(max_digits=12, decimal_places=2,null=True,blank=True,default=0) # type: ignore
+    handling_charges = models.DecimalField(max_digits=12, decimal_places=2,null=True,blank=True,default=0) # type: ignore
+    ##### Biaya Asuransi 
+    insurance_security_surcharge = models.DecimalField(max_digits=12, decimal_places=2,null=True,blank=True,default=0) # type: ignore
     ##biaya tambahan bahan bakar
-    fuel_surcharge = models.DecimalField(max_digits=12, decimal_places=2,null=True,blank=True,default=0)
+    fuel_surcharge = models.DecimalField(max_digits=12, decimal_places=2,null=True,blank=True,default=0) # type: ignore
     ###Biaya Penanganan Impor
-    import_handling_charges = models.DecimalField(max_digits=12, decimal_places=2,null=True,blank=True,default=0)
-    gst_zero_rated = models.DecimalField(max_digits=12, decimal_places=2,null=True,blank=True,default=0)
+    import_handling_charges = models.DecimalField(max_digits=12, decimal_places=2,null=True,blank=True,default=0) # type: ignore
+    gst_zero_rated = models.DecimalField(max_digits=12, decimal_places=2,null=True,blank=True,default=0) # type: ignore
 
     
 
@@ -433,25 +477,28 @@ class Job(models.Model):
    
     ##########Khusus Untuk Sholid Logistik
     ####### Biaya Storage
-    storage_at_cost = models.DecimalField(max_digits=12, decimal_places=2,null=True,blank=True,default=0)
-    pjkp2u_sin_dps_at_cost = models.DecimalField(max_digits=12, decimal_places=2,null=True,blank=True,default=0)
-    storage_mcl_e_0389249_at_cost = models.DecimalField(max_digits=12, decimal_places=2,null=True,blank=True,default=0)
-    pjkp2u_dps_dil_at_cost = models.DecimalField(max_digits=12, decimal_places=2,null=True,blank=True,default=0)
+    storage_at_cost = models.DecimalField(max_digits=12, decimal_places=2,null=True,blank=True,default=0) # type: ignore
+    pjkp2u_sin_dps_at_cost = models.DecimalField(max_digits=12, decimal_places=2,null=True,blank=True,default=0) # type: ignore
+    storage_mcl_e_0389249_at_cost = models.DecimalField(max_digits=12, decimal_places=2,null=True,blank=True,default=0) # type: ignore
+    pjkp2u_dps_dil_at_cost = models.DecimalField(max_digits=12, decimal_places=2,null=True,blank=True,default=0) # type: ignore
     ######### Biaya Storege
-    overweight_charges_surcharge = models.DecimalField(max_digits=12, decimal_places=2,null=True,blank=True,default=0)
-    awb_fee = models.DecimalField(max_digits=12, decimal_places=2,null=True,blank=True,default=0)    
+    overweight_charges_surcharge = models.DecimalField(max_digits=12, decimal_places=2,null=True,blank=True,default=0) # type: ignore
+    awb_fee = models.DecimalField(max_digits=12, decimal_places=2,null=True,blank=True,default=0)   # type: ignore 
     ########## Akhir Khusus Untuk Sholid Logistik
     ##########Khusus Untuk Sholid Logistik
         
     ############ khusus logistik dili
-    ground_handling = models.DecimalField(max_digits=12, decimal_places=2,null=True,blank=True,default=0)
-    forklift_for_heavy_cargo = models.DecimalField(max_digits=12, decimal_places=2,null=True,blank=True,default=0)
-    custom_clearance = models.DecimalField(max_digits=12, decimal_places=2,null=True,blank=True,default=0)
-    delivey_to_hera = models.DecimalField(max_digits=12, decimal_places=2,null=True,blank=True,default=0)
-    akses_bandara_inspeksi = models.DecimalField(max_digits=12, decimal_places=2,null=True,blank=True,default=0)
-    handling_fee = models.DecimalField(max_digits=12, decimal_places=2,null=True,blank=True,default=0)
-    admin_fee = models.DecimalField(max_digits=12, decimal_places=2,null=True,blank=True,default=0) 
-    fee_collection = models.DecimalField(max_digits=12, decimal_places=2,null=True,blank=True,default=0)
+    ground_handling = models.DecimalField(max_digits=12, decimal_places=2,null=True,blank=True,default=0) # type: ignore
+    forklift_for_heavy_cargo = models.DecimalField(max_digits=12, decimal_places=2,null=True,blank=True,default=0) # type: ignore
+    custom_clearance = models.DecimalField(max_digits=12, decimal_places=2,null=True,blank=True,default=0) # type: ignore
+    delivey_to = models.CharField(choices=DELIVERY_TIMOR_LESTE,max_length=10,null=True,blank=True)
+    delivey_to_hera = models.DecimalField(max_digits=12, decimal_places=2,null=True,blank=True,default=0) # type: ignore
+    delivey_to_okusi = models.DecimalField(max_digits=12, decimal_places=2,null=True,blank=True,default=0) # type: ignore
+    delivey_to_betano = models.DecimalField(max_digits=12, decimal_places=2,null=True,blank=True,default=0) # type: ignore
+    akses_bandara_inspeksi = models.DecimalField(max_digits=12, decimal_places=2,null=True,blank=True,default=0) # type: ignore
+    handling_fee = models.DecimalField(max_digits=12, decimal_places=2,null=True,blank=True,default=0) # type: ignore
+    admin_fee = models.DecimalField(max_digits=12, decimal_places=2,null=True,blank=True,default=0) # type: ignore 
+    fee_collection = models.DecimalField(max_digits=12, decimal_places=2,null=True,blank=True,default=0) # type: ignore
     ############ Akhir khusus logistik dili
     cu = models.ForeignKey(user, related_name='cu_job', editable=False, null=True, blank=True,on_delete=models.CASCADE)
     cu_update = models.ForeignKey(user, related_name='cu_jobup', null=True, blank=True,on_delete=models.CASCADE)
@@ -467,7 +514,8 @@ class Job(models.Model):
             self.import_handling_charges + self.gst_zero_rated + self.storage_at_cost + self.pjkp2u_sin_dps_at_cost +\
             self.storage_mcl_e_0389249_at_cost + self.pjkp2u_dps_dil_at_cost + self.overweight_charges_surcharge +\
             self.awb_fee + self.ground_handling + self.forklift_for_heavy_cargo + self.custom_clearance + \
-            self.delivey_to_hera + self.akses_bandara_inspeksi + self.handling_fee + self.admin_fee + self.fee_collection 
+            self.delivey_to_hera + self.akses_bandara_inspeksi + self.handling_fee + self.admin_fee + self.fee_collection + \
+            self.delivey_to_okusi + self.delivey_to_betano
     
     ####Untuk Vendor Solid Logistik
     def total_sl_one(self):
@@ -489,9 +537,9 @@ class Job(models.Model):
         return self.handling_charges + self.handeling_sl_kali_vat() 
 
     def total_lintas_negara(self):
-        return self.transit_charge + self.transportations_charge    
+        return self.transit_charge + self.transportations_charge  # type: ignore  
 
     def total_antarlapan(self):
-        return self.cbm + self.twentyft + self.blfee + self.biaya_peb 
+        return self.cbm + self.twentyft + self.blfee + self.biaya_peb  # type: ignore
 
     ####Untuk Vendor Solid Logistik

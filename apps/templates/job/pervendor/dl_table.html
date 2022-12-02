@@ -38,14 +38,29 @@
         <tr>
             <td>Custom Clearance</td>
             <td colspan='2'>{{data.nilai_kurs.mtu.nama_mata_uang}}</td><td></td>
-            <td>{{data.nilai_kurs.mtu.kode_matauang}}</td>
+            <td>{{data.nilai_kurs.mtu.kode_matauang}} {{ data.delivey_to }}</td>
             <td><div class="text-right">{{data.custom_clearance|intcomma}}</div></td>
         </tr>
         <tr>
+            {% if data.delivey_to == '3' %}
             <td>Delivey To Hera</td>
             <td colspan='2'>{{data.nilai_kurs.mtu.nama_mata_uang}}</td><td></td>
             <td>{{data.nilai_kurs.mtu.kode_matauang}}</td>
             <td><div class="text-right">{{data.delivey_to_hera|intcomma}}</div></td>
+            {% elif data.delivey_to == '4' %}
+            <td>Delivey To Okusi</td>
+            <td colspan='2'>{{data.nilai_kurs.mtu.nama_mata_uang}}</td><td></td>
+            <td>{{data.nilai_kurs.mtu.kode_matauang}}</td>
+            <td><div class="text-right">{{data.delivey_to_okusi|intcomma}}</div></td>
+            {% else %}
+            <td>Delivey To Betano</td>
+            <td colspan='2'>{{data.nilai_kurs.mtu.nama_mata_uang}}</td><td></td>
+            <td>{{data.nilai_kurs.mtu.kode_matauang}}</td>
+            <td><div class="text-right">{{data.delivey_to_betano|intcomma}}</div></td>
+            {% endif %}
+
+
+
         </tr>
         <tr>
             <td>Akses Bandara + Inspeksi</td>

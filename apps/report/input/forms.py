@@ -1,7 +1,8 @@
 from django import forms
 
 from apps.products.models import JENISPRODUK, STATUS, STATUS_UPDATE, Commodity, \
-    JasaPengiriman, Negara, ParameterData, ParameterDataBl, Produk,JUMLAH_VENDOR,STATUS_DUTY
+    JasaPengiriman, Negara, ParameterData, ParameterDataBl, Produk,JUMLAH_VENDOR,STATUS_DUTY,\
+    DELIVERY_TIMOR_LESTE
 
 class JvendorForm(forms.Form):
     jvendor = forms.ChoiceField(choices=JUMLAH_VENDOR)
@@ -145,12 +146,20 @@ class DLForm(forms.Form):
     
     weight_dl = forms.DecimalField(label='Weight',widget=forms.TextInput(attrs={
         'class':'input-small','onkeyup':'cek_currency_ground_handling();cek_currency_forklift_for_heavy_cargo();\
-        cek_currency_custom_clearance();cek_currency_delivey_to_hera();cek_currency_akses_bandara_inspeksi();\
+        cek_currency_custom_clearance();cek_currency_akses_bandara_inspeksi();cek_currency_delivey_to_hera();\
         cek_currency_handling_fee();cek_currency_admin_fee();cek_currency_fee_collection()'}))    
     price_ground_handling_dl = forms.DecimalField(widget=forms.NumberInput(attrs={'class':'input-small  ttip_t'}))
     price_forklift_for_heavy_cargo = forms.DecimalField(widget=forms.NumberInput(attrs={'class':'input-small  ttip_t'}))
     price_custom_clearance = forms.DecimalField(widget=forms.NumberInput(attrs={'class':'input-small  ttip_t'}))
-    price_delivey_to_hera = forms.DecimalField(widget=forms.NumberInput(attrs={'class':'input-small  ttip_t'}))
+
+    delivey_to = forms.ChoiceField(widget=forms.Select(attrs={'class':'input-small'}),choices=DELIVERY_TIMOR_LESTE)
+    price_delivey_to_hera = forms.DecimalField(widget=forms.NumberInput(attrs={'class':'input-small',})
+        ,required=False)
+    price_delivey_to_okusi = forms.DecimalField(widget=forms.NumberInput(attrs={'class':'input-small','hidden':'hidden'})
+        ,required=False)
+    price_delivey_to_betano = forms.DecimalField(widget=forms.NumberInput(attrs={'class':'input-small','hidden':'hidden'})
+        ,required=False)
+
     price_akses_bandara_inspeksi = forms.DecimalField(widget=forms.NumberInput(attrs={'class':'input-small  ttip_t'}))
     price_handling_fee = forms.DecimalField(widget=forms.NumberInput(attrs={'class':'input-small  ttip_t'}))
     admin_fee = forms.DecimalField(widget=forms.NumberInput(attrs={'class':'input-small  ttip_t'}))

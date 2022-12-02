@@ -14,11 +14,11 @@ from .forms import PengajuanForm
 def proses_input(request,param):
     param = ParameterData.objects.get(id = param)
     #print(param.products.origin_vendor.id,param.products.through_vendor.id,param.products.destinations_vendor.id,'ssssssss') 
-    if param.products.origin_vendor.id == 1 and param.products.through_vendor.id == 3 and param.products.destinations_vendor.id ==5:
+    if param.products.origin_vendor.id == 1 and param.products.through_vendor.id == 3 and param.products.destinations_vendor.id ==5:  # type: ignore
         return redirect('/report/save_input_satu/%s/'%(param)) ###ada Di direktori pecah View_satu.py       
-    elif param.products.origin_vendor.id == 10 and param.products.through_vendor.id == 18 and param.products.destinations_vendor.id ==5:
+    elif param.products.origin_vendor.id == 10 and param.products.through_vendor.id == 18 and param.products.destinations_vendor.id ==5:  # type: ignore
         return redirect('/report/save_input_dua/%s/'%(param)) ###ada Di direktori pecah  View_satu.py   
-    elif param.products.origin_vendor.id == 10 and param.products.through_vendor.id == 19 and param.products.destinations_vendor.id ==5:
+    elif param.products.origin_vendor.id == 10 and param.products.through_vendor.id == 19 and param.products.destinations_vendor.id ==5:  # type: ignore
         return redirect('/report/save_input_tiga/%s/'%(param)) ###ada Di direktori pecah View_satu.py   
     else:
         messages.success(request, 'Data Parameter Inputan Belum Ada, Hubungi IT ') 
@@ -53,7 +53,7 @@ def showparam(request):
     prd = param.products.kode_produk
     org_ven = param.products.origin_vendor
     org = param.products.point_satu
-    h_ajax ={'tanggal':tanggal,'produk':prd,'param':param.id,'org':org,'org_ven':org_ven,'ds_ven':param.products.through_vendor,
+    h_ajax ={'tanggal':tanggal,'produk':prd,'param':param.id,'org':org,'org_ven':org_ven,'ds_ven':param.products.through_vendor,  # type: ignore
         'ds': param.products.point_dua,'lt_ven':param.products.destinations_vendor,'lt':param.products.point_tiga,'js':param.products.jenis_produk}
     return save_simulasi_form(request, h_ajax,'pengajuan/addpengajuan.html')
     

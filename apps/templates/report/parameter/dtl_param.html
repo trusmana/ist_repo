@@ -33,13 +33,13 @@
             </tr>
             <tr>
                 <td>Tanggal Aktif</td><td>{{param.tgl_aktif_param|date:'d-m-Y'}}</td>
-                <td>User input</td><td>{{param.cu}}</td>
+                <td></td><td></td>
                 <td></td><td></td>
             </tr>
             <tr>
-                <td>Origen</td><td><b>{{param.products.origin_vendor}}</b> </td>
-                <td>Through</td><td><b>{{param.products.through_vendor}}</b></td>
-                <td>Destinations</td><td><b> {{param.products.destinations_vendor}}</b></td>
+                <td>Origin</td><td>{{param.products.origin_vendor.id}}.<b>{{param.products.origin_vendor}} </b> </td>
+                <td>Through</td><td>{{param.products.through_vendor.id}}.<b>{{param.products.through_vendor}}</b></td>
+                <td>Destinations</td><td>{{param.products.destinations_vendor.id}}.<b> {{param.products.destinations_vendor}}</b></td>
             </tr>
 
         </table>
@@ -48,17 +48,20 @@
 <div class="row-fluid">
     <div class="span12">
         <div id="accordion1" class="accordion">
+            <!--FS-->
+            {% if param.products.destinations_vendor.id == 1  or  param.products.origin_vendor.id == 1 or param.products.through_vendor.id == 1 %}
             <div class="accordion-group">
                 <div class="accordion-heading">
                     <a href="#collapseOne1" data-parent="#accordion1" data-toggle="collapse" class="accordion-toggle">
-                        Freigh Solution
+                        Freigh Solution 
                     </a>
                 </div>
                 <div class="accordion-body collapse" id="collapseOne1">
                     <div class="accordion-inner">
                         <table class="table table-striped table-bordered table-condensed">
                             <tr>
-                                <td colspan='6'><div class="text-center">Parameter Freigh Solution </div></td>
+                                <td colspan='6'><div class="text-center">Parameter Freigh Solution <a href="{% url 'e-fs' param.id %}">
+                                    <button class="btn-sm btn-info"> E</button></a> </div></td>
                             </tr>
                             <tr>
                                 <td>Min Airfreight</td><td>{{param.min_airfreight}} / Kg</td>
@@ -94,17 +97,22 @@
                     </div>
                 </div>
             </div>
+            {% endif %}
+            <!--FS-->
+            <!--SL-->
+            {% if param.products.destinations_vendor.id == 3  or  param.products.origin_vendor.id == 3 or param.products.through_vendor.id == 3 %}
             <div class="accordion-group">
                 <div class="accordion-heading">
                     <a href="#collapseTwo1" data-parent="#accordion1" data-toggle="collapse" class="accordion-toggle">
-                        Solide Logistic
+                        Solid Logistic
                     </a>
                 </div>
                 <div class="accordion-body collapse" id="collapseTwo1">
                     <div class="accordion-inner">
                         <table class="table table-striped table-bordered table-condensed">
                             <tr>
-                                <td colspan='6'><div class="text-center">Parameter Solide Logistic</div></td>
+                                <td colspan='6'><div class="text-center">Parameter Solid Logistic 
+                                    <a href="{% url 'e-sl' param.id %}"> <button class="btn-sm btn-danger">E</button></div></td>
                             </tr>
                             </tr>                                       
                                 <td>Min Storage AT Cost</td><td>{{param.min_storage_at_cost}}/Kg</td>
@@ -150,17 +158,25 @@
                     </div>
                 </div>
             </div>
+            {% endif %}
+            <!--SL-->
+            <!--DILI-->
+            {% if param.products.destinations_vendor.id == 5  or  param.products.origin_vendor.id == 5 or param.products.through_vendor.id == 5 %}
             <div class="accordion-group">
+                <!--DILI-->
                 <div class="accordion-heading">
                     <a href="#collapseThree1" data-parent="#accordion1" data-toggle="collapse" class="accordion-toggle">
                         Dili
                     </a>
-                </div>
+                </div>  
+                
                 <div class="accordion-body collapse" id="collapseThree1">
                     <div class="accordion-inner">
                         <table class="table table-striped table-bordered table-condensed">
                             <tr>
-                                <td colspan='6'><div class="text-center">DILI</div></td>
+                                <td colspan='6'><div class="text-center">DILI
+                                    <a href="{% url 'e-dl' param.id %}"><button class="btn-sm btn-gebo">E</button></a>
+                                </div></td>
                             </tr>
                             </tr>                                       
                                 <td>Min Ground Handling</td><td>{{param.min_ground_handling_dl}}/Kg</td>
@@ -206,6 +222,10 @@
                     </div>
                 </div>
             </div>
+            {% endif %}
+            <!--DILI-->
+            <!--Gasti asih-->
+            {% if param.products.destinations_vendor.id == 10  or  param.products.origin_vendor.id == 10 or param.products.through_vendor.id == 10 %}
             <div class="accordion-group">
                 <div class="accordion-heading">
                     <a href="#Empat" data-parent="#accordion1" data-toggle="collapse" class="accordion-toggle">
@@ -219,28 +239,20 @@
                                 <td colspan='6'><div class="text-center">Gasti Asih Caraka</div></td>
                             </tr>
                             </tr>                                       
-                                <td>Min PCS</td><td>{{param.min_pcs}}/Kg</td>
-                                <td>Price Min PCS</td><td>{{param.price_pcs}}</td>
-                                <td>Price Max PCS</td><td>{{param.price_high_pcs}}</td>
-                            </tr>
-                            </tr>                                       
-                                <td>Min Weight</td><td>{{param.min_weight}}/Kg</td>
-                                <td>Price Min weight</td><td>{{param.price_weight}}</td>
-                                <td>Price Max weight</td><td>{{param.price_high_weight}}</td>
-                            </tr>
-                            </tr>                                       
-                                <td>Min Paking</td><td>{{param.min_paking}}/Kg</td>
-                                <td>Price Min Paking</td><td>{{param.price_paking}}</td>
-                                <td>Price Max Paking</td><td>{{param.price_high_paking}}</td>
+                                <td>Keterangan</td><td>Tidak Ada Parameter </td>                                
                             </tr>
                         </table>
                     </div>
                 </div>
             </div>
+            {% endif %}
+            <!--Gasti asih-->
+            <!--Wastila Global-->
+            {% if param.products.destinations_vendor.id == 12  or  param.products.origin_vendor.id == 12 or param.products.through_vendor.id == 12 %}
             <div class="accordion-group">
                 <div class="accordion-heading">
                     <a href="#LIMA" data-parent="#accordion1" data-toggle="collapse" class="accordion-toggle">
-                        Wastila Nederland
+                        Wastila Global
                     </a>
                 </div>
                 <div class="accordion-body collapse" id="LIMA">
@@ -273,6 +285,10 @@
                     </div>
                 </div>
             </div>
+            {% endif %}
+            <!--Wastila Global-->
+            <!--DHL-->
+            {% if param.products.destinations_vendor.id == 8  or  param.products.origin_vendor.id == 8 or param.products.through_vendor.id == 8 %}
             <div class="accordion-group">
                 <div class="accordion-heading">
                     <a href="#ENAM" data-parent="#accordion1" data-toggle="collapse" class="accordion-toggle">
@@ -304,7 +320,8 @@
                     </div>
                 </div>
             </div>
-            
+            {% endif %}
+            <!--DHL-->            
         </div>
     </div>
 </div>

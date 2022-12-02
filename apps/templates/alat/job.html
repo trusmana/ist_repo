@@ -9,6 +9,8 @@ $(document).ready(function($) {
     });     
 });
 </script>
+
+
 <script src="/static/js/jquery-1.4.2.min.js"></script>
 <script src="/static/js/jquery.maskedinput-1.2.2-co.min.js"></script>
 <script type="text/javascript">
@@ -27,48 +29,9 @@ $(document).ready(function(){
                 $(".box").not("." + optionValue).hide();
                 $("." + optionValue).show();
             } else{
-                $(".box").show();
+                $(".box").hide();
             }
         });
     }).change();
 });
 </script>
-
-
-<script type="text/javascript">
-    window.onload = function() {
-        document.getElementById('ifYes').style.display = 'none';
-    }
-function Check() {
-    if (document.getElementById('yesCheck').checked) {
-        document.getElementById('ifYes').style.display = 'block';
-    } 
-    else {
-        document.getElementById('ifYes').style.display = 'none';
-
-   }
-}
-function nonCheck() {
-    if (document.getElementById('nonCheck').checked) {
-        document.getElementById('ifYes').style.display = 'none';
-    } 
-    else {
-        document.getElementById('ifYes').style.display = 'block';
-
-   }
-}
-
-</script>
-<script>
-    $(document).ready(function(){
-         $(".tombol1").click(function(){
-         $(".duty-tampil").show();
-         $("#div1").fadeIn("slow");
-         });
-         $(".tombol2").click(function(){
-         $(".duty-tampil").hide();
-         });
-    });
-    </script>
-
-
