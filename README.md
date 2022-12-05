@@ -150,3 +150,25 @@ Buat report untuk data vendor khusus dhl
 ---
 1. Penambahan menu di vendor dili, akusi dan betano
   - @done selesai silahkan di coba tedi_black 02112022
+
+
+15/12/2022
+---
+1. Saya tuliskan beberapa kendala yang di temui di web IST
+
+- Add parameter tidak bisa tulisan di web parameter tidak tersedia
+- Ketika buat job baru tidak bisa masuk tulisannya daftar parameter tidak tersedia
+  dengan Parameter sebagai berikit :
+  1.  origin ID vendor gasti asih, through DPS Solid , Abu destinations
+
+- Vendor Gasti asih caraka input Packing di ganti jadi Handling dan tambah 1 inputnya Transportation charge
+
+- Vendor Lintas Negara ganti kurs jadi USD (edit di vendor untuk kurs tidak ada)
+  @Done 15/12/2022 Di rubah di menu parameter,silahkan di coba.
+- Saya belum dapat akses admin untuk edit delete dan backup database.
+  @done 15/12/2022 Silahkan Di coba
+
+
+
+Best Regard,
+Rasky Maulana
