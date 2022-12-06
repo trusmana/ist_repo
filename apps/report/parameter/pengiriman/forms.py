@@ -10,4 +10,4 @@ class PengirimanForm(forms.ModelForm):
 
     class Meta:
         model = JasaPengiriman
-        fields =['id','nama_jasa_pengiriman','alamat','telepon','status']
+        fields =['id','nama_jasa_pengiriman','alamat','telepon','status','singkatan']

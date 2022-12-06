@@ -122,7 +122,8 @@ urlpatterns = [
     ### Proses Simpan Pekerjaan Berdasarkan Vendor
     path('save_input_satu/<int:param>/',fviews_satu.proses_input_satu,name='save-satu'),###SIng DPS DL Fs/SL/DILI
     path('save_input_dua/<int:param>/',fviews_satu.proses_input_dua,name='save-dua'),###ID SUB DILI GA/LA/DILI
-    path('save_input_tiga/<int:param>/',fviews_satu.proses_input_tiga,name='save-tiga'),###ID ABU DILI ID GA/AL/DILI    
+    path('save_input_tiga/<int:param>/',fviews_satu.proses_input_tiga,name='save-tiga'),###ID ABU DILI ID GA/AL/DILI
+    path('save_input_empat/<int:param>/',fviews_satu.proses_input_empat,name='save-empat'),###ID DPS DILI ID GA/SL/DILI    
     ###################Akhir Input Pengajuan
 
     ######Fungsi Ajax Hitungan Pembelian

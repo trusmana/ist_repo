@@ -234,11 +234,13 @@ class GastiAsihForm(forms.Form):
         'placeholder':'No Invoice'}))
     #pcs = forms.DecimalField(widget=forms.NumberInput(attrs={'class':'input-small ttip_t'}))
     #weight = forms.DecimalField(widget=forms.NumberInput(attrs={'class':'input-small ttip_t'}))
-    paking = forms.IntegerField(label='Paking',widget=forms.TextInput(attrs={'class':'input-small uang ttip_t',
+    paking = forms.IntegerField(label='Handling',widget=forms.TextInput(attrs={'class':'input-small uang ttip_t',
         'alt':'integer','onkeyup':'cek_amount_gst()'}))
     jenis = forms.ChoiceField(label='Jenis Pengiriman',widget = forms.Select(attrs={'class':'form-control chosen-select','onchange':'cek_amount_gst()'}),
         choices = JENISPRODUK)  
     amount = forms.IntegerField(label='Amount',widget=forms.TextInput(attrs={'class':'input-small uang ttip_t',
+        'alt':'integer'}))
+    transportation_charge = forms.IntegerField(label='Transportation Charge',widget=forms.TextInput(attrs={'class':'input-small uang ttip_t',
         'alt':'integer'}))
     
 class LintasNegaraForm(forms.Form):

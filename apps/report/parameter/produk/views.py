@@ -40,7 +40,7 @@ class list_product(View):
             html_template = loader.get_template('page-500.html')
             return HttpResponse(html_template.render(self.context, request))
 
-        return render(request, template, context)
+        return render(request, template, context)  # type: ignore
     
     def post(self, request, pk=None, action=None):
         self.update_instance(request, pk)
@@ -78,9 +78,9 @@ class list_product(View):
                     else:
                         filter_params |= Q(nama_produk__icontains=key.strip())
 
-        produk = Produk.objects.filter(filter_params) if filter_params else Produk.objects.all().order_by('-id')
+        produk = Produk.objects.filter(filter_params) if filter_params else Produk.objects.filter(jumlah_vendor = 3).order_by('-id')
 
-        self.context['produk'], self.context['info'] = set_pagination(request, produk)
+        self.context['produk'], self.context['info'] = set_pagination(request, produk)  # type: ignore
         if not self.context['produk']:
             return False, self.context['info']
 
@@ -89,8 +89,8 @@ class list_product(View):
     def edit(self, request, pk):
         produk = self.get_object(pk)
 
-        self.context['produk'] = produk
-        self.context['form'] = ProdukForm(instance=produk)
+        self.context['produk'] = produk  # type: ignore
+        self.context['form'] = ProdukForm(instance=produk)  # type: ignore
 
         return self.context, 'report/produk/edit_produk.html'
 
@@ -130,7 +130,7 @@ class list_product(View):
 
     
 @login_required(login_url=settings.LOGIN_URL)
-@user_passes_test(lambda u: u.groups.filter(name__in=('Administrator','Admin_IT','OPERASIONAL')))
+@user_passes_test(lambda u: u.groups.filter(name__in=('Administrator','Admin_IT','OPERASIONAL')))  # type: ignore
 def addproduk(request):
     user = request.user
     if request.method == 'POST':
@@ -142,6 +142,6 @@ def addproduk(request):
             messages.add_message(request, messages.INFO,'Data Produk Berhasil Di Input', 'alert-success')
             return redirect('d-produk')
     else:
-        form = ProdukForm()
+        form = ProdukForm(initial={'tgl_aktif':datetime.date.today(),'nama_produk':"SHIPMENT"})
     return render(request,'report/produk/add_produk.html',{'form':form})
 

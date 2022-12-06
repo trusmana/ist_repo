@@ -215,7 +215,12 @@ class GastiAsihForm(forms.Form):
     price_weight = forms.DecimalField(widget=forms.NumberInput(attrs={'class':'input-small  ttip_t'}))
     price_high_weight = forms.DecimalField(widget=forms.NumberInput(attrs={'class':'input-small  ttip_t'}))                                       
     
-    min_paking = forms.IntegerField(widget=forms.TextInput(attrs={'class':'form-control span2',
+    min_handling = forms.IntegerField(widget=forms.TextInput(attrs={'class':'form-control span2',
         'alt':'integer'}),required =False)
-    price_paking = forms.DecimalField(widget=forms.NumberInput(attrs={'class':'input-small  ttip_t'}))
-    price_high_paking = forms.DecimalField(widget=forms.NumberInput(attrs={'class':'input-small  ttip_t'}))
+    price_handling = forms.DecimalField(widget=forms.NumberInput(attrs={'class':'input-small  ttip_t'}))
+    price_high_handling = forms.DecimalField(widget=forms.NumberInput(attrs={'class':'input-small  ttip_t'}))
+
+    min_transportation_charge = forms.IntegerField(widget=forms.TextInput(attrs={'class':'form-control span2',
+        'alt':'integer'}),required =False)
+    price_transportation_charge = forms.DecimalField(widget=forms.NumberInput(attrs={'class':'input-small  ttip_t'}))
+    price_high_transportation_charge = forms.DecimalField(widget=forms.NumberInput(attrs={'class':'input-small  ttip_t'}))

@@ -35,16 +35,18 @@
             </ul>
             <div class="tab-content">
                 <div class="tab-pane active" id="tab_br1">
-                    <table class="table table-hover">
+                    <table class="table table-striped table-bordered table-condensed">
                         <thead>
                         <tr>
                             <th>#</th>
-                            <th>Kode Produk</th>
-                            <th>Nama Produk</th>
-                            <th>Jumlah Vendor</th>
+                            <th>Kode </th>
+                            <th>Produk</th>
                             <th>Origin</th>
                             <th>Through</th>
                             <th>Destination</th>
+                            <th>V Origin</th>
+                            <th>V Through</th>
+                            <th>V Destination</th>
                             <th>Status</th>
                             <th>Action</th>
                         </tr>
@@ -57,10 +59,12 @@
                                     <td><span class="font-weight-bold">{{ forloop.counter }}</span></td>
                                     <td><span class="font-weight-normal">{{ transaction.id_prod }}</span></td>
                                     <td><span class="font-weight-normal">{{ transaction.kode_produk }}</span></td>
-                                    <td><span class="font-weight-normal">{{ transaction.jumlah_vendor }}</span></td>
                                     <td><span class="font-weight-normal">{{ transaction.point_satu|default_if_none:'-' }}</span></td>
                                     <td><span class="font-weight-normal">{{ transaction.point_dua|default_if_none:'-' }}</span></td>
                                     <td><span class="font-weight-normal">{{ transaction.point_tiga }}</span></td>
+                                    <td><span class="font-weight-normal">{{ transaction.origin_vendor|truncatechars:20 }}</span></td>
+                                    <td><span class="font-weight-normal">{{ transaction.through_vendor|truncatechars:20 }}</span></td>
+                                    <td><span class="font-weight-normal">{{ transaction.destinations_vendor|truncatechars:20 }}</span></td>
                                     <td>
                                         <span class="font-weight-bold {{ transaction.status.class }}">{{ transaction.get_status_display }}</span>
                                     </td>
@@ -91,7 +95,32 @@
                         </tbody>
                     </table>
         
-                    {{ transactions.pagination }}
+                    <div class="card-footer px-3 border-0 d-flex align-items-center justify-content-between">
+                        <nav aria-label="Page navigation example">
+                            <ul class="pagination mb-0">
+                                <li class="page-item">
+                                    <a class="page-link" {% if produk.has_previous %}href="?page={{ produk.previous_page_number }}{% if url_params %}&{{ url_params }}{% endif %}"{% endif %}>Previous</a>
+                                </li>
+                
+                                {% for page_number in produk.paginator.page_range %}
+                                    {% if items.number == page_number %}
+                                        <li class="page-item active">
+                                            <a class="page-link">{{ page_number }}</a>
+                                        </li>
+                                    {% else %}
+                                        <li class="page-item">
+                                            <a class="page-link" {% if page_number != '...' %}href="?page={{ page_number }}{% if url_params %}&{{ url_params }}{% endif %}"{% endif %}>{{ page_number }}</a>
+                                        </li>
+                                    {% endif %}
+                                {% endfor %}
+                
+                                <li class="page-item">
+                                    <a class="page-link" {% if produk.has_next %}href="?page={{ produk.next_page_number }}{% if url_params %}&{{ url_params }}{% endif %}"{% endif %}>Next</a>
+                                </li>
+                            </ul>
+                        </nav>
+                        <div class="font-weight-bold small">Showing <b>{{ produk.number }}</b> out of <b>{{ last }}</b> entries</div>
+                    </div>
 
                 </div>
             </div>

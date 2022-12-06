@@ -159,7 +159,7 @@ Buat report untuk data vendor khusus dhl
 - Add parameter tidak bisa tulisan di web parameter tidak tersedia
 - Ketika buat job baru tidak bisa masuk tulisannya daftar parameter tidak tersedia
   dengan Parameter sebagai berikit :
-  1.  origin ID vendor gasti asih, through DPS Solid , Abu destinations
+  1.  origin ID vendor gasti asih, through DPS Solid , Abu destinations Lintas Negara
 
 - Vendor Gasti asih caraka input Packing di ganti jadi Handling dan tambah 1 inputnya Transportation charge
 
@@ -170,5 +170,16 @@ Buat report untuk data vendor khusus dhl
 
 
 
-Best Regard,
-Rasky Maulana
+Data Vendor 06/12/2022
+---
+
+| Origin |	Transit	 | Destination | vendor                                              | 	
+|--------|-----------|-------------|-----------------------------------------------------|			
+| ID	   | DPS	     | DIL	       | Gastiasih caraka, solid logistics, dili             |
+| ID	   | ATB	     | DIL	       | Gastiasih caraka, lintas negara, dili               |
+| NL	   | SIN	     | DIL	       | Wartsila Global, Freight solutions, dili            |
+| SIN		 |           | DIL	       | DHL, dili                                           |
+| DIL		 |           | SIN	       | DHL, Freight solutions                              |
+| DIL		 |           | PH	         | DHL, Philipines                                     |
+| NL	   | SIN	     | SIN	       | Wartsila Global, Freight solutions. Singapore T.A.G |
+

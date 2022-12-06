@@ -86,6 +86,7 @@ class JasaPengiriman(models.Model):
     alamat = models.CharField(max_length=100,null=True)
     telepon = models.CharField(max_length=20,null=True)
     status = models.CharField(max_length=20,choices=STATUS,null=True,blank=True,default=0)  # type: ignore
+    singkatan = models.CharField(null=True, max_length=50)
     cu = models.ForeignKey(user, related_name='cu_js', editable=False, null=True, blank=True,on_delete=models.CASCADE)
 
     class Meta:
@@ -93,7 +94,7 @@ class JasaPengiriman(models.Model):
         verbose_name = 'JasaPengiriman'
 
     def __str__(self):
-        return self.nama_jasa_pengiriman        
+        return '%s-%s' %(self.nama_jasa_pengiriman,self.singkatan)        
     
 
 class Produk(models.Model):
@@ -123,16 +124,34 @@ class Produk(models.Model):
         verbose_name= 'Produk'
         verbose_name_plural =verbose_name
     
+    def counter_produk(self):
+        tot = 0 # type: ignore
+        try:
+            skr = datetime.date.today()
+            count = Produk.objects.filter(tgl_aktif__year=skr.year).count()
+            cekkr = Produk.objects.filter(tgl_aktif__year=skr.year).latest('id_prod')
+            if count >= 1:
+                tot = cekkr.id_prod + 1 # type: ignore
+            else:
+                tot = 1
+        except ObjectDoesNotExist:
+            tot = 1
+        return tot
+    
     def kode_produk(self):
-        return '%s %s %s Via %s' %(self.nama_produk, self.point_satu,self.point_dua,self.point_tiga)
+        if self.jumlah_vendor == '1':  # type: ignore
+            return '%s %s' %(self.nama_produk,self.point_tiga)# type: ignore
+        elif self.jumlah_vendor == '2':# type: ignore
+            return '%s %s %s' %(self.nama_produk, self.point_satu,self.point_tiga)# type: ignore
+        else:
+            return '%s %s %s Via %s | ( %s %s %s )' %(self.nama_produk, self.point_satu,self.point_tiga,self.point_dua,self.origin_vendor.singkatan,self.through_vendor.singkatan,self.destinations_vendor.singkatan)# type: ignore
 
     def __str__(self):
-        return '%s-%s-%s' %(self.id,self.id_prod, self.kode_produk())  # type: ignore
+        return '%s-%s-%s' %(self.id,self.id_prod, self.kode_produk())# type: ignore
 
 ######Khusus Parameter Jual
 class ParameterDataBl(models.Model):
-    products = models.ForeignKey(Produk,on_delete=models.CASCADE)
-    
+    products = models.ForeignKey(('Produk'),on_delete=models.CASCADE)
     vendor = models.ForeignKey(JasaPengiriman,on_delete=models.CASCADE,null=True,blank=True)    
     status_param = models.CharField(max_length=20,choices=STATUS,null=True,blank=True,default=0)  # type: ignore
     tgl_aktif_param = models.DateField(blank=True, null=True)
@@ -198,7 +217,7 @@ class ParameterDataBl(models.Model):
 
 ##########Parameter untuk Job
 class ParameterData(models.Model):
-    products = models.ForeignKey(Produk,on_delete=models.CASCADE)
+    products = models.ForeignKey(('Produk'),on_delete=models.CASCADE)
     nilai_kurs = models.ForeignKey(Kurs,on_delete=models.CASCADE,null=True,blank=True)    
     status_param = models.CharField(max_length=20,choices=STATUS,null=True,blank=True,default=0) # type: ignore
     tgl_aktif_param = models.DateField(blank=True, null=True)
@@ -317,9 +336,13 @@ class ParameterData(models.Model):
     price_weight = models.DecimalField(max_digits=12, decimal_places=2,null=True,blank=True,help_text="Gasti Asih caraka")
     price_high_weight = models.DecimalField(max_digits=12, decimal_places=2,null=True,blank=True,help_text="Gasti Asih caraka")                                       
     
-    min_paking = models.FloatField(null=True,blank=True,help_text="Gasti asih caraka")
-    price_paking = models.DecimalField(max_digits=12, decimal_places=2,null=True,blank=True,help_text="Gasti Asih caraka")
-    price_high_paking = models.DecimalField(max_digits=12, decimal_places=2,null=True,blank=True,help_text="Gasti Asih caraka")
+    min_handling = models.FloatField(null=True,blank=True,help_text="Gasti asih caraka",default =0)
+    price_handling = models.DecimalField(max_digits=12, decimal_places=2,null=True,blank=True,help_text="Gasti Asih caraka",default = 0)  # type: ignore
+    price_high_handling = models.DecimalField(max_digits=12, decimal_places=2,null=True,blank=True,help_text="Gasti Asih caraka",default =0)  # type: ignore
+
+    min_transportation_charge = models.FloatField(null=True,blank=True,help_text="Gasti asih caraka",default =0)
+    price_transportation_charge = models.DecimalField(max_digits=12, decimal_places=2,null=True,blank=True,help_text="Gasti Asih caraka",default =0)  # type: ignore
+    price_high_transportation_charge = models.DecimalField(max_digits=12, decimal_places=2,null=True,blank=True,help_text="Gasti Asih caraka",default =0)  # type: ignore
     
     ########Warstila nedherlan
     min_custom_learance_fee_handling= models.FloatField(null=True,blank=True,help_text="Wastila Belanda")
@@ -386,9 +409,6 @@ class Transaksi(models.Model):
 
     def __str__(self):
         return '%s' %(self.no_pekerjaan)
-
-   
-        
 
     def counter_nope(self):
         tot = 0
@@ -500,6 +520,35 @@ class Job(models.Model):
     admin_fee = models.DecimalField(max_digits=12, decimal_places=2,null=True,blank=True,default=0) # type: ignore 
     fee_collection = models.DecimalField(max_digits=12, decimal_places=2,null=True,blank=True,default=0) # type: ignore
     ############ Akhir khusus logistik dili
+
+    ###########Gasti asih Caraka
+    jenis = models.CharField(choices = JENISPRODUK,max_length=20,null= True,blank= True)
+    amount = models.DecimalField(max_digits=12, decimal_places=2,null=True,blank=True,default=0,help_text="Gasti asih caraka")  # type: ignore
+    pcs = models.DecimalField(max_digits=12, decimal_places=2,null=True,blank=True,default=0,help_text="Gasti asih caraka")  # type: ignore
+    weight = models.DecimalField(max_digits=12, decimal_places=2,null=True,blank=True,default=0,help_text="Gasti asih caraka")  # type: ignore
+    paking = models.DecimalField(max_digits=12, decimal_places=2,null=True,blank=True,default=0,help_text="Gasti asih caraka") # type: ignore
+    transportation_charge = models.DecimalField(max_digits=12, decimal_places=2,null=True,blank=True,default=0,help_text="Gasti asih caraka") # type: ignore
+    
+    ###########LintasNegara
+    transit_charge = models.DecimalField(max_digits=12, decimal_places=2,null=True,blank=True,default=0,help_text="Lintas Negara") # type: ignore
+    transportations_charge = models.DecimalField(max_digits=12, decimal_places=2,null=True,blank=True,default=0,help_text="Lintas Negara") # type: ignore
+
+    ###########AntarLapan
+    cbm = models.DecimalField(max_digits=12, decimal_places=2,null=True,blank=True,default=0,help_text="ANTAR LAPAN") # type: ignore
+    twentyft = models.DecimalField(max_digits=12, decimal_places=2,null=True,blank=True,default=0,help_text="ANTAR LAPAN") # type: ignore
+    blfee = models.DecimalField(max_digits=12, decimal_places=2,null=True,blank=True,default=0,help_text="ANTAR LAPAN") # type: ignore
+    biaya_peb = models.DecimalField(max_digits=12, decimal_places=2,null=True,blank=True,default=0,help_text="ANTAR LAPAN") # type: ignore
+
+    ########Warstila nedherlan
+    custom_learance_fee_handling = models.DecimalField(max_digits=12, decimal_places=2,null=True,blank=True,default=0,help_text="Wastila belanda") # type: ignore
+    heavy_weight_surcharge =  models.DecimalField(max_digits=12, decimal_places=2,null=True,blank=True,default=0,help_text="Wastila belanda") # type: ignore
+    agent_fee = models.DecimalField(max_digits=12, decimal_places=2,null=True,blank=True,default=0,help_text="Wastila belanda") # type: ignore
+    delivery = models.DecimalField(max_digits=12, decimal_places=2,null=True,blank=True,default=0,help_text="Wastila belanda") # type: ignore
+    
+    ########DHL
+    express_wordwide_nondoc =models.DecimalField(max_digits=12, decimal_places=2,null=True,blank=True,default=0,help_text="DHL") # type: ignore
+    fuel_surcharge_dhl =models.DecimalField(max_digits=12, decimal_places=2,null=True,blank=True,default=0,help_text="DHL") # type: ignore
+    emergency_situation  =models.DecimalField(max_digits=12, decimal_places=2,null=True,blank=True,default=0,help_text="DHL") # type: ignore
     cu = models.ForeignKey(user, related_name='cu_job', editable=False, null=True, blank=True,on_delete=models.CASCADE)
     cu_update = models.ForeignKey(user, related_name='cu_jobup', null=True, blank=True,on_delete=models.CASCADE)
     cdate = models.DateTimeField(auto_now_add=True)

@@ -13,13 +13,15 @@ from .forms import PengajuanForm
 @login_required(login_url=settings.LOGIN_URL)
 def proses_input(request,param):
     param = ParameterData.objects.get(id = param)
-    #print(param.products.origin_vendor.id,param.products.through_vendor.id,param.products.destinations_vendor.id,'ssssssss') 
+    print(param.products.origin_vendor.id,param.products.through_vendor.id,param.products.destinations_vendor.id,'ssssssss') 
     if param.products.origin_vendor.id == 1 and param.products.through_vendor.id == 3 and param.products.destinations_vendor.id ==5:  # type: ignore
         return redirect('/report/save_input_satu/%s/'%(param)) ###ada Di direktori pecah View_satu.py       
     elif param.products.origin_vendor.id == 10 and param.products.through_vendor.id == 18 and param.products.destinations_vendor.id ==5:  # type: ignore
         return redirect('/report/save_input_dua/%s/'%(param)) ###ada Di direktori pecah  View_satu.py   
     elif param.products.origin_vendor.id == 10 and param.products.through_vendor.id == 19 and param.products.destinations_vendor.id ==5:  # type: ignore
         return redirect('/report/save_input_tiga/%s/'%(param)) ###ada Di direktori pecah View_satu.py   
+    elif param.products.origin_vendor.id == 10 and param.products.through_vendor.id == 3 and param.products.destinations_vendor.id ==5:  # type: ignore
+        return redirect('/report/save_input_empat/%s/'%(param)) ###ada Di direktori pecah View_satu.py       
     else:
         messages.success(request, 'Data Parameter Inputan Belum Ada, Hubungi IT ') 
         redirect('in-pengajuan')

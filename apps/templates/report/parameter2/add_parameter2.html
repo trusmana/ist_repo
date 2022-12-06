@@ -1,0 +1,230 @@
+{% extends "layouts/base.html" %}
+{% load static %}
+
+{% block title %} Paramjual{% endblock %}
+
+<!-- Specific Page CSS goes HERE  -->
+{% block stylesheets %}{% endblock stylesheets %}
+
+{% block content %}
+<div id="jCrumbs" class="breadCrumb module">
+    <ul>
+        <li>
+            <a href="/"><i class="icon-home"></i></a>
+        </li>
+        <li>
+            <a href="{% url 'd-paramjl' %}"> Daftar Parameter Jual</a>
+        </li>
+        <li>
+            <a href="."> Add Parameter</a>
+        </li>
+
+    </ul>
+</div>
+<div class="row-fluid">
+    <form action="." method='POST' enctype="multipart/form-data">{% csrf_token %}
+        <div class="span3">
+            <div class="w-box" id="w_sort05">    
+                <div class="w-box-header">
+                    Forms Satu
+                    <div class="pull-right"><i class="splashy-calendar_month_add"></i></div>
+                </div>
+                <div class="w-box-content cnt_a">
+                    <div class="sepH_b">
+                        <label for="w_name">Tgl Aktif </label>
+                        {{ form.tgl_aktif_param}}
+                    </div>
+                    <div class="sepH_b">
+                        <label for="w_name">Produk</label>
+                        {{form.products}}
+                    </div>
+                    <div class="sepH_b">
+                        <label for="w_name">Kurs</label>
+                        {{form.nilai_kurs}}
+                    </div>
+                    <div class="sepH_b">
+                        <label for="w_name">Vendor</label>
+                        {{form.vendor}}
+                    </div>
+                    <div class="formSep">
+                        <label for="w_name">{{form.min_airfreight_import_handling.label}}</label>
+                        {{form.min_airfreight_import_handling}}
+                    </div>
+                    <div class="formSep">
+                        <label for="w_name">{{form.max_airfreight_import_handling.label}}</label>
+                        {{form.max_airfreight_import_handling}}
+                    </div>
+                    <div class="formSep">
+                        <label for="w_name">{{form.price_airfreight_import_handling.label}}</label>
+                        {{form.price_airfreight_import_handling}}
+                    </div>
+                    <div class="sepH_b">
+                        <label for="w_name">{{form.min_ground_handling.label}} </label>
+                        {{form.min_ground_handling}}
+                    </div>
+                    <div class="sepH_b">
+                        <label for="w_name">{{form.max_ground_handling.label}} </label>
+                        {{form.max_ground_handling}}
+                    </div>
+                    <div class="sepH_b">
+                        <label for="w_name">{{form.price_ground_handling.label}} </label>
+                        {{form.price_ground_handling}}
+                    </div>
+                    <div class="sepH_b">
+                        <label for="w_name">{{form.min_delivery.label}} </label>
+                        {{form.min_delivery}}
+                    </div>
+                    <div class="sepH_b">
+                        <label for="w_name">{{form.max_delivery.label}} </label>
+                        {{form.max_delivery}}
+                    </div>
+                    <div class="sepH_b">
+                        <label for="w_name">{{form.price_delivery.label}} </label>
+                        {{form.price_delivery}}
+                    </div>
+
+                </div>
+            </div>
+        </div>
+        <div class="span3">
+            <div class="w-box" id="w_sort05">    
+                <div class="w-box-header">
+                    Forms 2
+                    <div class="pull-right">
+                        <i class="splashy-calendar_month_up"></i>
+                    </div>
+                </div>
+                <div class="w-box-content cnt_a">
+                    <div class="sepH_b">
+                        <label for="w_name">{{form.min_cartage_and_warehouse_charge.label}} </label>
+                        {{form.min_cartage_and_warehouse_charge}}
+                    </div>
+                    <div class="sepH_b">
+                        <label for="w_name">{{form.max_cartage_and_warehouse_charge.label}} </label>
+                        {{form.max_cartage_and_warehouse_charge}}
+                    </div>
+                    <div class="sepH_b">
+                        <label for="w_name">{{form.price_cartage_and_warehouse_charge.label}} </label>
+                        {{form.price_cartage_and_warehouse_charge}}
+                    </div>
+                    <div class="sepH_b">
+                        <label for="w_name">{{form.min_export_handling.label}} </label>
+                        {{form.min_export_handling}}
+                    </div>
+                    <div class="sepH_b">
+                        <label for="w_name">{{form.max_export_handling.label}} </label>
+                        {{form.max_export_handling}}
+                    </div>
+                    <div class="sepH_b">
+                        <label for="w_name">{{form.price_export_handling.label}} </label>
+                        {{form.price_export_handling}}
+                    </div>
+                    <div class="sepH_b">
+                        <label for="w_name">{{form.min_warehouse_charge.label}} </label>
+                        {{form.min_warehouse_charge}}
+                    </div>
+                    <div class="sepH_b">
+                        <label for="w_name">{{form.max_warehouse_charge.label}} </label>
+                        {{form.max_warehouse_charge}}
+                    </div>
+                    <div class="sepH_b">
+                        <label for="w_name">{{form.price_warehouse_charge.label}} </label>
+                        {{form.price_warehouse_charge}}
+                    </div>
+                    <div class="sepH_b">
+                        <label for="w_name">{{form.min_handling_charge.label}} </label>
+                        {{form.min_handling_charge}}
+                    </div>
+                    <div class="sepH_b">
+                        <label for="w_name">{{form.max_handling_charge.label}} </label>
+                        {{form.max_handling_charge}}
+                    </div>
+                    <div class="sepH_b">
+                        <label for="w_name">{{form.price_handling_charge.label}} </label>
+                        {{form.price_handling_charge}}
+                    </div>
+                    
+                </div>
+            </div>
+        </div>
+        <div class="span3">
+            <div class="w-box" id="w_sort05">    
+                <div class="w-box-header">
+                    Forms 3
+                    <div class="pull-right">
+                        <i class="splashy-calendar_month_up"></i>
+                    </div>
+                </div>
+                <div class="w-box-content cnt_a">
+                    <div class="sepH_b">
+                        <label for="w_name">{{form.min_airfreight_sin_dps_dil.label}} </label>
+                        {{form.min_airfreight_sin_dps_dil}}
+                    </div>
+                    <div class="sepH_b">
+                        <label for="w_name">{{form.max_airfreight_sin_dps_dil.label}} </label>
+                        {{form.max_airfreight_sin_dps_dil}}
+                    </div>
+                    <div class="sepH_b">
+                        <label for="w_name">Price {{form.airfreight_sin_dps_dil.label}} </label>
+                        {{form.airfreight_sin_dps_dil}}
+                    </div>
+                    
+                    <div class="sepH_b">
+                        <label for="w_name">{{form.min_doc_and_clearance.label}} </label>
+                        {{form.min_doc_and_clearance}}
+                    </div>
+                    <div class="sepH_b">
+                        <label for="w_name">{{form.max_doc_and_clearance.label}} </label>
+                        {{form.max_doc_and_clearance}}
+                    </div>
+                    <div class="sepH_b">
+                        <label for="w_name">{{form.price_doc_and_clearance.label}} </label>
+                        {{form.price_doc_and_clearance}}
+                    </div>
+                    
+                    
+                    <div class="sepH_b">
+                        <label for="w_name">{{form.min_duty_tax.label}} </label>
+                        {{form.min_duty_tax}}
+                    </div>
+                    <div class="sepH_b">
+                        <label for="w_name">{{form.max_duty_tax.label}} </label>
+                        {{form.max_duty_tax}}
+                    </div>
+                    <div class="sepH_b">
+                        <label for="w_name">{{form.price_duty_tax.label}} </label>
+                        {{form.price_duty_tax}}
+                    </div>
+                    <div class="sepH_b">
+                        <label for="w_name">{{form.min_tax_handling_charge.label}} </label>
+                        {{form.min_tax_handling_charge}}
+                    </div>
+                    <div class="sepH_b">
+                        <label for="w_name">{{form.max_tax_handling_charge.label}} </label>
+                        {{form.max_tax_handling_charge}}
+                    </div>
+                    <div class="sepH_b">
+                        <label for="w_name">{{form.price_tax_handling_charge.label}} </label>
+                        {{form.price_tax_handling_charge}}
+                    </div>
+                    <!--{{form.as_table}}-->
+                    <div class="sepH_b">
+                    <button class="btn btn-inverse tablular " type="submit" >
+                        <i class="icon-white icon-ok-circle"></i> Simpan
+                    </button>
+                    <button class="btn btn-gebo"><a href="/"><i class="splashy-sprocket_dark"></i> Cancel</a></button>
+                </div>                                        
+                </div>
+            </div>
+        </div>      
+    </form>    
+</div>
+
+      
+
+
+<!-- Specific Page JS goes HERE  -->
+{% block javascripts %}
+{% include 'alat/chosen.html' %}
+{% endblock javascripts %}
+{% endblock content %}

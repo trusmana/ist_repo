@@ -13,7 +13,7 @@
             <a href="{% url 'in-pengajuan' %}">Job</a>
         </li>
         <li>
-            Input Job #{{param}} {{pse}}
+            Input Job #{{param.products.point_satu.id}} {{param.products.point_dua.id}} {{param.products.point_tiga.id}} 
         </li>
     </ul>
 </div>
@@ -24,15 +24,21 @@
                 <form id="validate_wizard" class="stepy-wizzard form-horizontal tabular" method="POST" action="." enctype="multipart/form-data" >{% csrf_token %}
                     <fieldset title="{{param.products.origin_vendor}}">
                         <legend class="hide">{{param.products.point_satu}}&hellip;</legend>
+                        {% if param.products.point_satu.id == 1 %}
                         {% include "pengajuan/input/pecah/show/tampil_gastiasih.html" %}
+                        {% endif %}
                     </fieldset>
                     <fieldset title="{{param.products.through_vendor}}">
                         <legend class="hide">{{param.products.point_dua}}&hellip;</legend>
+                        {% if param.products.point_satu.id == 3 %}
                         {% include "pengajuan/input/pecah/show/tampil_antarlapan.html" %}
+                        {% endif %}
                     </fieldset>
                     <fieldset title="{{param.products.destinations_vendor}}">
                         <legend class="hide">{{param.products.point_tiga}}&hellip;</legend>
+                        {% if param.products.point_satu.id == 5 %}
                         {% include "pengajuan/input/pecah/show/tampil_dili.html" %}
+                        {% endif %}
 					</fieldset>
                     <!---Jual Gunakan -->
                     <fieldset title="{{pse.vendor}}">
