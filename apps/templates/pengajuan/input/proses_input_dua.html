@@ -13,7 +13,7 @@
             <a href="{% url 'in-pengajuan' %}">Job</a>
         </li>
         <li>
-            Input Job #{{param}} {{pse}}
+            Input Job #{{dt.origin_vendor.id}} {{dt.destinations_vendor.id}} sale {{pse.vendor.id}}
         </li>
     </ul>
 </div>
@@ -22,240 +22,41 @@
 		<div class="row-fluid">
 			<div class="span12">
                 <form id="validate_wizard" class="stepy-wizzard form-horizontal tabular" method="POST" action="." enctype="multipart/form-data" >{% csrf_token %}
-                    <fieldset title="{{param.products.origin_vendor}}">
-                        <legend class="hide">{{param.products.point_satu}}&hellip;</legend>
-                        <div class="formSep control-group">
-                            <label class="control-label">{{ form.tgl_fs.label }} </label>
-                            <div class="controls">
-                                {{ form.tgl_fs }} {{form.commodity}}
-							</div>
-                        </div>
-                        <div class="formSep control-group">
-                            <label class="control-label">{{ form.no_invoice_fs.label }} / {{ form.qt_fs.label }} </label>
-                            <div class="controls">
-                                {{ form.no_invoice_fs }} {{form.qt_fs}}
-							</div>
-                        </div>
-                        
-                        <div class="formSep control-group">
-                            <label class="control-label">{{ form.products.label }}</label>
-                            <div class="controls">
-                                {{ form.products }} {{form.param}}
-							</div>
-                        </div>
-                        <div class="formSep control-group input-prepend">
-                            <label class="control-label">{{form.weight_fs.label}}</label>
-                            <div class="controls"><span class="add-on">Kg</span>{{form.weight_fs}}
-							</div>
-                        </div> 
-
-                        <div class="formSep control-group input-prepend">
-                            <label class="control-label">{{form.price_airfreight.label}}</label>
-                            <div class="controls "> <span class="add-on">$</span>{{form.price_airfreight}} </div>							
-                        </div>
-                                               
-                        <div class="formSep control-group input-prepend input-append">
-                            <label class="control-label">{{ form.price_handling_charges.label }}</label>
-                            <div class="controls">
-								<span class="add-on">$</span> {{form.price_handling_charges}}
-							</div>
-                        </div>
-                        <div class="formSep control-group input-prepend input-append">
-                            <label class="control-label">{{ form.price_insurance_security_surcharge.label }}</label>
-                            <div class="controls">
-								<span class="add-on">$</span>{{form.price_insurance_security_surcharge}}
-							</div>
-                        </div>
-                        <div class="formSep control-group input-prepend input-append">
-                            <label class="control-label">{{ form.price_fuel_surcharge.label }}</label>
-                            <div class="controls">
-								<span class="add-on">$</span>{{form.price_fuel_surcharge}}
-							</div>
-                        </div>
-                        <div class="formSep control-group input-prepend input-append">
-                            <label class="control-label">{{ form.price_import_handling_charges.label }}</label>
-                            <div class="controls">
-								<span class="add-on">$</span> {{form.price_import_handling_charges }}
-							</div>
-                        </div>                          
-                        <div class="formSep control-group input-prepend input-append">
-                            <label class="control-label">{{ form.price_gst_zero_rated.label }}</label>
-                            <div class="controls">
-                                <span class="add-on">$</span> {{ form.price_gst_zero_rated}}
-							</div>
-                        </div>                                               
+                    <fieldset title="{{dt.origin_vendor}}">
+                        <legend class="hide">{{dt.point_satu}}&hellip;</legend>
+                        {% if dt.origin_vendor.id != 1 %}
+                        {% include 'pengajuan/input/pecah/show/head_form.html' %}
+                        {% endif %}
+                        {% if dt.origin_vendor.id == 5%}
+                            {% include 'pengajuan/input/pecah/show/dili/tampil_dili_satu.html'  %}
+                        {% endif %}
+                        {% if dt.origin_vendor.id == 1 %}
+                            {% include 'pengajuan/input/pecah/show/freight/tampil_freight.html'  %}
+                        {% endif %}
+                        {% if dt.origin_vendor.id == 8 %}
+                            {% include 'pengajuan/input/pecah/show/dhl/tampil_dhl.html'  %}
+                        {% endif %}                    
                     </fieldset>
 
-                    <fieldset title="{{param.products.destinations_vendor}}">
-                        <legend class="hide">{{param.products.point_tiga}}&hellip;</legend>
-                        <div class="formSep control-group">
-                            <label class="control-label">{{ formss.tgl_dl.label }} </label>
-                            <div class="controls">
-                                {{ formss.tgl_dl }} 
-							</div>
-                        </div>
-                        <div class="formSep control-group">
-                            <label class="control-label">{{ formss.no_invoice_dl.label }}  </label>
-                            <div class="controls">
-                                {{ formss.no_invoice_dl }}
-							</div>
-                        </div>
-                        <div class="formSep control-group input-prepend input-append">
-                            <label class="control-label">{{formss.weight_dl.label}}</label>
-                            <div class="controls"><span class="add-on">Kg</span>{{formss.weight_dl}}
-							</div>
-                        </div>                        
-						<div class="formSep control-group input-prepend input-append">
-                            <label class="control-label"> {{formss.price_ground_handling_dl.label }}</label>
-                            <div class="controls">
-                                <span class="add-on">$</span> {{ formss.price_ground_handling_dl}}                                 
-							</div>
-                        </div>
-                        <div class="formSep control-group input-prepend input-append">
-                            <label class="control-label"> {{formss.price_forklift_for_heavy_cargo.label }}</label>
-                            <div class="controls">
-                                <span class="add-on">$</span> {{ formss.price_forklift_for_heavy_cargo}}                                 
-							</div>
-                        </div>
-                        <div class="formSep control-group input-prepend input-append">
-                            <label class="control-label"> {{formss.price_custom_clearance.label }}</label>
-                            <div class="controls">
-                                <span class="add-on">$</span> {{ formss.price_custom_clearance}}                                 
-							</div>
-                        </div>
-                        <div class="formSep control-group input-prepend input-append">
-                            <label class="control-label"> {{formss.price_delivey_to_hera.label }}</label>
-                            <div class="controls">
-                                <span class="add-on">$</span> {{ formss.price_delivey_to_hera}}                                 
-							</div>
-                        </div>
-                        <div class="formSep control-group input-prepend input-append">
-                            <label class="control-label"> {{formss.price_akses_bandara_inspeksi.label }}</label>
-                            <div class="controls">
-                                <span class="add-on">$</span> {{ formss.price_akses_bandara_inspeksi}}                                 
-							</div>
-                        </div>
-                        <div class="formSep control-group input-prepend input-append">
-                            <label class="control-label"> {{formss.price_handling_fee.label }}</label>
-                            <div class="controls">
-                                <span class="add-on">$</span> {{ formss.price_handling_fee}}                                 
-							</div>
-                        </div>
-                        <div class="formSep control-group input-prepend input-append">
-                            <label class="control-label"> {{formss.admin_fee.label }}</label>
-                            <div class="controls">
-                                <span class="add-on">$</span> {{ formss.admin_fee}}                                 
-							</div>
-                        </div>
-                        <div class="formSep control-group input-prepend input-append">
-                            <label class="control-label"> {{formss.fee_collection.label }}</label>
-                            <div class="controls">
-                                <span class="add-on">$</span> {{ formss.fee_collection }}                                 
-							</div>
-                        </div>
+                    <fieldset title="{{dt.destinations_vendor}}">
+                        <legend class="hide">{{dt.point_tiga}}&hellip;</legend>
+                        {% if dt.destinations_vendor.id == 1 %}
+                            {% include 'pengajuan/input/pecah/show/freight/tampil_freight3.html'  %}
+                        {% endif %}
+                        {% if dt.destinations_vendor.id == 5 %}
+                            {% include 'pengajuan/input/pecah/show/dili/tampil_dili.html'  %}
+                        {% endif %}
 					</fieldset>
                     <!---Jual Gunakan -->
                     <fieldset title="{{pse.vendor}}">
                         <legend class="hide">{{pse.vendor}}&hellip;</legend>
-                        <div class="formSep control-group">
-                            <label class="control-label">{{ sl.tanggal.label }} </label>
-                            <div class="controls">
-                                {{ sl.tanggal }} {{sl.paramsale}}
-							</div>
-                        </div>
-                        <div class="formSep control-group">
-                            <label class="control-label">{{ sl.re_export_shipment_one.label }} </label>
-                            <div class="controls">
-                                {{ sl.re_export_shipment_one }} {{sl.re_export_shipment_one_pcs}} {{sl.re_export_shipment_one_qty}}
-							</div>
-                        </div>
-                        <div class="formSep control-group input-prepend">
-                            <label class="control-label">{{sl.airfreight_one.label}}</label>
-                            <div class="controls "> <span class="add-on">$</span>{{sl.airfreight_one}} </div>							
-                        </div>
-                        <div class="formSep control-group input-prepend">
-                            <label class="control-label">{{ sl.cartage_warehouse_charge_one.label }}  </label>
-                            <div class="controls"><span class="add-on">$</span>{{ sl.cartage_warehouse_charge_one }}</div>
-                        </div>
-                        <div class="formSep control-group">
-                            <label class="control-label">{{ sl.re_export_shipment_two.label }} </label>
-                            <div class="controls">
-                                {{ sl.re_export_shipment_two }} {{sl.re_export_shipment_two_pcs}} {{sl.re_export_shipment_two_qty}}
-							</div>
-                        </div>
-                        <div class="formSep control-group input-prepend">
-                            <label class="control-label">{{ sl.airfreight_two.label }}  </label>
-                            <div class="controls"><span class="add-on">$</span>
-                                {{ sl.airfreight_two }}
-							</div>
-                        </div>
-                        <div class="formSep control-group input-prepend">
-                            <label class="control-label">{{ sl.cartage_warehouse_charge_two.label }}  </label>
-                            <div class="controls"><span class="add-on">$</span>
-                                {{ sl.cartage_warehouse_charge_two }}
-							</div>
-                        </div>
-
-                        <div class="formSep control-group input-prepend">
-                            <label class="control-label">{{ sl.export_handling_sale.label }}  </label>
-                            <div class="controls"><span class="add-on">$</span>
-                                {{ sl.export_handling_sale }}
-							</div>
-                        </div>
-                        <div class="formSep control-group input-prepend">
-                            <label class="control-label">{{ sl.freight_sale.label }}  </label>
-                            <div class="controls"><span class="add-on">$</span>
-                                {{ sl.freight_sale }}
-							</div>
-                        </div>
+                        {% if pse.vendor.id == 2 %}
+                            {% include 'pengajuan/input/pecah/show/indah/tampil_indahsinergi.html'  %}                        
+                        {% endif %}
                         
-                        
-                        <div class="formSep control-group input-prepend">
-                            <label class="control-label">{{ sl.doc_clearance_sale.label }}  </label>
-                            <div class="controls"><span class="add-on">$</span>
-                                {{ sl.doc_clearance_sale }}
-							</div>
-                        </div>
-                        <div class="formSep control-group input-prepend">
-                            <label class="control-label">{{ sl.ground_handling_sale.label }}  </label>
-                            <div class="controls"><span class="add-on">$</span>
-                                {{ sl.ground_handling_sale }}                                
-							</div>
-                        </div>
-                        <div class="formSep control-group input-prepend">
-                            <label class="control-label">{{ sl.warehouse_charge_sale.label }}  </label>
-                            <div class="controls"><span class="add-on">$</span>
-                                {{ sl.warehouse_charge_sale }}                                
-							</div>
-                        </div>                        
-                        <div class="formSep control-group input-prepend">
-                            <label class="control-label">{{ sl.handling_charge_sale.label }}  </label>
-                            <div class="controls"><span class="add-on">$</span>
-                                {{ sl.handling_charge_sale }}                                
-							</div>
-                        </div>
-                        <div class="formSep control-group input-prepend">
-                            <label class="control-label">{{ sl.delivery_sale.label }}  </label>
-                            <div class="controls"><span class="add-on">$</span>
-                                {{ sl.delivery_sale }}                                
-							</div>
-                        </div>
-                        <div class="formSep control-group input-prepend">
-                            <label class="control-label">{{ sl.duty_tax_sale.label }}  </label>
-                            <div class="controls"><span class="add-on">$</span>
-                                {{ sl.duty_tax_sale }}                                
-							</div>
-                        </div>
-                        <div class="formSep control-group input-prepend">
-                            <label class="control-label">{{ sl.tax_handling_charge_sale.label }}  </label>
-                            <div class="controls"><span class="add-on">$</span>
-                                {{ sl.tax_handling_charge_sale }}                                
-							</div>
-                        </div>
 					</fieldset>
                     <!--
                     {{form.as_table}}
-                    {{forms.as_table}}
                     {{formss.as_table}}
                     {{sl.as_table}}
                     -->
@@ -266,144 +67,12 @@
 	</div>
 </div>
 {% block javascript %}
-{% include 'pengajuan/input/hitung_ajax.html' %}
-<script>
-    function sale_cartege()
-    {        
-        var prm = $('#id_paramsale').val();
-        var kali = $('#id_re_export_shipment_one_qty').val();
-        var dataString ='prm='+prm+'&kali='+kali;
-        $.ajax({
-            url: "{% url 'h-salecartage' %}",
-            data: dataString,
-            dataType: "JSON",
-            success: function(data){
-                if(data.result=='1'){
-                    $('#id_cartage_warehouse_charge_one').val(parseFloat(data.price).toFixed(2));                                                    
-                }else{
-                    $('#id_cartage_warehouse_charge_one').val('0');
-                }
-            }
-        });
-    
-    }
-    function sale_cartege_two()
-    {        
-        var prm = $('#id_paramsale').val();
-        var kali = $('#id_re_export_shipment_two_qty').val();
-        var dataString ='prm='+prm+'&kali='+kali;
-        $.ajax({
-            url: "{% url 'h-salecartagetwo' %}",
-            data: dataString,
-            dataType: "JSON",
-            success: function(data){
-                if(data.result=='1'){
-                    $('#id_cartage_warehouse_charge_two').val(parseFloat(data.price).toFixed(2));                                                    
-                }else{
-                    $('#id_cartage_warehouse_charge_two').val('0');
-                }
-            }
-        });
-    
-    }
-    
-    function h_ground_handling_sale()
-    {        
-        var prm = $('#id_paramsale').val();
-        var kali = $('#id_weight_fs').val();
-        var dataString ='prm='+prm+'&kali='+kali;
-        $.ajax({
-            url: "{% url 'h-groundhandlingsale' %}",
-            data: dataString,
-            dataType: "JSON",
-            success: function(data){
-                if(data.result=='1'){
-                    $('#id_ground_handling_sale').val(parseFloat(data.price).toFixed(2));                                                    
-                }else{
-                    $('#id_ground_handling_sale').val('0');
-                }
-            }
-        });
-    
-    }
-    function h_warehouse_charge_sale()
-    {        
-        var prm = $('#id_paramsale').val();
-        var kali = $('#id_weight_fs').val();
-        var dataString ='prm='+prm+'&kali='+kali;
-        $.ajax({
-            url: "{% url 'h-warehousechargesale' %}",
-            data: dataString,
-            dataType: "JSON",
-            success: function(data){
-                if(data.result=='1'){
-                    $('#id_warehouse_charge_sale').val(parseFloat(data.price).toFixed(2));                                                    
-                }else{
-                    $('#id_warehouse_charge_sale').val('0');
-                }
-            }
-        });
-    
-    }
-    function h_handling_charge_sale()
-    {        
-        var prm = $('#id_paramsale').val();
-        var kali = $('#id_weight_fs').val();
-        var dataString ='prm='+prm+'&kali='+kali;
-        $.ajax({
-            url: "{% url 'h-handlingchargesale' %}",
-            data: dataString,
-            dataType: "JSON",
-            success: function(data){
-                if(data.result=='1'){
-                    $('#id_handling_charge_sale').val(parseFloat(data.price).toFixed(2));                                                    
-                }else{
-                    $('#id_handling_charge_sale').val('0');
-                }
-            }
-        });
-    
-    }
-    function h_delivery_sale()
-    {        
-        var prm = $('#id_paramsale').val();
-        var kali = $('#id_weight_fs').val();
-        var dataString ='prm='+prm+'&kali='+kali;
-        $.ajax({
-            url: "{% url 'h-deliverysale' %}",
-            data: dataString,
-            dataType: "JSON",
-            success: function(data){
-                if(data.result=='1'){
-                    $('#id_delivery_sale').val(parseFloat(data.price).toFixed(2));                                                    
-                }else{
-                    $('#id_delivery_sale').val('0');
-                }
-            }
-        });
-    
-    }
-    function h_freight_sale()
-    {        
-        var prm = $('#id_paramsale').val();
-        var kali = $('#id_weight_fs').val();
-        var dataString ='prm='+prm+'&kali='+kali;
-        $.ajax({
-            url: "{% url 'h-freightsale' %}",
-            data: dataString,
-            dataType: "JSON",
-            success: function(data){
-                if(data.result=='1'){
-                    $('#id_freight_sale').val(parseFloat(data.price).toFixed(2));                                                    
-                }else{
-                    $('#id_freight_sale').val('0');
-                }
-            }
-        });
-    
-    }
-
-</script>    
+{% include "pengajuan/input/pecah/ajax/ajax_vendor_fred.html" %}
+{% include "pengajuan/input/pecah/ajax/ajax_vendor_solid.html" %}
+{% include 'pengajuan/input/pecah/ajax/ajax_vendor_gasti.html' %}
+{% include 'pengajuan/input/pecah/ajax/ajax_vendor_dili.html' %}
+{% include 'pengajuan/input/pecah/ajax/ajax_vendor_indahsinergi.html' %}
 {% include 'alat/chosen.html' %}
+
 {% endblock javascript %}
 {% endblock content %}

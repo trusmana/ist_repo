@@ -1,0 +1,53 @@
+<div class="formSep control-group">
+    <label class="control-label">{{ forms.tgl_fs.label }} </label>
+    <div class="controls">
+        {{ forms.tgl_fs }} 
+    </div>
+</div>
+<div class="formSep control-group">
+    <label class="control-label">{{ forms.no_invoice_fs.label }} / {{ forms.qt_fs.label }} </label>
+    <div class="controls">
+        {{ forms.no_invoice_fs }} {{forms.qt_fs}}
+    </div>
+</div>
+<div class="formSep control-group input-prepend">
+    <label class="control-label">{{forms.weight_fs.label}}</label>
+    <div class="controls"><span class="add-on">Kg</span>{{forms.weight_fs}}
+    </div>
+</div> 
+
+<div class="formSep control-group input-prepend">
+    <label class="control-label">{{forms.price_airfreight.label}}</label>
+    <div class="controls "> <span class="add-on">$</span>{{forms.price_airfreight}} </div>							
+</div>
+                        
+<div class="formSep control-group input-prepend input-append">
+    <label class="control-label">{{ forms.price_handling_charges.label }}</label>
+    <div class="controls">
+        <span class="add-on">$</span> {{forms.price_handling_charges}}
+    </div>
+</div>
+<div class="formSep control-group input-prepend input-append">
+    <label class="control-label">{{ forms.price_insurance_security_surcharge.label }}</label>
+    <div class="controls">
+        <span class="add-on">$</span>{{forms.price_insurance_security_surcharge}}
+    </div>
+</div>
+<div class="formSep control-group input-prepend input-append">
+    <label class="control-label">{{ forms.price_fuel_surcharge.label }}</label>
+    <div class="controls">
+        <span class="add-on">$</span>{{forms.price_fuel_surcharge}}
+    </div>
+</div>
+<div class="formSep control-group input-prepend input-append">
+    <label class="control-label">{{ forms.price_import_handling_charges.label }}</label>
+    <div class="controls">
+        <span class="add-on">$</span> {{forms.price_import_handling_charges }}
+    </div>
+</div>                          
+<div class="formSep control-group input-prepend input-append">
+    <label class="control-label">{{ forms.price_gst_zero_rated.label }}</label>
+    <div class="controls">
+        <span class="add-on">$</span> {{ forms.price_gst_zero_rated}}
+    </div>
+</div>

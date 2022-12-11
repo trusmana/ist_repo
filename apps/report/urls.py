@@ -94,10 +94,11 @@ urlpatterns = [
     path('edit_sl/<int:id>/',eparam.sledit, name='e-sl'),
     path('edit_fs/<int:id>/',eparam.fsedit, name='e-fs'),
     re_path(r'^param_data/(?:(?P<pk>\d+)/)?(?:(?P<action>\w+)/)?', prviews.list_param.as_view(),name='d-param'),
-    re_path(r'^param_data2/(?:(?P<pk>\d+)/)?(?:(?P<action>\w+)/)?', prviews.list_param_dua.as_view(),name='d-param2'),
+    re_path(r'^param_datadua/(?:(?P<pk>\d+)/)?(?:(?P<action>\w+)/)?', prviews.list_param_dua.as_view(),name='d-paramdua'),
     
     path('list_param/<int:id>/',prviews.detailparam, name='dtl-param'),
     path('add_dta/',prviewscr.addparamdta, name='add-paramdta'),
+    path('add_dtadua/',prviewscr.addparamdtadua, name='add-paramdta2'),
     
     path('add_paramdata/<int:pr>/<int:origin>/<int:through>/<int:destn>/',param3.addparam, name='add-paramdata'),
     path('add_paramdatadua/<int:pr>/<int:origin>/<int:destn>/',param2.addparamdua, name='add-paramdatadua'),
@@ -115,7 +116,7 @@ urlpatterns = [
     path('proses_input/<int:param>/',inviews.proses_input,name='proses-input'),###proses  input 3 vendor
     ## Dua Vendor
     path('show_pa_dua/',inviewsdua.showparamdua,name='show-param-dua'),###dua vendor
-    path('proses_input_dua/<int:param>/',inviewsdua.proses_input_dua,name='proses-input-dua'),
+    path('proses_input_dua/<int:param>/',inviewsdua.proses_input_dua_vendor,name='proses-input-dua'),
     ## Satu Vendor
     path('show_pa_satu/',inviewssatu.showparamsatu,name='show-param-satu'),###satu vendor
     path('proses_input_satu/<int:param>/',inviewssatu.proses_input_satu,name='proses-input-satu'),
@@ -124,6 +125,7 @@ urlpatterns = [
     path('save_input_dua/<int:param>/',fviews_satu.proses_input_dua,name='save-dua'),###ID SUB DILI GA/LA/DILI
     path('save_input_tiga/<int:param>/',fviews_satu.proses_input_tiga,name='save-tiga'),###ID ABU DILI ID GA/AL/DILI
     path('save_input_empat/<int:param>/',fviews_satu.proses_input_empat,name='save-empat'),###ID DPS DILI ID GA/SL/DILI    
+    path('save_input_lima/<int:param>/',fviews_satu.proses_input_lima,name='save-lima'),###ND DPS DILI ID WA/SL/DILI
     ###################Akhir Input Pengajuan
 
     ######Fungsi Ajax Hitungan Pembelian

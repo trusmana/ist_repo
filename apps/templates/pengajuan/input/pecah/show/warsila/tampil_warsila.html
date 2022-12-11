@@ -1,0 +1,35 @@
+<div class="formSep control-group">
+    <label class="control-label">{{ trsform.products.label }}</label>
+    <div class="controls">
+        {{ trsform.products }} {{trsform.param}} {{trsform.commodity}}
+    </div>
+</div>
+<div class="formSep control-group input-prepend">
+    <label class="control-label">{{trsform.weight_fs.label}} / Qty</label>
+    <div class="controls"><span class="add-on">Kg</span>{{trsform.weight_fs}} {{trsform.qt_fs}}
+    </div>
+</div> 
+
+<div class="formSep control-group">
+    <label class="control-label">{{ form.tgl_wsl.label }} </label>
+    <div class="controls">
+        {{ form.tgl_wsl }} {{ form.no_invoice_wsl }} 
+    </div>
+</div>
+
+<div class="formSep control-group input-prepend">
+    <label class="control-label">{{ form.custom_learance_fee_handling.label }}  </label>
+    <div class="controls"><span class="add-on">$</span>{{ form.custom_learance_fee_handling }}</div>
+</div>
+<div class="formSep control-group input-prepend">
+    <label class="control-label">{{ form.heavy_weight_surcharge.label }}  </label>
+    <div class="controls"><span class="add-on">$</span>{{ form.heavy_weight_surcharge }}</div>
+</div>
+<div class="formSep control-group input-prepend">
+    <label class="control-label">{{ form.agent_fee.label }}  </label>
+    <div class="controls"><span class="add-on">$</span>{{ form.agent_fee }}</div>
+</div>
+<div class="formSep control-group input-prepend">
+    <label class="control-label">{{ form.delivery.label }}  </label>
+    <div class="controls"><span class="add-on">$</span>{{ form.delivery }}</div>
+</div>

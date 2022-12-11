@@ -223,7 +223,7 @@ class TransaksiForm(forms.Form):
     qt_fs = forms.IntegerField(label='Quantity',widget=forms.NumberInput(attrs={'class':'input-small',
         'alt':'integer','placeholder':'QTY'}))
     weight_fs = forms.DecimalField(label='Weight',widget=forms.NumberInput(attrs={
-        'class':'uang input-small','onkeyup':'cek_amount_gst()'}))
+        'class':'uang input-small','onkeyup':'cek_amount_gst()','placeholder':'WEIGHT'}))
 
 
 class GastiAsihForm(forms.Form):
@@ -272,6 +272,16 @@ class DHLForm(forms.Form):
         attrs={'class': 'form-control '}))
     no_invoice_dhl = forms.CharField(label='No Invoice',widget=forms.TextInput(attrs={'class':'input-small',
         'placeholder':'No Invoice'}))
-    standard_charge = forms.DecimalField(widget=forms.NumberInput(attrs={'class':'input-small ttip_t'}))
+    express_wordwide_nondoc = forms.DecimalField(widget=forms.NumberInput(attrs={'class':'input-small ttip_t'}))
     fuel_surcharge_dhl = forms.DecimalField(widget=forms.NumberInput(attrs={'class':'input-small ttip_t'}))
     emergency_situation = forms.DecimalField(widget=forms.NumberInput(attrs={'class':'input-small ttip_t'}))
+
+class WarsilaForm(forms.Form):
+    tgl_wsl = forms.DateField(label="Tanggal Invoice", widget=forms.DateInput(
+        attrs={'class': 'form-control '}))
+    no_invoice_wsl = forms.CharField(label='No Invoice',widget=forms.TextInput(attrs={'class':'input-small',
+        'placeholder':'No Invoice'}))
+    custom_learance_fee_handling =forms.DecimalField(widget=forms.NumberInput(attrs={'class':'input-small ttip_t'}))
+    heavy_weight_surcharge =forms.DecimalField(widget=forms.NumberInput(attrs={'class':'input-small ttip_t'}))
+    agent_fee =forms.DecimalField(widget=forms.NumberInput(attrs={'class':'input-small ttip_t'}))
+    delivery =forms.DecimalField(widget=forms.NumberInput(attrs={'class':'input-small ttip_t'}))

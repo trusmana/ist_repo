@@ -2,7 +2,11 @@ from django import forms
 from apps.products.models import Produk,STATUS
 
 class CariForm(forms.Form):
-    products = forms.ModelChoiceField(queryset=Produk.objects.filter(status='1'),
+    products = forms.ModelChoiceField(queryset=Produk.objects.filter(status='1',jumlah_vendor = 3),
+        widget=forms.Select(attrs={'class':'form-control span8 transaction chosen-select'}))
+    
+class CariDuaForm(forms.Form):
+    products = forms.ModelChoiceField(queryset=Produk.objects.filter(status='1',jumlah_vendor = 2),
         widget=forms.Select(attrs={'class':'form-control span8 transaction chosen-select'}))
     
     

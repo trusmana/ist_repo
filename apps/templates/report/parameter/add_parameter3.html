@@ -36,11 +36,17 @@
                 {% endif %}
                 {% if dt.origin_vendor.id == 10 %}
                 {% include 'report/parameter/vendor_show/gs/gasti_asih.html' %}
+                {% endif %}
+                {% if dt.origin_vendor.id == 12 %}
+                {% include 'report/parameter/vendor_show/wastila/wastila.html' %}
                 {% endif %}                                        
             </fieldset>
             <fieldset title="{{dt.through_vendor}}">
                 <legend class="hide">{{dt.point_dua}}&hellip;</legend>
-                {% if dt.though_vendor.id == 1 %}
+                {% if dt.through_vendor.id == 12 %}
+                {% include 'report/parameter/vendor_show/wastila/wastila2.html' %}
+                {% endif %}                                        
+                {% if dt.through_vendor.id == 1 %}
                 {% include 'report/parameter/vendor_show/fs/fs2.html' %}
                 {% endif %}
                 {% if dt.through_vendor.id == 3 %}
@@ -57,6 +63,9 @@
             <!---Jual Gunakan -->
             <fieldset title="{{dt.destinations_vendor}}">
                 <legend class="hide">{{dt.point_tiga}}&hellip;</legend>
+                {% if dt.destinations_vendor.id == 12 %}
+                {% include 'report/parameter/vendor_show/wastila/wastila3.html' %}
+                {% endif %} 
                 {% if dt.destinations_vendor.id == 1 %}
                 {% include 'report/parameter/vendor_show/fs/fs3.html' %}
                 {% endif %}

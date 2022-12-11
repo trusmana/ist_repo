@@ -173,13 +173,31 @@ Buat report untuk data vendor khusus dhl
 Data Vendor 06/12/2022
 ---
 
-| Origin |	Transit	 | Destination | vendor                                              | 	
-|--------|-----------|-------------|-----------------------------------------------------|			
-| ID	   | DPS	     | DIL	       | Gastiasih caraka, solid logistics, dili             |
-| ID	   | ATB	     | DIL	       | Gastiasih caraka, lintas negara, dili               |
-| NL	   | SIN	     | DIL	       | Wartsila Global, Freight solutions, dili            |
-| SIN		 |           | DIL	       | DHL, dili                                           |
-| DIL		 |           | SIN	       | DHL, Freight solutions                              |
-| DIL		 |           | PH	         | DHL, Philipines                                     |
-| NL	   | SIN	     | SIN	       | Wartsila Global, Freight solutions. Singapore T.A.G |
+| Origin |	Transit	 | Destination | vendor                                              | Status                      | 	
+|--------|-----------|-------------|-----------------------------------------------------|---------------------------- |			
+| ID	   | DPS	     | DIL	       | Gastiasih caraka, solid logistics, dili             | Done kode (pr 107) 07122022 |  
+| ID	   | ATB	     | DIL	       | Gastiasih caraka, lintas negara, dili               | Done kode (pr 101) 07122022 |  
+| NL	   | SIN	     | DIL	       | Wartsila Global, Freight solutions, dili            | Done kode (pr 108) 08122022 |
+| NL	   | SIN	     | SIN	       | Wartsila Global, Freight solutions. Singapore T.A.G | Form SIng TAG belum Ada     | 
+| SIN		 |           | DIL	       | DHL, dili                                           | Done kode (pr 106) 09122022 |
+| DIL		 |           | SIN	       | DHL, Freight solutions                              | Done kode (pr 110) 09122022 |
+| DIL		 |           | PH	         | DHL, Philipines                                     | Form philipine blm ada      |
 
+- Silahkan Di coba , Nb : Untuk Data Inputan Vendor Philipines dan Singapur TAG  Kami Tunggu Terimaksih @tedi_black
+
+
+Request by User 06/12/2022
+---
+
+Permintaan Dari Pihak IST, Via Email
+
+1. Ada perbedaan iputan di vendor solid logistics, di dili, dan waktu pembuatan invoice IST saya lampirkan contoh nya mohon di perbaiki 
+
+2. Vendor Solid : - Total ada 8 inputan kalau bisa mengurut sesuai no invoice total ada 3 invoice untuk vendor solid.
+
+3. Inputan di Dili  : - Kurang lebih ada 6 Price ground handling, Inspeksi dan akses bandara, Forklift heavy cargo, Custom clearance, Handling fee, Invoicing fee.
+
+4. Pembuatan Invoice IST  : - Untuk tiap pengiriman sepertinya berbeda-beda inputannya mohon saran kang 
+                                     - Untuk Duty Invoice ada penambahan insuranse di bagian input jadi bisa ada dan tidak (enable dan disable).
+
+- Untuk Poin 1, 2,3 4 Kami Harus Memodifikasi ulang Menu Inputan, Untuk Itu kami Butuh Waktu, Estimasi Selesai tanggal 15/12/2022 Trim @tedi_black

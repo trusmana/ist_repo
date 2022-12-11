@@ -1,0 +1,63 @@
+{% extends "layouts/base.html" %}
+{% load static %}
+{% block title %} Param-2{% endblock %}
+{% block extrahead %}
+{% include "alat/job.html" %}
+{% endblock extrahead %}
+{% block content %}
+
+<div id="jCrumbs" class="breadCrumb module">
+    <ul>
+        <li>
+            <a href="/"><i class="icon-home"></i></a>
+        </li>
+        <li>
+            <a href="{% url 'd-param' %}"> Daftar Parameter</a>
+        </li>
+        <li>
+            <a href="."> Add Parameter Dua #{{dt.origin_vendor.id}} {{dt.destinations_vendor.id}}</a>
+        </li>
+
+    </ul>
+</div>
+<div class="row-fluid">
+    <div class="span12">
+        <form id="validate_wizard" class="stepy-wizzard form-horizontal tabular" method="POST" action="." enctype="multipart/form-data" >{% csrf_token %}
+            <fieldset title="{{dt.origin_vendor}}">
+                <legend class="hide">{{dt.point_satu}}&hellip;</legend>
+                {% if dt.origin_vendor.id == 1 %}
+                {% include 'report/parameter/vendor_show/fs/fs.html' %}
+                {% endif %}
+                {% if dt.origin_vendor.id == 5 %}
+                {% include 'report/parameter/vendor_show/dili/dili.html' %}
+                {% endif %}
+                {% if dt.origin_vendor.id == 8 %}
+                {% include 'report/parameter/vendor_show/dhl/dhl.html' %}
+                {% endif %}
+
+            </fieldset>
+            <fieldset title="{{dt.destinations_vendor}}">
+                <legend class="hide">{{dt.point_tiga}}&hellip;</legend>
+                {% if dt.destinations_vendor.id == 5 %}
+                {% include 'report/parameter/vendor_show/dili/dili3.html' %}
+                {% endif %}
+                {% if dt.destinations_vendor.id == 1 %}
+                {% include 'report/parameter/vendor_show/fs/fs3.html' %}
+                {% endif %}               
+                
+            </fieldset>
+            <!--
+            {{form.as_table}}
+            {{forms2.as_table}}
+            {{forms3.as_table}}
+            
+            -->
+            <button type="submit"  name ='submit' class="finish btn btn-primary"><i class="icon-ok icon-white"></i> Simpan</button>
+        </form>
+    </div>
+</div>
+
+{% endblock content %}
+
+<!-- Specific Page JS goes HERE  -->
+{% block javascripts %}{% endblock javascripts %}

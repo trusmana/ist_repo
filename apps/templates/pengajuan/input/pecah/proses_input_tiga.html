@@ -13,7 +13,7 @@
             <a href="{% url 'in-pengajuan' %}">Job</a>
         </li>
         <li>
-            Input Job #{{param.products.point_satu.id}} {{param.products.point_dua.id}} {{param.products.point_tiga.id}} 
+            Input Job #{{param.products.point_satu.id}} {{param.products.point_dua.id}} {{param.products.point_tiga.id}} #{{pse.vendor.id}} 
         </li>
     </ul>
 </div>
@@ -25,25 +25,42 @@
                     <fieldset title="{{param.products.origin_vendor}}">
                         <legend class="hide">{{param.products.point_satu}}&hellip;</legend>
                         {% if param.products.point_satu.id == 1 %}
-                        {% include "pengajuan/input/pecah/show/tampil_gastiasih.html" %}
+                        {% include "pengajuan/input/pecah/show/gastiasih/tampil_gastiasih.html" %}
+                        {% endif %}
+                        {% if param.products.point_satu.id == 4 %}
+                        {% include "pengajuan/input/pecah/show/freight/tampil_freight.html" %}
+                        {% endif %}
+                        {% if param.products.point_satu.id == 11 %}
+                        {% include "pengajuan/input/pecah/show/warsila/tampil_warsila.html" %}
                         {% endif %}
                     </fieldset>
                     <fieldset title="{{param.products.through_vendor}}">
                         <legend class="hide">{{param.products.point_dua}}&hellip;</legend>
-                        {% if param.products.point_satu.id == 3 %}
-                        {% include "pengajuan/input/pecah/show/tampil_antarlapan.html" %}
+                        {% if param.products.point_dua.id == 3 %}
+                        {% include "pengajuan/input/pecah/show/antarlapan/tampil_antarlapan.html" %}
+                        {% endif %}
+                        {% if param.products.point_dua.id == 2 %}
+                        {% include "pengajuan/input/pecah/show/solid/tampil_solid.html" %}
+                        {% endif %}
+                        {% if param.products.point_dua.id == 10 %}
+                        {% include "pengajuan/input/pecah/show/lintas/tampil_lintasnegara.html" %}
+                        {% endif %}
+                        {% if param.products.point_dua.id == 4 %}
+                        {% include "pengajuan/input/pecah/show/freight/tampil_freight2.html" %}
                         {% endif %}
                     </fieldset>
                     <fieldset title="{{param.products.destinations_vendor}}">
                         <legend class="hide">{{param.products.point_tiga}}&hellip;</legend>
-                        {% if param.products.point_satu.id == 5 %}
-                        {% include "pengajuan/input/pecah/show/tampil_dili.html" %}
+                        {% if param.products.point_tiga.id == 5 %}
+                        {% include "pengajuan/input/pecah/show/dili/tampil_dili.html" %}
                         {% endif %}
 					</fieldset>
                     <!---Jual Gunakan -->
                     <fieldset title="{{pse.vendor}}">
                         <legend class="hide">{{pse.vendor}}&hellip;</legend>
-                        {% include "pengajuan/input/pecah/show/tampil_indahsinergi.html" %}
+                        {% if pse.vendor.id == 2 %}
+                        {% include "pengajuan/input/pecah/show/indah/tampil_indahsinergi.html" %}
+                        {% endif %}
 					</fieldset>
                     <!--
                     {{form.as_table}}
@@ -59,6 +76,8 @@
 </div>
 
 {% block javascript %}
+{% include "pengajuan/input/pecah/ajax/ajax_vendor_fred.html" %}
+{% include "pengajuan/input/pecah/ajax/ajax_vendor_solid.html" %}
 {% include 'pengajuan/input/pecah/ajax/ajax_vendor_gasti.html' %}
 {% include 'pengajuan/input/pecah/ajax/ajax_vendor_dili.html' %}
 {% include 'pengajuan/input/pecah/ajax/ajax_vendor_indahsinergi.html' %}

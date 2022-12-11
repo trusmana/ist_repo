@@ -1,0 +1,19 @@
+<div class="formSep control-group">
+    <label class="control-label">{{ form.tgl_dhl.label }} </label>
+    <div class="controls">
+        {{ form.tgl_dhl }} {{ form.no_invoice_dhl }} 
+    </div>
+</div>
+
+<div class="formSep control-group input-prepend">
+    <label class="control-label">{{ form.express_wordwide_nondoc.label }}  </label>
+    <div class="controls"><span class="add-on">$</span>{{ form.express_wordwide_nondoc }}</div>
+</div>
+<div class="formSep control-group input-prepend">
+    <label class="control-label">{{ form.fuel_surcharge_dhl.label }}  </label>
+    <div class="controls"><span class="add-on">$</span>{{ form.fuel_surcharge_dhl }}</div>
+</div>
+<div class="formSep control-group input-prepend">
+    <label class="control-label">{{ form.emergency_situation.label }}  </label>
+    <div class="controls"><span class="add-on">$</span>{{ form.emergency_situation }}</div>
+</div>

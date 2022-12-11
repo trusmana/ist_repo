@@ -194,13 +194,13 @@ class list_param_dua(View):
 
         return self.context, 'report/parameter/data_parameter2.html'
 
-    def edit(self, request, pk):
-        param = self.get_object(pk)
+    #def edit(self, request, pk):
+        #param = self.get_object(pk)
 
-        self.context['param'] = param  # type: ignore
-        self.context['form'] = FSForm(instance=param)  # type: ignore  
+        #self.context['param'] = param  # type: ignore
+        #self.context['form'] = ParamForm(instance=param)  # type: ignore  
 
-        return self.context, 'report/parameter/edit_parameter.html'
+        #return self.context, 'report/parameter/edit_parameter.html'
 
     """ Get Ajax pages """
 

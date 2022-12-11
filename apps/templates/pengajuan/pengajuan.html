@@ -88,7 +88,6 @@ function cek_parameter()
             dataType: "JSON",
             error: function(data){
                 jAlert('Parameter Belum Tersedia!');
-                vendor_kosong();
             },
             success: function (data) {
                $("#mymodal .modal-content").html(data.django_form);
@@ -101,9 +100,10 @@ function vendor_kosong()
     {
         $('#id_products').val('');
         $('#id_poin_satu').val('');
+
         $('#id_poin_dua').val('');
         $('#id_poin_tiga').val('');
-        $('#id_origin_vendor').val('');
+        $('#id_destinations_vendor_chosen').val('');
     }
 </script>    
 {% endblock javascript %}

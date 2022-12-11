@@ -67,6 +67,7 @@ class Kurs(models.Model):
 
 class Negara(models.Model):
     nama_negara = models.CharField(max_length=100,null=True)
+    nama_kota = models.CharField(max_length=100,null=True)
     singkatan = models.CharField(max_length=100,null=True)
     status = models.CharField(max_length=20,choices=STATUS,null=True,blank=True,default=0)  # type: ignore
     cdate = models.DateTimeField(auto_now_add=True)
@@ -94,7 +95,7 @@ class JasaPengiriman(models.Model):
         verbose_name = 'JasaPengiriman'
 
     def __str__(self):
-        return '%s-%s' %(self.nama_jasa_pengiriman,self.singkatan)        
+        return '%s-%s' %(self.singkatan,self.nama_jasa_pengiriman)        
     
 
 class Produk(models.Model):
@@ -142,7 +143,7 @@ class Produk(models.Model):
         if self.jumlah_vendor == '1':  # type: ignore
             return '%s %s' %(self.nama_produk,self.point_tiga)# type: ignore
         elif self.jumlah_vendor == '2':# type: ignore
-            return '%s %s %s' %(self.nama_produk, self.point_satu,self.point_tiga)# type: ignore
+            return '%s %s %s | ( %s %s )' %(self.nama_produk, self.point_satu,self.point_tiga,self.origin_vendor.singkatan,self.destinations_vendor.singkatan)# type: ignore
         else:
             return '%s %s %s Via %s | ( %s %s %s )' %(self.nama_produk, self.point_satu,self.point_tiga,self.point_dua,self.origin_vendor.singkatan,self.through_vendor.singkatan,self.destinations_vendor.singkatan)# type: ignore
 
@@ -466,10 +467,10 @@ class Sale(models.Model):
             self.delivery + self.duty_tax + self.tax_handling_charge 
 
 class Job(models.Model):
-    tanggal_invoice = models.DateField()
-    no_invoice = models.CharField(null=True,blank=True,max_length=50)
-    no_invoice_sl_2 = models.CharField(null=True,blank=True,max_length=50)
-    no_invoice_sl_3 = models.CharField(null=True,blank=True,max_length=50)
+    tanggal_invoice = models.DateField()# Dipakai Semua vendor
+    no_invoice = models.CharField(null=True,blank=True,max_length=50)# Dipakai Semua vendor
+    no_invoice_sl_2 = models.CharField(null=True,blank=True,max_length=50)# Dipakai Semua vendor
+    no_invoice_sl_3 = models.CharField(null=True,blank=True,max_length=50)# Dipakai Semua vendor
     transaksi = models.ForeignKey(Transaksi,on_delete=models.CASCADE)
     status_job = models.CharField(choices=STATUS_UPDATE,null=True,blank=True,max_length=50)
     tanggal_status = models.DateField(null=True,blank=True) 
@@ -489,12 +490,8 @@ class Job(models.Model):
     ###Biaya Penanganan Impor
     import_handling_charges = models.DecimalField(max_digits=12, decimal_places=2,null=True,blank=True,default=0) # type: ignore
     gst_zero_rated = models.DecimalField(max_digits=12, decimal_places=2,null=True,blank=True,default=0) # type: ignore
-
-    
-
     ##########Akhir Khusus Untuk Freight Solutions
 
-   
     ##########Khusus Untuk Sholid Logistik
     ####### Biaya Storage
     storage_at_cost = models.DecimalField(max_digits=12, decimal_places=2,null=True,blank=True,default=0) # type: ignore

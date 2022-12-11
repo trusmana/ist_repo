@@ -17,10 +17,10 @@ def airfreight(request):
         id_param = request.GET.get('prm')
         airfreight = request.GET.get('airfreight')
         pa = ParameterData.objects.get(id= int(id_param))
-        if Decimal(airfreight)>Decimal(1) and Decimal(airfreight)<=Decimal(pa.min_airfreight) :
-            nilai = Decimal(airfreight) * Decimal(pa.price_min_airfreight)
+        if Decimal(airfreight)>Decimal(1) and Decimal(airfreight)<=Decimal(pa.min_airfreight) :  # type: ignore
+            nilai = Decimal(airfreight) * Decimal(pa.price_min_airfreight)  # type: ignore
         else:
-            nilai = Decimal(airfreight) * Decimal(pa.price_max_airfreight)
+            nilai = Decimal(airfreight) * Decimal(pa.price_max_airfreight)  # type: ignore
         data = {'result':'1','param':id_param,'price':nilai}            
         return HttpResponse(JsonResponse(data))
     else:
@@ -32,10 +32,10 @@ def handling_charges(request):
         id_param = request.GET.get('prm')
         handling = request.GET.get('handling')
         pa = ParameterData.objects.get(id= int(id_param))
-        if Decimal(handling) > Decimal(1) and Decimal(handling) <= Decimal(pa.min_handling_charges) :
-            nilai = Decimal(pa.price_min_handling_charges) * Decimal(handling)         
+        if Decimal(handling) > Decimal(1) and Decimal(handling) <= Decimal(pa.min_handling_charges) :  # type: ignore
+            nilai = Decimal(pa.price_min_handling_charges) * Decimal(handling)           # type: ignore
         else:
-            nilai = Decimal(pa.price_max_handling_charges) * Decimal(handling) 
+            nilai = Decimal(pa.price_max_handling_charges) * Decimal(handling)   # type: ignore
         data = {'result':'1','param':id_param,'price':nilai}            
         return HttpResponse(JsonResponse(data))
     else:
@@ -47,10 +47,10 @@ def insurance_security(request):
         id_param = request.GET.get('prm')
         asuransi = request.GET.get('asuransi')
         pa = ParameterData.objects.get(id= int(id_param))
-        if Decimal(asuransi) > Decimal(1) and Decimal(asuransi) <= Decimal(pa.min_insurance_security_surcharge) :
-            nilai = Decimal(asuransi) * Decimal(pa.price_insurance_security_surcharge)        
+        if Decimal(asuransi) > Decimal(1) and Decimal(asuransi) <= Decimal(pa.min_insurance_security_surcharge) :  # type: ignore
+            nilai = Decimal(asuransi) * Decimal(pa.price_insurance_security_surcharge)          # type: ignore
         else:
-            nilai = Decimal(asuransi) * Decimal(pa.price_high_insurance_security_surcharge)
+            nilai = Decimal(asuransi) * Decimal(pa.price_high_insurance_security_surcharge)  # type: ignore
         data = {'result':'1','param':id_param,'price':nilai}            
         return HttpResponse(JsonResponse(data))
     else:
@@ -62,10 +62,10 @@ def fuel_surcharge(request):
         id_param = request.GET.get('prm')
         bahanbakar = request.GET.get('bahanbakar')
         pa = ParameterData.objects.get(id= int(id_param))
-        if Decimal(bahanbakar) > Decimal(1) and Decimal(bahanbakar) <= Decimal(pa.min_fuel_surcharge) :
-            nilai = Decimal(bahanbakar) * Decimal(pa.price_fuel_surcharge)        
+        if Decimal(bahanbakar) > Decimal(1) and Decimal(bahanbakar) <= Decimal(pa.min_fuel_surcharge) :  # type: ignore
+            nilai = Decimal(bahanbakar) * Decimal(pa.price_fuel_surcharge)          # type: ignore
         else:
-            nilai = Decimal(bahanbakar) * Decimal(pa.price_high_fuel_surcharge)
+            nilai = Decimal(bahanbakar) * Decimal(pa.price_high_fuel_surcharge)  # type: ignore
         data = {'result':'1','param':id_param,'price':nilai}            
         return HttpResponse(JsonResponse(data))
     else:
@@ -77,10 +77,10 @@ def import_handling_charges(request):
         id_param = request.GET.get('prm')
         penanganan = request.GET.get('penanganan')
         pa = ParameterData.objects.get(id= int(id_param))
-        if Decimal(penanganan) > Decimal(1) and Decimal(penanganan) <= Decimal(pa.min_import_handling_charges) :
-            nilai = Decimal(penanganan) * int(pa.price_import_handling_charges)        
+        if Decimal(penanganan) > Decimal(1) and Decimal(penanganan) <= Decimal(pa.min_import_handling_charges) :  # type: ignore
+            nilai = Decimal(penanganan) * int(pa.price_import_handling_charges)          # type: ignore
         else:
-            nilai = Decimal(penanganan) * Decimal(pa.price_high_import_handling_charges)
+            nilai = Decimal(penanganan) * Decimal(pa.price_high_import_handling_charges)  # type: ignore
         data = {'result':'1','param':id_param,'price':nilai}            
         return HttpResponse(JsonResponse(data))
     else:
@@ -92,10 +92,10 @@ def gst_zero_rated(request):
         id_param = request.GET.get('prm')
         zero = request.GET.get('zero')
         pa = ParameterData.objects.get(id= Decimal(id_param))
-        if Decimal(zero) > Decimal(1) and Decimal(zero) <= Decimal(pa.min_gst_zero_rated) :
-            nilai = Decimal(zero) * Decimal(pa.price_gst_zero_rated)        
+        if Decimal(zero) > Decimal(1) and Decimal(zero) <= Decimal(pa.min_gst_zero_rated) :  # type: ignore
+            nilai = Decimal(zero) * Decimal(pa.price_gst_zero_rated)        # type: ignore
         else:
-            nilai = Decimal(zero) * Decimal(pa.price_high_gst_zero_rated)
+            nilai = Decimal(zero) * Decimal(pa.price_high_gst_zero_rated) # type: ignore
         data = {'result':'1','param':id_param,'price':nilai}            
         return HttpResponse(JsonResponse(data))
     else:
@@ -109,10 +109,10 @@ def currency_storage_at_cost(request):
         id_param = request.GET.get('prm')
         tmp = request.GET.get('tmp')
         pa = ParameterData.objects.get(id= int(id_param))
-        if Decimal(tmp) > Decimal(1) and Decimal(tmp) <= Decimal(pa.min_storage_at_cost) :
-            nilai = Decimal(tmp) * Decimal(pa.price_storage_at_cost)        
+        if Decimal(tmp) > Decimal(1) and Decimal(tmp) <= Decimal(pa.min_storage_at_cost) :  # type: ignore
+            nilai = Decimal(tmp) * Decimal(pa.price_storage_at_cost)   # type: ignore     
         else:
-            nilai = Decimal(tmp) * Decimal(pa.price_high_storage_at_cost)
+            nilai = Decimal(tmp) * Decimal(pa.price_high_storage_at_cost)# type: ignore
         data = {'result':'1','param':id_param,'price':nilai}            
         return HttpResponse(JsonResponse(data))
     else:
@@ -124,10 +124,10 @@ def pjkp2u_sin_dps_at_cost(request):
         id_param = request.GET.get('prm')
         tmp = request.GET.get('tmp')
         pa = ParameterData.objects.get(id= int(id_param))
-        if Decimal(tmp) > Decimal(1) and Decimal(tmp) <= Decimal(pa.min_pjkp2u_sin_dps_at_cost) :
-            nilai = int(tmp) * int(pa.price_pjkp2u_sin_dps_at_cost )        
+        if Decimal(tmp) > Decimal(1) and Decimal(tmp) <= Decimal(pa.min_pjkp2u_sin_dps_at_cost) :# type: ignore
+            nilai = int(tmp) * int(pa.price_pjkp2u_sin_dps_at_cost ) # type: ignore       
         else:
-            nilai = int(tmp) * int(pa.price_high_pjkp2u_sin_dps_at_cost)
+            nilai = int(tmp) * int(pa.price_high_pjkp2u_sin_dps_at_cost) # type: ignore
         data = {'result':'1','param':id_param,'price':nilai}            
         return HttpResponse(JsonResponse(data))
     else:
@@ -139,10 +139,10 @@ def storage_mcl_e_0389249_at_cost(request):
         id_param = request.GET.get('prm')
         tmp = request.GET.get('tmp')
         pa = ParameterData.objects.get(id= int(id_param))
-        if Decimal(tmp) > Decimal(1) and Decimal(tmp) <= Decimal(pa.min_storage_at_cost) :
-            nilai = Decimal(tmp) * Decimal(pa.price_storage_at_cost )            
+        if Decimal(tmp) > Decimal(1) and Decimal(tmp) <= Decimal(pa.min_storage_at_cost) :# type: ignore
+            nilai = Decimal(tmp) * Decimal(pa.price_storage_at_cost )           # type: ignore 
         else:
-            nilai = Decimal(tmp) * Decimal(pa.price_high_storage_at_cost)
+            nilai = Decimal(tmp) * Decimal(pa.price_high_storage_at_cost)# type: ignore
         data = {'result':'1','param':id_param,'price':nilai}            
         return HttpResponse(JsonResponse(data))
     else:
@@ -154,10 +154,10 @@ def pjkp2u_dps_dil_at_cost(request):
         id_param = request.GET.get('prm')
         tmp = request.GET.get('tmp')
         pa = ParameterData.objects.get(id= int(id_param))
-        if Decimal(tmp) > Decimal(1) and Decimal(tmp) <= Decimal(pa.min_pjkp2u_dps_dil_at_cost) :
-            nilai = Decimal(tmp) * Decimal(pa.price_pjkp2u_dps_dil_at_cost)            
+        if Decimal(tmp) > Decimal(1) and Decimal(tmp) <= Decimal(pa.min_pjkp2u_dps_dil_at_cost) : # type: ignore
+            nilai = Decimal(tmp) * Decimal(pa.price_pjkp2u_dps_dil_at_cost) # type: ignore           
         else:
-            nilai = Decimal(tmp) * Decimal(pa.price_high_pjkp2u_dps_dil_at_cost)
+            nilai = Decimal(tmp) * Decimal(pa.price_high_pjkp2u_dps_dil_at_cost)# type: ignore
         data = {'result':'1','param':id_param,'price':nilai}            
         return HttpResponse(JsonResponse(data))
     else:
@@ -169,10 +169,10 @@ def airfreight_charges(request):
         id_param = request.GET.get('prm')
         tmp = request.GET.get('tmp')
         pa = ParameterData.objects.get(id= int(id_param))
-        if Decimal(tmp) > Decimal(1) and Decimal(tmp) <= Decimal(pa.min_airfreight_charges) :
-            nilai = Decimal(tmp) * Decimal(pa.price_airfreight_charges)            
+        if Decimal(tmp) > Decimal(1) and Decimal(tmp) <= Decimal(pa.min_airfreight_charges) :# type: ignore
+            nilai = Decimal(tmp) * Decimal(pa.price_airfreight_charges)            # type: ignore
         else:
-            nilai = Decimal(tmp) * Decimal(pa.price_high_airfreight_charges)
+            nilai = Decimal(tmp) * Decimal(pa.price_high_airfreight_charges)# type: ignore
         data = {'result':'1','param':id_param,'price':nilai}            
         return HttpResponse(JsonResponse(data))
     else:
@@ -184,10 +184,10 @@ def currency_overweight_charges_surcharge(request):
         id_param = request.GET.get('prm')
         tmp = request.GET.get('tmp')
         pa = ParameterData.objects.get(id= int(id_param))        
-        if Decimal(tmp) > Decimal(1) and Decimal(tmp) <= Decimal(pa.min_overweight_charges_surcharge) :
-            nilai = Decimal(tmp) * Decimal(pa.price_overweight_charges_surcharge)            
+        if Decimal(tmp) > Decimal(1) and Decimal(tmp) <= Decimal(pa.min_overweight_charges_surcharge) :# type: ignore
+            nilai = Decimal(tmp) * Decimal(pa.price_overweight_charges_surcharge)            # type: ignore
         else:
-            nilai = Decimal(tmp) * Decimal(pa.price_high_overweight_charges_surcharge)
+            nilai = Decimal(tmp) * Decimal(pa.price_high_overweight_charges_surcharge)# type: ignore
         data = {'result':'1','param':id_param,'price':nilai}            
         return HttpResponse(JsonResponse(data))
     else:
@@ -199,10 +199,10 @@ def cek_currency_awb_fee(request):
         id_param = request.GET.get('prm')
         tmp = request.GET.get('tmp')
         pa = ParameterData.objects.get(id= int(id_param))        
-        if Decimal(tmp) > Decimal(1) and Decimal(tmp) <= Decimal(pa.min_awb_fee) :
-            nilai = Decimal(tmp) * Decimal(pa.price_awb_fee)            
+        if Decimal(tmp) > Decimal(1) and Decimal(tmp) <= Decimal(pa.min_awb_fee) :# type: ignore
+            nilai = Decimal(tmp) * Decimal(pa.price_awb_fee)            # type: ignore
         else:
-            nilai = Decimal(tmp) * Decimal(pa.price_high_awb_fee)
+            nilai = Decimal(tmp) * Decimal(pa.price_high_awb_fee)# type: ignore
         data = {'result':'1','param':id_param,'price':nilai}            
         return HttpResponse(JsonResponse(data))
     else:
@@ -214,11 +214,11 @@ def currency_handling_charges(request):
         id_param = request.GET.get('prm')
         tmp = request.GET.get('tmp')
         pa = ParameterData.objects.get(id= int(id_param))        
-        if Decimal(tmp) > Decimal(1) and Decimal(tmp) <= Decimal(pa.min_handling_charges_sl) :
-            nilai = Decimal(tmp) * Decimal(pa.price_handling_charges_sl)            
+        if Decimal(tmp) > Decimal(1) and Decimal(tmp) <= Decimal(pa.min_handling_charges_sl) :# type: ignore
+            nilai = Decimal(tmp) * Decimal(pa.price_handling_charges_sl)            # type: ignore
         else:
-            nilai = Decimal(tmp) * Decimal(pa.price_high_handling_charges_sl)
-        data = {'result':'1','param':id_param,'price':nilai}            
+            nilai = Decimal(tmp) * Decimal(pa.price_high_handling_charges_sl)# type: ignore
+        data = {'result':'1','param':id_param,'price':nilai}            # type: ignore
         return HttpResponse(JsonResponse(data))
     else:
         return HttpResponse(JsonResponse(data))

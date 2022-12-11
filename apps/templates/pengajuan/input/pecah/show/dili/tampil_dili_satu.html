@@ -1,0 +1,86 @@
+<!--Data Yang Form awal-->
+<div class="formSep control-group">
+    <label class="control-label">{{ form.tgl_dl.label }} </label>
+    <div class="controls">
+        {{ form.tgl_dl }} 
+    </div>
+</div>
+<div class="formSep control-group">
+    <label class="control-label">{{ form.no_invoice_dl.label }}  </label>
+    <div class="controls">
+        {{ form.no_invoice_dl }}
+    </div>
+</div>
+<div class="formSep control-group input-prepend input-append">
+    <label class="control-label">{{form.weight_dl.label}}</label>
+    <div class="controls"><span class="add-on">Kg</span>{{form.weight_dl}}
+    </div>
+</div>                        
+<div class="formSep control-group input-prepend input-append">
+    <label class="control-label"> {{form.price_ground_handling_dl.label }}</label>
+    <div class="controls">
+        <span class="add-on">$</span> {{ form.price_ground_handling_dl}}                                 
+    </div>
+</div>
+<div class="formSep control-group input-prepend input-append">
+    <label class="control-label"> {{form.price_forklift_for_heavy_cargo.label }}</label>
+    <div class="controls">
+        <span class="add-on">$</span> {{ form.price_forklift_for_heavy_cargo}}                                 
+    </div>
+</div>
+<div class="formSep control-group input-prepend input-append">
+    <label class="control-label"> {{form.price_custom_clearance.label }}</label>
+    <div class="controls">
+        <span class="add-on">$</span> {{ form.price_custom_clearance}}                                 
+    </div>
+</div>
+
+<div class="formSep control-group input-prepend input-append">
+    <label class="control-label"> {{form.price_akses_bandara_inspeksi.label }}</label>
+    <div class="controls">
+        <span class="add-on">$</span> {{ form.price_akses_bandara_inspeksi}}                                 
+    </div>
+</div>
+<div class="formSep control-group input-prepend input-append">
+    <label class="control-label"> {{form.price_handling_fee.label }}</label>
+    <div class="controls">
+        <span class="add-on">$</span> {{ form.price_handling_fee}}                                 
+    </div>
+</div>
+<div class="formSep control-group input-prepend input-append">
+    <label class="control-label"> {{form.admin_fee.label }}</label>
+    <div class="controls">
+        <span class="add-on">$</span> {{ form.admin_fee}}                                 
+    </div>
+</div>
+<div class="formSep control-group input-prepend input-append">
+    <label class="control-label"> {{form.fee_collection.label }}</label>
+    <div class="controls">
+        <span class="add-on">$</span> {{ form.fee_collection }}                                 
+    </div>
+</div>
+<div class="formSep control-group input-prepend input-append">
+    <label class="control-label"> {{form.delivey_to.label }}</label>
+    <div class="controls">
+        {{ form.delivey_to}}                                 
+    </div>
+</div>
+<div class="formSep control-group input-prepend input-append 4 box" style="display:none">
+    <label class="control-label"> {{form.price_delivey_to_okusi.label }}</label>
+    <div class="controls">
+        <span class="add-on">$</span> {{ form.price_delivey_to_okusi}}                                 
+    </div>
+</div>
+<!--5 box tanda dari javascript-->
+<div class="formSep control-group input-prepend input-append 5 box" style="display:none" >
+    <label class="control-label"> {{form.price_delivey_to_betano.label }}</label>
+    <div class="controls">
+        <span class="add-on">$</span> {{ form.price_delivey_to_betano}}                                 
+    </div>
+</div>
+<div class="formSep control-group input-prepend input-append 3 box" style="display:none">
+    <label class="control-label"> {{form.price_delivey_to_hera.label }}</label>
+    <div class="controls">
+        <span class="add-on">$</span> {{ form.price_delivey_to_hera}}                                 
+    </div>
+</div>
