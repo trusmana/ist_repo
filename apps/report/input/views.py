@@ -9,7 +9,7 @@ from django.conf import settings
 from apps.products.models import ParameterData, ParameterDataBl
 from .forms import PengajuanForm
 
-##### GAsti Asih = 10 ,LintasNegara = 18, dili= 5 ,antarlapan =19
+##### GAsti Asih = 10 ,LintasNegara = 18, dili= 5 ,antarlapan =19 DHL = 8
 @login_required(login_url=settings.LOGIN_URL)
 def proses_input(request,param):
     param = ParameterData.objects.get(id = param)
@@ -23,7 +23,9 @@ def proses_input(request,param):
     elif param.products.origin_vendor.id == 10 and param.products.through_vendor.id == 3 and param.products.destinations_vendor.id ==5:  # type: ignore
         return redirect('/report/save_input_empat/%s/'%(param)) ###ada Di direktori pecah View_satu.py
     elif param.products.origin_vendor.id == 12 and param.products.through_vendor.id == 1 and param.products.destinations_vendor.id ==5:  # type: ignore
-        return redirect('/report/save_input_lima/%s/'%(param)) ###ada Di direktori pecah View_satu.py       
+        return redirect('/report/save_input_lima/%s/'%(param)) ###ada Di direktori pecah View_satu.py
+    elif param.products.origin_vendor.id == 1 and param.products.through_vendor.id == 8 and param.products.destinations_vendor.id ==5:  # type: ignore
+        return redirect('/report/save_input_enam/%s/'%(param)) ###ada Di direktori pecah View_satu.py       
     else:
         messages.success(request, 'Data Parameter Inputan Belum Ada, Hubungi IT ') 
         redirect('in-pengajuan')

@@ -2,7 +2,7 @@ from django import forms
 
 from apps.products.models import JENISPRODUK, STATUS, STATUS_UPDATE, Commodity, \
     JasaPengiriman, Negara, ParameterData, ParameterDataBl, Produk,JUMLAH_VENDOR,STATUS_DUTY,\
-    DELIVERY_TIMOR_LESTE
+    DELIVERY_TIMOR_LESTE,STATUS_SHIPMENT
 
 class JvendorForm(forms.Form):
     jvendor = forms.ChoiceField(choices=JUMLAH_VENDOR)
@@ -121,7 +121,7 @@ class SLForm(forms.Form):
         'alt':'integer'}))
     price_pjkp2u_sin_dps_at_cost = forms.IntegerField(label= 'Handling IN',widget=forms.TextInput(attrs={'class':'input-small uang ttip_t',
         'alt':'integer'}))
-    price_storage_mcl_e_0389249_at_cost = forms.IntegerField(widget=forms.TextInput(attrs={'class':'input-small uang ttip_t',
+    price_storage_mcl_e_0389249_at_cost = forms.IntegerField(label= 'PJKP2U',widget=forms.TextInput(attrs={'class':'input-small uang ttip_t',
         'alt':'integer'}))
     price_pjkp2u_dps_dil_at_cost = forms.IntegerField(label='Handling Out',widget=forms.TextInput(attrs={'class':'input-small uang ttip_t',
         'alt':'integer'}))
@@ -133,7 +133,7 @@ class SLForm(forms.Form):
         'alt':'integer'}))
     price_awb_fee = forms.IntegerField(widget=forms.TextInput(attrs={'class':'input-small uang ttip_t',
         'alt':'integer'}))
-    price_handling_charges_sl = forms.IntegerField(widget=forms.TextInput(attrs={'class':'input-small uang ttip_t',
+    price_handling_charges_sl = forms.IntegerField(label= 'Transhipment Handling',widget=forms.TextInput(attrs={'class':'input-small uang ttip_t',
         'alt':'integer'}))
 
 class DLForm(forms.Form):
@@ -168,50 +168,82 @@ class DLForm(forms.Form):
 
 class SALEForm(forms.Form):
     tanggal = forms.DateField(label="Tanggal Invoice", widget=forms.DateInput(
-        attrs={'class': 'form-control '}))
-
+        attrs={'class': 'form-control input-small '}))
+    etd = forms.DateField(label="Estimasi Departur", widget=forms.DateInput(
+        attrs={'class': 'form-control input-small','placeholder':'DD-MM-YYYY'}))
+    eta = forms.DateField(label="Estimasi Arrival", widget=forms.DateInput(
+        attrs={'class': 'form-control input-small','placeholder':'DD-MM-YYYY'}))
     paramsale = forms.ModelChoiceField(queryset=ParameterDataBl.objects.filter(status_param='1'),
         widget=forms.Select(attrs={'class':'form-control ','readonly':True}))
+    
+    total_shipment = forms.ChoiceField(label='Total Shipment',widget = forms.Select(attrs={'class':'form-control input-small'}),
+        choices = STATUS_SHIPMENT)
 
-    re_export_shipment_one = forms.CharField(widget=forms.TextInput(attrs={'class':'input-small'}))
+    re_export_shipment_one = forms.CharField(widget=forms.TextInput(attrs={'class':'input-small'}),required=False)
     re_export_shipment_one_pcs = forms.DecimalField(widget=forms.TextInput(attrs={'class':'input-small ttip_t',
-        'placeholder':'PCS'}))
+        'placeholder':'PCS'}),required=False)
     re_export_shipment_one_qty = forms.DecimalField(widget=forms.TextInput(attrs={'class':'input-small ttip_t',
-        'placeholder':'QTY','onkeyup':'sale_cartege();'}))
+        'placeholder':'QTY','onkeyup':'sale_cartege();'}),required=False)
 
-    cartage_warehouse_charge_one = forms.DecimalField(label='Cartage and Warehouse Charge',
-        widget=forms.NumberInput(attrs={'class':'input-small ttip_t'}))
+    cartage_warehouse_charge_one = forms.DecimalField(label='1.Cartage and Warehouse Charge',
+        widget=forms.NumberInput(attrs={'class':'input-small ttip_t'}),required=False)
     
-    airfreight_one = forms.DecimalField(label='Airfreight Import Handling bda',
-        widget=forms.NumberInput(attrs={'class':'input-small  ttip_t'}))
+    airfreight_one = forms.DecimalField(label='1.Airfreight Import Handling ',
+        widget=forms.NumberInput(attrs={'class':'input-small  ttip_t'}),required=False)
     
-
-    re_export_shipment_two = forms.CharField(widget=forms.TextInput(attrs={'class':'input-small'}))
+    re_export_shipment_two = forms.CharField(widget=forms.TextInput(attrs={'class':'input-small'}),required=False)
     re_export_shipment_two_pcs = forms.DecimalField(widget=forms.TextInput(attrs={'class':'input-small ttip_t',
-        'placeholder':'PCS'}))
+        'placeholder':'PCS'}),required=False)
     re_export_shipment_two_qty = forms.DecimalField(widget=forms.TextInput(attrs={'class':'input-small ttip_t',
-        'placeholder':'QTY','onkeyup':'sale_cartege_two();'}))    
-    cartage_warehouse_charge_two = forms.DecimalField(label='Cartage And Warehouse Charge',
-        widget=forms.NumberInput(attrs={'class':'input-small ttip_t'}))
+        'placeholder':'QTY','onkeyup':'sale_cartege_two();'}),required=False)    
+    cartage_warehouse_charge_two = forms.DecimalField(label='2.Cartage And Warehouse Charge',
+        widget=forms.NumberInput(attrs={'class':'input-small ttip_t'}),required=False)
     
-    airfreight_two = forms.DecimalField(label='Airfreight Import Handling ',
+    airfreight_two = forms.DecimalField(label='2.Airfreight Import Handling ',
         widget=forms.NumberInput(attrs={'class':'input-small','onkeyup':'h_ground_handling_sale();\
         h_warehouse_charge_sale();h_handling_charge_sale();h_delivery_sale();h_freight_sale()'}))
+    ####3
+    re_export_shipment_tree = forms.CharField(widget=forms.TextInput(attrs={'class':'input-small'}),required=False)
+    re_export_shipment_tree_pcs = forms.DecimalField(widget=forms.TextInput(attrs={'class':'input-small ttip_t',
+        'placeholder':'PCS'}),required=False)
+    re_export_shipment_tree_qty = forms.DecimalField(widget=forms.TextInput(attrs={'class':'input-small ttip_t',
+        'placeholder':'QTY','onkeyup':'sale_cartege();'}),required=False)
 
-    export_handling_sale = forms.DecimalField(widget=forms.NumberInput(attrs={'class':'input-small ttip_t'}))
-    freight_sale = forms.DecimalField(widget=forms.NumberInput(attrs={'class':'input-small ttip_t'}))
+    cartage_warehouse_charge_tree = forms.DecimalField(label='3.Cartage and Warehouse Charge',
+        widget=forms.NumberInput(attrs={'class':'input-small ttip_t'}),required=False)
+    
+    airfreight_tree = forms.DecimalField(label='3.Airfreight Import Handling ',
+        widget=forms.NumberInput(attrs={'class':'input-small  ttip_t'}),required=False)
+    ####4
+    re_export_shipment_four = forms.CharField(widget=forms.TextInput(attrs={'class':'input-small'}),required=False)
+    re_export_shipment_four_pcs = forms.DecimalField(widget=forms.TextInput(attrs={'class':'input-small ttip_t',
+        'placeholder':'PCS'}),required=False)
+    re_export_shipment_four_qty = forms.DecimalField(widget=forms.TextInput(attrs={'class':'input-small ttip_t',
+        'placeholder':'QTY','onkeyup':'sale_cartege();'}),required=False)
 
-    doc_clearance_sale = forms.DecimalField(label='Doc Clearance',
+    cartage_warehouse_charge_four = forms.DecimalField(label='4.Cartage and Warehouse Charge',
+        widget=forms.NumberInput(attrs={'class':'input-small ttip_t'}),required=False)
+    
+    airfreight_four = forms.DecimalField(label='4.Airfreight Import Handling ',
+        widget=forms.NumberInput(attrs={'class':'input-small  ttip_t'}),required=False)
+    ####4
+    export_handling_sale = forms.DecimalField(label="Export Handling",widget=forms.NumberInput(attrs={'class':'input-small ttip_t'}))
+    freight_sale = forms.DecimalField(label='Airfreight Charge',widget=forms.NumberInput(attrs={'class':'input-small ttip_t'}))
+
+    doc_clearance_sale = forms.DecimalField(label='Doc Clearance Charge',
         widget=forms.NumberInput(attrs={'class':'input-small ttip_t'}))
-    ground_handling_sale = forms.DecimalField(label='Ground Handling',
+    ground_handling_sale = forms.DecimalField(label='Ground Handling Charge',
         widget=forms.NumberInput(attrs={'class':'input-small ttip_t'}))
-    warehouse_charge_sale = forms.DecimalField(widget=forms.NumberInput(attrs={'class':'input-small ttip_t'}))
-    handling_charge_sale = forms.DecimalField(widget=forms.NumberInput(attrs={'class':'input-small ttip_t'}))
+    warehouse_charge_sale = forms.DecimalField(label='Warehouse Charge',widget=forms.NumberInput(attrs={'class':'input-small ttip_t'}))
+    handling_charge_sale = forms.DecimalField(label='Handling Charge',widget=forms.NumberInput(attrs={'class':'input-small ttip_t'}))
     status_duty = forms.ChoiceField(label='Status Duty',widget = forms.Select(attrs={'class':'form-control'}),
         choices = STATUS_DUTY)
     delivery_sale = forms.DecimalField(widget=forms.NumberInput(attrs={'class':'input-small ttip_t'}),required=False)
-    duty_tax_sale = forms.DecimalField(widget=forms.NumberInput(attrs={'class':'input-small ttip_t'}),required=False) 
+    duty_tax_sale = forms.DecimalField(widget=forms.NumberInput(attrs={'class':'input-small ttip_t',
+        'onkeyup':'duty_persen()'}),required=False) 
     tax_handling_charge_sale = forms.DecimalField(widget=forms.NumberInput(attrs={'class':'input-small ttip_t'}),required=False)
+    shipment_value = forms.DecimalField(widget=forms.NumberInput(attrs={'class':'input-small ttip_t'}),required=False)
+    insurance = forms.DecimalField(widget=forms.NumberInput(attrs={'class':'input-small ttip_t'}),required=False)
 
 class TransaksiForm(forms.Form):
     products = forms.ModelChoiceField(queryset=Produk.objects.filter(status='1'),

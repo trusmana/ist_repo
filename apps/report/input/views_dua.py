@@ -233,8 +233,7 @@ def save_dhl_dili_indah(dt,form,formss,trsform,sl,user):
         vendor = tran.products.origin_vendor,# type: ignore
         express_wordwide_nondoc = express_wordwide_nondoc,fuel_surcharge_dhl = fuel_surcharge_dhl,emergency_situation = emergency_situation,
         )
-    job.save()
-    
+    job.save()    
     job2 = Job(transaksi =tran,tanggal_invoice = tgl_dl,no_invoice = no_invoice_dl,nilai_kurs = tran.products.kurs_destinations,# type: ignore
         vendor = tran.products.destinations_vendor,delivey_to_okusi = price_delivey_to_okusi,delivey_to_betano = price_delivey_to_betano,# type: ignore
         ground_handling = price_ground_handling_dl,forklift_for_heavy_cargo = price_forklift_for_heavy_cargo,

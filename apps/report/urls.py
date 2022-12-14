@@ -126,6 +126,7 @@ urlpatterns = [
     path('save_input_tiga/<int:param>/',fviews_satu.proses_input_tiga,name='save-tiga'),###ID ABU DILI ID GA/AL/DILI
     path('save_input_empat/<int:param>/',fviews_satu.proses_input_empat,name='save-empat'),###ID DPS DILI ID GA/SL/DILI    
     path('save_input_lima/<int:param>/',fviews_satu.proses_input_lima,name='save-lima'),###ND DPS DILI ID WA/SL/DILI
+    path('save_input_enam/<int:param>/',fviews_satu.proses_input_enam,name='save-lima'),###ND SING DPS DL FS/DHL/DILI
     ###################Akhir Input Pengajuan
 
     ######Fungsi Ajax Hitungan Pembelian

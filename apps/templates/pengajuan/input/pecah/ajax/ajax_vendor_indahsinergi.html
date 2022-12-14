@@ -1,4 +1,10 @@
 <script>
+    function duty_persen()
+    {
+        var duty_tax_sale = parseFloat(to_number($('#id_duty_tax_sale').val()));
+        hitung = (duty_tax_sale * 10)/100
+        $('#id_tax_handling_charge_sale').val(parseFloat(hitung).toFixed(2));
+    }
     function sale_cartege()
     {        
         var prm = $('#id_paramsale').val();

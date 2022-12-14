@@ -4,6 +4,8 @@ from django.core.exceptions import ObjectDoesNotExist
 import datetime
 from apps.core.models import AccountsUser as user
 
+STATUS_SHIPMENT =[('','--SELECT--'),('6','1'),('7','2'),('8','3'),('9','4') ]
+
 DELIVERY_TIMOR_LESTE =[('','--SELECT--'),('3','Hera'),('4','Okusi'),('5','Betano')]
 
 REPORT_DATA =[('','-- Select --'),("1",'View'),("2",'Xls')]
@@ -401,6 +403,14 @@ class Transaksi(models.Model):
     re_export_shipment_two = models.CharField(max_length=30,null=True,blank=True)
     re_export_shipment_two_pcs = models.DecimalField(max_digits=12, decimal_places=2,null=True,blank=True,default=0) # type: ignore
     re_export_shipment_two_qty = models.DecimalField(max_digits=12, decimal_places=2,null=True,blank=True,default=0) # type: ignore
+
+    re_export_shipment_tree = models.CharField(max_length=30,null=True,blank=True)
+    re_export_shipment_tree_pcs = models.DecimalField(max_digits=12, decimal_places=2,null=True,blank=True,default=0) # type: ignore
+    re_export_shipment_tree_qty = models.DecimalField(max_digits=12, decimal_places=2,null=True,blank=True,default=0) # type: ignore
+
+    re_export_shipment_four = models.CharField(max_length=30,null=True,blank=True)
+    re_export_shipment_four_pcs = models.DecimalField(max_digits=12, decimal_places=2,null=True,blank=True,default=0) # type: ignore
+    re_export_shipment_four_qty = models.DecimalField(max_digits=12, decimal_places=2,null=True,blank=True,default=0) # type: ignore
     cu = models.ForeignKey(user, related_name='cu_transaksi', editable=False, null=True, blank=True,on_delete=models.CASCADE)
     cdate = models.DateTimeField(auto_now_add=True)
 
@@ -433,6 +443,7 @@ class Transaksi(models.Model):
 
 class Sale(models.Model):
     trans = models.ForeignKey(Transaksi,on_delete=models.CASCADE,null=True)
+    total_shipment = models.CharField(choices=STATUS_SHIPMENT,null=True,blank=True,max_length=50)
     status_sale = models.CharField(choices=STATUS_UPDATE,null=True,blank=True,max_length=50)
     tgl_done = models.DateField(null=True,blank=True)
     prod = models.ForeignKey(ParameterDataBl,on_delete=models.CASCADE,null=True,blank=True)
@@ -440,6 +451,10 @@ class Sale(models.Model):
     cartage_warehouse_charge_two =models.DecimalField(max_digits=12, decimal_places=2,null=True,blank=True,default=0) # type: ignore
     airfreight_one = models.DecimalField(max_digits=12, decimal_places=2,null=True,blank=True,default=0) # type: ignore
     airfreight_two = models.DecimalField(max_digits=12, decimal_places=2,null=True,blank=True,default=0) # type: ignore
+    cartage_warehouse_charge_tree =models.DecimalField(max_digits=12, decimal_places=2,null=True,blank=True,default=0) # type: ignore
+    cartage_warehouse_charge_four =models.DecimalField(max_digits=12, decimal_places=2,null=True,blank=True,default=0) # type: ignore
+    airfreight_tree = models.DecimalField(max_digits=12, decimal_places=2,null=True,blank=True,default=0) # type: ignore
+    airfreight_four = models.DecimalField(max_digits=12, decimal_places=2,null=True,blank=True,default=0) # type: ignore
     export_handling = models.DecimalField(max_digits=12, decimal_places=2,null=True,blank=True,default=0) # type: ignore
     freight = models.DecimalField(max_digits=12, decimal_places=2,null=True,blank=True,default=0) # type: ignore
     doc_clearance = models.DecimalField(max_digits=12, decimal_places=2,null=True,blank=True,default=0) # type: ignore
@@ -450,6 +465,10 @@ class Sale(models.Model):
     delivery = models.DecimalField(max_digits=12, decimal_places=2,null=True,blank=True,default=0) # type: ignore
     duty_tax = models.DecimalField(max_digits=12, decimal_places=2,null=True,blank=True,default=0) # type: ignore 
     tax_handling_charge = models.DecimalField(max_digits=12, decimal_places=2,null=True,blank=True,default=0) # type: ignore 
+    shipment_value = models.DecimalField(max_digits=12, decimal_places=2,null=True,blank=True,default=0) # type: ignore 
+    insurance = models.DecimalField(max_digits=12, decimal_places=2,null=True,blank=True,default=0) # type: ignore 
+    etd = models.DateField(null=True,blank=True)
+    eta = models.DateField(null=True,blank=True)
     cu = models.ForeignKey(user, related_name='cu_sale', editable=False, null=True, blank=True,on_delete=models.CASCADE)
     cdate = models.DateTimeField(auto_now_add=True)
 

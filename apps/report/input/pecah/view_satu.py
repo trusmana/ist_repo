@@ -10,6 +10,157 @@ from apps.report.input.forms import FSForm,SLForm,DLForm,SALEForm,DHLForm,\
 
 ####SING FS DPS SL DIl DIL 
 @login_required(login_url=settings.LOGIN_URL)
+def proses_input_enam(request,param):
+    user = request.user
+    sekarang = datetime.date.today()
+    param = ParameterData.objects.get(id = param)
+    pse = ParameterDataBl.objects.get(products = param.products)
+    print(param.products.origin_vendor.id,param.products.through_vendor.id,param.products.destinations_vendor.id,'ssssssss')   # type: ignore      
+    if request.method == "POST":
+        form = FSForm(request.POST)
+        forms = DHLForm(request.POST)
+        formss = DLForm(request.POST)
+        slforms = SALEForm(request.POST)
+        if form.is_valid() and forms.is_valid() and formss.is_valid() and slforms.is_valid():
+            ##FSForm
+            tgl_fs = form.cleaned_data['tgl_fs']
+            no_invoice_fs = form.cleaned_data['no_invoice_fs']
+            qt_fs = form.cleaned_data['qt_fs']
+            products = form.cleaned_data['products']
+            commodity = form.cleaned_data['commodity']
+            param = form.cleaned_data['param']
+            
+            weight_fs = form.cleaned_data['weight_fs']
+            airfreight = form.cleaned_data['price_airfreight']
+            price_handling_charges = form.cleaned_data['price_handling_charges']
+            price_insurance_security_surcharge = form.cleaned_data['price_insurance_security_surcharge']
+            price_fuel_surcharge = form.cleaned_data['price_fuel_surcharge']
+            price_import_handling_charges = form.cleaned_data['price_import_handling_charges']
+            price_gst_zero_rated = form.cleaned_data['price_gst_zero_rated']
+
+            
+            ##DHLForm
+            tgl_dhl = forms.cleaned_data['tgl_dhl']
+            no_invoice_dhl = forms.cleaned_data['no_invoice_dhl']
+            express_wordwide_nondoc = forms.cleaned_data['express_wordwide_nondoc']
+            fuel_surcharge_dhl = forms.cleaned_data['fuel_surcharge_dhl']
+            emergency_situation = forms.cleaned_data['emergency_situation']
+
+            #DLFORM
+            tgl_dl = formss.cleaned_data['tgl_dl']
+            no_invoice_dl = formss.cleaned_data['no_invoice_dl']
+            
+            price_ground_handling_dl = formss.cleaned_data['price_ground_handling_dl']
+            price_forklift_for_heavy_cargo = formss.cleaned_data['price_forklift_for_heavy_cargo']
+            price_custom_clearance = formss.cleaned_data['price_custom_clearance']
+
+            delivey_to = formss.cleaned_data['delivey_to']
+            price_delivey_to_okusi = formss.cleaned_data['price_delivey_to_okusi']
+            price_delivey_to_hera = formss.cleaned_data['price_delivey_to_hera']
+            price_delivey_to_betano = formss.cleaned_data['price_delivey_to_betano']
+
+            price_akses_bandara_inspeksi = formss.cleaned_data['price_akses_bandara_inspeksi']
+            price_handling_fee = formss.cleaned_data['price_handling_fee']
+            admin_fee = formss.cleaned_data['admin_fee']
+            fee_collection = formss.cleaned_data['fee_collection']
+
+            ####Sale
+            paramsale = slforms.cleaned_data['paramsale']
+            total_shipment = slforms.cleaned_data['total_shipment']
+            eta = slforms.cleaned_data['eta']
+            etd = slforms.cleaned_data['etd']            
+            re_export_shipment_one = slforms.cleaned_data['re_export_shipment_one']
+            re_export_shipment_one_pcs = slforms.cleaned_data['re_export_shipment_one_pcs']
+            re_export_shipment_one_qty = slforms.cleaned_data['re_export_shipment_one_qty']
+
+            re_export_shipment_two = slforms.cleaned_data['re_export_shipment_two']
+            re_export_shipment_two_pcs = slforms.cleaned_data['re_export_shipment_two_pcs']
+            re_export_shipment_two_qty = slforms.cleaned_data['re_export_shipment_two_qty']
+
+            re_export_shipment_tree = slforms.cleaned_data['re_export_shipment_tree']
+            re_export_shipment_tree_pcs = slforms.cleaned_data['re_export_shipment_tree_pcs']
+            re_export_shipment_tree_qty = slforms.cleaned_data['re_export_shipment_tree_qty']
+
+            re_export_shipment_four = slforms.cleaned_data['re_export_shipment_four']
+            re_export_shipment_four_pcs = slforms.cleaned_data['re_export_shipment_four_pcs']
+            re_export_shipment_four_qty = slforms.cleaned_data['re_export_shipment_four_qty']
+
+            cartage_warehouse_charge_one = slforms.cleaned_data['cartage_warehouse_charge_one']
+            airfreight_one = slforms.cleaned_data['airfreight_one']
+            cartage_warehouse_charge_two = slforms.cleaned_data['cartage_warehouse_charge_two']
+            airfreight_two = slforms.cleaned_data['airfreight_two']
+            cartage_warehouse_charge_tree = slforms.cleaned_data['cartage_warehouse_charge_tree']
+            airfreight_tree = slforms.cleaned_data['airfreight_tree']
+            cartage_warehouse_charge_four = slforms.cleaned_data['cartage_warehouse_charge_four']
+            airfreight_four = slforms.cleaned_data['airfreight_four']
+
+
+            export_handling_sale = slforms.cleaned_data['export_handling_sale']
+            freight_sale = slforms.cleaned_data['freight_sale']
+            doc_clearance_sale = slforms.cleaned_data['doc_clearance_sale']
+            ground_handling_sale = slforms.cleaned_data['ground_handling_sale']
+            warehouse_charge_sale = slforms.cleaned_data['warehouse_charge_sale']
+            handling_charge_sale = slforms.cleaned_data['handling_charge_sale']
+            delivery_sale = slforms.cleaned_data['delivery_sale']
+            duty_tax_sale = slforms.cleaned_data['duty_tax_sale']
+            status_duty = slforms.cleaned_data['status_duty']
+            tax_handling_charge_sale = slforms.cleaned_data['tax_handling_charge_sale']
+            shipment_value = slforms.cleaned_data['shipment_value']
+            insurance = slforms.cleaned_data['insurance']
+            tran = Transaksi(tanggal= sekarang,products= products,commodity = commodity ,qty= qt_fs,weight=weight_fs,cu = user,
+                re_export_shipment_one=re_export_shipment_one,re_export_shipment_one_pcs=re_export_shipment_one_pcs,
+                re_export_shipment_one_qty=re_export_shipment_one_qty,re_export_shipment_two=re_export_shipment_two,
+                re_export_shipment_two_pcs=re_export_shipment_two_pcs,re_export_shipment_two_qty=re_export_shipment_two_qty,
+                re_export_shipment_tree=re_export_shipment_tree,
+                re_export_shipment_tree_pcs=re_export_shipment_tree_pcs,re_export_shipment_tree_qty=re_export_shipment_tree_qty,
+                re_export_shipment_four=re_export_shipment_four,
+                re_export_shipment_four_pcs=re_export_shipment_four_pcs,re_export_shipment_four_qty=re_export_shipment_four_qty)
+            tran.no_pekerjaan = tran._no_pk_()  # type: ignore
+            tran.save()
+            job = Job(transaksi= tran,tanggal_invoice =tgl_fs,no_invoice =no_invoice_fs,
+                airfreight = airfreight,handling_charges = price_handling_charges,nilai_kurs = tran.products.kurs_origin,# type: ignore
+                vendor = tran.products.origin_vendor,# type: ignore
+                insurance_security_surcharge = price_insurance_security_surcharge,fuel_surcharge = price_fuel_surcharge,
+                import_handling_charges = price_import_handling_charges,gst_zero_rated = price_gst_zero_rated,)
+            job.save()
+            job1 = Job(transaksi= tran,tanggal_invoice =tgl_dhl,no_invoice =no_invoice_dhl,nilai_kurs = tran.products.kurs_origin,# type: ignore
+                vendor = tran.products.origin_vendor,# type: ignore
+                express_wordwide_nondoc = express_wordwide_nondoc,fuel_surcharge_dhl = fuel_surcharge_dhl,emergency_situation = emergency_situation,)
+            job1.save()
+            job2 = Job(transaksi =tran,tanggal_invoice = tgl_dl,no_invoice = no_invoice_dl,nilai_kurs = tran.products.kurs_destinations,# type: ignore
+                vendor = tran.products.destinations_vendor,# type: ignore
+                ground_handling = price_ground_handling_dl,forklift_for_heavy_cargo = price_forklift_for_heavy_cargo,
+                custom_clearance = price_custom_clearance,delivey_to_hera = price_delivey_to_hera,
+                delivey_to_betano = price_delivey_to_betano,delivey_to_okusi= price_delivey_to_okusi,
+                delivey_to= delivey_to,
+                akses_bandara_inspeksi = price_akses_bandara_inspeksi,handling_fee = price_handling_fee,
+                admin_fee = admin_fee,fee_collection = fee_collection)
+            job2.save()
+            sale = Sale(trans=tran,prod=paramsale,cu=user,cartage_warehouse_charge_one = cartage_warehouse_charge_one,airfreight_one = airfreight_one,
+                cartage_warehouse_charge_two = cartage_warehouse_charge_two,airfreight_two = airfreight_two,
+                cartage_warehouse_charge_tree = cartage_warehouse_charge_tree,airfreight_tree = airfreight_tree,
+                cartage_warehouse_charge_four = cartage_warehouse_charge_four,airfreight_four = airfreight_four,
+                total_shipment=total_shipment,
+                export_handling = export_handling_sale,freight =freight_sale,status_duty= status_duty,
+                doc_clearance = doc_clearance_sale,ground_handling = ground_handling_sale,
+                warehouse_charge = warehouse_charge_sale,handling_charge = handling_charge_sale,
+                delivery= delivery_sale,duty_tax = duty_tax_sale,tax_handling_charge = tax_handling_charge_sale,
+                eta=eta,etd=etd,shipment_value=shipment_value,insurance=insurance)
+            sale.save()    
+            messages.success(request, 'Job Berhasil Di simpan')
+            return redirect('d-job')            
+    else:
+        form = FSForm(initial={'tgl_fs':datetime.date.today(),'products':param.products.id,'param':param.id})# type: ignore
+        forms = DHLForm(initial={'tgl_dhl':datetime.date.today()})
+        formss = DLForm(initial={'tgl_dl':datetime.date.today()})
+        slforms = SALEForm(initial={'tanggal':datetime.date.today(),'paramsale':pse.id})# type: ignore
+    
+    return render(request,'pengajuan/input/pecah/proses_input_tiga.html',{'param':param,'form':form,'pse':pse,
+        'forms':forms,'formss':formss,'sl':slforms})
+
+
+####SING FS DPS SL DIl DIL 
+@login_required(login_url=settings.LOGIN_URL)
 def proses_input_satu(request,param):
     user = request.user
     sekarang = datetime.date.today()
@@ -75,6 +226,7 @@ def proses_input_satu(request,param):
 
             ####Sale
             paramsale = slforms.cleaned_data['paramsale']
+            total_shipment = slforms.cleaned_data['total_shipment']
             re_export_shipment_one = slforms.cleaned_data['re_export_shipment_one']
             re_export_shipment_one_pcs = slforms.cleaned_data['re_export_shipment_one_pcs']
             re_export_shipment_one_qty = slforms.cleaned_data['re_export_shipment_one_qty']
@@ -83,10 +235,23 @@ def proses_input_satu(request,param):
             re_export_shipment_two_pcs = slforms.cleaned_data['re_export_shipment_two_pcs']
             re_export_shipment_two_qty = slforms.cleaned_data['re_export_shipment_two_qty']
 
+            re_export_shipment_tree = slforms.cleaned_data['re_export_shipment_tree']
+            re_export_shipment_tree_pcs = slforms.cleaned_data['re_export_shipment_tree_pcs']
+            re_export_shipment_tree_qty = slforms.cleaned_data['re_export_shipment_tree_qty']
+
+            re_export_shipment_four = slforms.cleaned_data['re_export_shipment_four']
+            re_export_shipment_four_pcs = slforms.cleaned_data['re_export_shipment_four_pcs']
+            re_export_shipment_four_qty = slforms.cleaned_data['re_export_shipment_four_qty']
+
             cartage_warehouse_charge_one = slforms.cleaned_data['cartage_warehouse_charge_one']
             airfreight_one = slforms.cleaned_data['airfreight_one']
             cartage_warehouse_charge_two = slforms.cleaned_data['cartage_warehouse_charge_two']
             airfreight_two = slforms.cleaned_data['airfreight_two']
+            cartage_warehouse_charge_tree = slforms.cleaned_data['cartage_warehouse_charge_tree']
+            airfreight_tree = slforms.cleaned_data['airfreight_tree']
+            cartage_warehouse_charge_four = slforms.cleaned_data['cartage_warehouse_charge_four']
+            airfreight_four = slforms.cleaned_data['airfreight_four']
+
             export_handling_sale = slforms.cleaned_data['export_handling_sale']
             freight_sale = slforms.cleaned_data['freight_sale']
             doc_clearance_sale = slforms.cleaned_data['doc_clearance_sale']
@@ -97,10 +262,18 @@ def proses_input_satu(request,param):
             duty_tax_sale = slforms.cleaned_data['duty_tax_sale']
             status_duty = slforms.cleaned_data['status_duty']
             tax_handling_charge_sale = slforms.cleaned_data['tax_handling_charge_sale']
+            shipment_value = slforms.cleaned_data['shipment_value']
+            insurance = slforms.cleaned_data['insurance']
+            eta = slforms.cleaned_data['eta']
+            etd = slforms.cleaned_data['etd']
             tran = Transaksi(tanggal= sekarang,products= products,commodity = commodity ,qty= qt_fs,weight=weight_fs,cu = user,
                 re_export_shipment_one=re_export_shipment_one,re_export_shipment_one_pcs=re_export_shipment_one_pcs,
                 re_export_shipment_one_qty=re_export_shipment_one_qty,re_export_shipment_two=re_export_shipment_two,
-                re_export_shipment_two_pcs=re_export_shipment_two_pcs,re_export_shipment_two_qty=re_export_shipment_two_qty)
+                re_export_shipment_two_pcs=re_export_shipment_two_pcs,re_export_shipment_two_qty=re_export_shipment_two_qty,
+                re_export_shipment_tree=re_export_shipment_tree,
+                re_export_shipment_tree_pcs=re_export_shipment_tree_pcs,re_export_shipment_tree_qty=re_export_shipment_tree_qty,
+                re_export_shipment_four=re_export_shipment_four,
+                re_export_shipment_four_pcs=re_export_shipment_four_pcs,re_export_shipment_four_qty=re_export_shipment_four_qty)
             tran.no_pekerjaan = tran._no_pk_()  # type: ignore
             tran.save()
             job = Job(transaksi= tran,tanggal_invoice =tgl_fs,no_invoice =no_invoice_fs,
@@ -127,10 +300,14 @@ def proses_input_satu(request,param):
             job2.save()
             sale = Sale(trans=tran,prod=paramsale,cu=user,cartage_warehouse_charge_one = cartage_warehouse_charge_one,airfreight_one = airfreight_one,
                 cartage_warehouse_charge_two = cartage_warehouse_charge_two,airfreight_two = airfreight_two,
+                cartage_warehouse_charge_tree = cartage_warehouse_charge_tree,airfreight_tree = airfreight_tree,
+                cartage_warehouse_charge_four = cartage_warehouse_charge_four,airfreight_four = airfreight_four,
+                total_shipment=total_shipment,
                 export_handling = export_handling_sale,freight =freight_sale,status_duty= status_duty,
                 doc_clearance = doc_clearance_sale,ground_handling = ground_handling_sale,
                 warehouse_charge = warehouse_charge_sale,handling_charge = handling_charge_sale,
-                delivery= delivery_sale,duty_tax = duty_tax_sale,tax_handling_charge = tax_handling_charge_sale)
+                delivery= delivery_sale,duty_tax = duty_tax_sale,tax_handling_charge = tax_handling_charge_sale,
+                eta=eta,etd=etd,shipment_value=shipment_value,insurance=insurance)
             sale.save()    
             messages.success(request, 'Job Berhasil Di simpan')
             return redirect('d-job')            
@@ -192,6 +369,7 @@ def proses_input_dua(request,param):
 
             ####Sale
             paramsale = slforms.cleaned_data['paramsale']
+            total_shipment = slforms.cleaned_data['total_shipment']
             re_export_shipment_one = slforms.cleaned_data['re_export_shipment_one']
             re_export_shipment_one_pcs = slforms.cleaned_data['re_export_shipment_one_pcs']
             re_export_shipment_one_qty = slforms.cleaned_data['re_export_shipment_one_qty']
@@ -200,10 +378,23 @@ def proses_input_dua(request,param):
             re_export_shipment_two_pcs = slforms.cleaned_data['re_export_shipment_two_pcs']
             re_export_shipment_two_qty = slforms.cleaned_data['re_export_shipment_two_qty']
 
+            re_export_shipment_tree = slforms.cleaned_data['re_export_shipment_tree']
+            re_export_shipment_tree_pcs = slforms.cleaned_data['re_export_shipment_tree_pcs']
+            re_export_shipment_tree_qty = slforms.cleaned_data['re_export_shipment_tree_qty']
+
+            re_export_shipment_four = slforms.cleaned_data['re_export_shipment_four']
+            re_export_shipment_four_pcs = slforms.cleaned_data['re_export_shipment_four_pcs']
+            re_export_shipment_four_qty = slforms.cleaned_data['re_export_shipment_four_qty']
+
             cartage_warehouse_charge_one = slforms.cleaned_data['cartage_warehouse_charge_one']
             airfreight_one = slforms.cleaned_data['airfreight_one']
             cartage_warehouse_charge_two = slforms.cleaned_data['cartage_warehouse_charge_two']
             airfreight_two = slforms.cleaned_data['airfreight_two']
+            cartage_warehouse_charge_tree = slforms.cleaned_data['cartage_warehouse_charge_tree']
+            airfreight_tree = slforms.cleaned_data['airfreight_tree']
+            cartage_warehouse_charge_four = slforms.cleaned_data['cartage_warehouse_charge_four']
+            airfreight_four = slforms.cleaned_data['airfreight_four']
+
             export_handling_sale = slforms.cleaned_data['export_handling_sale']
             freight_sale = slforms.cleaned_data['freight_sale']
             doc_clearance_sale = slforms.cleaned_data['doc_clearance_sale']
@@ -214,10 +405,18 @@ def proses_input_dua(request,param):
             duty_tax_sale = slforms.cleaned_data['duty_tax_sale']
             status_duty = slforms.cleaned_data['status_duty']
             tax_handling_charge_sale = slforms.cleaned_data['tax_handling_charge_sale']
+            shipment_value = slforms.cleaned_data['shipment_value']
+            insurance = slforms.cleaned_data['insurance']
+            eta = slforms.cleaned_data['eta']
+            etd = slforms.cleaned_data['etd']
             tran = Transaksi(tanggal= sekarang,products= products,commodity = commodity ,qty= qt_fs,weight=weight_fs,cu = user,
                 re_export_shipment_one=re_export_shipment_one,re_export_shipment_one_pcs=re_export_shipment_one_pcs,
                 re_export_shipment_one_qty=re_export_shipment_one_qty,re_export_shipment_two=re_export_shipment_two,
-                re_export_shipment_two_pcs=re_export_shipment_two_pcs,re_export_shipment_two_qty=re_export_shipment_two_qty)
+                re_export_shipment_two_pcs=re_export_shipment_two_pcs,re_export_shipment_two_qty=re_export_shipment_two_qty,
+                re_export_shipment_tree=re_export_shipment_tree,
+                re_export_shipment_tree_pcs=re_export_shipment_tree_pcs,re_export_shipment_tree_qty=re_export_shipment_tree_qty,
+                re_export_shipment_four=re_export_shipment_four,
+                re_export_shipment_four_pcs=re_export_shipment_four_pcs,re_export_shipment_four_qty=re_export_shipment_four_qty)
             tran.no_pekerjaan = tran._no_pk_()# type: ignore
             tran.save()
             ### gastiasih
@@ -237,10 +436,14 @@ def proses_input_dua(request,param):
             job2.save()# type: ignore
             sale = Sale(trans=tran,prod=paramsale,cu=user,cartage_warehouse_charge_one = cartage_warehouse_charge_one,airfreight_one = airfreight_one,
                 cartage_warehouse_charge_two = cartage_warehouse_charge_two,airfreight_two = airfreight_two,
+                cartage_warehouse_charge_tree = cartage_warehouse_charge_tree,airfreight_tree = airfreight_tree,
+                cartage_warehouse_charge_four = cartage_warehouse_charge_four,airfreight_four = airfreight_four,
+                total_shipment=total_shipment,
                 export_handling = export_handling_sale,freight =freight_sale,
                 doc_clearance = doc_clearance_sale,ground_handling = ground_handling_sale,
                 warehouse_charge = warehouse_charge_sale,handling_charge = handling_charge_sale,status_duty=status_duty,
-                delivery= delivery_sale,duty_tax = duty_tax_sale,tax_handling_charge = tax_handling_charge_sale)
+                delivery= delivery_sale,duty_tax = duty_tax_sale,tax_handling_charge = tax_handling_charge_sale,
+                eta=eta,etd=etd,shipment_value=shipment_value,insurance=insurance)
             sale.save()    
             messages.success(request, 'Job Berhasil Di simpan')
             return redirect('d-job')            
@@ -311,6 +514,7 @@ def proses_input_tiga(request,param):
 
             ####Sale
             paramsale = slforms.cleaned_data['paramsale']
+            total_shipment = slforms.cleaned_data['total_shipment']
             re_export_shipment_one = slforms.cleaned_data['re_export_shipment_one']
             re_export_shipment_one_pcs = slforms.cleaned_data['re_export_shipment_one_pcs']
             re_export_shipment_one_qty = slforms.cleaned_data['re_export_shipment_one_qty']
@@ -319,10 +523,23 @@ def proses_input_tiga(request,param):
             re_export_shipment_two_pcs = slforms.cleaned_data['re_export_shipment_two_pcs']
             re_export_shipment_two_qty = slforms.cleaned_data['re_export_shipment_two_qty']
 
+            re_export_shipment_tree = slforms.cleaned_data['re_export_shipment_tree']
+            re_export_shipment_tree_pcs = slforms.cleaned_data['re_export_shipment_tree_pcs']
+            re_export_shipment_tree_qty = slforms.cleaned_data['re_export_shipment_tree_qty']
+
+            re_export_shipment_four = slforms.cleaned_data['re_export_shipment_four']
+            re_export_shipment_four_pcs = slforms.cleaned_data['re_export_shipment_four_pcs']
+            re_export_shipment_four_qty = slforms.cleaned_data['re_export_shipment_four_qty']
+
             cartage_warehouse_charge_one = slforms.cleaned_data['cartage_warehouse_charge_one']
             airfreight_one = slforms.cleaned_data['airfreight_one']
             cartage_warehouse_charge_two = slforms.cleaned_data['cartage_warehouse_charge_two']
             airfreight_two = slforms.cleaned_data['airfreight_two']
+            cartage_warehouse_charge_tree = slforms.cleaned_data['cartage_warehouse_charge_tree']
+            airfreight_tree = slforms.cleaned_data['airfreight_tree']
+            cartage_warehouse_charge_four = slforms.cleaned_data['cartage_warehouse_charge_four']
+            airfreight_four = slforms.cleaned_data['airfreight_four']
+
             export_handling_sale = slforms.cleaned_data['export_handling_sale']
             freight_sale = slforms.cleaned_data['freight_sale']
             doc_clearance_sale = slforms.cleaned_data['doc_clearance_sale']
@@ -334,10 +551,18 @@ def proses_input_tiga(request,param):
             duty_tax_sale = slforms.cleaned_data['duty_tax_sale']
             status_duty = slforms.cleaned_data['status_duty']
             tax_handling_charge_sale = slforms.cleaned_data['tax_handling_charge_sale']
+            shipment_value = slforms.cleaned_data['shipment_value']
+            insurance = slforms.cleaned_data['insurance']
+            eta = slforms.cleaned_data['eta']
+            etd = slforms.cleaned_data['etd']
             tran = Transaksi(tanggal= sekarang,products= products,commodity = commodity ,qty= qt_fs,weight=weight_fs,cu = user,
                 re_export_shipment_one=re_export_shipment_one,re_export_shipment_one_pcs=re_export_shipment_one_pcs,
                 re_export_shipment_one_qty=re_export_shipment_one_qty,re_export_shipment_two=re_export_shipment_two,
-                re_export_shipment_two_pcs=re_export_shipment_two_pcs,re_export_shipment_two_qty=re_export_shipment_two_qty)
+                re_export_shipment_two_pcs=re_export_shipment_two_pcs,re_export_shipment_two_qty=re_export_shipment_two_qty,
+                re_export_shipment_tree=re_export_shipment_tree,
+                re_export_shipment_tree_pcs=re_export_shipment_tree_pcs,re_export_shipment_tree_qty=re_export_shipment_tree_qty,
+                re_export_shipment_four=re_export_shipment_four,
+                re_export_shipment_four_pcs=re_export_shipment_four_pcs,re_export_shipment_four_qty=re_export_shipment_four_qty)
             tran.no_pekerjaan = tran._no_pk_()  # type: ignore
             tran.save()
             ### gastiasih
@@ -364,10 +589,14 @@ def proses_input_tiga(request,param):
             ###dili
             sale = Sale(trans=tran,prod=paramsale,cu=user,cartage_warehouse_charge_one = cartage_warehouse_charge_one,airfreight_one = airfreight_one,
                 cartage_warehouse_charge_two = cartage_warehouse_charge_two,airfreight_two = airfreight_two,
+                cartage_warehouse_charge_tree = cartage_warehouse_charge_tree,airfreight_tree = airfreight_tree,
+                cartage_warehouse_charge_four = cartage_warehouse_charge_four,airfreight_four = airfreight_four,
+                total_shipment=total_shipment,
                 export_handling = export_handling_sale,freight =freight_sale,status_duty=status_duty,
                 doc_clearance = doc_clearance_sale,ground_handling = ground_handling_sale,
                 warehouse_charge = warehouse_charge_sale,handling_charge = handling_charge_sale,
-                delivery= delivery_sale,duty_tax = duty_tax_sale,tax_handling_charge = tax_handling_charge_sale)
+                delivery= delivery_sale,duty_tax = duty_tax_sale,tax_handling_charge = tax_handling_charge_sale,
+                eta=eta,etd=etd,shipment_value=shipment_value,insurance=insurance)
             sale.save()    
             messages.success(request, 'Job Berhasil Di simpan')
             return redirect('d-job')            
@@ -445,6 +674,7 @@ def proses_input_empat(request,param):
 
             ####Sale
             paramsale = slforms.cleaned_data['paramsale']
+            total_shipment = slforms.cleaned_data['total_shipment']
             re_export_shipment_one = slforms.cleaned_data['re_export_shipment_one']
             re_export_shipment_one_pcs = slforms.cleaned_data['re_export_shipment_one_pcs']
             re_export_shipment_one_qty = slforms.cleaned_data['re_export_shipment_one_qty']
@@ -453,10 +683,23 @@ def proses_input_empat(request,param):
             re_export_shipment_two_pcs = slforms.cleaned_data['re_export_shipment_two_pcs']
             re_export_shipment_two_qty = slforms.cleaned_data['re_export_shipment_two_qty']
 
+            re_export_shipment_tree = slforms.cleaned_data['re_export_shipment_tree']
+            re_export_shipment_tree_pcs = slforms.cleaned_data['re_export_shipment_tree_pcs']
+            re_export_shipment_tree_qty = slforms.cleaned_data['re_export_shipment_tree_qty']
+
+            re_export_shipment_four = slforms.cleaned_data['re_export_shipment_four']
+            re_export_shipment_four_pcs = slforms.cleaned_data['re_export_shipment_four_pcs']
+            re_export_shipment_four_qty = slforms.cleaned_data['re_export_shipment_four_qty']
+
             cartage_warehouse_charge_one = slforms.cleaned_data['cartage_warehouse_charge_one']
             airfreight_one = slforms.cleaned_data['airfreight_one']
             cartage_warehouse_charge_two = slforms.cleaned_data['cartage_warehouse_charge_two']
             airfreight_two = slforms.cleaned_data['airfreight_two']
+            cartage_warehouse_charge_tree = slforms.cleaned_data['cartage_warehouse_charge_tree']
+            airfreight_tree = slforms.cleaned_data['airfreight_tree']
+            cartage_warehouse_charge_four = slforms.cleaned_data['cartage_warehouse_charge_four']
+            airfreight_four = slforms.cleaned_data['airfreight_four']
+
             export_handling_sale = slforms.cleaned_data['export_handling_sale']
             freight_sale = slforms.cleaned_data['freight_sale']
             doc_clearance_sale = slforms.cleaned_data['doc_clearance_sale']
@@ -468,10 +711,18 @@ def proses_input_empat(request,param):
             duty_tax_sale = slforms.cleaned_data['duty_tax_sale']
             status_duty = slforms.cleaned_data['status_duty']
             tax_handling_charge_sale = slforms.cleaned_data['tax_handling_charge_sale']
+            shipment_value = slforms.cleaned_data['shipment_value']
+            insurance = slforms.cleaned_data['insurance']
+            eta = slforms.cleaned_data['eta']
+            etd = slforms.cleaned_data['etd']
             tran = Transaksi(tanggal= sekarang,products= products,commodity = commodity ,qty= qt_fs,weight=weight_fs,cu = user,
                 re_export_shipment_one=re_export_shipment_one,re_export_shipment_one_pcs=re_export_shipment_one_pcs,
                 re_export_shipment_one_qty=re_export_shipment_one_qty,re_export_shipment_two=re_export_shipment_two,
-                re_export_shipment_two_pcs=re_export_shipment_two_pcs,re_export_shipment_two_qty=re_export_shipment_two_qty)
+                re_export_shipment_two_pcs=re_export_shipment_two_pcs,re_export_shipment_two_qty=re_export_shipment_two_qty,
+                re_export_shipment_tree=re_export_shipment_tree,
+                re_export_shipment_tree_pcs=re_export_shipment_tree_pcs,re_export_shipment_tree_qty=re_export_shipment_tree_qty,
+                re_export_shipment_four=re_export_shipment_four,
+                re_export_shipment_four_pcs=re_export_shipment_four_pcs,re_export_shipment_four_qty=re_export_shipment_four_qty)
             tran.no_pekerjaan = tran._no_pk_()  # type: ignore
             tran.save()
             ### gastiasih
@@ -500,10 +751,14 @@ def proses_input_empat(request,param):
             ###dili
             sale = Sale(trans=tran,prod=paramsale,cu=user,cartage_warehouse_charge_one = cartage_warehouse_charge_one,airfreight_one = airfreight_one,
                 cartage_warehouse_charge_two = cartage_warehouse_charge_two,airfreight_two = airfreight_two,
+                cartage_warehouse_charge_tree = cartage_warehouse_charge_tree,airfreight_tree = airfreight_tree,
+                cartage_warehouse_charge_four = cartage_warehouse_charge_four,airfreight_four = airfreight_four,
+                total_shipment=total_shipment,
                 export_handling = export_handling_sale,freight =freight_sale,status_duty=status_duty,
                 doc_clearance = doc_clearance_sale,ground_handling = ground_handling_sale,
                 warehouse_charge = warehouse_charge_sale,handling_charge = handling_charge_sale,
-                delivery= delivery_sale,duty_tax = duty_tax_sale,tax_handling_charge = tax_handling_charge_sale)
+                delivery= delivery_sale,duty_tax = duty_tax_sale,tax_handling_charge = tax_handling_charge_sale,
+                eta=eta,etd=etd,shipment_value=shipment_value,insurance=insurance)
             sale.save()    
             messages.success(request, 'Job Berhasil Di simpan')
             return redirect('d-job')            
@@ -579,6 +834,7 @@ def proses_input_lima(request,param):
 
             ####Sale
             paramsale = slforms.cleaned_data['paramsale']
+            total_shipment = slforms.cleaned_data['total_shipment']
             re_export_shipment_one = slforms.cleaned_data['re_export_shipment_one']
             re_export_shipment_one_pcs = slforms.cleaned_data['re_export_shipment_one_pcs']
             re_export_shipment_one_qty = slforms.cleaned_data['re_export_shipment_one_qty']
@@ -587,10 +843,24 @@ def proses_input_lima(request,param):
             re_export_shipment_two_pcs = slforms.cleaned_data['re_export_shipment_two_pcs']
             re_export_shipment_two_qty = slforms.cleaned_data['re_export_shipment_two_qty']
 
+            re_export_shipment_tree = slforms.cleaned_data['re_export_shipment_tree']
+            re_export_shipment_tree_pcs = slforms.cleaned_data['re_export_shipment_tree_pcs']
+            re_export_shipment_tree_qty = slforms.cleaned_data['re_export_shipment_tree_qty']
+
+            re_export_shipment_four = slforms.cleaned_data['re_export_shipment_four']
+            re_export_shipment_four_pcs = slforms.cleaned_data['re_export_shipment_four_pcs']
+            re_export_shipment_four_qty = slforms.cleaned_data['re_export_shipment_four_qty']
+
             cartage_warehouse_charge_one = slforms.cleaned_data['cartage_warehouse_charge_one']
             airfreight_one = slforms.cleaned_data['airfreight_one']
             cartage_warehouse_charge_two = slforms.cleaned_data['cartage_warehouse_charge_two']
             airfreight_two = slforms.cleaned_data['airfreight_two']
+            cartage_warehouse_charge_tree = slforms.cleaned_data['cartage_warehouse_charge_tree']
+            airfreight_tree = slforms.cleaned_data['airfreight_tree']
+            cartage_warehouse_charge_four = slforms.cleaned_data['cartage_warehouse_charge_four']
+            airfreight_four = slforms.cleaned_data['airfreight_four']
+
+
             export_handling_sale = slforms.cleaned_data['export_handling_sale']
             freight_sale = slforms.cleaned_data['freight_sale']
             doc_clearance_sale = slforms.cleaned_data['doc_clearance_sale']
@@ -602,10 +872,18 @@ def proses_input_lima(request,param):
             duty_tax_sale = slforms.cleaned_data['duty_tax_sale']
             status_duty = slforms.cleaned_data['status_duty']
             tax_handling_charge_sale = slforms.cleaned_data['tax_handling_charge_sale']
+            shipment_value = slforms.cleaned_data['shipment_value']
+            insurance = slforms.cleaned_data['insurance']
+            eta = slforms.cleaned_data['eta']
+            etd = slforms.cleaned_data['etd']
             tran = Transaksi(tanggal= sekarang,products= products,commodity = commodity ,qty= qt_fs,weight=weight_fs,cu = user,
                 re_export_shipment_one=re_export_shipment_one,re_export_shipment_one_pcs=re_export_shipment_one_pcs,
                 re_export_shipment_one_qty=re_export_shipment_one_qty,re_export_shipment_two=re_export_shipment_two,
-                re_export_shipment_two_pcs=re_export_shipment_two_pcs,re_export_shipment_two_qty=re_export_shipment_two_qty)
+                re_export_shipment_two_pcs=re_export_shipment_two_pcs,re_export_shipment_two_qty=re_export_shipment_two_qty,
+                re_export_shipment_tree=re_export_shipment_tree,
+                re_export_shipment_tree_pcs=re_export_shipment_tree_pcs,re_export_shipment_tree_qty=re_export_shipment_tree_qty,
+                re_export_shipment_four=re_export_shipment_four,
+                re_export_shipment_four_pcs=re_export_shipment_four_pcs,re_export_shipment_four_qty=re_export_shipment_four_qty)
             tran.no_pekerjaan = tran._no_pk_()  # type: ignore
             tran.save()
             ### Wastila
@@ -636,10 +914,14 @@ def proses_input_lima(request,param):
             ###dili
             sale = Sale(trans=tran,prod=paramsale,cu=user,cartage_warehouse_charge_one = cartage_warehouse_charge_one,airfreight_one = airfreight_one,
                 cartage_warehouse_charge_two = cartage_warehouse_charge_two,airfreight_two = airfreight_two,
+                cartage_warehouse_charge_tree = cartage_warehouse_charge_tree,airfreight_tree = airfreight_tree,
+                cartage_warehouse_charge_four = cartage_warehouse_charge_four,airfreight_four = airfreight_four,
+                total_shipment=total_shipment,
                 export_handling = export_handling_sale,freight =freight_sale,status_duty=status_duty,
                 doc_clearance = doc_clearance_sale,ground_handling = ground_handling_sale,
                 warehouse_charge = warehouse_charge_sale,handling_charge = handling_charge_sale,
-                delivery= delivery_sale,duty_tax = duty_tax_sale,tax_handling_charge = tax_handling_charge_sale)
+                delivery= delivery_sale,duty_tax = duty_tax_sale,tax_handling_charge = tax_handling_charge_sale,
+                eta=eta,etd=etd,shipment_value=shipment_value,insurance=insurance)
             sale.save()    
             messages.success(request, 'Job Berhasil Di simpan')
             return redirect('d-job')            

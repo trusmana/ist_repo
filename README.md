@@ -244,4 +244,9 @@ Remarks
     perubahan sales manager jadi  AUTHORIZED SIGNATURE 
 
 Onproses:
-1. dateline tgl 15/12/2022
+1. - Solid Done@tedi_black 14122022 Silahkan di uji
+   - Ist freight sale ganti jadi Airfreight charge dan kata sale diganti jadi charge Done@tedi_black 14122022 Silahkan di uji
+   - tambah pilihan reexport maksimal 4 Done@tedi_black 14122022 Silahkan di uji
+   - penambahan inputan shipment value dan insuransi dan  10% dari nilai duty tax Done@tedi_black 14122022 Silahkan di uji
+   - estimasi departur dan estimasi arrival Done@tedi_black 14122022 Silahkan di uji
+    
