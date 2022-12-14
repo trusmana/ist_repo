@@ -29,10 +29,10 @@ def proses_input_dua_vendor(request,param):
                 messages.success(request, 'Job Berhasil Di simpan')
                 return redirect('d-job')
         else:
-            trsform = TransaksiForm(initial={'products':param.products.id,'param':param.id})
+            trsform = TransaksiForm(initial={'products':param.products.id,'param':param.id})  # type: ignore
             form = DLForm(initial={'tgl_dl':sekarang})
             formss = FSForm(initial={'tgl_fs':sekarang})
-            sl = SALEForm(initial={'tanggal':sekarang,'paramsale':pse.id})
+            sl = SALEForm(initial={'tanggal':sekarang,'paramsale':pse.id})  # type: ignore  # type: ignore
             return render(request,'pengajuan/input/proses_input_dua.html',{'form':form,'formss':formss,'sl':sl,
                 'trsform':trsform,'dt':dt,'pse':pse})
     ###Dili - Fr    
@@ -48,9 +48,9 @@ def proses_input_dua_vendor(request,param):
                 return redirect('d-job')
         else:
             trsform = TransaksiForm()
-            form = FSForm(initial={'tgl_fs':sekarang,'products':param.products.id,'param':param.id})
+            form = FSForm(initial={'tgl_fs':sekarang,'products':param.products.id,'param':param.id})  # type: ignore
             formss = DLForm(initial={'tgl_dl':sekarang})
-            sl = SALEForm(initial={'tanggal':sekarang,'paramsale':pse.id})
+            sl = SALEForm(initial={'tanggal':sekarang,'paramsale':pse.id})  # type: ignore
             return render(request,'pengajuan/input/proses_input_dua.html',{'form':form,'formss':formss,'sl':sl,
                 'trsform':trsform,'dt':dt,'pse':pse})    
     ## DHL - DILI
@@ -66,10 +66,10 @@ def proses_input_dua_vendor(request,param):
                 messages.success(request, 'Data Parameter Berhasil Di Input')
                 return redirect('d-job')
         else:
-            trsform = TransaksiForm(initial={'products':param.products.id,'param':param.id})
+            trsform = TransaksiForm(initial={'products':param.products.id,'param':param.id})  # type: ignore
             form = DHLForm(initial={'tgl_dhl':sekarang})
             formss = DLForm(initial={'tgl_dl':sekarang})
-            sl = SALEForm(initial={'tanggal':sekarang,'paramsale':pse.id})
+            sl = SALEForm(initial={'tanggal':sekarang,'paramsale':pse.id})  # type: ignore
         return render(request,'pengajuan/input/proses_input_dua.html',{'form':form,'formss':formss,'sl':sl,
             'trsform':trsform,'dt':dt,'pse':pse})
     ### DHL FS
@@ -85,10 +85,10 @@ def proses_input_dua_vendor(request,param):
                 messages.success(request, 'Data Parameter Berhasil Di Input')
                 return redirect('d-job')
         else:
-            trsform = TransaksiForm(initial={'products':param.products.id,'param':param.id})
+            trsform = TransaksiForm(initial={'products':param.products.id,'param':param.id})  # type: ignore
             form = DHLForm(initial={'tgl_dhl':sekarang})
             formss = FSForm(initial={'tgl_fs':sekarang})
-            sl = SALEForm(initial={'tanggal':sekarang,'paramsale':pse.id})
+            sl = SALEForm(initial={'tanggal':sekarang,'paramsale':pse.id})  # type: ignore
         return render(request,'pengajuan/input/proses_input_dua.html',{'form':form,'formss':formss,'sl':sl,
             'trsform':trsform,'dt':dt,'pse':pse})
         
@@ -147,16 +147,16 @@ def save_dhl_fs_indah(dt,form,formss,trsform,sl,user):
         re_export_shipment_one=re_export_shipment_one,re_export_shipment_one_pcs=re_export_shipment_one_pcs,
         re_export_shipment_one_qty=re_export_shipment_one_qty,re_export_shipment_two=re_export_shipment_two,
         re_export_shipment_two_pcs=re_export_shipment_two_pcs,re_export_shipment_two_qty=re_export_shipment_two_qty)
-    tran.no_pekerjaan = tran._no_pk_()
+    tran.no_pekerjaan = tran._no_pk_()  # type: ignore
     tran.save()
-    job = Job(transaksi= tran,tanggal_invoice =tgl_dhl,no_invoice =no_invoice_dhl,nilai_kurs = tran.products.kurs_origin,
-        vendor = tran.products.origin_vendor,
+    job = Job(transaksi= tran,tanggal_invoice =tgl_dhl,no_invoice =no_invoice_dhl,nilai_kurs = tran.products.kurs_origin,# type: ignore
+        vendor = tran.products.origin_vendor,# type: ignore
         express_wordwide_nondoc = express_wordwide_nondoc,fuel_surcharge_dhl = fuel_surcharge_dhl,emergency_situation = emergency_situation,
         )
     job.save()    
     job2 = Job(transaksi= tran,tanggal_invoice =tgl_fs,no_invoice =no_invoice_fs,
-        airfreight = airfreight,handling_charges = price_handling_charges,nilai_kurs = tran.products.kurs_origin,
-        vendor = tran.products.destinations_vendor,
+        airfreight = airfreight,handling_charges = price_handling_charges,nilai_kurs = tran.products.kurs_origin,# type: ignore
+        vendor = tran.products.destinations_vendor,# type: ignore
         insurance_security_surcharge = price_insurance_security_surcharge,fuel_surcharge = price_fuel_surcharge,
         import_handling_charges = price_import_handling_charges,gst_zero_rated = price_gst_zero_rated,)
     job2.save()
@@ -227,16 +227,16 @@ def save_dhl_dili_indah(dt,form,formss,trsform,sl,user):
         re_export_shipment_one=re_export_shipment_one,re_export_shipment_one_pcs=re_export_shipment_one_pcs,
         re_export_shipment_one_qty=re_export_shipment_one_qty,re_export_shipment_two=re_export_shipment_two,
         re_export_shipment_two_pcs=re_export_shipment_two_pcs,re_export_shipment_two_qty=re_export_shipment_two_qty)
-    tran.no_pekerjaan = tran._no_pk_()
+    tran.no_pekerjaan = tran._no_pk_()  # type: ignore
     tran.save()
-    job = Job(transaksi= tran,tanggal_invoice =tgl_dhl,no_invoice =no_invoice_dhl,nilai_kurs = tran.products.kurs_origin,
-        vendor = tran.products.origin_vendor,
+    job = Job(transaksi= tran,tanggal_invoice =tgl_dhl,no_invoice =no_invoice_dhl,nilai_kurs = tran.products.kurs_origin,# type: ignore
+        vendor = tran.products.origin_vendor,# type: ignore
         express_wordwide_nondoc = express_wordwide_nondoc,fuel_surcharge_dhl = fuel_surcharge_dhl,emergency_situation = emergency_situation,
         )
     job.save()
     
-    job2 = Job(transaksi =tran,tanggal_invoice = tgl_dl,no_invoice = no_invoice_dl,nilai_kurs = tran.products.kurs_destinations,
-        vendor = tran.products.destinations_vendor,delivey_to_okusi = price_delivey_to_okusi,delivey_to_betano = price_delivey_to_betano,
+    job2 = Job(transaksi =tran,tanggal_invoice = tgl_dl,no_invoice = no_invoice_dl,nilai_kurs = tran.products.kurs_destinations,# type: ignore
+        vendor = tran.products.destinations_vendor,delivey_to_okusi = price_delivey_to_okusi,delivey_to_betano = price_delivey_to_betano,# type: ignore
         ground_handling = price_ground_handling_dl,forklift_for_heavy_cargo = price_forklift_for_heavy_cargo,
         custom_clearance = price_custom_clearance,delivey_to_hera = price_delivey_to_hera,
         akses_bandara_inspeksi = price_akses_bandara_inspeksi,handling_fee = price_handling_fee,
@@ -310,17 +310,17 @@ def save_dili_fr_indah(dt,form,formss,trsform,sl,user):
         re_export_shipment_one=re_export_shipment_one,re_export_shipment_one_pcs=re_export_shipment_one_pcs,
         re_export_shipment_one_qty=re_export_shipment_one_qty,re_export_shipment_two=re_export_shipment_two,
         re_export_shipment_two_pcs=re_export_shipment_two_pcs,re_export_shipment_two_qty=re_export_shipment_two_qty)
-    tran.no_pekerjaan = tran._no_pk_()
+    tran.no_pekerjaan = tran._no_pk_()  # type: ignore
     tran.save()
     job = Job(transaksi= tran,tanggal_invoice =tgl_fs,no_invoice =no_invoice_fs,
-        airfreight = airfreight,handling_charges = price_handling_charges,nilai_kurs = tran.products.kurs_origin,
-        vendor = tran.products.origin_vendor,
+        airfreight = airfreight,handling_charges = price_handling_charges,nilai_kurs = tran.products.kurs_origin,# type: ignore
+        vendor = tran.products.origin_vendor,# type: ignore
         insurance_security_surcharge = price_insurance_security_surcharge,fuel_surcharge = price_fuel_surcharge,
         import_handling_charges = price_import_handling_charges,gst_zero_rated = price_gst_zero_rated,)
     job.save()
     
-    job2 = Job(transaksi =tran,tanggal_invoice = tgl_dl,no_invoice = no_invoice_dl,nilai_kurs = tran.products.kurs_destinations,
-        vendor = tran.products.destinations_vendor,delivey_to_okusi = price_delivey_to_okusi,delivey_to_betano = price_delivey_to_betano,
+    job2 = Job(transaksi =tran,tanggal_invoice = tgl_dl,no_invoice = no_invoice_dl,nilai_kurs = tran.products.kurs_destinations,# type: ignore
+        vendor = tran.products.destinations_vendor,delivey_to_okusi = price_delivey_to_okusi,delivey_to_betano = price_delivey_to_betano,# type: ignore
         ground_handling = price_ground_handling_dl,forklift_for_heavy_cargo = price_forklift_for_heavy_cargo,
         custom_clearance = price_custom_clearance,delivey_to_hera = price_delivey_to_hera,
         akses_bandara_inspeksi = price_akses_bandara_inspeksi,handling_fee = price_handling_fee,
@@ -393,17 +393,17 @@ def save_fr_dili_indah(dt,form,formss,trsform,sl,user):
         re_export_shipment_one=re_export_shipment_one,re_export_shipment_one_pcs=re_export_shipment_one_pcs,
         re_export_shipment_one_qty=re_export_shipment_one_qty,re_export_shipment_two=re_export_shipment_two,
         re_export_shipment_two_pcs=re_export_shipment_two_pcs,re_export_shipment_two_qty=re_export_shipment_two_qty)
-    tran.no_pekerjaan = tran._no_pk_()
+    tran.no_pekerjaan = tran._no_pk_()  # type: ignore
     tran.save()
     job = Job(transaksi= tran,tanggal_invoice =tgl_fs,no_invoice =no_invoice_fs,
-        airfreight = airfreight,handling_charges = price_handling_charges,nilai_kurs = tran.products.kurs_origin,
-        vendor = tran.products.origin_vendor,
+        airfreight = airfreight,handling_charges = price_handling_charges,nilai_kurs = tran.products.kurs_origin,# type: ignore
+        vendor = tran.products.origin_vendor,# type: ignore
         insurance_security_surcharge = price_insurance_security_surcharge,fuel_surcharge = price_fuel_surcharge,
         import_handling_charges = price_import_handling_charges,gst_zero_rated = price_gst_zero_rated,)
     job.save()
     
-    job2 = Job(transaksi =tran,tanggal_invoice = tgl_dl,no_invoice = no_invoice_dl,nilai_kurs = tran.products.kurs_destinations,
-        vendor = tran.products.destinations_vendor,delivey_to_okusi = price_delivey_to_okusi,delivey_to_betano = price_delivey_to_betano,
+    job2 = Job(transaksi =tran,tanggal_invoice = tgl_dl,no_invoice = no_invoice_dl,nilai_kurs = tran.products.kurs_destinations,# type: ignore
+        vendor = tran.products.destinations_vendor,delivey_to_okusi = price_delivey_to_okusi,delivey_to_betano = price_delivey_to_betano,# type: ignore
         ground_handling = price_ground_handling_dl,forklift_for_heavy_cargo = price_forklift_for_heavy_cargo,
         custom_clearance = price_custom_clearance,delivey_to_hera = price_delivey_to_hera,
         akses_bandara_inspeksi = price_akses_bandara_inspeksi,handling_fee = price_handling_fee,
@@ -445,7 +445,7 @@ def showparamdua(request):
     prd = param.products.kode_produk
     org_ven = param.products.origin_vendor
     org = param.products.point_satu
-    h_ajax ={'tanggal':tanggal,'produk':prd,'param':param.id,'org':org,'org_ven':org_ven,'jmlv':param.products.jumlah_vendor,
+    h_ajax ={'tanggal':tanggal,'produk':prd,'param':param.id,'org':org,'org_ven':org_ven,'jmlv':param.products.jumlah_vendor,  # type: ignore
         'lt_ven':param.products.destinations_vendor,'lt':param.products.point_tiga,'js':param.products.jenis_produk}
     return save_simulasi_form_dua(request, h_ajax,'pengajuan/addpengajuan_dua.html')
     

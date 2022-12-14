@@ -201,3 +201,45 @@ Permintaan Dari Pihak IST, Via Email
                                      - Untuk Duty Invoice ada penambahan insuranse di bagian input jadi bisa ada dan tidak (enable dan disable).
 
 - Untuk Poin 1, 2,3 4 Kami Harus Memodifikasi ulang Menu Inputan, Untuk Itu kami Butuh Waktu, Estimasi Selesai tanggal 15/12/2022 Trim @tedi_black
+
+Request by User 04/12/2022
+--- 
+|---|----------------------------------------|----------|
+|             Test Data Job                             |
+|---|----------------------------------------|----------|
+|1. | - Sin	Dps	Dil	                         |airfreight|
+|	  | - FS	Solid	dili                       |airfreight|
+|	  | - FS	DHL	dili	                       |airfreight|  
+|2. | - jkt	Dps	Dil	                         |airfreight|
+|	  | - Gasti asih	Solid	dili	             |airfreight|
+|3. | - jkt	atb	dil	                         |airfreight|
+|	  | - Gasti asih	Lintas Negara	dili	     |airfreight|
+|4. | - jkt	sub	dil	                         |seafreight|
+|	  | - Gasti asih	ASL	dili	               |airfreight|
+|5. | - dil	dps	jkt	                         |airfreight|
+|	  | - dili	Solid	indonusantara	           |airfreight|
+|6. | - dil	atb	jkt	                         |airfreight|
+|	  | - dili	Lintas Negara	indonusantara	   |airfreight|
+|7. |	- dil		sin	                           |airfreight|
+|	  | - dili		sgs lab, veritas lab	       |airfreight| 
+|8. |	- dil		ph	                           |airfreight|
+|	  | - dili		dhl	                         |airfreight| 
+|9. |	- jkt		dil	                           |airfreight| 
+|	  | - dhl		dili	                         |airfreight| 
+|10.|	- sin			                             |trucking  | 
+|	  | - fs			                             |trucking  | 
+|11.|	- sin 		dil	                         |seafreight|
+|	  | - fs		dhl	                           |seafreight| 
+|---|----------------------------------------|----------|
+
+Remarks
+---
+1. Yang Diperbaiki
+  - vendor charge solid penamaan Price storage mcl e 0389249 at cost ganti jadi PJKP2U; Price handling charges sl ganti jadi transhipment handling
+  - Pembuatan invoice ist freight sale ganti jadi Airfreight charge ; tambah pilihan reexport maksimal 4 ; kata" sale diganti jadi charge
+  - dibagian duty penambahan inputan shipment value dan insuransi dan untuk shipment value kurs bisa di rubah ; tax handling 10% dari nilai duty tax
+  - penambahan form invoice untuk invoice reff dan customer reff ; dan awb ; estimasi departur dan      estimasi arrival ; tambahan di warehouse charge 
+  - data vendor khusus ist nomor rek / ac 
+  - khusus invoice dili penambahan alamat lengkap ; invoice wartsila indonesia alamat lengkap
+    perubahan sales manager jadi  AUTHORIZED SIGNATURE 
+
