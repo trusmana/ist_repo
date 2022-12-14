@@ -204,7 +204,7 @@ Permintaan Dari Pihak IST, Via Email
 
 Request by User 04/12/2022
 --- 
-|---|----------------------------------------|----------|
+
 |   |          Test Data Job                 |          |
 |---|----------------------------------------|----------|
 |1. | - Sin	Dps	Dil	                         |airfreight|
@@ -230,7 +230,7 @@ Request by User 04/12/2022
 |	  | - fs			                             |trucking  | 
 |11.|	- sin 		dil	                         |seafreight|
 |	  | - fs		dhl	                           |seafreight| 
-|---|----------------------------------------|----------|
+
 
 Remarks
 ---
