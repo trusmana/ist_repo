@@ -205,7 +205,7 @@ Permintaan Dari Pihak IST, Via Email
 Request by User 04/12/2022
 --- 
 |---|----------------------------------------|----------|
-|             Test Data Job                             |
+|   |          Test Data Job                 |          |
 |---|----------------------------------------|----------|
 |1. | - Sin	Dps	Dil	                         |airfreight|
 |	  | - FS	Solid	dili                       |airfreight|
