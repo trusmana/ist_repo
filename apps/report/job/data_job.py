@@ -6,8 +6,40 @@ from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from django.conf import settings
 import datetime
-from apps.products.models import Transaksi,Job
+from apps.products.models import Transaksi,Job,Sale
 from apps.report.input.forms import UpdateForm
+from apps.report.job.forms import RefForm,KursDutyForm
+from django import forms
+
+@login_required(login_url=settings.LOGIN_URL)
+def edit_kursduty(request, pk):
+    user = request.user
+    sale = Sale.objects.get(pk=pk)
+    if request.method == 'POST':
+        form = KursDutyForm(request.POST,instance= sale)
+        if form.is_valid():
+            form.save()
+            messages.success(request, 'Ref Customer Berhasil Di Input')
+            return redirect('/report/dtl_all_job/%s/' %(sale.trans.id)  )
+    else:
+        form = KursDutyForm(instance=sale)  # type: ignore
+    return render(request,'job/edit_kursduty.html',{'sale':sale,'form':form})
+
+@login_required(login_url=settings.LOGIN_URL)
+def add_ref(request, pk):
+    user = request.user
+    sale = Sale.objects.get(pk=pk)
+    if request.method == 'POST':
+        form = RefForm(request.POST)
+        if form.is_valid():
+            form.save()
+            messages.success(request, 'Ref Customer Berhasil Di Input')
+            return redirect('/report/dtl_all_job/%s/' %(sale.trans.id)  )
+    else:
+        form = RefForm(initial={'fkref':sale.id})  # type: ignore
+        form.fields["fkref"].widget = forms.HiddenInput()
+    return render(request,'job/add_ref.html',{'sale':sale,'form':form})
+
 
 @login_required(login_url=settings.LOGIN_URL)
 def detail_job(request,pk):

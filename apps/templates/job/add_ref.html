@@ -1,0 +1,83 @@
+{% extends "layouts/base.html" %}
+{% load static %}
+{% block title %} ref{% endblock %}
+{% block extrahead %}
+{% include 'alat/ref.html' %}
+{% endblock  %}
+{% block content %}
+<div id="jCrumbs" class="breadCrumb module">
+    <ul>
+        <li>
+            <a href="/"><i class="icon-home"></i></a>
+        </li>
+        
+        <li>
+            <a href="."> Add Reff</a>
+        </li>
+
+    </ul>
+</div>
+<div class="row-fluid">
+    <div class="span12">
+		<form action="." method='POST' enctype="multipart/form-data">{% csrf_token %}
+			<div class="formSep">
+				<div class="row-fluid">
+					<div class="span6">
+						<label>{{ form.jumlahreff.label }}</label>
+						{{ form.jumlahreff }}  {{ form.jumlahreffcs }} {{ form.fkref }}
+					</div>
+				</div>
+			</div>
+			<div class="formSep">
+				<div class="row-fluid">
+					<div class="span6">
+						{{ form.ref1 }}  {{form.csref1 }} 
+					</div>
+					<div class="span6">
+						{{ form.ref2 }}  {{form.csref2 }} 
+					</div>
+				</div>
+				<div class="row-fluid">
+					<div class="span6">
+						{{ form.ref3 }}  {{form.csref3 }} 
+					</div>
+					<div class="span6" style="disable">
+						{{ form.ref4 }}  {{form.csref4 }} 
+					</div>
+				</div>
+                <div class="row-fluid">
+					<div class="span6">
+						{{ form.ref5 }}  {{form.csref5 }} 
+					</div>
+					<div class="span6" style="disable">
+						{{ form.ref6 }}  {{form.csref6 }} 
+					</div>
+				</div>
+                <div class="row-fluid">
+					<div class="span6">
+						{{ form.ref7 }}  {{form.csref7 }} 
+					</div>
+					<div class="span6" style="disable">
+						{{ form.ref8 }}  {{form.csref8 }} 
+					</div>
+				</div>
+                <div class="row-fluid">
+					<div class="span6">
+						{{ form.ref9 }}  {{form.csref9 }} 
+					</div>
+					<div class="span6" >
+						{{ form.ref10 }}  {{form.csref10 }} 
+					</div>
+				</div>
+                <div class="row-fluid">
+                    <div class="span6">
+                        <button type="submit" class="btn btn-primary">Save All</button>
+                    </div>
+                </div>
+			</div>
+        </div>
+    </div>
+</div>
+
+      
+{% endblock content %}

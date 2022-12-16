@@ -1,7 +1,7 @@
 from django.contrib import admin
 from import_export.admin import ImportExportMixin, ExportActionModelAdmin
 from .models import Commodity, Job, MataUang,Kurs, ParameterData,Produk,JasaPengiriman,Negara,ParameterDataBl, Sale, Transaksi,\
-    Transaksi,Job
+    Transaksi,Job,RefCustomer
 
 
 class SaleAdmin(ImportExportMixin, admin.ModelAdmin):
@@ -9,6 +9,10 @@ class SaleAdmin(ImportExportMixin, admin.ModelAdmin):
     search_fields = ['id']
 admin.site.register(Sale,SaleAdmin)
 
+class RefCustomerAdmin(ImportExportMixin, admin.ModelAdmin):
+    list_display = ['id',]
+    search_fields = ['id']
+admin.site.register(RefCustomer,RefCustomerAdmin)
 
 class MataUangAdmin(ImportExportMixin, admin.ModelAdmin):
     list_display = ['id','status','nama_mata_uang',]

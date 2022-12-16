@@ -58,12 +58,15 @@ urlpatterns = [
     ######menu Edit Pekerjaan
     path('e_jual/<int:id>',v_edit.edit_jual,name='e-jual'),
     ###################Data Job
-    path('d_job_done/',djob.datajob_done, name='d-job-done'),
+    path('d_job_done/',djob.datajob_done, name='d-job-done'),  # type: ignore 
     path('d_job/',djob.datajob, name='d-job'),
     ####Update Status Pekerjaan
+    path('add_ref/<int:pk>/',djob.add_ref, name='add-ref'),
+    path('edit_kursduty/<int:pk>/',djob.edit_kursduty, name='e-kursduty'),
     path('up_date/<int:pk>/',djob.update_job, name='up-job'),
     path('dtl_job/<int:pk>/',djob.detail_job, name='dtl-job'),
     path('dtl_all_job/<int:pk>/',djob.detail_job_all, name='dtl-all-job'),
+
     ###################Data Job
 
     ####show kurs

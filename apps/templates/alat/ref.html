@@ -1,0 +1,34 @@
+</script>
+<script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+<script>
+$(document).ready(function(){
+    $("#id_jumlahreff").change(function(){
+        $(this).find("option:selected").each(function(){
+            var optionValue = $(this).attr("value");
+            if(optionValue){
+                $(".ref").not("." + optionValue).hide();
+                $("." + optionValue).show();
+            }
+             else{
+                $(".ref").hide();
+            }
+        });
+    }).change();
+});
+$(document).ready(function(){
+    $("#id_jumlahreffcs").change(function(){
+        $(this).find("option:selected").each(function(){
+            var optionValue = $(this).attr("value");
+            if(optionValue){
+                $(".cs").not("." + optionValue).hide() ;
+                $("." + optionValue).show();
+            } 
+            else{
+                $(".cs").hide();
+            }
+            
+        });
+    }).change();
+});
+
+</script>

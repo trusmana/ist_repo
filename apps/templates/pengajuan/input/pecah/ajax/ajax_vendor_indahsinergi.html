@@ -7,41 +7,87 @@
     }
     function sale_cartege()
     {        
-        var prm = $('#id_paramsale').val();
         var kali = $('#id_re_export_shipment_one_qty').val();
-        var dataString ='prm='+prm+'&kali='+kali;
-        $.ajax({
-            url: "{% url 'h-salecartage' %}",
-            data: dataString,
-            dataType: "JSON",
-            success: function(data){
-                if(data.result=='1'){
-                    $('#id_cartage_warehouse_charge_one').val(parseFloat(data.price).toFixed(2));                                                    
-                }else{
-                    $('#id_cartage_warehouse_charge_one').val('0');
-                }
-            }
-        });
-    
+        var price = $('#id_price_cartage_warehouse_charge_one').val();
+        hitung  = kali * price
+        $('#id_cartage_warehouse_charge_one').val(parseFloat(hitung).toFixed(2));
     }
     function sale_cartege_two()
     {        
-        var prm = $('#id_paramsale').val();
         var kali = $('#id_re_export_shipment_two_qty').val();
-        var dataString ='prm='+prm+'&kali='+kali;
-        $.ajax({
-            url: "{% url 'h-salecartagetwo' %}",
-            data: dataString,
-            dataType: "JSON",
-            success: function(data){
-                if(data.result=='1'){
-                    $('#id_cartage_warehouse_charge_two').val(parseFloat(data.price).toFixed(2));                                                    
-                }else{
-                    $('#id_cartage_warehouse_charge_two').val('0');
-                }
-            }
-        });
-    
+        var price = $('#id_price_cartage_warehouse_charge_two').val();
+        hitung  = kali * price
+        $('#id_cartage_warehouse_charge_two').val(parseFloat(hitung).toFixed(2));     
+    }
+    function sale_cartege_tree()
+    {        
+        var kali = $('#id_re_export_shipment_tree_qty').val();
+        var price = $('#id_price_cartage_warehouse_charge_tree').val();
+        hitung  = kali * price
+        $('#id_cartage_warehouse_charge_tree').val(parseFloat(hitung).toFixed(2));     
+    }
+    function sale_cartege_four()
+    {        
+        var kali = $('#id_re_export_shipment_four_qty').val();
+        var price = $('#id_price_cartage_warehouse_charge_four').val();
+        hitung  = kali * price
+        $('#id_cartage_warehouse_charge_four').val(parseFloat(hitung).toFixed(2));     
+    }
+
+    function hitung_ground()
+    {   var satu = parseFloat($("#id_re_export_shipment_one_qty").val());     
+        var dua = parseFloat($("#id_re_export_shipment_two_qty").val());
+        var tiga = parseFloat($("#id_re_export_shipment_tree_qty").val());
+        var empat = parseFloat($("#id_re_export_shipment_four_qty").val());
+        jl = (+(satu+dua+tiga + empat).toFixed(2));
+        var price = $('#id_price_ground_handling_sale').val();
+        hitung = price * jl
+        $('#id_ground_handling_sale').val(parseFloat(hitung).toFixed(2));    
+        
+    }
+    function hitung_warehouse_charge_sale()
+    {   var satu = parseFloat($("#id_re_export_shipment_one_qty").val());     
+        var dua = parseFloat($("#id_re_export_shipment_two_qty").val());
+        var tiga = parseFloat($("#id_re_export_shipment_tree_qty").val());
+        var empat = parseFloat($("#id_re_export_shipment_four_qty").val());
+        jl = (+(satu+dua+tiga + empat).toFixed(2));
+        var price = $('#id_price_warehouse_charge_sale').val();
+        hitung = price * jl
+        $('#id_warehouse_charge_sale').val(parseFloat(hitung).toFixed(2));    
+        
+    }
+    function hitung_freight_sale()
+    {   var satu = parseFloat($("#id_re_export_shipment_one_qty").val());     
+        var dua = parseFloat($("#id_re_export_shipment_two_qty").val());
+        var tiga = parseFloat($("#id_re_export_shipment_tree_qty").val());
+        var empat = parseFloat($("#id_re_export_shipment_four_qty").val());
+        jl = (+(satu+dua+tiga + empat).toFixed(2));
+        var price = $('#id_price_freight_sale').val();
+        hitung = price * jl
+        $('#id_freight_sale').val(parseFloat(hitung).toFixed(2));    
+        
+    }
+    function hitung_handling_charge_sale()
+    {   var satu = parseFloat($("#id_re_export_shipment_one_qty").val());     
+        var dua = parseFloat($("#id_re_export_shipment_two_qty").val());
+        var tiga = parseFloat($("#id_re_export_shipment_tree_qty").val());
+        var empat = parseFloat($("#id_re_export_shipment_four_qty").val());
+        jl = (+(satu+dua+tiga + empat).toFixed(2));
+        var price = $('#id_price_handling_charge_sale').val();
+        hitung = price * jl
+        $('#id_handling_charge_sale').val(parseFloat(hitung).toFixed(2));    
+        
+    }
+    function hitung_delivery_sale()
+    {   var satu = parseFloat($("#id_re_export_shipment_one_qty").val());     
+        var dua = parseFloat($("#id_re_export_shipment_two_qty").val());
+        var tiga = parseFloat($("#id_re_export_shipment_tree_qty").val());
+        var empat = parseFloat($("#id_re_export_shipment_four_qty").val());
+        jl = (+(satu+dua+tiga + empat).toFixed(2));
+        var price = $('#id_price_delivery_sale').val();
+        hitung = price * jl
+        $('#id_delivery_sale').val(parseFloat(hitung).toFixed(2));    
+        
     }
     
     function h_ground_handling_sale()

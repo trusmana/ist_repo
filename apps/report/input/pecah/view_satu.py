@@ -68,7 +68,8 @@ def proses_input_enam(request,param):
             paramsale = slforms.cleaned_data['paramsale']
             total_shipment = slforms.cleaned_data['total_shipment']
             eta = slforms.cleaned_data['eta']
-            etd = slforms.cleaned_data['etd']            
+            etd = slforms.cleaned_data['etd']
+            awb = slforms.cleaned_data['awb']            
             re_export_shipment_one = slforms.cleaned_data['re_export_shipment_one']
             re_export_shipment_one_pcs = slforms.cleaned_data['re_export_shipment_one_pcs']
             re_export_shipment_one_qty = slforms.cleaned_data['re_export_shipment_one_qty']
@@ -77,6 +78,17 @@ def proses_input_enam(request,param):
             re_export_shipment_two_pcs = slforms.cleaned_data['re_export_shipment_two_pcs']
             re_export_shipment_two_qty = slforms.cleaned_data['re_export_shipment_two_qty']
 
+            price_cartage_warehouse_charge_one =slforms.cleaned_data['price_cartage_warehouse_charge_one']
+            price_cartage_warehouse_charge_two =slforms.cleaned_data['price_cartage_warehouse_charge_two']
+            price_cartage_warehouse_charge_tree =slforms.cleaned_data['price_cartage_warehouse_charge_tree']
+            price_cartage_warehouse_charge_four =slforms.cleaned_data['price_cartage_warehouse_charge_four']
+            price_doc_clearance_sale = slforms.cleaned_data['price_doc_clearance_sale']
+            price_ground_handling_sale = slforms.cleaned_data['price_ground_handling_sale']
+            price_warehouse_charge_sale = slforms.cleaned_data['price_warehouse_charge_sale']
+            price_handling_charge_sale = slforms.cleaned_data['price_handling_charge_sale']
+            price_delivery_sale = slforms.cleaned_data['price_delivery_sale']
+            price_freight_sale = slforms.cleaned_data['price_freight_sale']
+            
             re_export_shipment_tree = slforms.cleaned_data['re_export_shipment_tree']
             re_export_shipment_tree_pcs = slforms.cleaned_data['re_export_shipment_tree_pcs']
             re_export_shipment_tree_qty = slforms.cleaned_data['re_export_shipment_tree_qty']
@@ -100,6 +112,7 @@ def proses_input_enam(request,param):
             doc_clearance_sale = slforms.cleaned_data['doc_clearance_sale']
             ground_handling_sale = slforms.cleaned_data['ground_handling_sale']
             warehouse_charge_sale = slforms.cleaned_data['warehouse_charge_sale']
+            warehouse_charge_days = slforms.cleaned_data['warehouse_charge_days']
             handling_charge_sale = slforms.cleaned_data['handling_charge_sale']
             delivery_sale = slforms.cleaned_data['delivery_sale']
             duty_tax_sale = slforms.cleaned_data['duty_tax_sale']
@@ -141,11 +154,21 @@ def proses_input_enam(request,param):
                 cartage_warehouse_charge_tree = cartage_warehouse_charge_tree,airfreight_tree = airfreight_tree,
                 cartage_warehouse_charge_four = cartage_warehouse_charge_four,airfreight_four = airfreight_four,
                 total_shipment=total_shipment,
+                price_cartage_warehouse_charge_one =price_cartage_warehouse_charge_one,
+                price_cartage_warehouse_charge_two =price_cartage_warehouse_charge_two,
+                price_cartage_warehouse_charge_tree =price_cartage_warehouse_charge_tree,
+                price_cartage_warehouse_charge_four =price_cartage_warehouse_charge_four,
+                price_doc_clearance = price_doc_clearance_sale,
+                price_ground_handling = price_ground_handling_sale,
+                price_warehouse_charge = price_warehouse_charge_sale,
+                price_handling_charge = price_handling_charge_sale,
+                warehouse_charge_days = warehouse_charge_days,
+                price_delivery = price_delivery_sale,price_freight = price_freight_sale,
                 export_handling = export_handling_sale,freight =freight_sale,status_duty= status_duty,
                 doc_clearance = doc_clearance_sale,ground_handling = ground_handling_sale,
                 warehouse_charge = warehouse_charge_sale,handling_charge = handling_charge_sale,
                 delivery= delivery_sale,duty_tax = duty_tax_sale,tax_handling_charge = tax_handling_charge_sale,
-                eta=eta,etd=etd,shipment_value=shipment_value,insurance=insurance)
+                eta=eta,etd=etd,awb=awb,shipment_value=shipment_value,insurance=insurance)
             sale.save()    
             messages.success(request, 'Job Berhasil Di simpan')
             return redirect('d-job')            
@@ -227,6 +250,9 @@ def proses_input_satu(request,param):
             ####Sale
             paramsale = slforms.cleaned_data['paramsale']
             total_shipment = slforms.cleaned_data['total_shipment']
+            eta = slforms.cleaned_data['eta']
+            etd = slforms.cleaned_data['etd']
+            awb = slforms.cleaned_data['awb']
             re_export_shipment_one = slforms.cleaned_data['re_export_shipment_one']
             re_export_shipment_one_pcs = slforms.cleaned_data['re_export_shipment_one_pcs']
             re_export_shipment_one_qty = slforms.cleaned_data['re_export_shipment_one_qty']
@@ -238,6 +264,17 @@ def proses_input_satu(request,param):
             re_export_shipment_tree = slforms.cleaned_data['re_export_shipment_tree']
             re_export_shipment_tree_pcs = slforms.cleaned_data['re_export_shipment_tree_pcs']
             re_export_shipment_tree_qty = slforms.cleaned_data['re_export_shipment_tree_qty']
+
+            price_cartage_warehouse_charge_one =slforms.cleaned_data['price_cartage_warehouse_charge_one']
+            price_cartage_warehouse_charge_two =slforms.cleaned_data['price_cartage_warehouse_charge_two']
+            price_cartage_warehouse_charge_tree =slforms.cleaned_data['price_cartage_warehouse_charge_tree']
+            price_cartage_warehouse_charge_four =slforms.cleaned_data['price_cartage_warehouse_charge_four']
+            price_doc_clearance_sale = slforms.cleaned_data['price_doc_clearance_sale']
+            price_ground_handling_sale = slforms.cleaned_data['price_ground_handling_sale']
+            price_warehouse_charge_sale = slforms.cleaned_data['price_warehouse_charge_sale']
+            price_handling_charge_sale = slforms.cleaned_data['price_handling_charge_sale']
+            price_delivery_sale = slforms.cleaned_data['price_delivery_sale']
+            price_freight_sale = slforms.cleaned_data['price_freight_sale']
 
             re_export_shipment_four = slforms.cleaned_data['re_export_shipment_four']
             re_export_shipment_four_pcs = slforms.cleaned_data['re_export_shipment_four_pcs']
@@ -257,6 +294,7 @@ def proses_input_satu(request,param):
             doc_clearance_sale = slforms.cleaned_data['doc_clearance_sale']
             ground_handling_sale = slforms.cleaned_data['ground_handling_sale']
             warehouse_charge_sale = slforms.cleaned_data['warehouse_charge_sale']
+            warehouse_charge_days = slforms.cleaned_data['warehouse_charge_days']
             handling_charge_sale = slforms.cleaned_data['handling_charge_sale']
             delivery_sale = slforms.cleaned_data['delivery_sale']
             duty_tax_sale = slforms.cleaned_data['duty_tax_sale']
@@ -303,11 +341,21 @@ def proses_input_satu(request,param):
                 cartage_warehouse_charge_tree = cartage_warehouse_charge_tree,airfreight_tree = airfreight_tree,
                 cartage_warehouse_charge_four = cartage_warehouse_charge_four,airfreight_four = airfreight_four,
                 total_shipment=total_shipment,
+                price_cartage_warehouse_charge_one =price_cartage_warehouse_charge_one,
+                price_cartage_warehouse_charge_two =price_cartage_warehouse_charge_two,
+                price_cartage_warehouse_charge_tree =price_cartage_warehouse_charge_tree,
+                price_cartage_warehouse_charge_four =price_cartage_warehouse_charge_four,
+                price_doc_clearance = price_doc_clearance_sale,
+                price_ground_handling = price_ground_handling_sale,
+                price_warehouse_charge = price_warehouse_charge_sale,
+                price_handling_charge = price_handling_charge_sale,
+                warehouse_charge_days = warehouse_charge_days,
+                price_delivery = price_delivery_sale,price_freight = price_freight_sale,
                 export_handling = export_handling_sale,freight =freight_sale,status_duty= status_duty,
                 doc_clearance = doc_clearance_sale,ground_handling = ground_handling_sale,
                 warehouse_charge = warehouse_charge_sale,handling_charge = handling_charge_sale,
                 delivery= delivery_sale,duty_tax = duty_tax_sale,tax_handling_charge = tax_handling_charge_sale,
-                eta=eta,etd=etd,shipment_value=shipment_value,insurance=insurance)
+                eta=eta,etd=etd,awb=awb,shipment_value=shipment_value,insurance=insurance)
             sale.save()    
             messages.success(request, 'Job Berhasil Di simpan')
             return redirect('d-job')            
@@ -370,6 +418,9 @@ def proses_input_dua(request,param):
             ####Sale
             paramsale = slforms.cleaned_data['paramsale']
             total_shipment = slforms.cleaned_data['total_shipment']
+            eta = slforms.cleaned_data['eta']
+            etd = slforms.cleaned_data['etd']
+            awb = slforms.cleaned_data['awb']
             re_export_shipment_one = slforms.cleaned_data['re_export_shipment_one']
             re_export_shipment_one_pcs = slforms.cleaned_data['re_export_shipment_one_pcs']
             re_export_shipment_one_qty = slforms.cleaned_data['re_export_shipment_one_qty']
@@ -386,6 +437,17 @@ def proses_input_dua(request,param):
             re_export_shipment_four_pcs = slforms.cleaned_data['re_export_shipment_four_pcs']
             re_export_shipment_four_qty = slforms.cleaned_data['re_export_shipment_four_qty']
 
+            price_cartage_warehouse_charge_one =slforms.cleaned_data['price_cartage_warehouse_charge_one']
+            price_cartage_warehouse_charge_two =slforms.cleaned_data['price_cartage_warehouse_charge_two']
+            price_cartage_warehouse_charge_tree =slforms.cleaned_data['price_cartage_warehouse_charge_tree']
+            price_cartage_warehouse_charge_four =slforms.cleaned_data['price_cartage_warehouse_charge_four']
+            price_doc_clearance_sale = slforms.cleaned_data['price_doc_clearance_sale']
+            price_ground_handling_sale = slforms.cleaned_data['price_ground_handling_sale']
+            price_warehouse_charge_sale = slforms.cleaned_data['price_warehouse_charge_sale']
+            price_handling_charge_sale = slforms.cleaned_data['price_handling_charge_sale']
+            price_delivery_sale = slforms.cleaned_data['price_delivery_sale']
+            price_freight_sale = slforms.cleaned_data['price_freight_sale']
+
             cartage_warehouse_charge_one = slforms.cleaned_data['cartage_warehouse_charge_one']
             airfreight_one = slforms.cleaned_data['airfreight_one']
             cartage_warehouse_charge_two = slforms.cleaned_data['cartage_warehouse_charge_two']
@@ -400,6 +462,7 @@ def proses_input_dua(request,param):
             doc_clearance_sale = slforms.cleaned_data['doc_clearance_sale']
             ground_handling_sale = slforms.cleaned_data['ground_handling_sale']
             warehouse_charge_sale = slforms.cleaned_data['warehouse_charge_sale']
+            warehouse_charge_days = slforms.cleaned_data['warehouse_charge_days']
             handling_charge_sale = slforms.cleaned_data['handling_charge_sale']
             delivery_sale = slforms.cleaned_data['delivery_sale']
             duty_tax_sale = slforms.cleaned_data['duty_tax_sale']
@@ -439,11 +502,21 @@ def proses_input_dua(request,param):
                 cartage_warehouse_charge_tree = cartage_warehouse_charge_tree,airfreight_tree = airfreight_tree,
                 cartage_warehouse_charge_four = cartage_warehouse_charge_four,airfreight_four = airfreight_four,
                 total_shipment=total_shipment,
+                price_cartage_warehouse_charge_one =price_cartage_warehouse_charge_one,
+                price_cartage_warehouse_charge_two =price_cartage_warehouse_charge_two,
+                price_cartage_warehouse_charge_tree =price_cartage_warehouse_charge_tree,
+                price_cartage_warehouse_charge_four =price_cartage_warehouse_charge_four,
+                price_doc_clearance = price_doc_clearance_sale,
+                price_ground_handling = price_ground_handling_sale,
+                price_warehouse_charge = price_warehouse_charge_sale,
+                price_handling_charge = price_handling_charge_sale,
+                warehouse_charge_days = warehouse_charge_days,
+                price_delivery = price_delivery_sale,price_freight = price_freight_sale,
                 export_handling = export_handling_sale,freight =freight_sale,
                 doc_clearance = doc_clearance_sale,ground_handling = ground_handling_sale,
                 warehouse_charge = warehouse_charge_sale,handling_charge = handling_charge_sale,status_duty=status_duty,
                 delivery= delivery_sale,duty_tax = duty_tax_sale,tax_handling_charge = tax_handling_charge_sale,
-                eta=eta,etd=etd,shipment_value=shipment_value,insurance=insurance)
+                eta=eta,etd=etd,awb=awb,shipment_value=shipment_value,insurance=insurance)
             sale.save()    
             messages.success(request, 'Job Berhasil Di simpan')
             return redirect('d-job')            
@@ -515,6 +588,9 @@ def proses_input_tiga(request,param):
             ####Sale
             paramsale = slforms.cleaned_data['paramsale']
             total_shipment = slforms.cleaned_data['total_shipment']
+            eta = slforms.cleaned_data['eta']
+            etd = slforms.cleaned_data['etd']
+            awb = slforms.cleaned_data['awb']
             re_export_shipment_one = slforms.cleaned_data['re_export_shipment_one']
             re_export_shipment_one_pcs = slforms.cleaned_data['re_export_shipment_one_pcs']
             re_export_shipment_one_qty = slforms.cleaned_data['re_export_shipment_one_qty']
@@ -531,6 +607,17 @@ def proses_input_tiga(request,param):
             re_export_shipment_four_pcs = slforms.cleaned_data['re_export_shipment_four_pcs']
             re_export_shipment_four_qty = slforms.cleaned_data['re_export_shipment_four_qty']
 
+            price_cartage_warehouse_charge_one =slforms.cleaned_data['price_cartage_warehouse_charge_one']
+            price_cartage_warehouse_charge_two =slforms.cleaned_data['price_cartage_warehouse_charge_two']
+            price_cartage_warehouse_charge_tree =slforms.cleaned_data['price_cartage_warehouse_charge_tree']
+            price_cartage_warehouse_charge_four =slforms.cleaned_data['price_cartage_warehouse_charge_four']
+            price_doc_clearance_sale = slforms.cleaned_data['price_doc_clearance_sale']
+            price_ground_handling_sale = slforms.cleaned_data['price_ground_handling_sale']
+            price_warehouse_charge_sale = slforms.cleaned_data['price_warehouse_charge_sale']
+            price_handling_charge_sale = slforms.cleaned_data['price_handling_charge_sale']
+            price_delivery_sale = slforms.cleaned_data['price_delivery_sale']
+            price_freight_sale = slforms.cleaned_data['price_freight_sale']
+
             cartage_warehouse_charge_one = slforms.cleaned_data['cartage_warehouse_charge_one']
             airfreight_one = slforms.cleaned_data['airfreight_one']
             cartage_warehouse_charge_two = slforms.cleaned_data['cartage_warehouse_charge_two']
@@ -545,6 +632,7 @@ def proses_input_tiga(request,param):
             doc_clearance_sale = slforms.cleaned_data['doc_clearance_sale']
             ground_handling_sale = slforms.cleaned_data['ground_handling_sale']
             warehouse_charge_sale = slforms.cleaned_data['warehouse_charge_sale']
+            warehouse_charge_days = slforms.cleaned_data['warehouse_charge_days']
             handling_charge_sale = slforms.cleaned_data['handling_charge_sale']
             status_duty = slforms.cleaned_data['status_duty']
             delivery_sale = slforms.cleaned_data['delivery_sale']
@@ -592,11 +680,21 @@ def proses_input_tiga(request,param):
                 cartage_warehouse_charge_tree = cartage_warehouse_charge_tree,airfreight_tree = airfreight_tree,
                 cartage_warehouse_charge_four = cartage_warehouse_charge_four,airfreight_four = airfreight_four,
                 total_shipment=total_shipment,
+                price_cartage_warehouse_charge_one =price_cartage_warehouse_charge_one,
+                price_cartage_warehouse_charge_two =price_cartage_warehouse_charge_two,
+                price_cartage_warehouse_charge_tree =price_cartage_warehouse_charge_tree,
+                price_cartage_warehouse_charge_four =price_cartage_warehouse_charge_four,
+                price_doc_clearance = price_doc_clearance_sale,
+                price_ground_handling = price_ground_handling_sale,
+                price_warehouse_charge = price_warehouse_charge_sale,
+                price_handling_charge = price_handling_charge_sale,
+                warehouse_charge_days = warehouse_charge_days,
+                price_delivery= price_delivery_sale,price_freight = price_freight_sale,
                 export_handling = export_handling_sale,freight =freight_sale,status_duty=status_duty,
                 doc_clearance = doc_clearance_sale,ground_handling = ground_handling_sale,
                 warehouse_charge = warehouse_charge_sale,handling_charge = handling_charge_sale,
                 delivery= delivery_sale,duty_tax = duty_tax_sale,tax_handling_charge = tax_handling_charge_sale,
-                eta=eta,etd=etd,shipment_value=shipment_value,insurance=insurance)
+                eta=eta,etd=etd,awb=awb,shipment_value=shipment_value,insurance=insurance)
             sale.save()    
             messages.success(request, 'Job Berhasil Di simpan')
             return redirect('d-job')            
@@ -675,6 +773,9 @@ def proses_input_empat(request,param):
             ####Sale
             paramsale = slforms.cleaned_data['paramsale']
             total_shipment = slforms.cleaned_data['total_shipment']
+            eta = slforms.cleaned_data['eta']
+            etd = slforms.cleaned_data['etd']
+            awb = slforms.cleaned_data['awb']
             re_export_shipment_one = slforms.cleaned_data['re_export_shipment_one']
             re_export_shipment_one_pcs = slforms.cleaned_data['re_export_shipment_one_pcs']
             re_export_shipment_one_qty = slforms.cleaned_data['re_export_shipment_one_qty']
@@ -690,6 +791,18 @@ def proses_input_empat(request,param):
             re_export_shipment_four = slforms.cleaned_data['re_export_shipment_four']
             re_export_shipment_four_pcs = slforms.cleaned_data['re_export_shipment_four_pcs']
             re_export_shipment_four_qty = slforms.cleaned_data['re_export_shipment_four_qty']
+
+            price_cartage_warehouse_charge_one =slforms.cleaned_data['price_cartage_warehouse_charge_one']
+            price_cartage_warehouse_charge_two =slforms.cleaned_data['price_cartage_warehouse_charge_two']
+            price_cartage_warehouse_charge_tree =slforms.cleaned_data['price_cartage_warehouse_charge_tree']
+            price_cartage_warehouse_charge_four =slforms.cleaned_data['price_cartage_warehouse_charge_four']
+            price_doc_clearance_sale = slforms.cleaned_data['price_doc_clearance_sale']
+            price_ground_handling_sale = slforms.cleaned_data['price_ground_handling_sale']
+            price_warehouse_charge_sale = slforms.cleaned_data['price_warehouse_charge_sale']
+            warehouse_charge_days = slforms.cleaned_data['warehouse_charge_days']
+            price_handling_charge_sale = slforms.cleaned_data['price_handling_charge_sale']
+            price_delivery_sale = slforms.cleaned_data['price_delivery_sale']
+            price_freight_sale = slforms.cleaned_data['price_freight_sale']
 
             cartage_warehouse_charge_one = slforms.cleaned_data['cartage_warehouse_charge_one']
             airfreight_one = slforms.cleaned_data['airfreight_one']
@@ -754,11 +867,21 @@ def proses_input_empat(request,param):
                 cartage_warehouse_charge_tree = cartage_warehouse_charge_tree,airfreight_tree = airfreight_tree,
                 cartage_warehouse_charge_four = cartage_warehouse_charge_four,airfreight_four = airfreight_four,
                 total_shipment=total_shipment,
+                price_cartage_warehouse_charge_one =price_cartage_warehouse_charge_one,
+                price_cartage_warehouse_charge_two =price_cartage_warehouse_charge_two,
+                price_cartage_warehouse_charge_tree =price_cartage_warehouse_charge_tree,
+                price_cartage_warehouse_charge_four =price_cartage_warehouse_charge_four,
+                price_doc_clearance = price_doc_clearance_sale,
+                price_ground_handling = price_ground_handling_sale,
+                price_warehouse_charge = price_warehouse_charge_sale,
+                price_handling_charge = price_handling_charge_sale,
+                warehouse_charge_days = warehouse_charge_days,
+                price_delivery = price_delivery_sale,price_freight = price_freight_sale,
                 export_handling = export_handling_sale,freight =freight_sale,status_duty=status_duty,
                 doc_clearance = doc_clearance_sale,ground_handling = ground_handling_sale,
                 warehouse_charge = warehouse_charge_sale,handling_charge = handling_charge_sale,
                 delivery= delivery_sale,duty_tax = duty_tax_sale,tax_handling_charge = tax_handling_charge_sale,
-                eta=eta,etd=etd,shipment_value=shipment_value,insurance=insurance)
+                eta=eta,etd=etd,awb=awb,shipment_value=shipment_value,insurance=insurance)
             sale.save()    
             messages.success(request, 'Job Berhasil Di simpan')
             return redirect('d-job')            
@@ -835,6 +958,9 @@ def proses_input_lima(request,param):
             ####Sale
             paramsale = slforms.cleaned_data['paramsale']
             total_shipment = slforms.cleaned_data['total_shipment']
+            eta = slforms.cleaned_data['eta']
+            etd = slforms.cleaned_data['etd']
+            awb = slforms.cleaned_data['awb']
             re_export_shipment_one = slforms.cleaned_data['re_export_shipment_one']
             re_export_shipment_one_pcs = slforms.cleaned_data['re_export_shipment_one_pcs']
             re_export_shipment_one_qty = slforms.cleaned_data['re_export_shipment_one_qty']
@@ -860,12 +986,24 @@ def proses_input_lima(request,param):
             cartage_warehouse_charge_four = slforms.cleaned_data['cartage_warehouse_charge_four']
             airfreight_four = slforms.cleaned_data['airfreight_four']
 
+            price_cartage_warehouse_charge_one =slforms.cleaned_data['price_cartage_warehouse_charge_one']
+            price_cartage_warehouse_charge_two =slforms.cleaned_data['price_cartage_warehouse_charge_two']
+            price_cartage_warehouse_charge_tree =slforms.cleaned_data['price_cartage_warehouse_charge_tree']
+            price_cartage_warehouse_charge_four =slforms.cleaned_data['price_cartage_warehouse_charge_four']
+            price_doc_clearance_sale = slforms.cleaned_data['price_doc_clearance_sale']
+            price_ground_handling_sale = slforms.cleaned_data['price_ground_handling_sale']
+            price_warehouse_charge_sale = slforms.cleaned_data['price_warehouse_charge_sale']
+            price_handling_charge_sale = slforms.cleaned_data['price_handling_charge_sale']
+            price_delivery_sale = slforms.cleaned_data['price_delivery_sale']
+            price_freight_sale = slforms.cleaned_data['price_freight_sale']
+
 
             export_handling_sale = slforms.cleaned_data['export_handling_sale']
             freight_sale = slforms.cleaned_data['freight_sale']
             doc_clearance_sale = slforms.cleaned_data['doc_clearance_sale']
             ground_handling_sale = slforms.cleaned_data['ground_handling_sale']
             warehouse_charge_sale = slforms.cleaned_data['warehouse_charge_sale']
+            warehouse_charge_days = slforms.cleaned_data['warehouse_charge_days']
             handling_charge_sale = slforms.cleaned_data['handling_charge_sale']
             status_duty = slforms.cleaned_data['status_duty']
             delivery_sale = slforms.cleaned_data['delivery_sale']
@@ -917,11 +1055,21 @@ def proses_input_lima(request,param):
                 cartage_warehouse_charge_tree = cartage_warehouse_charge_tree,airfreight_tree = airfreight_tree,
                 cartage_warehouse_charge_four = cartage_warehouse_charge_four,airfreight_four = airfreight_four,
                 total_shipment=total_shipment,
+                price_cartage_warehouse_charge_one =price_cartage_warehouse_charge_one,
+                price_cartage_warehouse_charge_two =price_cartage_warehouse_charge_two,
+                price_cartage_warehouse_charge_tree =price_cartage_warehouse_charge_tree,
+                price_cartage_warehouse_charge_four =price_cartage_warehouse_charge_four,
+                price_doc_clearance = price_doc_clearance_sale,
+                price_ground_handling = price_ground_handling_sale,
+                price_warehouse_charge = price_warehouse_charge_sale,
+                price_handling_charge = price_handling_charge_sale,
+                price_delivery = price_delivery_sale,price_freight = price_freight_sale,
                 export_handling = export_handling_sale,freight =freight_sale,status_duty=status_duty,
                 doc_clearance = doc_clearance_sale,ground_handling = ground_handling_sale,
+                warehouse_charge_days = warehouse_charge_days,
                 warehouse_charge = warehouse_charge_sale,handling_charge = handling_charge_sale,
                 delivery= delivery_sale,duty_tax = duty_tax_sale,tax_handling_charge = tax_handling_charge_sale,
-                eta=eta,etd=etd,shipment_value=shipment_value,insurance=insurance)
+                eta=eta,etd=etd,awb=awb,shipment_value=shipment_value,insurance=insurance)
             sale.save()    
             messages.success(request, 'Job Berhasil Di simpan')
             return redirect('d-job')            

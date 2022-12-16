@@ -4,6 +4,8 @@ from django.core.exceptions import ObjectDoesNotExist
 import datetime
 from apps.core.models import AccountsUser as user
 
+KURS_DUTY =[('1','€'),('2','$'),('3','Rp')]
+
 STATUS_SHIPMENT =[('','--SELECT--'),('6','1'),('7','2'),('8','3'),('9','4') ]
 
 DELIVERY_TIMOR_LESTE =[('','--SELECT--'),('3','Hera'),('4','Okusi'),('5','Betano')]
@@ -420,6 +422,12 @@ class Transaksi(models.Model):
 
     def __str__(self):
         return '%s' %(self.no_pekerjaan)
+    
+    def nb_of_parcels(self):
+        return self.re_export_shipment_one_pcs + self.re_export_shipment_two_pcs
+    
+    def gross_weight(self):
+        return self.re_export_shipment_one_qty + self.re_export_shipment_two_qty
 
     def counter_nope(self):
         tot = 0
@@ -445,10 +453,16 @@ class Sale(models.Model):
     trans = models.ForeignKey(Transaksi,on_delete=models.CASCADE,null=True)
     total_shipment = models.CharField(choices=STATUS_SHIPMENT,null=True,blank=True,max_length=50)
     status_sale = models.CharField(choices=STATUS_UPDATE,null=True,blank=True,max_length=50)
+    awb = models.CharField(max_length=50,null=True,blank=True)
+    warehouse_charge_days = models.CharField(max_length=50,null=True,blank=True)
     tgl_done = models.DateField(null=True,blank=True)
     prod = models.ForeignKey(ParameterDataBl,on_delete=models.CASCADE,null=True,blank=True)
     cartage_warehouse_charge_one =models.DecimalField(max_digits=12, decimal_places=2,null=True,blank=True,default=0) # type: ignore
     cartage_warehouse_charge_two =models.DecimalField(max_digits=12, decimal_places=2,null=True,blank=True,default=0) # type: ignore
+    price_cartage_warehouse_charge_one =models.DecimalField(max_digits=12, decimal_places=2,null=True,blank=True,default=0) # type: ignore
+    price_cartage_warehouse_charge_two =models.DecimalField(max_digits=12, decimal_places=2,null=True,blank=True,default=0) # type: ignore
+    price_cartage_warehouse_charge_tree =models.DecimalField(max_digits=12, decimal_places=2,null=True,blank=True,default=0) # type: ignore
+    price_cartage_warehouse_charge_four =models.DecimalField(max_digits=12, decimal_places=2,null=True,blank=True,default=0) # type: ignore
     airfreight_one = models.DecimalField(max_digits=12, decimal_places=2,null=True,blank=True,default=0) # type: ignore
     airfreight_two = models.DecimalField(max_digits=12, decimal_places=2,null=True,blank=True,default=0) # type: ignore
     cartage_warehouse_charge_tree =models.DecimalField(max_digits=12, decimal_places=2,null=True,blank=True,default=0) # type: ignore
@@ -457,16 +471,23 @@ class Sale(models.Model):
     airfreight_four = models.DecimalField(max_digits=12, decimal_places=2,null=True,blank=True,default=0) # type: ignore
     export_handling = models.DecimalField(max_digits=12, decimal_places=2,null=True,blank=True,default=0) # type: ignore
     freight = models.DecimalField(max_digits=12, decimal_places=2,null=True,blank=True,default=0) # type: ignore
+    price_freight = models.DecimalField(max_digits=12, decimal_places=2,null=True,blank=True,default=0) # type: ignore
     doc_clearance = models.DecimalField(max_digits=12, decimal_places=2,null=True,blank=True,default=0) # type: ignore
+    price_doc_clearance = models.DecimalField(max_digits=12, decimal_places=2,null=True,blank=True,default=0) # type: ignore
     ground_handling = models.DecimalField(max_digits=12, decimal_places=2,null=True,blank=True,default=0) # type: ignore
+    price_ground_handling = models.DecimalField(max_digits=12, decimal_places=2,null=True,blank=True,default=0) # type: ignore
     warehouse_charge = models.DecimalField(max_digits=12, decimal_places=2,null=True,blank=True,default=0) # type: ignore
+    price_warehouse_charge = models.DecimalField(max_digits=12, decimal_places=2,null=True,blank=True,default=0) # type: ignore
     handling_charge = models.DecimalField(max_digits=12, decimal_places=2,null=True,blank=True,default=0) # type: ignore
+    price_handling_charge = models.DecimalField(max_digits=12, decimal_places=2,null=True,blank=True,default=0) # type: ignore
     status_duty = models.CharField(choices=STATUS_DUTY,max_length=10,null=True,blank=True)
     delivery = models.DecimalField(max_digits=12, decimal_places=2,null=True,blank=True,default=0) # type: ignore
+    price_delivery = models.DecimalField(max_digits=12, decimal_places=2,null=True,blank=True,default=0) # type: ignore
     duty_tax = models.DecimalField(max_digits=12, decimal_places=2,null=True,blank=True,default=0) # type: ignore 
     tax_handling_charge = models.DecimalField(max_digits=12, decimal_places=2,null=True,blank=True,default=0) # type: ignore 
     shipment_value = models.DecimalField(max_digits=12, decimal_places=2,null=True,blank=True,default=0) # type: ignore 
     insurance = models.DecimalField(max_digits=12, decimal_places=2,null=True,blank=True,default=0) # type: ignore 
+    kurs_duty = models.CharField(choices=KURS_DUTY,max_length=10,null=True,blank=True,default=1) # type: ignore
     etd = models.DateField(null=True,blank=True)
     eta = models.DateField(null=True,blank=True)
     cu = models.ForeignKey(user, related_name='cu_sale', editable=False, null=True, blank=True,on_delete=models.CASCADE)
@@ -482,8 +503,48 @@ class Sale(models.Model):
         return self.cartage_warehouse_charge_one + self.cartage_warehouse_charge_two + \
             self.airfreight_one + self.airfreight_two + self.export_handling + \
             self.freight + self.doc_clearance + self.ground_handling + \
-            self.warehouse_charge + self.handling_charge + \
-            self.delivery + self.duty_tax + self.tax_handling_charge 
+            self.warehouse_charge + self.handling_charge + self.delivery 
+    
+    def total_duty(self):
+        return self.duty_tax + self.tax_handling_charge + self.insurance
+
+
+JUMLAHREFF=[('','--SELECT--'),('1','1'),('2','2'),('3','3'),('4','4'),('5','5'),('6','6'),('7','7'),
+    ('8','8'),('9','9'),('10','10')]
+
+JUMLAHREFFCS=[('','--SELECT--'),('11','1'),('12','2'),('13','3'),('14','4'),('15','5'),('16','6'),('17','7'),
+    ('18','8'),('19','9'),('20','10')]  
+    
+class RefCustomer(models.Model):
+    fkref = models.ForeignKey(Sale, verbose_name=("fkreff"), on_delete=models.CASCADE)
+    jumlahreff = models.CharField(choices=JUMLAHREFF,blank=True,null=True,max_length=20)
+    jumlahreffcs = models.CharField(choices=JUMLAHREFFCS,blank=True,null=True,max_length=20)
+    ref1 = models.CharField(blank=True,null=True,max_length=20 )
+    ref2 = models.CharField(blank=True,null=True,max_length=20 )
+    ref3 = models.CharField(blank=True,null=True,max_length=20 )
+    ref4 = models.CharField(blank=True,null=True,max_length=20 )
+    ref5 = models.CharField(blank=True,null=True,max_length=20 )
+    ref6 = models.CharField(blank=True,null=True,max_length=20 )
+    ref7 = models.CharField(blank=True,null=True,max_length=20 )
+    ref8 = models.CharField(blank=True,null=True,max_length=20 )
+    ref9 = models.CharField(blank=True,null=True,max_length=20 )
+    ref10 = models.CharField(blank=True,null=True,max_length=20)
+
+    csref1 = models.CharField(blank=True,null=True,max_length=20 )
+    csref2 = models.CharField(blank=True,null=True,max_length=20 )
+    csref3 = models.CharField(blank=True,null=True,max_length=20 )
+    csref4 = models.CharField(blank=True,null=True,max_length=20 )
+    csref5 = models.CharField(blank=True,null=True,max_length=20 )
+    csref6 = models.CharField(blank=True,null=True,max_length=20 )
+    csref7 = models.CharField(blank=True,null=True,max_length=20 )
+    csref8 = models.CharField(blank=True,null=True,max_length=20 )
+    csref9 = models.CharField(blank=True,null=True,max_length=20 )
+    csref10 = models.CharField(blank=True,null=True,max_length=20 )
+    
+    class Meta:
+        db_table = 'refcustomer'
+        verbose_name = 'RefCustomer'
+
 
 class Job(models.Model):
     tanggal_invoice = models.DateField()# Dipakai Semua vendor

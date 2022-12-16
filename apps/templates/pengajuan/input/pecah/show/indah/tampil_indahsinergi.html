@@ -5,9 +5,9 @@
     </div>
 </div>
 <div class="formSep control-group">
-    <label class="control-label">{{ sl.eta.label }} / {{ sl.etd.label }}</label>
+    <label class="control-label">{{ sl.eta.label }} / {{ sl.etd.label }} / {{ sl.awb.label }}</label>
     <div class="controls">
-        {{ sl.eta }} {{sl.etd}}
+        {{ sl.eta }} {{sl.etd}} {{sl.awb}}
     </div>
 </div>
 <div class="formSep control-group">
@@ -28,12 +28,16 @@
     <div class="controls "> <span class="add-on">$</span>{{sl.airfreight_one}} </div>							
 </div>
 <div class="formSep control-group input-prepend 6 7 8 9 empat">
+    <label class="control-label">{{ sl.price_cartage_warehouse_charge_one.label }}  </label>
+    <div class="controls"><span class="add-on">$</span>{{ sl.price_cartage_warehouse_charge_one }}</div>
+</div>
+<div class="formSep control-group input-prepend 6 7 8 9 empat">
     <label class="control-label">{{ sl.cartage_warehouse_charge_one.label }}  </label>
     <div class="controls"><span class="add-on">$</span>{{ sl.cartage_warehouse_charge_one }}</div>
 </div>
 <!--Two-->
 <div class="formSep control-group 7 8 9 empat">
-    <label class="control-label"><b>2</b>{{ sl.re_export_shipment_two.label }} </label>
+    <label class="control-label"><b>2</b> {{ sl.re_export_shipment_two.label }} </label>
     <div class="controls">
         {{ sl.re_export_shipment_two }} {{sl.re_export_shipment_two_pcs}} {{sl.re_export_shipment_two_qty}}
     </div>
@@ -45,6 +49,12 @@
     </div>
 </div>
 <div class="formSep control-group input-prepend 7 8 9 empat">
+    <label class="control-label">{{ sl.price_cartage_warehouse_charge_two.label }}  </label>
+    <div class="controls"><span class="add-on">$</span>
+        {{ sl.price_cartage_warehouse_charge_two }}
+    </div>
+</div>
+<div class="formSep control-group input-prepend 7 8 9 empat">
     <label class="control-label">{{ sl.cartage_warehouse_charge_two.label }}  </label>
     <div class="controls"><span class="add-on">$</span>
         {{ sl.cartage_warehouse_charge_two }}
@@ -52,7 +62,7 @@
 </div>
 <!--tiga-->
 <div class="formSep control-group 8 9 empat">
-    <label class="control-label"><b>3</b>{{ sl.re_export_shipment_tree.label }}</label>
+    <label class="control-label"><b>3</b> {{ sl.re_export_shipment_tree.label }}</label>
     <div class="controls">
         {{ sl.re_export_shipment_tree }} {{sl.re_export_shipment_tree_pcs}} {{sl.re_export_shipment_tree_qty}}
     </div>
@@ -64,6 +74,12 @@
     </div>
 </div>
 <div class="formSep control-group input-prepend 8 9 empat">
+    <label class="control-label">{{ sl.price_cartage_warehouse_charge_tree.label }}  </label>
+    <div class="controls"><span class="add-on">$</span>
+        {{ sl.price_cartage_warehouse_charge_tree }}
+    </div>
+</div>
+<div class="formSep control-group input-prepend 8 9 empat">
     <label class="control-label">{{ sl.cartage_warehouse_charge_tree.label }}  </label>
     <div class="controls"><span class="add-on">$</span>
         {{ sl.cartage_warehouse_charge_tree }}
@@ -72,7 +88,7 @@
 <!--Akhir tiga-->
 <!--Empat-->
 <div class="formSep control-group 9 empat">
-    <label class="control-label"><b>4</b>{{ sl.re_export_shipment_four.label }} </label>
+    <label class="control-label"><b>4</b> {{ sl.re_export_shipment_four.label }} </label>
     <div class="controls">
         {{ sl.re_export_shipment_four }} {{sl.re_export_shipment_four_pcs}} {{sl.re_export_shipment_four_qty}}
     </div>
@@ -81,6 +97,12 @@
     <label class="control-label">{{ sl.airfreight_four.label }}  </label>
     <div class="controls"><span class="add-on">$</span>
         {{ sl.airfreight_four }}
+    </div>
+</div>
+<div class="formSep control-group input-prepend 9 empat">
+    <label class="control-label">{{ sl.price_cartage_warehouse_charge_four.label }}  </label>
+    <div class="controls"><span class="add-on">$</span>
+        {{ sl.price_cartage_warehouse_charge_four }}
     </div>
 </div>
 <div class="formSep control-group input-prepend 9 empat">
@@ -99,17 +121,34 @@
     </div>
 </div>
 <div class="formSep control-group input-prepend">
+    <label class="control-label">{{ sl.price_freight_sale.label }}  </label>
+    <div class="controls"><span class="add-on">$</span>
+        {{ sl.price_freight_sale }}
+    </div>
+</div>
+<div class="formSep control-group input-prepend">
     <label class="control-label">{{ sl.freight_sale.label }}  </label>
     <div class="controls"><span class="add-on">$</span>
         {{ sl.freight_sale }}
     </div>
 </div>
 
-
+<div class="formSep control-group input-prepend">
+    <label class="control-label">{{ sl.price_doc_clearance_sale.label }}  </label>
+    <div class="controls"><span class="add-on">$</span>
+        {{ sl.price_doc_clearance_sale }}
+    </div>
+</div>
 <div class="formSep control-group input-prepend">
     <label class="control-label">{{ sl.doc_clearance_sale.label }}  </label>
     <div class="controls"><span class="add-on">$</span>
         {{ sl.doc_clearance_sale }}
+    </div>
+</div>
+<div class="formSep control-group input-prepend">
+    <label class="control-label">{{ sl.price_ground_handling_sale.label }}  </label>
+    <div class="controls"><span class="add-on">$</span>
+        {{ sl.price_ground_handling_sale }}                                
     </div>
 </div>
 <div class="formSep control-group input-prepend">
@@ -119,15 +158,40 @@
     </div>
 </div>
 <div class="formSep control-group input-prepend">
+    <label class="control-label">{{ sl.price_warehouse_charge_sale.label }}  </label>
+    <div class="controls"><span class="add-on">$</span>
+        {{ sl.price_warehouse_charge_sale }}                                
+    </div>
+</div>
+<div class="formSep control-group input-prepend">
     <label class="control-label">{{ sl.warehouse_charge_sale.label }}  </label>
     <div class="controls"><span class="add-on">$</span>
         {{ sl.warehouse_charge_sale }}                                
+    </div>
+</div>
+<div class="formSep control-group input-prepend">
+    <label class="control-label">{{ sl.warehouse_charge_days.label }}  </label>
+    <div class="controls"><span class="add-on">$</span>
+        {{ sl.warehouse_charge_days }}                                
+    </div>
+</div>
+
+<div class="formSep control-group input-prepend">
+    <label class="control-label">{{ sl.price_handling_charge_sale.label }}  </label>
+    <div class="controls"><span class="add-on">$</span>
+        {{ sl.price_handling_charge_sale }}                                
     </div>
 </div>                        
 <div class="formSep control-group input-prepend">
     <label class="control-label">{{ sl.handling_charge_sale.label }}  </label>
     <div class="controls"><span class="add-on">$</span>
         {{ sl.handling_charge_sale }}                                
+    </div>
+</div>
+<div class="formSep control-group input-prepend">
+    <label class="control-label">{{ sl.price_delivery_sale.label }}  </label>
+    <div class="controls"><span class="add-on">$</span>
+        {{ sl.price_delivery_sale }}                                
     </div>
 </div>
 <div class="formSep control-group input-prepend">

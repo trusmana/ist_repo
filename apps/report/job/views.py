@@ -1,10 +1,10 @@
 from django.contrib.auth.decorators import login_required
-from django.shortcuts import render
+from django.shortcuts import render,redirect
 from django.conf import settings
 from django.http import HttpResponse
-
-import datetime,io,xlsxwriter
-from apps.products.models import Job
+from django.contrib import messages
+import io,xlsxwriter
+from apps.products.models import Job,Sale
 from apps.report.job.forms import DateForm
 
 @login_required(login_url=settings.LOGIN_URL)
@@ -58,7 +58,7 @@ def report_job(request):
                 worksheet.write_datetime(row, col + 1 , t.tanggal_invoice,date_format)
                 worksheet.write_number(row, col + 2 , t.transaksi.no_pekerjaan)
                 worksheet.write_string(row, col + 3 , t.vendor.nama_jasa_pengiriman)
-                worksheet.write_string(row, col + 4 , t.transaksi.commodity.nama )
+                worksheet.write_string(row, col + 4 , t.transaksi.commodity.nama ) # type: ignore
                 worksheet.write_string(row, col + 5 , t.no_invoice )
                 if t.no_invoice_sl_2:
                     worksheet.write_string(row, col + 6 , t.no_invoice_sl_2 )
@@ -137,7 +137,7 @@ def report_job_done(request):
                 worksheet.write_datetime(row, col + 1 , t.tanggal_invoice,date_format)
                 worksheet.write_number(row, col + 2 , t.transaksi.no_pekerjaan)
                 worksheet.write_string(row, col + 3 , t.vendor.nama_jasa_pengiriman)
-                worksheet.write_string(row, col + 4 , t.transaksi.commodity.nama )
+                worksheet.write_string(row, col + 4 , t.transaksi.commodity.nama )# type: ignore
                 worksheet.write_string(row, col + 5 , t.no_invoice )
                 if t.no_invoice_sl_2:
                     worksheet.write_string(row, col + 6 , t.no_invoice_sl_2 )

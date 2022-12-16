@@ -1,9 +1,9 @@
 {% load static %}
+{% load humanize %}
 <html>
     <head>
-      {% include 'report/cetak/style.html' %}
+    {% include "report/cetak/style.html" %}
     </head>
-     
     <page size="A4">
       <body>
 
@@ -12,7 +12,7 @@
           <table style="text-align:left; font-size:12px; top:240px; border:none; width:100%;">
             <thead >
               <tr style="border:none;">
-                <td span="1" colspan="3" style="width: 25%; border:none;"><b>Indah Sinergi Trading Unipessoal. Lda,</b></td>
+                <td span="1" colspan="3" style="width: 25%; border:none;"><b>{{data.prod.vendor}},</b></td>
               </tr>
 
               <tr style="border:none;">
@@ -44,13 +44,13 @@
               <tr style="border:none;">
                 <td span="1" style="width: 25%; border:none;">INVOICE NO</td>
                 <td span="1" style="width: 1%; border:none;">: </td>
-                <td span="1" style="width: 30%; border:none;">{{ist.trans.no_pekerjaan}}</td>
+                <td span="1" style="width: 30%; border:none;">{{data.trans.no_pekerjaan}}</td>
               </tr>
 
               <tr style="border:none;">
                 <td span="1" style="width: 25%; border:none;">INVOICE DATE</td>
                 <td span="1" style="width: 1%; border:none;">: </td>
-                <td span="1" style="width: 30%; border:none;">{{ist.cdate|date:"d-m-Y"}}</td>
+                <td span="1" style="width: 30%; border:none;">{{data.cdate|date:"d-m-Y"}}</td>
               </tr>
 
               <tr style="border:none;">
@@ -82,7 +82,7 @@
 
         <table height="200px"  style="text-align:left; margin-top:120px; font-size:11px; border-top:none; width:86%; margin-left:-30px;">
           <thead>
-              <tr>
+              <tr style="background-color: #AFEEEE">
                 <th style="width: 30%; text-align: center;">Shipper</th>
                 <th style="width: 30%; text-align: Center;">Consignee</th>
                 <th style="width: 30%; text-align: Center;">Descriptions of Goods</th>
@@ -90,35 +90,34 @@
           </thead>
           <tbody>
             <tr >
-              <td style="text-align:center; padding:15px 0px;">WARTSILA GLOBAL LOGISTICS SERVICES, KAMPEN - NETHERLAND</td>
+              <td style="text-align:center; padding:15px 0px;">WARTSILA GLOBAL LOGdataICS SERVICES, KAMPEN - NETHERLAND</td>
               <td style="text-align:center; padding:15px 0px;">WARTSILA INDONESIA, R.P. DILI, TIMOR LESTE</td>
-              <td style="text-align:center; padding:15px 0px;">{{ist.trans.commodity}}</td>
+              <td style="text-align:center; padding:15px 0px;">{{data.trans.commodity}}</td>
             </tr>
           </tbody>
         </table>
 
         <table height="200px"  style="text-align:left; font-size:11px; border-top:none; width:86%; margin-left:-30px;">
           <thead >
-              <tr>
-                <th style="width: 15%; text-align: center;">Invoice Ref#</th>
-                <th style="width: 15%; text-align: center;">Order#</th>
-                <th style="width: 32%; text-align: Center;">Delivery#</th>
+              <tr style="background-color: #AFEEEE">
+                <th style="width: 22%; text-align: center;">Invoice Ref#</th>
+                <th style="width: 40%; text-align: Center;">Customer Reference</th>
                 <th style="width: 50%; text-align: Center;">AWB ORIGIN</th>
               </tr>
           </thead>
           <tbody>
             <tr >
-              <td style="text-align:center; padding:5px 0px;">8702054<br>8700531<br>8700352</td>
-              <td style="text-align:center; padding:5px 0px;">8702054<br>8700531<br>8700352</td>
-              <td style="text-align:center; padding:5px 0px;">PR62139852<br>PO4505237662</td>
-              <td style="text-align:center; padding:5px 0px;">AMS220855015 (2PCS/206.5KG)<br>AMS220840959 (1PCS/36KG)</td>
+              <td style="text-align:center; padding:5px 0px;">{% include 'job/refdata.html' %}</td>
+              <td style="text-align:center; padding:5px 0px;">{% include 'job/refcustomer.html' %}</td>
+              <td style="text-align:center; padding:5px 0px;">{{data.trans.re_export_shipment_one }} ({{data.trans.re_export_shipment_one_pcs}} PCS / {{data.trans.re_export_shipment_one_qty}} KG )<br>
+                {{data.trans.re_export_shipment_two }} ({{data.trans.re_export_shipment_two_pcs}} PCS / {{data.trans.re_export_shipment_two_qty}} KG )</td>
             </tr>
           </tbody>
         </table>
 
         <table height="200px"  style="text-align:left; font-size:11px; border-top:none; width:86%; margin-left:-30px;">
           <thead>
-              <tr>
+              <tr style="background-color: #AFEEEE">
                 <th style="width: 30%; text-align: center;">AWB</th>
                 <th style="width: 30%; text-align: Center;">ETD</th>
                 <th style="width: 30%; text-align: Center;">ETA</th>
@@ -126,16 +125,16 @@
           </thead>
           <tbody>
             <tr >
-              <td style="text-align:center; padding:2px 0px;">97504010930</td>
-              <td style="text-align:center; padding:2px 0px;">19/4/2022</td>
-              <td style="text-align:center; padding:2px 0px;">22/4/2022</td>
+              <td style="text-align:center; padding:2px 0px;">{{data.awb}}</td>
+              <td style="text-align:center; padding:2px 0px;">{{data.etd|date:'d/m/Y'}}</td>
+              <td style="text-align:center; padding:2px 0px;">{{data.eta|date:'d/m/Y'}}</td>
             </tr>
           </tbody>
         </table>
 
         <table height="200px"  style="text-align:left; font-size:11px; border-top:none; width:86%; margin-left:-30px;">
           <thead>
-              <tr>
+              <tr style="background-color: #AFEEEE">
                 <th style="width: 15%; text-align: center;">Nb of Parcels</th>
                 <th style="width: 15%; text-align: Center;">Gross Weight</th>
                 <th style="width: 20%; text-align: Center;">Chargeable W.</th>
@@ -159,7 +158,7 @@
 
         <table height="200px"  style="text-align:left; font-size:11px; border-top:none; width:86%; margin-left:-30px;">
           <thead>
-              <tr>
+              <tr style="background-color: #AFEEEE">
                 <th style="width: 45%; text-align: center;">DETAIL OF CHARGE</th>
                 <th style="width: 15%; text-align: Center;">QUANTITY</th>
                 <th style="width: 13%; text-align: Center;">PRICE</th>
@@ -175,8 +174,8 @@
             </tr>
 
             <tr >
-              <td style="text-align:left; padding:2px 0px; border-bottom:none; border-top:none;"><b>- AMS220855015 (2PCS/206.5KG)</b></td>
-              <td style="text-align:center; padding:2px 0px; border-bottom:none; border-top:none;"><b>206.50 &nbsp;&nbsp;KG</b></td>
+              <td style="text-align:left; padding:2px 0px; border-bottom:none; border-top:none;"><b>- {{data.trans.re_export_shipment_one }} ({{data.trans.re_export_shipment_one_pcs}} / {{data.trans.re_export_shipment_one_qty}} )</b></td>
+              <td style="text-align:center; padding:2px 0px; border-bottom:none; border-top:none;"><b>{{data.trans.re_export_shipment_one_qty}}</b></td>
               <td style="text-align:center; padding:2px 0px; border-bottom:none; border-top:none;">&nbsp;</td>
               <td style="text-align:center; padding:2px 0px; border-bottom:none; border-top:none;">&nbsp;</td>
             </tr>
@@ -185,19 +184,19 @@
               <td style="text-align:left; padding:2px 8px; border-bottom:none; border-top:none;">Airfreight Import Handling</td>
               <td style="text-align:center; padding:2px 0px; border-bottom:none; border-top:none;">1.00 &nbsp;&nbsp;AWB</td>
               <td style="text-align:center; padding:2px 0px; border-bottom:none; border-top:none;">&nbsp;</td>
-              <td style="text-align:center; padding:2px 0px; border-bottom:none; border-top:none;">$ &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; $257.40</td>
+              <td style="text-align:center; padding:2px 0px; border-bottom:none; border-top:none;"> {{data.prod.vendor.nilai_kurs.simbol}} {{data.airfreight_one|intcomma}}</td>
             </tr>
 
             <tr >
               <td style="text-align:left; padding:2px 8px; border-bottom:none; border-top:none;">Cartage and warehouse charge</td>
-              <td style="text-align:center; padding:2px 0px; border-bottom:none; border-top:none;">206.50 &nbsp;&nbsp;KG</td>
-              <td style="text-align:center; padding:2px 0px; border-bottom:none; border-top:none;">$ &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; 3.25</td>
-              <td style="text-align:center; padding:2px 0px; border-bottom:none; border-top:none;">$ &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; $257.40</td>
+              <td style="text-align:center; padding:2px 0px; border-bottom:none; border-top:none;">{{data.trans.re_export_shipment_one_qty}} &nbsp;&nbsp;KG</td>
+              <td style="text-align:center; padding:2px 0px; border-bottom:none; border-top:none;">  {{data.prod.vendor.nilai_kurs.simbol}} {{data.price_cartage_warehouse_charge_one}}</td>
+              <td style="text-align:center; padding:2px 0px; border-bottom:none; border-top:none;">  {{data.prod.vendor.nilai_kurs.simbol}} {{data.cartage_warehouse_charge_one|intcomma }}</td>
             </tr>
 
             <tr >
-              <td style="text-align:left; padding:2px 0px; border-bottom:none; border-top:none;"><b>- AAMS220840959 (1PCS/36KG)</b></td>
-              <td style="text-align:center; padding:2px 0px; border-bottom:none; border-top:none;"><b>36.00 &nbsp;&nbsp;KG</b></td>
+              <td style="text-align:left; padding:2px 0px; border-bottom:none; border-top:none;"><b>- {{data.trans.re_export_shipment_two }} ({{data.trans.re_export_shipment_two_pcs}} / {{data.trans.re_export_shipment_two_qty}} )</b></td>
+              <td style="text-align:center; padding:2px 0px; border-bottom:none; border-top:none;"><b>{{data.trans.re_export_shipment_two_qty}} &nbsp;&nbsp;KG</b></td>
               <td style="text-align:center; padding:2px 0px; border-bottom:none; border-top:none;">&nbsp;</td>
               <td style="text-align:center; padding:2px 0px; border-bottom:none; border-top:none;">&nbsp;</td>
             </tr>
@@ -206,17 +205,77 @@
               <td style="text-align:left; padding:2px 8px; border-bottom:none; border-top:none;">Airfreight Import Handling</td>
               <td style="text-align:center; padding:2px 0px; border-bottom:none; border-top:none;">1.00 &nbsp;&nbsp;AWB</td>
               <td style="text-align:center; padding:2px 0px; border-bottom:none; border-top:none;">&nbsp;</td>
-              <td style="text-align:center; padding:2px 0px; border-bottom:none; border-top:none;">$ &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; $257.40</td>
+              <td style="text-align:center; padding:2px 0px; border-bottom:none; border-top:none;"> {{data.prod.vendor.nilai_kurs.simbol}} {{data.airfreight_two|intcomma}}</td>
             </tr>
 
+            <tr - >
+              <td style="text-align:left; padding:2px 8px; border-bottom:none; border-top:none;"> -Cartage and warehouse charge</td>
+              <td style="text-align:center; padding:2px 0px; border-bottom:none; border-top:none;">{{data.trans.re_export_shipment_two_qty}} &nbsp;&nbsp;KG</td>
+              <td style="text-align:center; padding:2px 0px; border-bottom:none; border-top:none;"> {{data.prod.vendor.nilai_kurs.simbol}} {{data.price_cartage_warehouse_charge_two}}</td>
+              <td style="text-align:center; padding:2px 0px; border-bottom:none; border-top:none;"> {{data.prod.vendor.nilai_kurs.simbol}} {{data.cartage_warehouse_charge_two|intcomma }}</td>
+            </tr>
             <tr >
-              <td style="text-align:left; padding:2px 8px; border-bottom:none; border-top:none;">Cartage and warehouse charge</td>
-              <td style="text-align:center; padding:2px 0px; border-bottom:none; border-top:none;">36.00 &nbsp;&nbsp;KG</td>
-              <td style="text-align:center; padding:2px 0px; border-bottom:none; border-top:none;">$ &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; 3.25</td>
-              <td style="text-align:center; padding:2px 0px; border-bottom:none; border-top:none;">$ &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; $117.00</td>
+              <td style="text-align:left; padding:2px 8px; border-bottom:none; border-top:none;"><!--kosong Satu row--></td>
+              <td style="text-align:center; padding:2px 0px; border-bottom:none; border-top:none;"></td>
+              <td style="text-align:center; padding:2px 0px; border-bottom:none; border-top:none;"></td>
+              <td style="text-align:center; padding:2px 0px; border-bottom:none; border-top:none;"></td>
             </tr>
 
-
+            <tr - >
+              <td style="text-align:left; padding:2px 8px; border-bottom:none; border-top:none;"> -Export Handling</td>
+              <td style="text-align:center; padding:2px 0px; border-bottom:none; border-top:none;">1.00 &nbsp;&nbsp;AWB </td>
+              <td style="text-align:center; padding:2px 0px; border-bottom:none; border-top:none;">  </td>
+              <td style="text-align:center; padding:2px 0px; border-bottom:none; border-top:none;"> {{data.prod.vendor.nilai_kurs.simbol}} {{data.export_handling|intcomma}}</td>
+            </tr>
+            <tr - >
+              <td style="text-align:left; padding:2px 8px; border-bottom:none; border-top:none;"> -{{data.trans.products.get_jenis_produk_display}} {{data.trans.products.point_satu}} - {{data.trans.products.point_dua}} - {{data.trans.products.point_tiga}}</td>
+              <td style="text-align:center; padding:2px 0px; border-bottom:none; border-top:none;">{{data.trans.gross_weight}} &nbsp;&nbsp;KG</td>
+              <td style="text-align:center; padding:2px 0px; border-bottom:none; border-top:none;"> {{data.nilai_kurs.mtu.kode_matauang}} {{data.price_freight|intcomma}}</td>
+              <td style="text-align:center; padding:2px 0px; border-bottom:none; border-top:none;"> {{data.prod.vendor.nilai_kurs.simbol}} {{data.freight|intcomma}}</td>
+            </tr>
+            <tr>
+              <td style="text-align:left; padding:2px 8px; border-bottom:none; border-top:none;"> -</td>
+              <td style="text-align:center; padding:2px 0px; border-bottom:none; border-top:none;"> &nbsp;&nbsp; &nbsp;&nbsp;</td>
+              <td style="text-align:center; padding:2px 0px; border-bottom:none; border-top:none;">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; </td>
+              <td style="text-align:center; padding:2px 0px; border-bottom:none; border-top:none;"> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; </td>
+            </tr>
+            <tr>
+              <td style="text-align:left; padding:2px 8px; border-bottom:none; border-top:none;"><b>Local Handling Charge</b></td>
+              <td style="text-align:center; padding:2px 0px; border-bottom:none; border-top:none;"></td>
+              <td style="text-align:center; padding:2px 0px; border-bottom:none; border-top:none;"></td>
+              <td style="text-align:center; padding:2px 0px; border-bottom:none; border-top:none;"></td>
+            </tr>
+            <tr>
+              <td style="text-align:left; padding:2px 8px; border-bottom:none; border-top:none;"> -Doc and Clearance</td>
+              <td style="text-align:center; padding:2px 0px; border-bottom:none; border-top:none;">1.00 &nbsp;&nbsp;AWB &nbsp;&nbsp;</td>
+              <td style="text-align:center; padding:2px 0px; border-bottom:none; border-top:none;">{{data.prod.vendor.nilai_kurs.simbol}} {{data.price_doc_clearance}} </td>
+              <td style="text-align:center; padding:2px 0px; border-bottom:none; border-top:none;">{{data.prod.vendor.nilai_kurs.simbol}} {{data.doc_clearance|intcomma}} </td>
+            </tr>
+            <tr>
+              <td style="text-align:left; padding:2px 8px; border-bottom:none; border-top:none;"> -Ground Handling</td>
+              <td style="text-align:center; padding:2px 0px; border-bottom:none; border-top:none;"> {{data.trans.gross_weight}}KG</td>
+              <td style="text-align:center; padding:2px 0px; border-bottom:none; border-top:none;"> {{data.prod.vendor.nilai_kurs.simbol}} {{data.price_ground_handling}}</td>
+              <td style="text-align:center; padding:2px 0px; border-bottom:none; border-top:none;">  {{data.prod.vendor.nilai_kurs.simbol}} {{data.ground_handling|intcomma}} </td>
+            </tr>
+            <tr>
+              <td style="text-align:left; padding:2px 8px; border-bottom:none; border-top:none;"> -Warehouse Charge ({{data.warehouse_charge_days}}  Days)</td>
+              <td style="text-align:center; padding:2px 0px; border-bottom:none; border-top:none;"> {{data.trans.gross_weight}} KG</td>
+              <td style="text-align:center; padding:2px 0px; border-bottom:none; border-top:none;"> {{data.prod.vendor.nilai_kurs.simbol}} {{data.price_warehouse_charge}} </td>
+              <td style="text-align:center; padding:2px 0px; border-bottom:none; border-top:none;"> {{data.prod.vendor.nilai_kurs.simbol}} {{data.warehouse_charge|intcomma}} </td>
+            </tr>
+            
+            <tr>
+              <td style="text-align:left; padding:2px 8px; border-bottom:none; border-top:none;"> -Handling Charge</td>
+              <td style="text-align:center; padding:2px 0px; border-bottom:none; border-top:none;"> {{data.trans.gross_weight}} KG</td>
+              <td style="text-align:center; padding:2px 0px; border-bottom:none; border-top:none;"> {{data.prod.vendor.nilai_kurs.simbol}} {{data.price_handling_charge }}</td>
+              <td style="text-align:center; padding:2px 0px; border-bottom:none; border-top:none;">{{data.prod.vendor.nilai_kurs.simbol}} {{data.handling_charge|intcomma}} </td>
+            </tr>
+            <tr>
+              <td style="text-align:left; padding:2px 8px; border-bottom:none; border-top:none;"> -Delivery</td>
+              <td style="text-align:center; padding:2px 0px; border-bottom:none; border-top:none;"> {{data.trans.gross_weight}} KG</td>
+              <td style="text-align:center; padding:2px 0px; border-bottom:none; border-top:none;"> {{data.prod.vendor.nilai_kurs.simbol}} {{data.price_delivery }}</td>
+              <td style="text-align:center; padding:2px 0px; border-bottom:none; border-top:none;">{{data.prod.vendor.nilai_kurs.simbol}} {{data.delivery|intcomma}} </td>
+            </tr>
           </tbody>
         </table>
 
@@ -225,7 +284,7 @@
               <tr>
                 <th style="width: 45%; text-align: center;">&nbsp;</th>
                 <th style="width: 28%; text-align: Center;">GRAND TOTAL</th>
-                <th style="width: 17%; text-align: Center;">$ 12,755.30</th>
+                <th style="width: 17%; text-align: Center;"> {{data.total_sale|intcomma}}</th>
               </tr>
           </thead>
         </table>

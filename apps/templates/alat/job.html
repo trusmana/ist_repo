@@ -23,23 +23,46 @@ $(document).ready(function($) {
 <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
 <script>
 $(document).ready(function(){
-    $("select").change(function(){
+    $("#id_total_shipment").change(function(){
         $(this).find("option:selected").each(function(){
             var optionValue = $(this).attr("value");
             if(optionValue){
-                ///$(".box").not("." + optionValue).hide() ;
-                $("." + optionValue).show();
-            } 
-            else{
-                $(".box").hide();
-            }
-            if(optionValue){
-                ///$(".empat").not("." + optionValue).hide();
+                $(".empat").not("." + optionValue).hide();
                 $("." + optionValue).show();
             }
              else{
                 $(".empat").hide();
             }
+        });
+    }).change();
+});
+$(document).ready(function(){
+    $("#id_status_duty").change(function(){
+        $(this).find("option:selected").each(function(){
+            var optionValue = $(this).attr("value");
+            if(optionValue){
+                $(".box").not("." + optionValue).hide() ;
+                $("." + optionValue).show();
+            } 
+            else{
+                $(".box").hide();
+            }
+            
+        });
+    }).change();
+});
+$(document).ready(function(){
+    $("#id_delivey_to").change(function(){
+        $(this).find("option:selected").each(function(){
+            var optionValue = $(this).attr("value");
+            if(optionValue){
+                $(".box").not("." + optionValue).hide() ;
+                $("." + optionValue).show();
+            } 
+            else{
+                $(".box").hide();
+            }
+            
         });
     }).change();
 });

@@ -249,4 +249,16 @@ Onproses:
    - tambah pilihan reexport maksimal 4 Done@tedi_black 14122022 Silahkan di uji
    - penambahan inputan shipment value dan insuransi dan  10% dari nilai duty tax Done@tedi_black 14122022 Silahkan di uji
    - estimasi departur dan estimasi arrival Done@tedi_black 14122022 Silahkan di uji
-    
+
+Request by User 15/12/2022
+--- 
+1. Airfreight SIN - DPS - DIL tidak ada price,(Cartage and warehouse charge), (Cartage and warehouse charge )
+2. Taxs Shipment Value bisa di pilih = euro,dolar dan rupiah , sum belum betul
+3. Menu Input Reff  Dan Customer Reff
+4. Menu Perubahan Mata Uang DI Duty Tax
+
+Action :
+1. Done Silalahkan Di Coba @16122022 tedi_black 
+2. Done Silalahkan Di Coba @16122022 tedi_black 
+3. Done Silalahkan Di Coba @16122022 tedi_black 
+4. Done Silalahkan Di Coba @16122022 tedi_black 
