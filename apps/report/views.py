@@ -37,7 +37,7 @@ class list_matauang(View):
             html_template = loader.get_template('page-500.html')
             return HttpResponse(html_template.render(self.context, request))
 
-        return render(request, template, context)
+        return render(request, template, context)  # type: ignore
     
     def post(self, request, pk=None, action=None):
         self.update_instance(request, pk)
@@ -77,7 +77,7 @@ class list_matauang(View):
 
         transactions = MataUang.objects.filter(filter_params) if filter_params else MataUang.objects.all()
 
-        self.context['transactions'], self.context['info'] = set_pagination(request, transactions)
+        self.context['transactions'], self.context['info'] = set_pagination(request, transactions)  # type: ignore
         if not self.context['transactions']:
             return False, self.context['info']
 
@@ -86,8 +86,8 @@ class list_matauang(View):
     def edit(self, request, pk):
         transaction = self.get_object(pk)
 
-        self.context['transaction'] = transaction
-        self.context['form'] = MataUangForm(instance=transaction)
+        self.context['transaction'] = transaction  # type: ignore
+        self.context['form'] = MataUangForm(instance=transaction)  # type: ignore
 
         return self.context, 'report/matauang/edit.html'
 

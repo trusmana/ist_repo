@@ -29,6 +29,26 @@
                     </div>
                     <div class="accordion-group">
                         <div class="accordion-heading">
+                            <a href="#Invoice" data-parent="#side_accordion" data-toggle="collapse" class="accordion-toggle">
+                                <i class="icon-th"></i> Menu Invoice 
+                            </a>
+                        </div>
+                        <div class="accordion-body collapse" id="Invoice">
+                            <div class="accordion-inner">
+                                <ul class="nav nav-list">
+                                    <li><a href="{% url 'list_address' %}"><span>Head Invoice</span></a></li>
+                                    <li><a href="{% url 'list_shipper' %}"><span>Shipper</span></a></li>
+                                    <li><a href="{% url 'list_consigne' %}"><span>Consigne</span></a></li>
+                                    <li><a href="{% url 'list_hsc' %}"><span>Gabungan HSC</span></a></li>
+                                    <li><a href="{% url 'list_term' %}"><span>Term</span></a></li>
+                                    <li><a href="{% url 'list_ddp' %}"><span>DDP</span></a></li>
+                                    <li><a href="{% url 'list_pic' %}"><span>PIC</span></a></li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="accordion-group">
+                        <div class="accordion-heading">
                             <a href="#collapseTwo" data-parent="#side_accordion" data-toggle="collapse" class="accordion-toggle">
                                 <i class="icon-cog"></i> Modules
                             </a>

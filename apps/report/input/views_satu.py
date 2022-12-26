@@ -7,7 +7,7 @@ from django.contrib import messages
 from django.conf import settings
 
 from apps.products.models import Job, ParameterData, ParameterDataBl, Sale, Transaksi
-from .forms import FSForm,SLForm,DLForm,SALEForm
+from .forms import FSForm,SLForm,DLForm
 
 @login_required(login_url=settings.LOGIN_URL)
 def proses_input_satu(request,param):
@@ -20,8 +20,8 @@ def proses_input_satu(request,param):
         form = FSForm(request.POST)
         forms = SLForm(request.POST)
         formss = DLForm(request.POST)
-        slforms = SALEForm(request.POST)
-        if form.is_valid() and forms.is_valid() and formss.is_valid() and slforms.is_valid():
+        
+        if form.is_valid() and forms.is_valid() and formss.is_valid():
             ##FSForm
             tgl_fs = form.cleaned_data['tgl_fs']
             no_invoice_fs = form.cleaned_data['no_invoice_fs']
@@ -71,33 +71,8 @@ def proses_input_satu(request,param):
             admin_fee = formss.cleaned_data['admin_fee']
             fee_collection = formss.cleaned_data['fee_collection']
 
-            ####Sale
-            paramsale = slforms.cleaned_data['paramsale']
-            re_export_shipment_one = slforms.cleaned_data['re_export_shipment_one']
-            re_export_shipment_one_pcs = slforms.cleaned_data['re_export_shipment_one_pcs']
-            re_export_shipment_one_qty = slforms.cleaned_data['re_export_shipment_one_qty']
-
-            re_export_shipment_two = slforms.cleaned_data['re_export_shipment_two']
-            re_export_shipment_two_pcs = slforms.cleaned_data['re_export_shipment_two_pcs']
-            re_export_shipment_two_qty = slforms.cleaned_data['re_export_shipment_two_qty']
-
-            cartage_warehouse_charge_one = slforms.cleaned_data['cartage_warehouse_charge_one']
-            airfreight_one = slforms.cleaned_data['airfreight_one']
-            cartage_warehouse_charge_two = slforms.cleaned_data['cartage_warehouse_charge_two']
-            airfreight_two = slforms.cleaned_data['airfreight_two']
-            export_handling_sale = slforms.cleaned_data['export_handling_sale']
-            freight_sale = slforms.cleaned_data['freight_sale']
-            doc_clearance_sale = slforms.cleaned_data['doc_clearance_sale']
-            ground_handling_sale = slforms.cleaned_data['ground_handling_sale']
-            warehouse_charge_sale = slforms.cleaned_data['warehouse_charge_sale']
-            handling_charge_sale = slforms.cleaned_data['handling_charge_sale']
-            delivery_sale = slforms.cleaned_data['delivery_sale']
-            duty_tax_sale = slforms.cleaned_data['duty_tax_sale']
-            tax_handling_charge_sale = slforms.cleaned_data['tax_handling_charge_sale']
-            tran = Transaksi(tanggal= sekarang,products= products,commodity = commodity ,qty= qt_fs,weight=weight_fs,cu = user,
-                re_export_shipment_one=re_export_shipment_one,re_export_shipment_one_pcs=re_export_shipment_one_pcs,
-                re_export_shipment_one_qty=re_export_shipment_one_qty,re_export_shipment_two=re_export_shipment_two,
-                re_export_shipment_two_pcs=re_export_shipment_two_pcs,re_export_shipment_two_qty=re_export_shipment_two_qty)
+            
+            tran = Transaksi(tanggal= sekarang,products= products,commodity = commodity ,qty= qt_fs,weight=weight_fs,cu = user)
             tran.no_pekerjaan = tran._no_pk_()  # type: ignore
             tran.save()
             job = Job(transaksi= tran,tanggal_invoice =tgl_fs,no_invoice =no_invoice_fs,
@@ -121,23 +96,16 @@ def proses_input_satu(request,param):
                 akses_bandara_inspeksi = price_akses_bandara_inspeksi,handling_fee = price_handling_fee,
                 admin_fee = admin_fee,fee_collection = fee_collection)
             job2.save()
-            sale = Sale(trans=tran,prod=paramsale,cu=user,cartage_warehouse_charge_one = cartage_warehouse_charge_one,airfreight_one = airfreight_one,
-                cartage_warehouse_charge_two = cartage_warehouse_charge_two,airfreight_two = airfreight_two,
-                export_handling = export_handling_sale,freight =freight_sale,
-                doc_clearance = doc_clearance_sale,ground_handling = ground_handling_sale,
-                warehouse_charge = warehouse_charge_sale,handling_charge = handling_charge_sale,
-                delivery= delivery_sale,duty_tax = duty_tax_sale,tax_handling_charge = tax_handling_charge_sale)
-            sale.save()    
+                
             messages.success(request, 'Job Berhasil Di simpan')
             return redirect('d-job')            
     else:
         form = FSForm(initial={'tgl_fs':datetime.date.today(),'products':param.products.id,'param':param.id})# type: ignore
         forms = SLForm(initial={'tgl_sl':datetime.date.today()})
         formss = DLForm(initial={'tgl_dl':datetime.date.today()})
-        slforms = SALEForm(initial={'tanggal':datetime.date.today(),'paramsale':pse.id})# type: ignore
-    
+            
     return render(request,'pengajuan/input/proses_input_satu.html',{'param':param,'form':form,'pse':pse,
-        'forms':forms,'formss':formss,'sl':slforms})
+        'forms':forms,'formss':formss})
 
 
 def is_ajax(request):

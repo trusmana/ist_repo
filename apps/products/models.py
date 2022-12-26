@@ -6,7 +6,9 @@ from apps.core.models import AccountsUser as user
 
 KURS_DUTY =[('1','€'),('2','$'),('3','Rp')]
 
-STATUS_SHIPMENT =[('','--SELECT--'),('6','1'),('7','2'),('8','3'),('9','4') ]
+STATUS_SHIPMENT =[('','--SELECT--'),('1','1'),('2','2'),('3','3'),('4','4'),('5','5'),('6','6'),
+    ('7','7'),('8','8'),('9','9'),('10','10'),('11','11'),('12','12'), 
+    ('13','13'),('14','14'),('15','15'),('16','16'),('17','17'),('18','18'), ]
 
 DELIVERY_TIMOR_LESTE =[('','--SELECT--'),('3','Hera'),('4','Okusi'),('5','Betano')]
 
@@ -91,6 +93,7 @@ class JasaPengiriman(models.Model):
     alamat = models.CharField(max_length=100,null=True)
     telepon = models.CharField(max_length=20,null=True)
     status = models.CharField(max_length=20,choices=STATUS,null=True,blank=True,default=0)  # type: ignore
+    nilai_kurs = models.ForeignKey(Kurs, on_delete=models.CASCADE,null=True,blank=True)
     singkatan = models.CharField(null=True, max_length=50)
     cu = models.ForeignKey(user, related_name='cu_js', editable=False, null=True, blank=True,on_delete=models.CASCADE)
 
@@ -398,21 +401,6 @@ class Transaksi(models.Model):
     weight = models.FloatField(null=True,blank=True)
     products = models.ForeignKey(Produk,on_delete=models.CASCADE,null=True,blank=True)
     commodity =models.ForeignKey(Commodity,blank=True,null=True,on_delete= models.CASCADE)
-    re_export_shipment_one = models.CharField(max_length=30,null=True,blank=True)
-    re_export_shipment_one_pcs = models.DecimalField(max_digits=12, decimal_places=2,null=True,blank=True,default=0) # type: ignore
-    re_export_shipment_one_qty = models.DecimalField(max_digits=12, decimal_places=2,null=True,blank=True,default=0) # type: ignore
-    
-    re_export_shipment_two = models.CharField(max_length=30,null=True,blank=True)
-    re_export_shipment_two_pcs = models.DecimalField(max_digits=12, decimal_places=2,null=True,blank=True,default=0) # type: ignore
-    re_export_shipment_two_qty = models.DecimalField(max_digits=12, decimal_places=2,null=True,blank=True,default=0) # type: ignore
-
-    re_export_shipment_tree = models.CharField(max_length=30,null=True,blank=True)
-    re_export_shipment_tree_pcs = models.DecimalField(max_digits=12, decimal_places=2,null=True,blank=True,default=0) # type: ignore
-    re_export_shipment_tree_qty = models.DecimalField(max_digits=12, decimal_places=2,null=True,blank=True,default=0) # type: ignore
-
-    re_export_shipment_four = models.CharField(max_length=30,null=True,blank=True)
-    re_export_shipment_four_pcs = models.DecimalField(max_digits=12, decimal_places=2,null=True,blank=True,default=0) # type: ignore
-    re_export_shipment_four_qty = models.DecimalField(max_digits=12, decimal_places=2,null=True,blank=True,default=0) # type: ignore
     cu = models.ForeignKey(user, related_name='cu_transaksi', editable=False, null=True, blank=True,on_delete=models.CASCADE)
     cdate = models.DateTimeField(auto_now_add=True)
 
@@ -423,12 +411,6 @@ class Transaksi(models.Model):
     def __str__(self):
         return '%s' %(self.no_pekerjaan)
     
-    def nb_of_parcels(self):
-        return self.re_export_shipment_one_pcs + self.re_export_shipment_two_pcs
-    
-    def gross_weight(self):
-        return self.re_export_shipment_one_qty + self.re_export_shipment_two_qty
-
     def counter_nope(self):
         tot = 0
         try:
@@ -448,27 +430,297 @@ class Transaksi(models.Model):
         thn = int(skr.strftime("%Y"))
         bl = int(skr.strftime("%m"))
         return "%s" %(int(self.counter_nope()))
+    
+class AddresInvoice(models.Model):
+    nama = models.CharField(max_length=100,null=True)
+    alamat = models.CharField(max_length=100,null=True)
+    telepon = models.CharField(max_length=20,null=True)
+    status = models.CharField(max_length=20,choices=STATUS,null=True,blank=True,default=0)  # type: ignore
+    cu = models.ForeignKey(user, related_name='cu_addI', editable=False, null=True, blank=True,on_delete=models.CASCADE)
+
+    class Meta:
+        db_table = 'addresinvoice'
+        verbose_name = 'AddresInvoice'
+
+    def __str__(self):
+        return '%s' %(self.nama)    
+
+class ShipperInvoice(models.Model):
+    nama = models.CharField(max_length=100,null=True)
+    alamat = models.CharField(max_length=100,null=True,blank=True)
+    kota = models.CharField(max_length=100,null=True,blank=True)
+    telepon = models.CharField(max_length=20,null=True,blank=True)
+    status = models.CharField(max_length=20,choices=STATUS,null=True,blank=True,default=0)  # type: ignore
+    cu = models.ForeignKey(user, related_name='cu_ssp', editable=False, null=True, blank=True,on_delete=models.CASCADE)
+
+    class Meta:
+        db_table = 'shipersinvoice'
+        verbose_name = 'ShipperInvoice'
+    
+    def __str__(self):
+        return '%s %s' %(self.nama, self.kota)    
+
+class ConsigneInvoice(models.Model):
+    nama = models.CharField(max_length=100,null=True)
+    alamat = models.CharField(max_length=100,null=True,blank=True)
+    kota = models.CharField(max_length=100,null=True,blank=True)
+    telepon = models.CharField(max_length=20,null=True,blank=True)
+    status = models.CharField(max_length=20,choices=STATUS,null=True,blank=True,default=0)  # type: ignore
+    cu = models.ForeignKey(user, related_name='cu_csg', editable=False, null=True, blank=True,on_delete=models.CASCADE)
+
+    class Meta:
+        db_table = 'Consigneinvoice'
+        verbose_name = 'ConsigneInvoice' 
+
+    def __str__(self):
+        return '%s %s' %(self.nama, self.kota)
+
+class TermInvoice(models.Model):
+    nama_term = models.CharField(max_length=100,null=True)                      
+    status = models.CharField(max_length=20,choices=STATUS,null=True,blank=True,default=0)  # type: ignore
+    cu = models.ForeignKey(user, related_name='cu_term', editable=False, null=True, blank=True,on_delete=models.CASCADE)
+
+    class Meta:
+        db_table = 'TermInvoice'
+        verbose_name = 'TermInvoice'
+
+    def __str__(self):
+        return '%s ' %(self.nama_term)
+
+class DdpInvoice(models.Model):
+    nama_ddp = models.CharField(max_length=100,null=True)                      
+    status = models.CharField(max_length=20,choices=STATUS,null=True,blank=True,default=0)  # type: ignore
+    cu = models.ForeignKey(user, related_name='cu_ddp', editable=False, null=True, blank=True,on_delete=models.CASCADE)
+
+    class Meta:
+        db_table = 'DdpInvoice'
+        verbose_name = 'DdpInvoice'
+
+    def __str__(self):
+        return '%s ' %(self.nama_ddp)
+
+class PicInvoice(models.Model):
+    nama_pic = models.CharField(max_length=100,null=True)                      
+    status = models.CharField(max_length=20,choices=STATUS,null=True,blank=True,default=0)  # type: ignore
+    cu = models.ForeignKey(user, related_name='cu_pic', editable=False, null=True, blank=True,on_delete=models.CASCADE)
+
+    class Meta:
+        db_table = 'PicInvoice'
+        verbose_name = 'PicInvoice'
+
+    def __str__(self):
+        return '%s ' %(self.nama_pic)
+
+
+class Invoice(models.Model):
+    address_header = models.ForeignKey(AddresInvoice,on_delete=models.CASCADE,null=True,related_name='inv_01')
+    shipper = models.ForeignKey(ShipperInvoice, verbose_name='Shipper', on_delete=models.CASCADE)
+    consignee = models.ForeignKey(ConsigneInvoice, verbose_name='Consigne', on_delete=models.CASCADE)
+    status = models.CharField(max_length=20,choices=STATUS,null=True,blank=True,default=0)  # type: ignore
+
+    class Meta:
+        db_table = 'Invoice'    
+        verbose_name = 'Invoice' 
+
+    def __str__(self):
+        return '%s-%s-%s' %(self.address_header,self.shipper,self.consignee)
+
+JFORM =[('','--Select--'),('100','Form1'),('200','Fom2')]    
+
+class MenuInputSale(models.Model):
+    jenis_form = models.CharField(("Jenis Form"), max_length=50,choices=JFORM)
+    total_shipment = models.CharField(choices=STATUS_SHIPMENT,null=True,blank=True,max_length=50)
+    ######## Shifment dua 200 form1
+    nb_of_parcels = models.DecimalField(("NB OF PARCE"), max_digits=12, decimal_places=2,null=True,blank=True,default=0) # type: ignore
+    gross_weight = models.DecimalField(("Gross Weight"), max_digits=12, decimal_places=2,null=True,blank=True,default=0) # type: ignore
+    repecking = models.DecimalField(max_digits=12, decimal_places=2,null=True,blank=True,default=0) # type: ignore
+    repecking_price = models.DecimalField(max_digits=12, decimal_places=2,null=True,blank=True,default=0) # type: ignore
+    repecking_qty = models.DecimalField(max_digits=12, decimal_places=2,null=True,blank=True,default=0) # type: ignore
+
+    pickup = models.DecimalField(max_digits=12, decimal_places=2,null=True,blank=True,default=0) # type: ignore
+    pickup_qty = models.DecimalField(max_digits=12, decimal_places=2,null=True,blank=True,default=0) # type: ignore
+
+    freight_cost = models.DecimalField(("Freight Cost"), max_digits=12, decimal_places=2,null=True,blank=True,default=0) # type: ignore
+    freight_cost_price = models.DecimalField(("Freight Cost Price"),max_digits=12, decimal_places=2,null=True,blank=True,default=0) # type: ignore
+    freight_cost_qty = models.DecimalField(("Freight Cost QTY"),max_digits=12, decimal_places=2,null=True,blank=True,default=0) # type: ignore
+
+    overweight_charge = models.DecimalField(("Overweight Charge"), max_digits=12, decimal_places=2,null=True,blank=True,default=0) # type: ignore
+    overweight_charge_price = models.DecimalField(("Overweight Charge Price"), max_digits=12, decimal_places=2,null=True,blank=True,default=0) # type: ignore
+    overweight_charge_qty = models.DecimalField(("Overweight Charge QTY"), max_digits=12, decimal_places=2,null=True,blank=True,default=0) # type: ignore
+
+    insuranse_forms = models.DecimalField(("Insurence"), max_digits=12, decimal_places=2,null=True,blank=True,default=0) # type: ignore
+    insuranse_nilai = models.DecimalField(("Insurence Price "), max_digits=12, decimal_places=2,null=True,blank=True,default=0) # type: ignore
+    insuranse_pers = models.DecimalField(("Insurence Persen"), max_digits=12, decimal_places=2,null=True,blank=True,default=0) # type: ignore
+
+    ######## Shifment dua 100 form1
+    cartage_warehouse_charge_satu =models.DecimalField(max_digits=12, decimal_places=2,null=True,blank=True,default=0) # type: ignore
+    cartage_warehouse_charge_dua =models.DecimalField(max_digits=12, decimal_places=2,null=True,blank=True,default=0) # type: ignore
+    cartage_warehouse_charge_tiga =models.DecimalField(max_digits=12, decimal_places=2,null=True,blank=True,default=0) # type: ignore
+    cartage_warehouse_charge_empat =models.DecimalField(max_digits=12, decimal_places=2,null=True,blank=True,default=0) # type: ignore
+    cartage_warehouse_charge_lima =models.DecimalField(max_digits=12, decimal_places=2,null=True,blank=True,default=0) # type: ignore
+    cartage_warehouse_charge_enam =models.DecimalField(max_digits=12, decimal_places=2,null=True,blank=True,default=0) # type: ignore
+    cartage_warehouse_charge_tujuh =models.DecimalField(max_digits=12, decimal_places=2,null=True,blank=True,default=0) # type: ignore
+    cartage_warehouse_charge_delapan =models.DecimalField(max_digits=12, decimal_places=2,null=True,blank=True,default=0) # type: ignore
+    cartage_warehouse_charge_sembilan =models.DecimalField(max_digits=12, decimal_places=2,null=True,blank=True,default=0) # type: ignore
+    cartage_warehouse_charge_sepuluh =models.DecimalField(max_digits=12, decimal_places=2,null=True,blank=True,default=0) # type: ignore
+    cartage_warehouse_charge_sebelas =models.DecimalField(max_digits=12, decimal_places=2,null=True,blank=True,default=0) # type: ignore
+    cartage_warehouse_charge_duabelas =models.DecimalField(max_digits=12, decimal_places=2,null=True,blank=True,default=0) # type: ignore
+    cartage_warehouse_charge_tigabelas =models.DecimalField(max_digits=12, decimal_places=2,null=True,blank=True,default=0) # type: ignore
+    cartage_warehouse_charge_empatbelas =models.DecimalField(max_digits=12, decimal_places=2,null=True,blank=True,default=0) # type: ignore
+    cartage_warehouse_charge_limabelas =models.DecimalField(max_digits=12, decimal_places=2,null=True,blank=True,default=0) # type: ignore
+    cartage_warehouse_charge_enambelas =models.DecimalField(max_digits=12, decimal_places=2,null=True,blank=True,default=0) # type: ignore
+    cartage_warehouse_charge_tujuhbelas =models.DecimalField(max_digits=12, decimal_places=2,null=True,blank=True,default=0) # type: ignore
+    cartage_warehouse_charge_delapanbelas =models.DecimalField(max_digits=12, decimal_places=2,null=True,blank=True,default=0) # type: ignore
+    cartage_warehouse_charge_sembilanbelas =models.DecimalField(max_digits=12, decimal_places=2,null=True,blank=True,default=0) # type: ignore
+    cartage_warehouse_charge_duapuluh =models.DecimalField(max_digits=12, decimal_places=2,null=True,blank=True,default=0) # type: ignore
+
+    price_cartage_warehouse_charge_satu =models.DecimalField(max_digits=12, decimal_places=2,null=True,blank=True,default=0) # type: ignore
+    price_cartage_warehouse_charge_dua =models.DecimalField(max_digits=12, decimal_places=2,null=True,blank=True,default=0) # type: ignore
+    price_cartage_warehouse_charge_tiga =models.DecimalField(max_digits=12, decimal_places=2,null=True,blank=True,default=0) # type: ignore
+    price_cartage_warehouse_charge_empat =models.DecimalField(max_digits=12, decimal_places=2,null=True,blank=True,default=0) # type: ignore
+    price_cartage_warehouse_charge_lima =models.DecimalField(max_digits=12, decimal_places=2,null=True,blank=True,default=0) # type: ignore
+    price_cartage_warehouse_charge_enam =models.DecimalField(max_digits=12, decimal_places=2,null=True,blank=True,default=0) # type: ignore
+    price_cartage_warehouse_charge_tujuh =models.DecimalField(max_digits=12, decimal_places=2,null=True,blank=True,default=0) # type: ignore
+    price_cartage_warehouse_charge_delapan =models.DecimalField(max_digits=12, decimal_places=2,null=True,blank=True,default=0) # type: ignore
+    price_cartage_warehouse_charge_sembilan =models.DecimalField(max_digits=12, decimal_places=2,null=True,blank=True,default=0) # type: ignore
+    price_cartage_warehouse_charge_sepuluh =models.DecimalField(max_digits=12, decimal_places=2,null=True,blank=True,default=0) # type: ignore
+    price_cartage_warehouse_charge_sebelas =models.DecimalField(max_digits=12, decimal_places=2,null=True,blank=True,default=0) # type: ignore
+    price_cartage_warehouse_charge_duabelas =models.DecimalField(max_digits=12, decimal_places=2,null=True,blank=True,default=0) # type: ignore
+    price_cartage_warehouse_charge_tigabelas =models.DecimalField(max_digits=12, decimal_places=2,null=True,blank=True,default=0) # type: ignore
+    price_cartage_warehouse_charge_empatbelas =models.DecimalField(max_digits=12, decimal_places=2,null=True,blank=True,default=0) # type: ignore
+    price_cartage_warehouse_charge_limabelas =models.DecimalField(max_digits=12, decimal_places=2,null=True,blank=True,default=0) # type: ignore
+    price_cartage_warehouse_charge_enambelas =models.DecimalField(max_digits=12, decimal_places=2,null=True,blank=True,default=0) # type: ignore
+    price_cartage_warehouse_charge_tujuhbelas =models.DecimalField(max_digits=12, decimal_places=2,null=True,blank=True,default=0) # type: ignore
+    price_cartage_warehouse_charge_delapanbelas =models.DecimalField(max_digits=12, decimal_places=2,null=True,blank=True,default=0) # type: ignore
+    price_cartage_warehouse_charge_sembilanbelas =models.DecimalField(max_digits=12, decimal_places=2,null=True,blank=True,default=0) # type: ignore
+    price_cartage_warehouse_charge_daupuluh =models.DecimalField(max_digits=12, decimal_places=2,null=True,blank=True,default=0) # type: ignore
+
+    airfreight_satu = models.DecimalField(max_digits=12, decimal_places=2,null=True,blank=True,default=0) # type: ignore
+    airfreight_dua = models.DecimalField(max_digits=12, decimal_places=2,null=True,blank=True,default=0) # type: ignore
+    airfreight_tiga = models.DecimalField(max_digits=12, decimal_places=2,null=True,blank=True,default=0) # type: ignore
+    airfreight_empat = models.DecimalField(max_digits=12, decimal_places=2,null=True,blank=True,default=0) # type: ignore
+    airfreight_lima = models.DecimalField(max_digits=12, decimal_places=2,null=True,blank=True,default=0) # type: ignore
+    airfreight_enam = models.DecimalField(max_digits=12, decimal_places=2,null=True,blank=True,default=0) # type: ignore
+    airfreight_tujuh = models.DecimalField(max_digits=12, decimal_places=2,null=True,blank=True,default=0) # type: ignore
+    airfreight_delapan = models.DecimalField(max_digits=12, decimal_places=2,null=True,blank=True,default=0) # type: ignore
+    airfreight_sembilan = models.DecimalField(max_digits=12, decimal_places=2,null=True,blank=True,default=0) # type: ignore
+    airfreight_sepuluh = models.DecimalField(max_digits=12, decimal_places=2,null=True,blank=True,default=0) # type: ignore
+    airfreight_sebelas = models.DecimalField(max_digits=12, decimal_places=2,null=True,blank=True,default=0) # type: ignore
+    airfreight_duabelas = models.DecimalField(max_digits=12, decimal_places=2,null=True,blank=True,default=0) # type: ignore
+    airfreight_tigabelas = models.DecimalField(max_digits=12, decimal_places=2,null=True,blank=True,default=0) # type: ignore
+    airfreight_empatbelas = models.DecimalField(max_digits=12, decimal_places=2,null=True,blank=True,default=0) # type: ignore
+    airfreight_limabelas = models.DecimalField(max_digits=12, decimal_places=2,null=True,blank=True,default=0) # type: ignore
+    airfreight_enambelas = models.DecimalField(max_digits=12, decimal_places=2,null=True,blank=True,default=0) # type: ignore
+    airfreight_tujuhbelas = models.DecimalField(max_digits=12, decimal_places=2,null=True,blank=True,default=0) # type: ignore
+    airfreight_delapanbelas = models.DecimalField(max_digits=12, decimal_places=2,null=True,blank=True,default=0) # type: ignore
+    airfreight_sembilanbelas = models.DecimalField(max_digits=12, decimal_places=2,null=True,blank=True,default=0) # type: ignore
+    airfreight_duapuluh = models.DecimalField(max_digits=12, decimal_places=2,null=True,blank=True,default=0) # type: ignore
+    
+    re_export_shipment_satu = models.CharField(max_length=30,null=True,blank=True)
+    re_export_shipment_satu_pcs = models.DecimalField(max_digits=12, decimal_places=2,null=True,blank=True,default=0) # type: ignore
+    re_export_shipment_satu_qty = models.DecimalField(max_digits=12, decimal_places=2,null=True,blank=True,default=0) # type: ignore
+    
+    re_export_shipment_dua = models.CharField(max_length=30,null=True,blank=True)
+    re_export_shipment_dua_pcs = models.DecimalField(max_digits=12, decimal_places=2,null=True,blank=True,default=0) # type: ignore
+    re_export_shipment_dua_qty = models.DecimalField(max_digits=12, decimal_places=2,null=True,blank=True,default=0) # type: ignore
+
+    re_export_shipment_tiga = models.CharField(max_length=30,null=True,blank=True)
+    re_export_shipment_tiga_pcs = models.DecimalField(max_digits=12, decimal_places=2,null=True,blank=True,default=0) # type: ignore
+    re_export_shipment_tiga_qty = models.DecimalField(max_digits=12, decimal_places=2,null=True,blank=True,default=0) # type: ignore
+
+    re_export_shipment_empat = models.CharField(max_length=30,null=True,blank=True)
+    re_export_shipment_empat_pcs = models.DecimalField(max_digits=12, decimal_places=2,null=True,blank=True,default=0) # type: ignore
+    re_export_shipment_empat_qty = models.DecimalField(max_digits=12, decimal_places=2,null=True,blank=True,default=0) # type: ignore
+
+    re_export_shipment_lima = models.CharField(max_length=30,null=True,blank=True)
+    re_export_shipment_lima_pcs = models.DecimalField(max_digits=12, decimal_places=2,null=True,blank=True,default=0) # type: ignore
+    re_export_shipment_lima_qty = models.DecimalField(max_digits=12, decimal_places=2,null=True,blank=True,default=0) # type: ignore
+
+    re_export_shipment_enam = models.CharField(max_length=30,null=True,blank=True)
+    re_export_shipment_enam_pcs = models.DecimalField(max_digits=12, decimal_places=2,null=True,blank=True,default=0) # type: ignore
+    re_export_shipment_enam_qty = models.DecimalField(max_digits=12, decimal_places=2,null=True,blank=True,default=0) # type: ignore
+
+    re_export_shipment_tujuh = models.CharField(max_length=30,null=True,blank=True)
+    re_export_shipment_tujuh_pcs = models.DecimalField(max_digits=12, decimal_places=2,null=True,blank=True,default=0) # type: ignore
+    re_export_shipment_tujuh_qty = models.DecimalField(max_digits=12, decimal_places=2,null=True,blank=True,default=0) # type: ignore
+
+    re_export_shipment_delapan = models.CharField(max_length=30,null=True,blank=True)
+    re_export_shipment_delapan_pcs = models.DecimalField(max_digits=12, decimal_places=2,null=True,blank=True,default=0) # type: ignore
+    re_export_shipment_delapan_qty = models.DecimalField(max_digits=12, decimal_places=2,null=True,blank=True,default=0) # type: ignore
+
+    re_export_shipment_sembilan = models.CharField(max_length=30,null=True,blank=True)
+    re_export_shipment_sembilan_pcs = models.DecimalField(max_digits=12, decimal_places=2,null=True,blank=True,default=0) # type: ignore
+    re_export_shipment_sembilan_qty = models.DecimalField(max_digits=12, decimal_places=2,null=True,blank=True,default=0) # type: ignore
+
+    re_export_shipment_sepuluh = models.CharField(max_length=30,null=True,blank=True)
+    re_export_shipment_sepuluh_pcs = models.DecimalField(max_digits=12, decimal_places=2,null=True,blank=True,default=0) # type: ignore
+    re_export_shipment_sepuluh_qty = models.DecimalField(max_digits=12, decimal_places=2,null=True,blank=True,default=0) # type: ignore
+
+    re_export_shipment_sebelas = models.CharField(max_length=30,null=True,blank=True)
+    re_export_shipment_sebelas_pcs = models.DecimalField(max_digits=12, decimal_places=2,null=True,blank=True,default=0) # type: ignore
+    re_export_shipment_sebelas_qty = models.DecimalField(max_digits=12, decimal_places=2,null=True,blank=True,default=0) # type: ignore
+
+    re_export_shipment_duabelas = models.CharField(max_length=30,null=True,blank=True)
+    re_export_shipment_duabelas_pcs = models.DecimalField(max_digits=12, decimal_places=2,null=True,blank=True,default=0) # type: ignore
+    re_export_shipment_duabelas_qty = models.DecimalField(max_digits=12, decimal_places=2,null=True,blank=True,default=0) # type: ignore
+
+    re_export_shipment_tigabelas = models.CharField(max_length=30,null=True,blank=True)
+    re_export_shipment_tigabelas_pcs = models.DecimalField(max_digits=12, decimal_places=2,null=True,blank=True,default=0) # type: ignore
+    re_export_shipment_tigabelas_qty = models.DecimalField(max_digits=12, decimal_places=2,null=True,blank=True,default=0) # type: ignore
+
+    re_export_shipment_empatbelas = models.CharField(max_length=30,null=True,blank=True)
+    re_export_shipment_empatbelas_pcs = models.DecimalField(max_digits=12, decimal_places=2,null=True,blank=True,default=0) # type: ignore
+    re_export_shipment_empatbelas_qty = models.DecimalField(max_digits=12, decimal_places=2,null=True,blank=True,default=0) # type: ignore
+
+    re_export_shipment_limabelas = models.CharField(max_length=30,null=True,blank=True)
+    re_export_shipment_limabelas_pcs = models.DecimalField(max_digits=12, decimal_places=2,null=True,blank=True,default=0) # type: ignore
+    re_export_shipment_limabelas_qty = models.DecimalField(max_digits=12, decimal_places=2,null=True,blank=True,default=0) # type: ignore
+
+    re_export_shipment_enambelas = models.CharField(max_length=30,null=True,blank=True)
+    re_export_shipment_enambelas_pcs = models.DecimalField(max_digits=12, decimal_places=2,null=True,blank=True,default=0) # type: ignore
+    re_export_shipment_enambelas_qty = models.DecimalField(max_digits=12, decimal_places=2,null=True,blank=True,default=0) # type: ignore
+
+    re_export_shipment_tujuhbelas = models.CharField(max_length=30,null=True,blank=True)
+    re_export_shipment_tujuhbelas_pcs = models.DecimalField(max_digits=12, decimal_places=2,null=True,blank=True,default=0) # type: ignore
+    re_export_shipment_tujuhbelas_qty = models.DecimalField(max_digits=12, decimal_places=2,null=True,blank=True,default=0) # type: ignore
+
+    re_export_shipment_delapanbelas = models.CharField(max_length=30,null=True,blank=True)
+    re_export_shipment_delapanbelas_pcs = models.DecimalField(max_digits=12, decimal_places=2,null=True,blank=True,default=0) # type: ignore
+    re_export_shipment_delapanbelas_qty = models.DecimalField(max_digits=12, decimal_places=2,null=True,blank=True,default=0) # type: ignore
+
+    re_export_shipment_sembilanbelas = models.CharField(max_length=30,null=True,blank=True)
+    re_export_shipment_sembilanbelas_pcs = models.DecimalField(max_digits=12, decimal_places=2,null=True,blank=True,default=0) # type: ignore
+    re_export_shipment_sembilanbelas_qty = models.DecimalField(max_digits=12, decimal_places=2,null=True,blank=True,default=0) # type: ignore
+
+    re_export_shipment_duapuluh = models.CharField(max_length=30,null=True,blank=True)
+    re_export_shipment_duapuluh_pcs = models.DecimalField(max_digits=12, decimal_places=2,null=True,blank=True,default=0) # type: ignore
+    re_export_shipment_duapuluh_qty = models.DecimalField(max_digits=12, decimal_places=2,null=True,blank=True,default=0) # type: ignore
+    #########end shiftment
+
+    class Meta:
+        db_table='MenuInputSale'
+
+    def __str__(self):
+        return '%s' %(self.id) # type: ignore
+    
 
 class Sale(models.Model):
     trans = models.ForeignKey(Transaksi,on_delete=models.CASCADE,null=True)
-    total_shipment = models.CharField(choices=STATUS_SHIPMENT,null=True,blank=True,max_length=50)
+    head_address = models.ForeignKey(AddresInvoice,on_delete=models.CASCADE,null=True,blank=True)
+    consigne = models.ForeignKey(ConsigneInvoice,on_delete=models.CASCADE,null=True,blank=True)
+    shipper = models.ForeignKey(ShipperInvoice,on_delete=models.CASCADE,null=True,blank=True)
+
+    term = models.ForeignKey(TermInvoice, verbose_name='Term', on_delete=models.CASCADE,null=True,blank=True)
+    ddp = models.ForeignKey(DdpInvoice, verbose_name='DDP', on_delete=models.CASCADE,null=True,blank=True)
+    pic = models.ForeignKey(PicInvoice, verbose_name='PIC', on_delete=models.CASCADE,null=True,blank=True)
+    
     status_sale = models.CharField(choices=STATUS_UPDATE,null=True,blank=True,max_length=50)
     awb = models.CharField(max_length=50,null=True,blank=True)
     warehouse_charge_days = models.CharField(max_length=50,null=True,blank=True)
     tgl_done = models.DateField(null=True,blank=True)
     prod = models.ForeignKey(ParameterDataBl,on_delete=models.CASCADE,null=True,blank=True)
-    cartage_warehouse_charge_one =models.DecimalField(max_digits=12, decimal_places=2,null=True,blank=True,default=0) # type: ignore
-    cartage_warehouse_charge_two =models.DecimalField(max_digits=12, decimal_places=2,null=True,blank=True,default=0) # type: ignore
-    price_cartage_warehouse_charge_one =models.DecimalField(max_digits=12, decimal_places=2,null=True,blank=True,default=0) # type: ignore
-    price_cartage_warehouse_charge_two =models.DecimalField(max_digits=12, decimal_places=2,null=True,blank=True,default=0) # type: ignore
-    price_cartage_warehouse_charge_tree =models.DecimalField(max_digits=12, decimal_places=2,null=True,blank=True,default=0) # type: ignore
-    price_cartage_warehouse_charge_four =models.DecimalField(max_digits=12, decimal_places=2,null=True,blank=True,default=0) # type: ignore
-    airfreight_one = models.DecimalField(max_digits=12, decimal_places=2,null=True,blank=True,default=0) # type: ignore
-    airfreight_two = models.DecimalField(max_digits=12, decimal_places=2,null=True,blank=True,default=0) # type: ignore
-    cartage_warehouse_charge_tree =models.DecimalField(max_digits=12, decimal_places=2,null=True,blank=True,default=0) # type: ignore
-    cartage_warehouse_charge_four =models.DecimalField(max_digits=12, decimal_places=2,null=True,blank=True,default=0) # type: ignore
-    airfreight_tree = models.DecimalField(max_digits=12, decimal_places=2,null=True,blank=True,default=0) # type: ignore
-    airfreight_four = models.DecimalField(max_digits=12, decimal_places=2,null=True,blank=True,default=0) # type: ignore
+    formsale = models.ForeignKey(MenuInputSale,on_delete=models.CASCADE,null=True,blank=True)
+    
     export_handling = models.DecimalField(max_digits=12, decimal_places=2,null=True,blank=True,default=0) # type: ignore
     freight = models.DecimalField(max_digits=12, decimal_places=2,null=True,blank=True,default=0) # type: ignore
     price_freight = models.DecimalField(max_digits=12, decimal_places=2,null=True,blank=True,default=0) # type: ignore
@@ -500,9 +752,7 @@ class Sale(models.Model):
         return '%s' %(self.id) # type: ignore
 
     def total_sale(self):
-        return self.cartage_warehouse_charge_one + self.cartage_warehouse_charge_two + \
-            self.airfreight_one + self.airfreight_two + self.export_handling + \
-            self.freight + self.doc_clearance + self.ground_handling + \
+        return  self.export_handling + self.freight + self.doc_clearance + self.ground_handling + \
             self.warehouse_charge + self.handling_charge + self.delivery 
     
     def total_duty(self):
@@ -529,6 +779,27 @@ class RefCustomer(models.Model):
     ref8 = models.CharField(blank=True,null=True,max_length=20 )
     ref9 = models.CharField(blank=True,null=True,max_length=20 )
     ref10 = models.CharField(blank=True,null=True,max_length=20)
+    ref11 = models.CharField(blank=True,null=True,max_length=20 )
+    ref12 = models.CharField(blank=True,null=True,max_length=20 )
+    ref13 = models.CharField(blank=True,null=True,max_length=20 )
+    ref14 = models.CharField(blank=True,null=True,max_length=20 )
+    ref15 = models.CharField(blank=True,null=True,max_length=20 )
+    ref16 = models.CharField(blank=True,null=True,max_length=20 )
+    ref17 = models.CharField(blank=True,null=True,max_length=20 )
+    ref18 = models.CharField(blank=True,null=True,max_length=20 )
+    ref19 = models.CharField(blank=True,null=True,max_length=20 )
+    ref20 = models.CharField(blank=True,null=True,max_length=20)
+    ref21 = models.CharField(blank=True,null=True,max_length=20 )
+    ref22 = models.CharField(blank=True,null=True,max_length=20 )
+    ref23 = models.CharField(blank=True,null=True,max_length=20 )
+    ref24 = models.CharField(blank=True,null=True,max_length=20 )
+    ref25 = models.CharField(blank=True,null=True,max_length=20 )
+    ref26 = models.CharField(blank=True,null=True,max_length=20 )
+    ref27 = models.CharField(blank=True,null=True,max_length=20 )
+    ref28 = models.CharField(blank=True,null=True,max_length=20 )
+    ref29 = models.CharField(blank=True,null=True,max_length=20 )
+    ref30 = models.CharField(blank=True,null=True,max_length=20)
+    
 
     csref1 = models.CharField(blank=True,null=True,max_length=20 )
     csref2 = models.CharField(blank=True,null=True,max_length=20 )
@@ -540,6 +811,26 @@ class RefCustomer(models.Model):
     csref8 = models.CharField(blank=True,null=True,max_length=20 )
     csref9 = models.CharField(blank=True,null=True,max_length=20 )
     csref10 = models.CharField(blank=True,null=True,max_length=20 )
+    csref11 = models.CharField(blank=True,null=True,max_length=20 )
+    csref12 = models.CharField(blank=True,null=True,max_length=20 )
+    csref13 = models.CharField(blank=True,null=True,max_length=20 )
+    csref14 = models.CharField(blank=True,null=True,max_length=20 )
+    csref15 = models.CharField(blank=True,null=True,max_length=20 )
+    csref16 = models.CharField(blank=True,null=True,max_length=20 )
+    csref17 = models.CharField(blank=True,null=True,max_length=20 )
+    csref18 = models.CharField(blank=True,null=True,max_length=20 )
+    csref19 = models.CharField(blank=True,null=True,max_length=20 )
+    csref20 = models.CharField(blank=True,null=True,max_length=20 )
+    csref21 = models.CharField(blank=True,null=True,max_length=20 )
+    csref22 = models.CharField(blank=True,null=True,max_length=20 )
+    csref23 = models.CharField(blank=True,null=True,max_length=20 )
+    csref24 = models.CharField(blank=True,null=True,max_length=20 )
+    csref25 = models.CharField(blank=True,null=True,max_length=20 )
+    csref26 = models.CharField(blank=True,null=True,max_length=20 )
+    csref27 = models.CharField(blank=True,null=True,max_length=20 )
+    csref28 = models.CharField(blank=True,null=True,max_length=20 )
+    csref29 = models.CharField(blank=True,null=True,max_length=20 )
+    csref30 = models.CharField(blank=True,null=True,max_length=20 )
     
     class Meta:
         db_table = 'refcustomer'

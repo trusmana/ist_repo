@@ -7,16 +7,11 @@
 <div class="formSep control-group">
     <label class="control-label">{{ form.no_invoice_fs.label }} / {{ form.qt_fs.label }} </label>
     <div class="controls">
-        {{ form.no_invoice_fs }} {{form.qt_fs}}
+        {{ form.no_invoice_fs }} {{form.qt_fs}}{{ form.products }} {{form.param}}
     </div>
 </div>
 
-<div class="formSep control-group">
-    <label class="control-label">{{ form.products.label }}</label>
-    <div class="controls">
-        {{ form.products }} {{form.param}}
-    </div>
-</div>
+
 <div class="formSep control-group input-prepend">
     <label class="control-label">{{form.weight_fs.label}}</label>
     <div class="controls"><span class="add-on">Kg</span>{{form.weight_fs}}

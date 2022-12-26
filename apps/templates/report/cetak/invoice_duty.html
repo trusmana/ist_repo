@@ -12,7 +12,7 @@
           <table style="text-align:left; font-size:12px; top:240px; border:none; width:100%;">
             <thead >
               <tr style="border:none;">
-                <td span="1" colspan="3" style="width: 25%; border:none;"><b>{{data.prod.vendor}},</b></td>
+                <td span="1" colspan="3" style="width: 25%; border:none;"><b>{{data.prod.vendor.nama_jasa_pengiriman}},</b></td>
               </tr>
 
               <tr style="border:none;">
@@ -41,6 +41,7 @@
         <div class="box2" >
           <table style="text-align:left; font-size:12px; font-weight:700; top:240px; border:none; width:100%;">
             <thead >
+              {% include 'report/cetak/head_alamat.html' %}
               <tr style="border:none;">
                 <td span="1" style="width: 25%; border:none;">INVOICE NO</td>
                 <td span="1" style="width: 1%; border:none;">: </td>
@@ -56,7 +57,7 @@
               <tr style="border:none;">
                 <td span="1" style="width: 25%; border:none;">TERMS</td>
                 <td span="1" style="width: 1%; border:none;">: </td>
-                <td span="1" style="width: 30%; border:none;">W600-60DAYS NET</td>
+                <td span="1" style="width: 30%; border:none;">{{data.term.nama_term}}</td>
               </tr>
 
               <tr style="border:none;">
@@ -68,21 +69,21 @@
               <tr style="border:none;">
                 <td span="1" style="width: 25%; border:none;">DDP</td>
                 <td span="1" style="width: 1%; border:none;">: </td>
-                <td span="1" style="width: 30%; border:none;">BETANO</td>
+                <td span="1" style="width: 30%; border:none;">{{data.ddp.nama_ddp}}</td>
               </tr>
 
               <tr style="border:none;">
                 <td span="1" style="width: 25%; border:none;">PIC</td>
                 <td span="1" style="width: 1%; border:none;">: </td>
-                <td span="1" style="width: 30%; border:none;">ELEAZAR</td>
+                <td span="1" style="width: 30%; border:none;">{{data.pic.nama_pic}}</td>
               </tr>
             </thead>
           </table>
         </div> 
 
-        <table height="200px"  style="text-align:left; margin-top:120px; font-size:11px; border-top:none; width:86%; margin-left:-30px;">
+        <table height="200px"  style="text-align:left; margin-top:170px; font-size:11px; border-top:none; width:86%; margin-left:-30px;">
           <thead>
-              <tr style="background-color: #AFEEEE">
+              <tr style="background-color: #ADD8E6">
                 <th style="width: 30%; text-align: center;">Shipper</th>
                 <th style="width: 30%; text-align: Center;">Consignee</th>
                 <th style="width: 30%; text-align: Center;">Descriptions of Goods</th>
@@ -90,8 +91,8 @@
           </thead>
           <tbody>
             <tr >
-              <td style="text-align:center; padding:15px 0px;">WARTSILA GLOBAL LOGdataICS SERVICES, KAMPEN - NETHERLAND</td>
-              <td style="text-align:center; padding:15px 0px;">WARTSILA INDONESIA, R.P. DILI, TIMOR LESTE</td>
+              <td style="text-align:center; padding:15px 0px;">{{data.shipper.nama}} {{data.shipper.kota}}</td>
+              <td style="text-align:center; padding:15px 0px;">{{data.consigne.nama}} {{data.consigne.kota}} </td>
               <td style="text-align:center; padding:15px 0px;">{{data.trans.commodity}}</td>
             </tr>
           </tbody>
@@ -99,7 +100,7 @@
 
         <table height="200px"  style="text-align:left; font-size:11px; border-top:none; width:86%; margin-left:-30px;">
           <thead >
-              <tr style="background-color: #AFEEEE">
+              <tr style="background-color: #ADD8E6">
                 <th style="width: 22%; text-align: center;">Invoice Ref#</th>
                 <th style="width: 40%; text-align: Center;">Customer Reference</th>
                 <th style="width: 50%; text-align: Center;">AWB ORIGIN</th>
@@ -109,15 +110,14 @@
             <tr >
               <td style="text-align:center; padding:5px 0px;">{% include 'job/refdata.html' %}</td>
               <td style="text-align:center; padding:5px 0px;">{% include 'job/refcustomer.html' %}</td>
-              <td style="text-align:center; padding:5px 0px;">{{data.trans.re_export_shipment_one }} ({{data.trans.re_export_shipment_one_pcs}} PCS / {{data.trans.re_export_shipment_one_qty}} KG )<br>
-                {{data.trans.re_export_shipment_two }} ({{data.trans.re_export_shipment_two_pcs}} PCS / {{data.trans.re_export_shipment_two_qty}} KG )</td>
+              {% include 'report/cetak/awb_origin.html' %}
             </tr>
           </tbody>
         </table>
 
         <table height="200px"  style="text-align:left; font-size:11px; border-top:none; width:86%; margin-left:-30px;">
           <thead>
-              <tr style="background-color: #AFEEEE">
+              <tr style="background-color: #ADD8E6">
                 <th style="width: 30%; text-align: center;">AWB</th>
                 <th style="width: 30%; text-align: Center;">ETD</th>
                 <th style="width: 30%; text-align: Center;">ETA</th>
@@ -125,7 +125,7 @@
           </thead>
           <tbody>
             <tr >
-              <td style="text-align:center; padding:2px 0px;">97504010930</td>
+              <td style="text-align:center; padding:2px 0px;">{{data.awb}}</td>
               <td style="text-align:center; padding:2px 0px;">{{data.etd|date:'d/m/Y'}}</td>
               <td style="text-align:center; padding:2px 0px;">{{data.eta|date:'d/m/Y'}}</td>
             </tr>
@@ -134,7 +134,7 @@
 
         <table height="200px"  style="text-align:left; font-size:11px; border-top:none; width:86%; margin-left:-30px;">
           <thead>
-              <tr style="background-color: #AFEEEE">
+              <tr style="background-color: #ADD8E6">
                 <th style="width: 15%; text-align: center;">Nb of Parcels</th>
                 <th style="width: 15%; text-align: Center;">Gross Weight</th>
                 <th style="width: 20%; text-align: Center;">Chargeable W.</th>
@@ -145,9 +145,9 @@
           </thead>
           <tbody>
             <tr >
-              <td style="text-align:center; padding:2px 0px;">{{data.trans.nb_of_parcels}}</td>
-              <td style="text-align:center; padding:2px 0px;">{{data.trans.gross_weight}}</td>
-              <td style="text-align:center; padding:2px 0px;">{{data.trans.gross_weight}}</td>
+              <td style="text-align:center; padding:2px 0px;">{{data.formsale.nb_of_parcels}}</td>
+              <td style="text-align:center; padding:2px 0px;">{{data.formsale.gross_weight}}</td>
+              <td style="text-align:center; padding:2px 0px;">{{data.formsale.gross_weight}}</td>
               <td style="text-align:center; padding:2px 0px;">{{data.trans.products.point_satu}}</td>
               <td style="text-align:center; padding:2px 0px;">{{data.trans.products.point_tiga}}</td>
               <td style="text-align:center; padding:2px 0px;">{{data.trans.products.get_jenis_produk_display}}</td>
@@ -158,11 +158,11 @@
 
         <table height="200px"  style="text-align:left; font-size:11px; border-top:none; width:86%; margin-left:-30px;">
           <thead>
-              <tr style="background-color: #AFEEEE">
+              <tr style="background-color: #ADD8E6">
                 <th style="width: 45%; text-align: center;">DETAIL OF CHARGE</th>
                 <th style="width: 15%; text-align: Center;">QUANTITY</th>
                 <th style="width: 13%; text-align: Center;">PRICE</th>
-                <th style="width: 17%; text-align: Center;">AMOUNT</th>
+                <th style="width: 17%; text-align: Center;" colspan="2">AMOUNT</th>
               </tr>
           </thead>
           <tbody>
@@ -170,33 +170,38 @@
               <td style="text-align:left; padding:2px 0px; border-bottom:none;">Shipment Value </td>
               <td style="text-align:center; padding:2px 0px; border-bottom:none;">&nbsp;</td>
               <td style="text-align:center; padding:2px 0px; border-bottom:none;">{{data.get_kurs_duty_display}} &nbsp; &nbsp; &nbsp;{{data.shipment_value|intcomma}}</td>
-              <td style="text-align:center; padding:2px 0px; border-bottom:none;">&nbsp;</td>
+              <td style="text-align:center; padding:2px 0px; border-bottom:none;border:none;">&nbsp;</td>
+              <td style="text-align:center; padding:2px 0px; border-bottom:none;border:none;">&nbsp;</td>
             </tr>
             <tr >
               <td style="text-align:left; padding:2px 0px; border-bottom:none;border-top:none;"></td>
               <td style="text-align:center; padding:2px 0px; border-bottom:none;border-top:none;">&nbsp;</td>
               <td style="text-align:center; padding:2px 0px; border-bottom:none;border-top:none;"> &nbsp; &nbsp; &nbsp;</td>
-              <td style="text-align:center; padding:2px 0px; border-bottom:none;border-top:none;">&nbsp;</td>
+              <td style="text-align:center; padding:2px 0px; border-bottom:none;border-top:none;border:none;">&nbsp;</td>
+              <td style="text-align:center; padding:2px 0px; border-bottom:none;border:none;">&nbsp;</td>
             </tr>
             <tr >
               <td style="text-align:left; padding:2px 8px; border-bottom:none; border-top:none;">- Duty Tax</td>
               <td style="text-align:center; padding:2px 0px; border-bottom:none; border-top:none;"> &nbsp;&nbsp;</td>
-              <td style="text-align:center; padding:2px 0px; border-bottom:none; border-top:none;">&nbsp;</td>
-              <td style="text-align:center; padding:2px 0px; border-bottom:none; border-top:none;">$ &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; {{data.duty_tax|intcomma}}</td>
+              <td style="text-align:center; padding:2px 0px; border-bottom:none; border-top:none;"></td>
+              <td style="text-align:center; padding:2px 0px; border-bottom:none; border-top:none;border:none;">{{data.prod.vendor.nilai_kurs.simbol}}</td>
+              <td style="text-align:right; padding:2px 0px; border-bottom:none; border-top:none;border:none;">{{data.duty_tax|intcomma}}&nbsp;&nbsp;</td>
             </tr>
 
             <tr>
               <td style="text-align:left; padding:2px 8px; border-bottom:none; border-top:none;">- Handling fee duty Tax </td>
               <td style="text-align:center; padding:2px 0px; border-bottom:none; border-top:none;"> &nbsp;&nbsp;</td>
               <td style="text-align:center; padding:2px 0px; border-bottom:none; border-top:none;"></td>
-              <td style="text-align:center; padding:2px 0px; border-bottom:none; border-top:none;">$ &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; {{data.tax_handling_charge|intcomma}}</td>
+              <td style="text-align:center; padding:2px 0px; border-bottom:none; border-top:none;border:none;">{{data.prod.vendor.nilai_kurs.simbol}}</td>
+              <td style="text-align:right; padding:2px 0px; border-bottom:none; border-top:none;border:none;">{{data.tax_handling_charge|intcomma}}&nbsp;&nbsp;</td>
             </tr>
             {% if data.insurance == 1 %}
             <tr>
-              <td style="text-align:left; padding:2px 8px; border-bottom:none; border-top:none;">- insurance </td>
+              <td style="text-align:left; padding:2px 8px; border-bottom:none; border-top:none;">- Insurance </td>
               <td style="text-align:center; padding:2px 0px; border-bottom:none; border-top:none;"> &nbsp;&nbsp;</td>
               <td style="text-align:center; padding:2px 0px; border-bottom:none; border-top:none;"></td>
-              <td style="text-align:center; padding:2px 0px; border-bottom:none; border-top:none;">$ &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; {{data.insurance|intcomma}}</td>
+              <td style="text-align:center; padding:2px 0px; border-bottom:none; border-top:none;border:none;">{{data.prod.vendor.nilai_kurs.simbol}}</td>
+              <td style="text-align:center; padding:2px 0px; border-bottom:none; border-top:none;border:none;">{{data.insurance|intcomma}}&nbsp;&nbsp;</td>
             </tr>
             {% endif %}
           </tbody>
@@ -204,10 +209,11 @@
 
         <table height="200px"  style="text-align:left; font-size:11px; border-top:none; width:86%; margin-left:-30px;">
           <thead>
-              <tr>
+              <tr style="background-color: #ADD8E6">
                 <th style="width: 45%; text-align: center;">&nbsp;</th>
                 <th style="width: 28%; text-align: Center;">GRAND TOTAL</th>
-                <th style="width: 17%; text-align: Center;"> {{data.total_duty|intcomma}}</th>
+                <th style="width: 7%; text-align: left;border:none;border:none; ">&nbsp;{{data.prod.vendor.nilai_kurs.simbol}}</th>  
+                <th style="width: 10%; text-align: right;border:none;"> {{data.total_duty|intcomma}}&nbsp;</th>
               </tr>
           </thead>
         </table>
@@ -218,7 +224,7 @@
               <td style="text-align:left; padding:2px 0px; border:none;">Remarks : All payment are to be made by cross cheque</td>
             </tr>
             <tr style="border:none;">
-              <td style="text-align:left; padding:2px 0px; border:none;">or T/T to <b>INDAH SINERGI TRADING UNIPESSOAL LDA</b></td>
+              <td style="text-align:left; padding:2px 0px; border:none;">or T/T to <b>{{data.prod.vendor.nama_jasa_pengiriman}}</b></td>
             </tr>
           </tbody>
         </table>

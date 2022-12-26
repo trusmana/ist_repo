@@ -7,7 +7,7 @@ from django.contrib import messages
 from django.conf import settings
 
 from apps.products.models import Job, ParameterData, ParameterDataBl, Sale, Transaksi,Produk
-from .forms import PengajuanForm,FSForm,SLForm,DLForm,SALEForm,DHLForm,TransaksiForm
+from .forms import FSForm,DLForm,DHLForm,TransaksiForm
 
 @login_required(login_url=settings.LOGIN_URL)
 def proses_input_dua_vendor(request,param):
@@ -23,17 +23,15 @@ def proses_input_dua_vendor(request,param):
             trsform = TransaksiForm(request.POST) #### digunakan Khusus Yg Bukan Fred vendor
             form = DLForm(request.POST)###satu
             formss = FSForm(request.POST)###Tiga
-            sl = SALEForm(request.POST)
-            if trsform.is_valid() and form.is_valid() and formss.is_valid() and sl.is_valid():
-                save_dili_fr_indah(dt,form,formss,trsform,sl,user)
+            if trsform.is_valid() and form.is_valid() and formss.is_valid() :
+                save_dili_fr_indah(dt,form,formss,trsform,user)
                 messages.success(request, 'Job Berhasil Di simpan')
                 return redirect('d-job')
         else:
             trsform = TransaksiForm(initial={'products':param.products.id,'param':param.id})  # type: ignore
             form = DLForm(initial={'tgl_dl':sekarang})
             formss = FSForm(initial={'tgl_fs':sekarang})
-            sl = SALEForm(initial={'tanggal':sekarang,'paramsale':pse.id})  # type: ignore  # type: ignore
-            return render(request,'pengajuan/input/proses_input_dua.html',{'form':form,'formss':formss,'sl':sl,
+            return render(request,'pengajuan/input/proses_input_dua.html',{'form':form,'formss':formss,
                 'trsform':trsform,'dt':dt,'pse':pse})
     ###Dili - Fr    
     if param.products.origin_vendor.id == 1 and param.products.destinations_vendor.id == 5:
@@ -41,17 +39,16 @@ def proses_input_dua_vendor(request,param):
             trsform = TransaksiForm(request.POST)
             form = FSForm(request.POST)###satu
             formss = DLForm(request.POST)###Tiga
-            sl = SALEForm(request.POST)
-            if trsform.is_valid() and form.is_valid() and formss.is_valid() and sl.is_valid():
-                save_fr_dili_indah(dt,form,formss,trsform,sl,user)
+            
+            if trsform.is_valid() and form.is_valid() and formss.is_valid():
+                save_fr_dili_indah(dt,form,formss,trsform,user)
                 messages.success(request, 'Data Job Berhasil Di Input')
                 return redirect('d-job')
         else:
             trsform = TransaksiForm()
             form = FSForm(initial={'tgl_fs':sekarang,'products':param.products.id,'param':param.id})  # type: ignore
             formss = DLForm(initial={'tgl_dl':sekarang})
-            sl = SALEForm(initial={'tanggal':sekarang,'paramsale':pse.id})  # type: ignore
-            return render(request,'pengajuan/input/proses_input_dua.html',{'form':form,'formss':formss,'sl':sl,
+            return render(request,'pengajuan/input/proses_input_dua.html',{'form':form,'formss':formss,
                 'trsform':trsform,'dt':dt,'pse':pse})    
     ## DHL - DILI
     if param.products.origin_vendor.id == 8 and param.products.destinations_vendor.id == 5:
@@ -60,17 +57,15 @@ def proses_input_dua_vendor(request,param):
             trsform = TransaksiForm(request.POST) #### digunakan Khusus Yg Bukan Fred vendor
             form = DHLForm(request.POST)
             formss = DLForm(request.POST)
-            sl = SALEForm(request.POST)
-            if trsform.is_valid() and form.is_valid() and formss.is_valid() and sl.is_valid():
-                save_dhl_dili_indah(dt,form,formss,trsform,sl,user)
+            if trsform.is_valid() and form.is_valid() and formss.is_valid():
+                save_dhl_dili_indah(dt,form,formss,trsform,user)
                 messages.success(request, 'Data Parameter Berhasil Di Input')
                 return redirect('d-job')
         else:
             trsform = TransaksiForm(initial={'products':param.products.id,'param':param.id})  # type: ignore
             form = DHLForm(initial={'tgl_dhl':sekarang})
             formss = DLForm(initial={'tgl_dl':sekarang})
-            sl = SALEForm(initial={'tanggal':sekarang,'paramsale':pse.id})  # type: ignore
-        return render(request,'pengajuan/input/proses_input_dua.html',{'form':form,'formss':formss,'sl':sl,
+        return render(request,'pengajuan/input/proses_input_dua.html',{'form':form,'formss':formss,
             'trsform':trsform,'dt':dt,'pse':pse})
     ### DHL FS
     if param.products.origin_vendor.id == 8 and param.products.destinations_vendor.id == 1:
@@ -79,9 +74,8 @@ def proses_input_dua_vendor(request,param):
             trsform = TransaksiForm(request.POST) #### digunakan Khusus Yg Bukan Fred vendor
             form = DHLForm(request.POST)
             formss = FSForm(request.POST)
-            sl = SALEForm(request.POST)
-            if trsform.is_valid() and form.is_valid() and formss.is_valid() and sl.is_valid():
-                save_dhl_fs_indah(dt,form,formss,trsform,sl,user)
+            if trsform.is_valid() and form.is_valid() and formss.is_valid():
+                save_dhl_fs_indah(dt,form,formss,trsform,user)
                 messages.success(request, 'Data Parameter Berhasil Di Input')
                 return redirect('d-job')
         else:
@@ -89,18 +83,16 @@ def proses_input_dua_vendor(request,param):
             form = DHLForm(initial={'tgl_dhl':sekarang})
             formss = FSForm(initial={'tgl_fs':sekarang})
             sl = SALEForm(initial={'tanggal':sekarang,'paramsale':pse.id})  # type: ignore
-        return render(request,'pengajuan/input/proses_input_dua.html',{'form':form,'formss':formss,'sl':sl,
+        return render(request,'pengajuan/input/proses_input_dua.html',{'form':form,'formss':formss,
             'trsform':trsform,'dt':dt,'pse':pse})
         
     return render(request,'pengajuan/input/proses_input_dua.html',{'param':param,'pse':pse,})
 
-def save_dhl_fs_indah(dt,form,formss,trsform,sl,user):
+def save_dhl_fs_indah(dt,form,formss,trsform,user):
     products = trsform.cleaned_data['products']
     commodity = trsform.cleaned_data['commodity']
-    param = trsform.cleaned_data['param']
-    
-    qt_fs = trsform.cleaned_data['qt_fs']
-    
+    param = trsform.cleaned_data['param']    
+    qt_fs = trsform.cleaned_data['qt_fs']    
     
     ##DHLForm
     tgl_dhl = form.cleaned_data['tgl_dhl']
@@ -120,33 +112,7 @@ def save_dhl_fs_indah(dt,form,formss,trsform,sl,user):
     price_import_handling_charges = formss.cleaned_data['price_import_handling_charges']
     price_gst_zero_rated = formss.cleaned_data['price_gst_zero_rated']
 
-    ####Sale
-    paramsale = sl.cleaned_data['paramsale']
-    re_export_shipment_one = sl.cleaned_data['re_export_shipment_one']
-    re_export_shipment_one_pcs = sl.cleaned_data['re_export_shipment_one_pcs']
-    re_export_shipment_one_qty = sl.cleaned_data['re_export_shipment_one_qty']
-
-    re_export_shipment_two = sl.cleaned_data['re_export_shipment_two']
-    re_export_shipment_two_pcs = sl.cleaned_data['re_export_shipment_two_pcs']
-    re_export_shipment_two_qty = sl.cleaned_data['re_export_shipment_two_qty']
-
-    cartage_warehouse_charge_one = sl.cleaned_data['cartage_warehouse_charge_one']
-    airfreight_one = sl.cleaned_data['airfreight_one']
-    cartage_warehouse_charge_two = sl.cleaned_data['cartage_warehouse_charge_two']
-    airfreight_two = sl.cleaned_data['airfreight_two']
-    export_handling_sale = sl.cleaned_data['export_handling_sale']
-    freight_sale = sl.cleaned_data['freight_sale']
-    doc_clearance_sale = sl.cleaned_data['doc_clearance_sale']
-    ground_handling_sale = sl.cleaned_data['ground_handling_sale']
-    warehouse_charge_sale = sl.cleaned_data['warehouse_charge_sale']
-    handling_charge_sale = sl.cleaned_data['handling_charge_sale']
-    delivery_sale = sl.cleaned_data['delivery_sale']
-    duty_tax_sale = sl.cleaned_data['duty_tax_sale']
-    tax_handling_charge_sale = sl.cleaned_data['tax_handling_charge_sale']
-    tran = Transaksi(tanggal= datetime.date.today,products= products,commodity = commodity ,qty= qt_fs,weight=weight_fs,cu = user,
-        re_export_shipment_one=re_export_shipment_one,re_export_shipment_one_pcs=re_export_shipment_one_pcs,
-        re_export_shipment_one_qty=re_export_shipment_one_qty,re_export_shipment_two=re_export_shipment_two,
-        re_export_shipment_two_pcs=re_export_shipment_two_pcs,re_export_shipment_two_qty=re_export_shipment_two_qty)
+    tran = Transaksi(tanggal= datetime.date.today,products= products,commodity = commodity ,qty= qt_fs,weight=weight_fs,cu = user)
     tran.no_pekerjaan = tran._no_pk_()  # type: ignore
     tran.save()
     job = Job(transaksi= tran,tanggal_invoice =tgl_dhl,no_invoice =no_invoice_dhl,nilai_kurs = tran.products.kurs_origin,# type: ignore
@@ -159,18 +125,11 @@ def save_dhl_fs_indah(dt,form,formss,trsform,sl,user):
         vendor = tran.products.destinations_vendor,# type: ignore
         insurance_security_surcharge = price_insurance_security_surcharge,fuel_surcharge = price_fuel_surcharge,
         import_handling_charges = price_import_handling_charges,gst_zero_rated = price_gst_zero_rated,)
-    job2.save()
+    job2.save()    
     
-    sale = Sale(trans=tran,prod=paramsale,cu=user,cartage_warehouse_charge_one = cartage_warehouse_charge_one,airfreight_one = airfreight_one,
-        cartage_warehouse_charge_two = cartage_warehouse_charge_two,airfreight_two = airfreight_two,
-        export_handling = export_handling_sale,freight =freight_sale,
-        doc_clearance = doc_clearance_sale,ground_handling = ground_handling_sale,
-        warehouse_charge = warehouse_charge_sale,handling_charge = handling_charge_sale,
-        delivery= delivery_sale,duty_tax = duty_tax_sale,tax_handling_charge = tax_handling_charge_sale)
-    sale.save()
 
 
-def save_dhl_dili_indah(dt,form,formss,trsform,sl,user):
+def save_dhl_dili_indah(dt,form,formss,trsform,user):
     products = trsform.cleaned_data['products']
     commodity = trsform.cleaned_data['commodity']
     param = trsform.cleaned_data['param']
@@ -200,35 +159,7 @@ def save_dhl_dili_indah(dt,form,formss,trsform,sl,user):
     admin_fee = formss.cleaned_data['admin_fee']
     fee_collection = formss.cleaned_data['fee_collection']
 
-    ####Sale
-    paramsale = sl.cleaned_data['paramsale']
-    re_export_shipment_one = sl.cleaned_data['re_export_shipment_one']
-    re_export_shipment_one_pcs = sl.cleaned_data['re_export_shipment_one_pcs']
-    re_export_shipment_one_qty = sl.cleaned_data['re_export_shipment_one_qty']
-
-    re_export_shipment_two = sl.cleaned_data['re_export_shipment_two']
-    re_export_shipment_two_pcs = sl.cleaned_data['re_export_shipment_two_pcs']
-    re_export_shipment_two_qty = sl.cleaned_data['re_export_shipment_two_qty']
-
-    cartage_warehouse_charge_one = sl.cleaned_data['cartage_warehouse_charge_one']
-    airfreight_one = sl.cleaned_data['airfreight_one']
-    cartage_warehouse_charge_two = sl.cleaned_data['cartage_warehouse_charge_two']
-    airfreight_two = sl.cleaned_data['airfreight_two']
-    export_handling_sale = sl.cleaned_data['export_handling_sale']
-    freight_sale = sl.cleaned_data['freight_sale']
-    doc_clearance_sale = sl.cleaned_data['doc_clearance_sale']
-    ground_handling_sale = sl.cleaned_data['ground_handling_sale']
-    warehouse_charge_sale = sl.cleaned_data['warehouse_charge_sale']
-    handling_charge_sale = sl.cleaned_data['handling_charge_sale']
-    delivery_sale = sl.cleaned_data['delivery_sale']
-    duty_tax_sale = sl.cleaned_data['duty_tax_sale']
-    tax_handling_charge_sale = sl.cleaned_data['tax_handling_charge_sale']
-    tran = Transaksi(tanggal= datetime.date.today,products= products,commodity = commodity ,qty= qt_fs,weight=weight_fs,cu = user,
-        re_export_shipment_one=re_export_shipment_one,re_export_shipment_one_pcs=re_export_shipment_one_pcs,
-        re_export_shipment_one_qty=re_export_shipment_one_qty,re_export_shipment_two=re_export_shipment_two,
-        re_export_shipment_two_pcs=re_export_shipment_two_pcs,re_export_shipment_two_qty=re_export_shipment_two_qty)
-    tran.no_pekerjaan = tran._no_pk_()  # type: ignore
-    tran.save()
+    
     job = Job(transaksi= tran,tanggal_invoice =tgl_dhl,no_invoice =no_invoice_dhl,nilai_kurs = tran.products.kurs_origin,# type: ignore
         vendor = tran.products.origin_vendor,# type: ignore
         express_wordwide_nondoc = express_wordwide_nondoc,fuel_surcharge_dhl = fuel_surcharge_dhl,emergency_situation = emergency_situation,
@@ -241,15 +172,9 @@ def save_dhl_dili_indah(dt,form,formss,trsform,sl,user):
         akses_bandara_inspeksi = price_akses_bandara_inspeksi,handling_fee = price_handling_fee,
         admin_fee = admin_fee,fee_collection = fee_collection)
     job2.save()
-    sale = Sale(trans=tran,prod=paramsale,cu=user,cartage_warehouse_charge_one = cartage_warehouse_charge_one,airfreight_one = airfreight_one,
-        cartage_warehouse_charge_two = cartage_warehouse_charge_two,airfreight_two = airfreight_two,
-        export_handling = export_handling_sale,freight =freight_sale,
-        doc_clearance = doc_clearance_sale,ground_handling = ground_handling_sale,
-        warehouse_charge = warehouse_charge_sale,handling_charge = handling_charge_sale,
-        delivery= delivery_sale,duty_tax = duty_tax_sale,tax_handling_charge = tax_handling_charge_sale)
-    sale.save()
+    
 
-def save_dili_fr_indah(dt,form,formss,trsform,sl,user):
+def save_dili_fr_indah(dt,form,formss,trsform,user):
     products = trsform.cleaned_data['products']
     commodity = trsform.cleaned_data['commodity']
     param = trsform.cleaned_data['param']
@@ -282,33 +207,8 @@ def save_dili_fr_indah(dt,form,formss,trsform,sl,user):
     admin_fee = form.cleaned_data['admin_fee']
     fee_collection = form.cleaned_data['fee_collection']
 
-    ####Sale
-    paramsale = sl.cleaned_data['paramsale']
-    re_export_shipment_one = sl.cleaned_data['re_export_shipment_one']
-    re_export_shipment_one_pcs = sl.cleaned_data['re_export_shipment_one_pcs']
-    re_export_shipment_one_qty = sl.cleaned_data['re_export_shipment_one_qty']
-
-    re_export_shipment_two = sl.cleaned_data['re_export_shipment_two']
-    re_export_shipment_two_pcs = sl.cleaned_data['re_export_shipment_two_pcs']
-    re_export_shipment_two_qty = sl.cleaned_data['re_export_shipment_two_qty']
-
-    cartage_warehouse_charge_one = sl.cleaned_data['cartage_warehouse_charge_one']
-    airfreight_one = sl.cleaned_data['airfreight_one']
-    cartage_warehouse_charge_two = sl.cleaned_data['cartage_warehouse_charge_two']
-    airfreight_two = sl.cleaned_data['airfreight_two']
-    export_handling_sale = sl.cleaned_data['export_handling_sale']
-    freight_sale = sl.cleaned_data['freight_sale']
-    doc_clearance_sale = sl.cleaned_data['doc_clearance_sale']
-    ground_handling_sale = sl.cleaned_data['ground_handling_sale']
-    warehouse_charge_sale = sl.cleaned_data['warehouse_charge_sale']
-    handling_charge_sale = sl.cleaned_data['handling_charge_sale']
-    delivery_sale = sl.cleaned_data['delivery_sale']
-    duty_tax_sale = sl.cleaned_data['duty_tax_sale']
-    tax_handling_charge_sale = sl.cleaned_data['tax_handling_charge_sale']
-    tran = Transaksi(tanggal= datetime.date.today,products= products,commodity = commodity ,qty= qt_fs,weight=weight_fs,cu = user,
-        re_export_shipment_one=re_export_shipment_one,re_export_shipment_one_pcs=re_export_shipment_one_pcs,
-        re_export_shipment_one_qty=re_export_shipment_one_qty,re_export_shipment_two=re_export_shipment_two,
-        re_export_shipment_two_pcs=re_export_shipment_two_pcs,re_export_shipment_two_qty=re_export_shipment_two_qty)
+    
+    tran = Transaksi(tanggal= datetime.date.today,products= products,commodity = commodity ,qty= qt_fs,weight=weight_fs,cu = user,)
     tran.no_pekerjaan = tran._no_pk_()  # type: ignore
     tran.save()
     job = Job(transaksi= tran,tanggal_invoice =tgl_fs,no_invoice =no_invoice_fs,
@@ -325,15 +225,8 @@ def save_dili_fr_indah(dt,form,formss,trsform,sl,user):
         akses_bandara_inspeksi = price_akses_bandara_inspeksi,handling_fee = price_handling_fee,
         admin_fee = admin_fee,fee_collection = fee_collection)
     job2.save()
-    sale = Sale(trans=tran,prod=paramsale,cu=user,cartage_warehouse_charge_one = cartage_warehouse_charge_one,airfreight_one = airfreight_one,
-        cartage_warehouse_charge_two = cartage_warehouse_charge_two,airfreight_two = airfreight_two,
-        export_handling = export_handling_sale,freight =freight_sale,
-        doc_clearance = doc_clearance_sale,ground_handling = ground_handling_sale,
-        warehouse_charge = warehouse_charge_sale,handling_charge = handling_charge_sale,
-        delivery= delivery_sale,duty_tax = duty_tax_sale,tax_handling_charge = tax_handling_charge_sale)
-    sale.save()
-
-def save_fr_dili_indah(dt,form,formss,trsform,sl,user):
+    
+def save_fr_dili_indah(dt,form,formss,trsform,user):
     ##FSForm
     tgl_fs = form.cleaned_data['tgl_fs']
     products = form.cleaned_data['products']
@@ -365,33 +258,8 @@ def save_fr_dili_indah(dt,form,formss,trsform,sl,user):
     fee_collection = formss.cleaned_data['fee_collection']
    
                
-    ####Sale
-    paramsale = sl.cleaned_data['paramsale']
-    re_export_shipment_one = sl.cleaned_data['re_export_shipment_one']
-    re_export_shipment_one_pcs = sl.cleaned_data['re_export_shipment_one_pcs']
-    re_export_shipment_one_qty = sl.cleaned_data['re_export_shipment_one_qty']
-
-    re_export_shipment_two = sl.cleaned_data['re_export_shipment_two']
-    re_export_shipment_two_pcs = sl.cleaned_data['re_export_shipment_two_pcs']
-    re_export_shipment_two_qty = sl.cleaned_data['re_export_shipment_two_qty']
-
-    cartage_warehouse_charge_one = sl.cleaned_data['cartage_warehouse_charge_one']
-    airfreight_one = sl.cleaned_data['airfreight_one']
-    cartage_warehouse_charge_two = sl.cleaned_data['cartage_warehouse_charge_two']
-    airfreight_two = sl.cleaned_data['airfreight_two']
-    export_handling_sale = sl.cleaned_data['export_handling_sale']
-    freight_sale = sl.cleaned_data['freight_sale']
-    doc_clearance_sale = sl.cleaned_data['doc_clearance_sale']
-    ground_handling_sale = sl.cleaned_data['ground_handling_sale']
-    warehouse_charge_sale = sl.cleaned_data['warehouse_charge_sale']
-    handling_charge_sale = sl.cleaned_data['handling_charge_sale']
-    delivery_sale = sl.cleaned_data['delivery_sale']
-    duty_tax_sale = sl.cleaned_data['duty_tax_sale']
-    tax_handling_charge_sale = sl.cleaned_data['tax_handling_charge_sale']
-    tran = Transaksi(tanggal= datetime.date.today,products= products,commodity = commodity ,qty= qt_fs,weight=weight_fs,cu = user,
-        re_export_shipment_one=re_export_shipment_one,re_export_shipment_one_pcs=re_export_shipment_one_pcs,
-        re_export_shipment_one_qty=re_export_shipment_one_qty,re_export_shipment_two=re_export_shipment_two,
-        re_export_shipment_two_pcs=re_export_shipment_two_pcs,re_export_shipment_two_qty=re_export_shipment_two_qty)
+    
+    tran = Transaksi(tanggal= datetime.date.today,products= products,commodity = commodity ,qty= qt_fs,weight=weight_fs,cu = user)
     tran.no_pekerjaan = tran._no_pk_()  # type: ignore
     tran.save()
     job = Job(transaksi= tran,tanggal_invoice =tgl_fs,no_invoice =no_invoice_fs,
@@ -407,14 +275,7 @@ def save_fr_dili_indah(dt,form,formss,trsform,sl,user):
         custom_clearance = price_custom_clearance,delivey_to_hera = price_delivey_to_hera,
         akses_bandara_inspeksi = price_akses_bandara_inspeksi,handling_fee = price_handling_fee,
         admin_fee = admin_fee,fee_collection = fee_collection)
-    job2.save()
-    sale = Sale(trans=tran,prod=paramsale,cu=user,cartage_warehouse_charge_one = cartage_warehouse_charge_one,airfreight_one = airfreight_one,
-        cartage_warehouse_charge_two = cartage_warehouse_charge_two,airfreight_two = airfreight_two,
-        export_handling = export_handling_sale,freight =freight_sale,
-        doc_clearance = doc_clearance_sale,ground_handling = ground_handling_sale,
-        warehouse_charge = warehouse_charge_sale,handling_charge = handling_charge_sale,
-        delivery= delivery_sale,duty_tax = duty_tax_sale,tax_handling_charge = tax_handling_charge_sale)
-    sale.save()         
+    job2.save()    
    
 
 def is_ajax(request):

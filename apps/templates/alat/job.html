@@ -9,13 +9,11 @@ $(document).ready(function($) {
     });     
 });
 </script>
-
-
 <script src="/static/js/jquery-1.4.2.min.js"></script>
 <script src="/static/js/jquery.maskedinput-1.2.2-co.min.js"></script>
 <script type="text/javascript">
     jQuery(function($){    
-    
+
     $("#id_tgl_fs,#id_tgl_sl,#id_tgl_dl,#id_tgl_aktif,#id_tgl_ga,#id_tgl_ln,\
     #id_tgl_dhl,#id_tanggal,#id_tgl_wsl,#id_etd,#id_eta").mask("99-99-9999", {placeholder: 'DD-MM-YYYY'});
 });
@@ -23,15 +21,29 @@ $(document).ready(function($) {
 <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
 <script>
 $(document).ready(function(){
+    $("#id_jenis_form").change(function(){
+        $(this).find("option:selected").each(function(){
+            var optionValue = $(this).attr("value");
+            if(optionValue){
+                $(".jform").not("." + optionValue).hide();
+                $("." + optionValue).show();
+            }
+                else{
+                $(".jform").hide();
+            }
+        });
+    }).change();
+});    
+$(document).ready(function(){
     $("#id_total_shipment").change(function(){
         $(this).find("option:selected").each(function(){
             var optionValue = $(this).attr("value");
             if(optionValue){
-                $(".empat").not("." + optionValue).hide();
+                $(".shipman").not("." + optionValue).hide();
                 $("." + optionValue).show();
             }
              else{
-                $(".empat").hide();
+                $(".shipman").hide();
             }
         });
     }).change();

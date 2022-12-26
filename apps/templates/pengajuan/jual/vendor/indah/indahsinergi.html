@@ -1,0 +1,151 @@
+<div class="formSep control-group">
+    <label class="control-label">{{ sl.tanggal.label }} </label>
+    <div class="controls">
+        {{ sl.tanggal }} {{sl.paramsale}}
+    </div>
+</div>
+<div class="formSep control-group">
+    <label class="control-label">{{ sl.eta.label }} / {{ sl.etd.label }} / {{ sl.awb.label }}</label>
+    <div class="controls">
+        {{ sl.eta }} {{sl.etd}} {{sl.awb}}
+    </div>
+</div>
+<div class="formSep control-group">
+    <label class="control-label">{{ sl.term.label }} / {{ sl.ddp.label }} / {{ sl.pic.label }}</label>
+    <div class="controls">
+        {{ sl.term }} {{sl.ddp}} {{sl.pic}}
+    </div>
+</div>
+<div class="formSep control-group">
+    <label class="control-label">{{ sl.gross_weight.label }} / {{ sl.nb_of_parcels.label }} </label>
+    <div class="controls">
+        {{ sl.gross_weight }} {{sl.nb_of_parcels}}
+    </div>
+</div>
+
+<div class="formSep control-group">
+    <label class="control-label">{{ sl.head_address.label }} / {{ sl.consigne.label }} /{{ sl.shipper.label }} </label>
+    <div class="controls">
+        {{ sl.head_address }} {{ sl.consigne}} {{sl.shipper}}
+    </div>
+</div>
+
+
+<div class="formSep control-group input-prepend">
+    <label class="control-label">{{ sl.export_handling_sale.label }}  </label>
+    <div class="controls"><span class="add-on">$</span>
+        {{ sl.export_handling_sale }}
+    </div>
+</div>
+<div class="formSep control-group input-prepend">
+    <label class="control-label">{{ sl.price_freight_sale.label }}  </label>
+    <div class="controls"><span class="add-on">$</span>
+        {{ sl.price_freight_sale }} 
+    </div>
+</div>
+<div class="formSep control-group input-prepend">
+    <label class="control-label">{{ sl.freight_sale.label }}  </label>
+    <div class="controls"><span class="add-on">$</span>
+        {{ sl.freight_sale }}
+    </div>
+</div>
+
+<div class="formSep control-group input-prepend">
+    <label class="control-label">{{ sl.price_doc_clearance_sale.label }}  </label>
+    <div class="controls"><span class="add-on">$</span>
+        {{ sl.price_doc_clearance_sale }}
+    </div>
+</div>
+<div class="formSep control-group input-prepend">
+    <label class="control-label">{{ sl.doc_clearance_sale.label }}  </label>
+    <div class="controls"><span class="add-on">$</span>
+        {{ sl.doc_clearance_sale }}
+    </div>
+</div>
+<div class="formSep control-group input-prepend">
+    <label class="control-label">{{ sl.price_ground_handling_sale.label }}  </label>
+    <div class="controls"><span class="add-on">$</span>
+        {{ sl.price_ground_handling_sale }}                                
+    </div>
+</div>
+<div class="formSep control-group input-prepend">
+    <label class="control-label">{{ sl.ground_handling_sale.label }}  </label>
+    <div class="controls"><span class="add-on">$</span>
+        {{ sl.ground_handling_sale }}                                
+    </div>
+</div>
+<div class="formSep control-group input-prepend">
+    <label class="control-label">{{ sl.price_warehouse_charge_sale.label }}  </label>
+    <div class="controls"><span class="add-on">$</span>
+        {{ sl.price_warehouse_charge_sale }}                                
+    </div>
+</div>
+<div class="formSep control-group input-prepend">
+    <label class="control-label">{{ sl.warehouse_charge_sale.label }}  </label>
+    <div class="controls"><span class="add-on">$</span>
+        {{ sl.warehouse_charge_sale }}                                
+    </div>
+</div>
+<div class="formSep control-group input-prepend">
+    <label class="control-label">{{ sl.warehouse_charge_days.label }}  </label>
+    <div class="controls"><span class="add-on">$</span>
+        {{ sl.warehouse_charge_days }}                                
+    </div>
+</div>
+
+<div class="formSep control-group input-prepend">
+    <label class="control-label">{{ sl.price_handling_charge_sale.label }}  </label>
+    <div class="controls"><span class="add-on">$</span>
+        {{ sl.price_handling_charge_sale }}                                
+    </div>
+</div>                        
+<div class="formSep control-group input-prepend">
+    <label class="control-label">{{ sl.handling_charge_sale.label }}  </label>
+    <div class="controls"><span class="add-on">$</span>
+        {{ sl.handling_charge_sale }}                                
+    </div>
+</div>
+<div class="formSep control-group input-prepend">
+    <label class="control-label">{{ sl.price_delivery_sale.label }}  </label>
+    <div class="controls"><span class="add-on">$</span>
+        {{ sl.price_delivery_sale }}                                
+    </div>
+</div>
+<div class="formSep control-group input-prepend">
+    <label class="control-label">{{ sl.delivery_sale.label }}  </label>
+    <div class="controls"><span class="add-on">$</span>
+        {{ sl.delivery_sale }}                                
+    </div>
+</div>
+<div class="formSep control-group input-prepend">
+    <label class="control-label">{{ sl.status_duty.label }}  </label>
+    <div class="controls">
+        {{ sl.status_duty }}                                
+    </div>
+</div>
+
+<div class="formSep control-group input-prepend 2 box" style="display:none">
+    <label class="control-label">{{ sl.duty_tax_sale.label }}  </label>
+    <div class="controls"><span class="add-on">$</span>
+        {{ sl.duty_tax_sale }}                                
+    </div>
+</div>
+<div class="formSep control-group input-prepend 2 box" style="display:none">
+    <label class="control-label">{{ sl.tax_handling_charge_sale.label }}  </label>
+    <div class="controls"><span class="add-on">$</span>
+        {{ sl.tax_handling_charge_sale }}                                
+    </div>
+</div>
+<div class="formSep control-group input-prepend 2 box" style="display:none">
+    <label class="control-label">{{ sl.shipment_value.label }}  </label>
+    <div class="controls"><span class="add-on">$</span>
+        {{ sl.shipment_value }}                                
+    </div>
+</div>
+<div class="formSep control-group input-prepend 2 box" style="display:none">
+    <label class="control-label">{{ sl.insurance.label }}  </label>
+    <div class="controls"><span class="add-on">$</span>
+        {{ sl.insurance }}                                
+    </div>
+</div>
+

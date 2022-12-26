@@ -1,7 +1,47 @@
 from django.contrib import admin
 from import_export.admin import ImportExportMixin, ExportActionModelAdmin
 from .models import Commodity, Job, MataUang,Kurs, ParameterData,Produk,JasaPengiriman,Negara,ParameterDataBl, Sale, Transaksi,\
-    Transaksi,Job,RefCustomer
+    Transaksi,Job,RefCustomer,DdpInvoice,Invoice,PicInvoice,TermInvoice,AddresInvoice,ShipperInvoice,ConsigneInvoice,MenuInputSale
+
+class MenuInputSaleAdmin(ImportExportMixin, admin.ModelAdmin):
+    list_display = ['id']
+    search_fields = ['id']
+admin.site.register(MenuInputSale,MenuInputSaleAdmin)
+
+class DdpInvoiceAdmin(ImportExportMixin, admin.ModelAdmin):
+    list_display = ['id','nama_ddp']
+    search_fields = ['id']
+admin.site.register(DdpInvoice,DdpInvoiceAdmin)
+
+class InvoiceAdmin(ImportExportMixin, admin.ModelAdmin):
+    list_display = ['id']
+    search_fields = ['id']
+admin.site.register(Invoice,InvoiceAdmin)
+
+class PicInvoiceAdmin(ImportExportMixin, admin.ModelAdmin):
+    list_display = ['id','nama_pic']
+    search_fields = ['id']
+admin.site.register(PicInvoice,PicInvoiceAdmin)
+
+class TermInvoiceAdmin(ImportExportMixin, admin.ModelAdmin):
+    list_display = ['id','nama_term']
+    search_fields = ['id']
+admin.site.register(TermInvoice,TermInvoiceAdmin)
+
+class AddresInvoiceAdmin(ImportExportMixin, admin.ModelAdmin):
+    list_display = ['id','nama']
+    search_fields = ['id']
+admin.site.register(AddresInvoice,AddresInvoiceAdmin)
+
+class ShipperInvoiceAdmin(ImportExportMixin, admin.ModelAdmin):
+    list_display = ['id','nama']
+    search_fields = ['id']
+admin.site.register(ShipperInvoice,ShipperInvoiceAdmin)
+
+class ConsigneInvoiceAdmin(ImportExportMixin, admin.ModelAdmin):
+    list_display = ['id','nama']
+    search_fields = ['id']
+admin.site.register(ConsigneInvoice,ConsigneInvoiceAdmin)
 
 
 class SaleAdmin(ImportExportMixin, admin.ModelAdmin):

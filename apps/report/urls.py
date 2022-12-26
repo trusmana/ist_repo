@@ -27,8 +27,12 @@ from apps.report.parameter.sale import views as s_views #### Data sale
 from apps.report.parameter.sale import views_report as rpt_views #### Report sale
 from apps.report.parameter.commodity import views as comm_v ####Commodity
 
+from apps.report.input.jual import view_jual as jualv
+
 
 urlpatterns = [
+    #### sale pisah
+    path('jl_pisah/<int:id>/',jualv.input_jual_ist,name='jl-pisah'),
     ###### Report Sale
     path('rp-sales',rpt_views.report_sale,name='rpt-sale'),
     path('rp-sales-done',rpt_views.report_sale_done,name='rpt-sale-done'),
@@ -61,6 +65,7 @@ urlpatterns = [
     path('d_job_done/',djob.datajob_done, name='d-job-done'),  # type: ignore 
     path('d_job/',djob.datajob, name='d-job'),
     ####Update Status Pekerjaan
+    path('edit_head/<int:pk>/',djob.header_invoice, name='edit_head'),
     path('add_ref/<int:pk>/',djob.add_ref, name='add-ref'),
     path('edit_kursduty/<int:pk>/',djob.edit_kursduty, name='e-kursduty'),
     path('up_date/<int:pk>/',djob.update_job, name='up-job'),

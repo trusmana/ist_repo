@@ -1,6 +1,6 @@
 from django import forms
 
-from apps.products.models import REPORT_DATA,RefCustomer,JUMLAHREFF,JUMLAHREFFCS,KURS_DUTY
+from apps.products.models import REPORT_DATA,RefCustomer,JUMLAHREFF,JUMLAHREFFCS,KURS_DUTY,Invoice,Sale
 
 class DateForm(forms.Form):
     from_date = forms.DateField(widget=forms.DateInput({'class':'input-append span5',
@@ -46,3 +46,8 @@ class RefForm(forms.ModelForm):
     class Meta:
         model = RefCustomer
         fields ='__all__'
+
+class HeaderInvForm(forms.ModelForm):
+    class Meta:
+        model = Sale
+        fields = '__all__'

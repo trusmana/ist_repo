@@ -5,7 +5,7 @@ from django.conf import settings
 from django.contrib.auth.decorators import login_required
 from weasyprint import HTML
 
-from apps.products.models import Job,Sale
+from apps.products.models import Job,Sale,JasaPengiriman
 
 @login_required(login_url=settings.LOGIN_URL)
 def debit_note(request,id):
@@ -26,6 +26,7 @@ def debit_note(request,id):
 #####cetak Sale IST
 def invoice(request,id):
     ist = Sale.objects.get(id=id)
+    
     html_string = render_to_string('report/cetak/invoice.html', {'data': ist})
     html = HTML(string=html_string)
     html.write_pdf(target='/tmp/mypdf.pdf')
@@ -33,7 +34,7 @@ def invoice(request,id):
     fs = FileSystemStorage('/tmp')
     with fs.open('mypdf.pdf') as pdf:
         response = HttpResponse(pdf, content_type='application/pdf')
-        response['Content-Disposition'] = 'attachment; filename="INVOICE.pdf"'
+        response['Content-Disposition'] = 'attachment; filename="Inv-%s.pdf"' % ist.trans.no_pekerjaan
         return response
     
 
@@ -48,6 +49,6 @@ def invoice_duty(request,id):
     fs = FileSystemStorage('/tmp')
     with fs.open('mypdf.pdf') as pdf:
         response = HttpResponse(pdf, content_type='application/pdf')
-        response['Content-Disposition'] = 'attachment; filename="Duty.pdf"'
+        response['Content-Disposition'] = 'attachment; filename="Duty-%s.pdf"' % ist.trans.no_pekerjaan
         return response
     

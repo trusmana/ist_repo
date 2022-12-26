@@ -8,8 +8,24 @@ from django.conf import settings
 import datetime
 from apps.products.models import Transaksi,Job,Sale
 from apps.report.input.forms import UpdateForm
-from apps.report.job.forms import RefForm,KursDutyForm
+from apps.report.job.forms import RefForm,KursDutyForm,HeaderInvForm
 from django import forms
+from django.forms.widgets import HiddenInput
+
+@login_required(login_url=settings.LOGIN_URL)
+def header_invoice(request, pk):
+    user = request.user
+    sale = Sale.objects.get(pk=pk)
+    if request.method == 'POST':
+        form = HeaderInvForm(request.POST)
+        if form.is_valid():
+            form.save()
+            messages.success(request, 'Ref Customer Berhasil Di Input')
+            return redirect('/report/dtl_all_job/%s/' %(sale.trans.id))  # type: ignore
+    else:
+        form = HeaderInvForm()  # type: ignore
+    return render(request,'job/header_invoice.html',{'sale':sale,'form':form})
+
 
 @login_required(login_url=settings.LOGIN_URL)
 def edit_kursduty(request, pk):
@@ -20,7 +36,7 @@ def edit_kursduty(request, pk):
         if form.is_valid():
             form.save()
             messages.success(request, 'Ref Customer Berhasil Di Input')
-            return redirect('/report/dtl_all_job/%s/' %(sale.trans.id)  )
+            return redirect('/report/dtl_all_job/%s/' %(sale.trans.id)  )  # type: ignore
     else:
         form = KursDutyForm(instance=sale)  # type: ignore
     return render(request,'job/edit_kursduty.html',{'sale':sale,'form':form})
@@ -34,7 +50,7 @@ def add_ref(request, pk):
         if form.is_valid():
             form.save()
             messages.success(request, 'Ref Customer Berhasil Di Input')
-            return redirect('/report/dtl_all_job/%s/' %(sale.trans.id)  )
+            return redirect('/report/dtl_all_job/%s/' %(sale.trans.id)  )  # type: ignore
     else:
         form = RefForm(initial={'fkref':sale.id})  # type: ignore
         form.fields["fkref"].widget = forms.HiddenInput()

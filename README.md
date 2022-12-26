@@ -262,3 +262,7 @@ Action :
 2. Done Silalahkan Di Coba @16122022 tedi_black 
 3. Done Silalahkan Di Coba @16122022 tedi_black 
 4. Done Silalahkan Di Coba @16122022 tedi_black 
+
+1. AMS invoce pasang parameter
+2. inputan asuransi yg dibayar di menu job, masukan nilai persentasi dan rp asuransi,inputan amount
+3. Invoce beda,data terlampir

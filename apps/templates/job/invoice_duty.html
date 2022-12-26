@@ -1,0 +1,61 @@
+{% load humanize %}
+<h3 class="heading"><a href="{% url 'e-jual' data.id %}">{{data.prod.vendor}}</a> | 
+    <a href="{% url 'ctk-job-buy_duty' data.id %}"><button class="btn btn-small btn-info">Invoice</button></a>
+    <a href="{% url 'e-kursduty' data.id %}"><button class="btn btn-small btn-success">E Kurs</button></a>
+</h3>
+<table class="table table-bordered table-striped table_vam">
+    <tr>
+        <td colspan='6'><div class="text-center act-info">{{data.trans.products}}</div></td>
+    </tr>    
+    <tr>
+        <td rowspan='2'><div class="text-center"><b>{{data.prod.vendor}}</b></div></td>
+        <td rowspan='2' colspan='2'></td>
+        <td><div class="text-center">Tanggal Invoice</div></td>
+        <td><div class="text-center">Nomor Invoice</div></td>
+        <td><div class="text-center">Job Number</div></td>
+    </tr>
+    <tr>
+        <td><div class="text-center">{% include 'job/refdata.html' %}</div></td>
+        <td><div class="text-center">{% include 'job/refcustomer.html' %}</div></td>
+        <td><div class="text-center">{{data.trans.no_pekerjaan}}</div></td>
+    </tr>
+    <tr>
+        <td><div class="text-center"> Detail Charges</div></td>
+        <td colspan="2"><div class="text-center">Currency </div></td>
+        <td><div class="text-center">Price </div> </td>
+        <td colspan="2"><div class="text-center"> Amount</div></td>
+    </tr>
+    <tr>
+        <td>Shipment Value</td>
+        <td colspan='2'></td>
+        <td><div class="text-center">{{data.get_kurs_duty_display}} {{data.shipment_value|intcomma}}</div></td>
+        <td></td>
+        <td></td>
+    </tr>
+    <tr>
+        <td>Duty Tax</td>
+        <td colspan='2'></td><td></td>
+        <td></td>
+        <td><div class="text-right">{{data.duty_tax |intcomma}}</div></td>
+    </tr>
+    <tr>
+        <td>Tax Handling Charge</td>
+        <td colspan='2'></td><td></td>
+        <td></td>
+        <td><div class="text-right">{{data.tax_handling_charge|intcomma}}</div></td>
+    </tr>
+    {% if data.insurance == 1 %}
+    <tr>
+        <td>Insurance</td>
+        <td colspan='2'></td><td></td>
+        <td></td>
+        <td><div class="text-right">{{data.insurance|intcomma}}</div></td>
+    </tr>
+    {% endif %}
+    <tr>
+        <td></td>
+        <td colspan='2'></td><td></td>
+        <td><b>Total {{data.nilai_kurs.mtu.kode_matauang}}</b></td>
+        <td><div class="text-right act-danger">{{data.total_duty|intcomma}}</div></td>
+    </tr>
+</table>
